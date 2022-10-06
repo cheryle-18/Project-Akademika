@@ -1,5 +1,7 @@
 import React from "react";
 import { Button } from "@material-tailwind/react";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faCoffee } from '@fortawesome/free-solid-svg-icons'
 
 const Home = () => {
     return(
@@ -40,6 +42,7 @@ const Home = () => {
             </div>
 
             <Button>test</Button>
+            <FontAwesomeIcon icon={faCoffee} />
         </div>
     );
 }
