@@ -104,7 +104,7 @@ const Sidebar = (props) => {
                         htmlFor="my-drawer"
                         className="drawer-overlay"
                     ></label>
-                    <ul className="menu p-4 overflow-y-auto w-64 bg-custom-blue min-h-full text-base-content">
+                    <ul className="menu p-4 overflow-y-auto w-64 rounded-r-3xl bg-custom-blue min-h-full text-base-content">
                         {cetakMenu}
                     </ul>
                 </div>
