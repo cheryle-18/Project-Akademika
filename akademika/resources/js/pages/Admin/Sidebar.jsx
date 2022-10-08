@@ -8,9 +8,9 @@ import "../../../css/app.css";
 
 const Sidebar = (props) => {
     const classNow =
-        "px-4 py-3 mt-3 rounded-lg text-blue-800 bg-white hidden lg:block";
+        "px-4 py-3 mt-3 rounded-lg text-blue-800 bg-white";
     const classMenu =
-        "px-4 py-3 mt-3 rounded-lg text-white hover:text-blue-800 bg-custom-blue hover:bg-gray-100 hidden lg:block";
+        "px-4 py-3 mt-3 rounded-lg text-white hover:text-blue-800 bg-custom-blue hover:bg-gray-100";
     const [open, setOpen] = useState(true);
     const Menus = [
         {
@@ -104,7 +104,7 @@ const Sidebar = (props) => {
                         htmlFor="my-drawer"
                         className="drawer-overlay"
                     ></label>
-                    <ul className="menu p-4 overflow-y-auto w-64 rounded-r-3xl bg-custom-blue min-h-full text-base-content">
+                    <ul className="menu p-4 overflow-y-auto w-64 rounded-r-3xl bg-custom-blue min-h-screen flex-none">
                         {cetakMenu}
                     </ul>
                 </div>
