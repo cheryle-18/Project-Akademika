@@ -2,7 +2,7 @@ import React from "react";
 import { useState } from "react";
 import { Button } from "@material-tailwind/react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faHouseChimney, faUser } from "@fortawesome/free-solid-svg-icons";
+import { faHouseChimney, faUser, faGraduationCap, faFileContract, faSignOut } from "@fortawesome/free-solid-svg-icons";
 import { Link } from "react-router-dom";
 import "../../../css/app.css";
 
@@ -16,31 +16,31 @@ const Sidebar = (props) => {
         {
             title: "Home",
             icon: faHouseChimney,
-            link: "/Admin",
+            link: "/admin",
             now: props.now == "home",
         },
         {
             title: "Guru",
             icon: faUser,
-            link: "/Admin/Guru",
+            link: "/admin/guru",
             now: props.now == "guru",
         },
-        { title: "Siswa", icon: faUser, link: "/", now: props.now == "siswa" },
+        { title: "Siswa", icon: faUser, link: "/admin/siswa", now: props.now == "siswa" },
         {
-            title: "Kursus ",
-            icon: faUser,
-            link: "/",
+            title: "Kursus",
+            icon: faGraduationCap,
+            link: "/admin/kursus",
             now: props.now == "kursus",
         },
         {
             title: "Laporan",
-            icon: faUser,
-            link: "/",
+            icon: faFileContract,
+            link: "/admin/laporan",
             now: props.now == "laporan",
         },
         {
             title: "Logout",
-            icon: faUser,
+            icon: faSignOut,
             link: "/",
             now: props.now == "logout",
         },
@@ -131,8 +131,14 @@ const Sidebar = (props) => {
                         {props.now == "kursus" && "Master Kursus"}
                         {props.now == "laporan" && "Master Laporan"}
                     </div>
+                    <div className="z-1 absolute left-80 top-0 bg-white py-4 text-black font-semibold text-xl">
+                        {props.now == "guru" && "Master Guru"}
+                        {props.now == "siswa" && "Master Siswa"}
+                        {props.now == "kursus" && "Master Kursus"}
+                        {props.now == "laporan" && "Master Laporan"}
+                    </div>
                     <div className="z-1 drawer-side bg-custom-blue rounded-r-3xl min-h-screen overflow-y-auto flex-none">
-                        <ul className="menu p-7 w-64">
+                        <ul className="menu p-6 w-56">
                             <div className="ml-3">
                                 <div className="text-white text-3xl font-semibold mb-1">
                                     Akademika

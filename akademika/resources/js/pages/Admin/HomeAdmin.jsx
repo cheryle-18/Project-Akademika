@@ -10,7 +10,7 @@ const HomeAdmin = () => {
         <div className="bg-gray-200 flex">
             <Sidebar now="home">
                 <div className="text-2xl p-14 pb-2">
-                    <div className="bg-white overflow-y-auto h-77vh p-6 mb-6 rounded-md drop-shadow-lg">
+                    <div className="bg-white overflow-y-auto h-77vh p-6 mb-6 rounded-md drop-shadow-lg hidden">
                     </div>
                 </div>
             </Sidebar>

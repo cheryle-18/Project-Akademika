@@ -30,7 +30,7 @@ module.exports = withMT({
                 "80vh": "80vh",
                 "75vh": "75vh",
                 "77vh": "77vh",
-            }
+            },
         },
     },
     plugins: [require("daisyui")],

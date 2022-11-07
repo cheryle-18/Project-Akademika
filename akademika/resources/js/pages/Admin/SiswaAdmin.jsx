@@ -5,10 +5,10 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCoffee } from "@fortawesome/free-solid-svg-icons";
 import Sidebar from "./Sidebar";
 
-const GuruAdmin = () => {
+const SiswaAdmin = () => {
     return (
         <div className="bg-gray-200 flex">
-            <Sidebar now="guru" >
+            <Sidebar now="siswa">
                 <div className="text-2xl p-14 pb-2">
                     <div className="bg-white overflow-y-auto h-77vh p-6 mb-6 rounded-md drop-shadow-lg">
                         <h1>Home Page</h1>
@@ -26,4 +26,4 @@ const GuruAdmin = () => {
     );
 };
 
-export default GuruAdmin;
+export default SiswaAdmin;
