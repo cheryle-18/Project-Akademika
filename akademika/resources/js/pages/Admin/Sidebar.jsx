@@ -16,26 +16,26 @@ const Sidebar = (props) => {
         {
             title: "Home",
             icon: faHouseChimney,
-            link: "/admin",
+            link: "/admin/home",
             now: props.now == "home",
         },
         {
             title: "Guru",
             icon: faUser,
-            link: "/admin/guru",
+            link: "/admin/master/guru",
             now: props.now == "guru",
         },
-        { title: "Siswa", icon: faUser, link: "/admin/siswa", now: props.now == "siswa" },
+        { title: "Siswa", icon: faUser, link: "/admin/master/siswa", now: props.now == "siswa" },
         {
             title: "Kursus",
             icon: faGraduationCap,
-            link: "/admin/kursus",
+            link: "/admin/master/kursus",
             now: props.now == "kursus",
         },
         {
             title: "Laporan",
             icon: faFileContract,
-            link: "/admin/laporan",
+            link: "/admin/master/laporan",
             now: props.now == "laporan",
         },
         {
@@ -125,13 +125,7 @@ const Sidebar = (props) => {
                     <div className="z-0 absolute left-0 top-0 w-full bg-white py-5 text-black">
                         .
                     </div>
-                    <div className="z-1 absolute left-80 top-0 bg-white py-4 text-black font-semibold text-xl">
-                        {props.now == "guru" && "Master Guru"}
-                        {props.now == "siswa" && "Master Siswa"}
-                        {props.now == "kursus" && "Master Kursus"}
-                        {props.now == "laporan" && "Master Laporan"}
-                    </div>
-                    <div className="z-1 absolute left-80 top-0 bg-white py-4 text-black font-semibold text-xl">
+                    <div className="z-1 absolute left-70 top-0 bg-white py-4 text-black font-semibold text-xl">
                         {props.now == "guru" && "Master Guru"}
                         {props.now == "siswa" && "Master Siswa"}
                         {props.now == "kursus" && "Master Kursus"}

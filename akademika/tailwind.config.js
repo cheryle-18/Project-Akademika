@@ -27,11 +27,18 @@ module.exports = withMT({
             height: {
                 "500px": "500px",
                 "600px": "600px",
+                "65vh": "65vh",
                 "80vh": "80vh",
                 "75vh": "75vh",
                 "77vh": "77vh",
             },
+            inset: {
+              '70': '17.4rem',
+            }
         },
     },
     plugins: [require("daisyui")],
+    daisyui: {
+      themes: false,
+    },
 });
