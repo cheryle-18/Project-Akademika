@@ -71,7 +71,7 @@ const Sidebar = (props) => {
                 <div className="drawer-content min-h-screen bg-white">
                     <label
                         htmlFor="my-drawer"
-                        className="btn btn-primary drawer-button bg-custom-blue hover:bg-blue-900 flex-none"
+                        className="btn btn-primary drawer-button bg-white hover:bg-white hover:text-custom-blue text-custom-blue border border-none flex-none"
                     >
                         <svg
                             xmlns="http://www.w3.org/2000/svg"

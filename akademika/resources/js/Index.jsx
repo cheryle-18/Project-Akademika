@@ -12,8 +12,8 @@ const Index = () => {
     return(
       <Router>
         <Switch>
-          <Route exact  path="/">
-            <HomeAdmin></HomeAdmin>
+          <Route exact path="/">
+            <Home></Home>
           </Route>
           <Route exact path="/admin/home">
             <HomeAdmin></HomeAdmin>

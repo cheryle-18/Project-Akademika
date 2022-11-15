@@ -1,78 +1,26 @@
-import React from "react";
-import { Button } from "@material-tailwind/react";
+import React, { useState, useEffect } from "react";
 import { BrowserRouter as Router, Route } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCoffee } from "@fortawesome/free-solid-svg-icons";
-import Sidebar from "./Admin/Sidebar";
+import Nav from "./Nav";
+import { Link } from "react-router-dom";
 
 const Home = () => {
     return (
-        <div className="bg-gray-200 flex">
-            <Sidebar now="home">
-                <div className="text-2xl p-14 pb-2">
-                    <div className="bg-white overflow-y-auto h-77vh p-6 mb-6 rounded-md drop-shadow-lg">
-                        <h1>Home Page</h1>
-                        Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                        Accusantium ad, nisi amet eaque, reprehenderit sequi
-                        voluptate adipisci voluptas labore maxime ducimus magni
-                        perferendis harum? Facere libero iste quisquam deserunt?
-                        Enim? Temporibus, suscipit nostrum! Fugiat amet
-                        molestiae consequuntur est sequi ipsam a nihil at? Quae
-                        <FontAwesomeIcon icon={faCoffee} />
-                    </div>
-                </div>
-            </Sidebar>
+        <div>
+            <div
+                className="relative min-h-screen w-full z-0"
+                style={{
+                    backgroundImage:
+                        "linear-gradient(to bottom right, rgb(13,90,162), rgb(152,204,234))",
+                }}
+            >
+                <Nav></Nav>
+                <Link to="/admin/home">admin</Link>
+                <div className="absolute bottom-0 z-1 py-2 w-full bg-custom-blue text-center text-white font-normal">@ Akademika</div>
+            </div>
         </div>
     );
-    // // return (
-    // //     <div className="container m-0">
-    // //     <Sidebar></Sidebar>
-    // //         <div className="grid grid-cols-12">
-    // //             <div className="col-span-2">
-    // //             </div>
-    // //             <div className="col-span-10">
-    // //                 <h1 className="text-blue-900 text-2xl font-bold">
-    // //                     Hello World with Tailwind
-    // //                 </h1>
-    // //                 <div className="overflow-x-auto">
-    // //                     <table className="table w-full">
-    // //                         <thead>
-    // //                             <tr>
-    // //                                 <th></th>
-    // //                                 <th>Name</th>
-    // //                                 <th>Job</th>
-    // //                                 <th>Favorite Color</th>
-    // //                             </tr>
-    // //                         </thead>
-    // //                         <tbody>
-    // //                             <tr>
-    // //                                 <th>1</th>
-    // //                                 <td>Cy Ganderton</td>
-    // //                                 <td>Quality Control Specialist</td>
-    // //                                 <td>Blue</td>
-    // //                             </tr>
-    // //                             <tr>
-    // //                                 <th>2</th>
-    // //                                 <td>Hart Hagerty</td>
-    // //                                 <td>Desktop Support Technician</td>
-    // //                                 <td>Purple</td>
-    // //                             </tr>
-    // //                             <tr>
-    // //                                 <th>3</th>
-    // //                                 <td>Brice Swyre</td>
-    // //                                 <td>Tax Accountant</td>
-    // //                                 <td>Red</td>
-    // //                             </tr>
-    // //                         </tbody>
-    // //                     </table>
-    // //                 </div>
-
-    // //                 <Button>test</Button>
-    // //                 <FontAwesomeIcon icon={faCoffee} />
-    // //             </div>
-    // //         </div>
-    // //     </div>
-    // );
 };
 
 export default Home;
