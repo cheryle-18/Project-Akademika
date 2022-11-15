@@ -46,7 +46,7 @@ const GuruAdmin = () => {
                 <td>
                     <button
                         type="button"
-                        className="py-2 px-4  bg-custom-blue hover:bg-blue-900 text-white w-full transition ease-in duration-200 text-center text-base font-normal shadow-md rounded-lg w-20"
+                        className="py-2 px-4  bg-custom-blue hover:bg-blue-900 text-white transition ease-in duration-200 text-center text-base font-normal shadow-md rounded-lg w-20"
                     >
                         Detail
                     </button>

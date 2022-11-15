@@ -7,6 +7,7 @@ import Sidebar from "./Sidebar";
 
 const HomeAdmin = () => {
     return (
+        // <div className="bg-gray-200 flex">
         <div className="bg-gray-200 flex">
             <Sidebar now="home">
                 <div className="text-2xl p-14 pb-2">
