@@ -12,10 +12,12 @@ import { Link } from "react-router-dom";
 import Logo from "../../images/logo_akademika.png";
 
 const Home = () => {
+    const classItem = "";
+
     return (
-        <div>
+        <div className="">
             <div
-                className="relative min-h-screen w-full z-0 px-4 sm:px-16 md:px-24 lg:px-32"
+                className="relative min-h-screen w-full z-0 px-4 sm:px-16 md:px-24"
                 style={{
                     backgroundImage:
                         "linear-gradient(to bottom right, rgb(13,90,162), rgb(152,204,234))",
@@ -53,10 +55,10 @@ const Home = () => {
                     </div>
                 </div>
             </div>
-            <div className="flex justify-center align-center relative min-h-screen w-full z-0 px-32 bg-white">
+            <div className="flex justify-center items-center relative min-h-screen w-full z-0 bg-white px-4 sm:px-16 md:px-24">
                 <div className="relative"></div>
                 <div className="absolute -top-10 md:-top-14 lg:-top-20">
-                    <div className="bg-white overflow-y-auto min-h-8 p-2 md:p-6 rounded-3xl drop-shadow-lg overflow-x-auto flex justify-center align-center flex-row">
+                    <div className="bg-white overflow-y-auto min-h-8 p-2 md:p-6 rounded-3xl drop-shadow-lg overflow-x-auto flex justify-center items-center flex-row">
                         <div className="w-28 md:w-40 lg:w-72 text-center">
                             <FontAwesomeIcon
                                 className="text-custom-blue text-5xl lg:text-8xl"
@@ -88,7 +90,7 @@ const Home = () => {
                         </div>
                     </div>
                 </div>
-                <div class="grid grid-cols-12 mt-60">
+                <div class="grid grid-cols-12 mt-52">
                     <div class="col-span-6"></div>
                     <div class="col-span-6">
                         <div
@@ -101,7 +103,10 @@ const Home = () => {
                             Mengapa pilih Akademika?
                         </div>
                         <div className="mt-6 text-xl">
-                            Akademika adalah platform kursus online pertama di Indonesia yang menyediakan kursus dalam berbagai kategori dengan biaya yang terjangkau dan fasilitas tanya guru gratis.
+                            Akademika adalah platform kursus online pertama di
+                            Indonesia yang menyediakan kursus dalam berbagai
+                            kategori dengan biaya yang terjangkau dan fasilitas
+                            tanya guru gratis.
                         </div>
                     </div>
                 </div>
@@ -109,10 +114,47 @@ const Home = () => {
             {/* <div className="absolute bottom-0 z-1 py-2 w-full bg-custom-blue text-center text-white font-normal">
                 @ Akademika
             </div> */}
-            <div className="flex relative min-h-screen w-full z-0 px-32 bg-white">
+            <div className="flex justify-center items-center w-full min-h-screen z-0 px-4 sm:px-16 md:px-24 bg-white">
+                <div className="w-full h-90vh bg-custom-light-blue rounded-xl"></div>
+            </div>
+            <div
+                className="text-custom-blue text-5xl lg:text-start lg:text-6xl px-4 sm:px-16 md:px-24 mt-14 font-semibold"
+                style={{
+                    letterSpacing: "-1px",
+                    fontFamily: "initial",
+                }}
+            >
+                Jelajahi Akademika
+            </div>
+            <div className="px-4 sm:px-16 md:px-24 bg-white w-full min-h-screen mt-10">
+                <div class="grid grid-cols-12 gap-4 w-full h-full text-custom-blue text-3xl">
+                    <div class="col-span-6 flex justify-center items-center h-24 rounded-lg border-1 bg-custom-light-blue2 border-2 border-solid border-custom-blue hover:bg-custom-blue hover:text-white">
+                        Teknologi Informasi
+                    </div>
+                    <div class="col-span-6 flex justify-center items-center h-24 rounded-lg border-1 bg-custom-light-blue2 border-2 border-solid border-custom-blue hover:bg-custom-blue hover:text-white">
+                        Teknologi Informasi
+                    </div>
+                    <div class="col-span-6 flex justify-center items-center h-24 rounded-lg border-1 bg-custom-light-blue2 border-2 border-solid border-custom-blue hover:bg-custom-blue hover:text-white">
+                        Teknologi Informasi
+                    </div>
+                    <div class="col-span-6 flex justify-center items-center h-24 rounded-lg border-1 bg-custom-light-blue2 border-2 border-solid border-custom-blue hover:bg-custom-blue hover:text-white">
+                        Teknologi Informasi
+                    </div>
+                    <div class="col-span-6 flex justify-center items-center h-24 rounded-lg border-1 bg-custom-light-blue2 border-2 border-solid border-custom-blue hover:bg-custom-blue hover:text-white">
+                        Teknologi Informasi
+                    </div>
+                    <div class="col-span-6 flex justify-center items-center h-24 rounded-lg border-1 bg-custom-light-blue2 border-2 border-solid border-custom-blue hover:bg-custom-blue hover:text-white">
+                        Teknologi Informasi
+                    </div>
+                    <div class="col-span-6 flex justify-center items-center h-24 rounded-lg border-1 bg-custom-light-blue2 border-2 border-solid border-custom-blue hover:bg-custom-blue hover:text-white">
+                        Teknologi Informasi
+                    </div>
+                    <div class="col-span-6 flex justify-center items-center h-24 rounded-lg border-1 bg-custom-light-blue2 border-2 border-solid border-custom-blue hover:bg-custom-blue hover:text-white">
+                        Teknologi Informasi
+                    </div>
+                </div>
             </div>
         </div>
-
     );
 };
 

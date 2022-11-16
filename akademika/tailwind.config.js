@@ -15,6 +15,8 @@ module.exports = withMT({
             },
             colors: {
                 "custom-blue": "rgb(15,77,134)",
+                "custom-light-blue": "rgb(218,242,255)",
+                "custom-light-blue2": "rgb(237,248,255)",
             },
             zIndex: {
                 0: "0",
@@ -31,6 +33,10 @@ module.exports = withMT({
                 "80vh": "80vh",
                 "75vh": "75vh",
                 "77vh": "77vh",
+                "90vh": "90vh",
+            },
+            width: {
+                "90vw": "90vw",
             },
             inset: {
               '70': '17.4rem',

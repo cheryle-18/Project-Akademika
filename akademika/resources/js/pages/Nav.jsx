@@ -169,7 +169,7 @@ const Nav = () => {
                 </div>
             </div>
 
-            <div>
+            <div className="z-10">
                 <input type="checkbox" id="masukDaftar" class="modal-toggle" />
                 <div class="modal">
                     <div class="modal-box relative py-10 px-8">
