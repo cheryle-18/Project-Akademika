@@ -147,19 +147,25 @@ const Nav = () => {
                         Cari Kursus
                     </div>
                 </div>
-                <div className="md:hidden">
-                    <div className="text-3xl font-semibold text-white float-left">
+                <div className="md:hidden w-full">
+                    <div className="text-3xl font-semibold text-white text-center">
                         Akademika
                     </div>
-                    <div className="text-3xl font-semibold text-white float-right mr-5">
-                        Daftar
+                    <div className="flex justify-center align-center">
+                        <div className="cursor-pointer border-2 border-white bg-transparent text-white py-1 px-8 rounded-md hover:bg-custom-blue hover:text-white bg-white w-full sm:w-96 text-center mt-2">
+                            Cari Kursus
+                        </div>
                     </div>
-                    <div className="text-3xl font-semibold text-white float-right mr-5">
-                        Masuk
-                    </div>
-                    <div className="text-3xl font-semibold text-white float-right mr-5">
-                        Cari Kursus
-                    </div>
+                    <label for="masukDaftar" onClick={changeDaftarFalse} className="flex justify-center align-center">
+                        <div className="cursor-pointer border-2 border-white bg-transparent text-white py-1 px-8 rounded-md hover:bg-custom-blue hover:text-white bg-white w-full sm:w-96 text-center mt-2">
+                            Masuk
+                        </div>
+                    </label>
+                    <label for="masukDaftar" onClick={changeDaftarTrue} className="flex justify-center align-center">
+                        <div className="cursor-pointer border-2 border-white text-custom-blue py-1 px-8 rounded-md hover:bg-custom-blue hover:text-white bg-white w-full sm:w-96 text-center mt-2">
+                            Daftar
+                        </div>
+                    </label>
                 </div>
             </div>
 
