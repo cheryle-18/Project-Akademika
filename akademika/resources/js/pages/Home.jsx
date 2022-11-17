@@ -10,6 +10,7 @@ import {
 import Nav from "./Nav";
 import { Link } from "react-router-dom";
 import Logo from "../../images/logo_akademika.png";
+import teknologiLogo from "../../images/Teknologi_Informasi.png";
 
 const Home = () => {
     const classItem = "";
@@ -129,28 +130,34 @@ const Home = () => {
             <div className="px-4 sm:px-16 md:px-24 bg-white w-full min-h-screen mt-10">
                 <div class="grid grid-cols-12 gap-4 w-full h-full text-custom-blue text-3xl">
                     <div class="col-span-6 flex justify-center items-center h-24 rounded-lg border-1 bg-custom-light-blue2 border-2 border-solid border-custom-blue hover:bg-custom-blue hover:text-white">
-                        Teknologi Informasi
+                        <img
+                            className=""
+                            style={{ width: "55px" }}
+                            src={teknologiLogo}
+                            alt=""
+                        />
+                        <b>Teknologi Informasi</b>
                     </div>
                     <div class="col-span-6 flex justify-center items-center h-24 rounded-lg border-1 bg-custom-light-blue2 border-2 border-solid border-custom-blue hover:bg-custom-blue hover:text-white">
-                        Teknologi Informasi
+                        <b>Bisnis dan Ekonomi</b>
                     </div>
                     <div class="col-span-6 flex justify-center items-center h-24 rounded-lg border-1 bg-custom-light-blue2 border-2 border-solid border-custom-blue hover:bg-custom-blue hover:text-white">
-                        Teknologi Informasi
+                        <b>Logika dan Matematika</b>
                     </div>
                     <div class="col-span-6 flex justify-center items-center h-24 rounded-lg border-1 bg-custom-light-blue2 border-2 border-solid border-custom-blue hover:bg-custom-blue hover:text-white">
-                        Teknologi Informasi
+                        <b>Bahasa dan Literatur</b>
                     </div>
                     <div class="col-span-6 flex justify-center items-center h-24 rounded-lg border-1 bg-custom-light-blue2 border-2 border-solid border-custom-blue hover:bg-custom-blue hover:text-white">
-                        Teknologi Informasi
+                        <b>Fisika dan Teknik</b>
                     </div>
                     <div class="col-span-6 flex justify-center items-center h-24 rounded-lg border-1 bg-custom-light-blue2 border-2 border-solid border-custom-blue hover:bg-custom-blue hover:text-white">
-                        Teknologi Informasi
+                        <b>Pengembangan Diri</b>
                     </div>
                     <div class="col-span-6 flex justify-center items-center h-24 rounded-lg border-1 bg-custom-light-blue2 border-2 border-solid border-custom-blue hover:bg-custom-blue hover:text-white">
-                        Teknologi Informasi
+                        <b>Kesehatan</b>
                     </div>
                     <div class="col-span-6 flex justify-center items-center h-24 rounded-lg border-1 bg-custom-light-blue2 border-2 border-solid border-custom-blue hover:bg-custom-blue hover:text-white">
-                        Teknologi Informasi
+                        <b>Kesenian</b>
                     </div>
                 </div>
             </div>
