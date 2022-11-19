@@ -16,10 +16,10 @@ return new class extends Migration
         Schema::create('guru', function (Blueprint $table) {
             $table->id('guru_id');
             $table->string('username',50)->unique();
-            $table->string('password',50);
+            $table->text('password');
             $table->string('nama',50);
             $table->string('email',50)->unique();
-            $table->string('telp',15)->nullable();
+            $table->string('telp',50)->nullable();
             $table->integer('total_wallet')->nullable();
             $table->tinyInteger('status');
             $table->dateTime('email_verified_at')->nullable();

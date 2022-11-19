@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\Models\Kursus;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -17,7 +18,9 @@ class PengumumanFactory extends Factory
     public function definition()
     {
         return [
-            //
+            'kursus_id' => $this->faker->randomElement(Kursus::all()->pluck('kursus_id')),
+            'deskripsi' => $this->faker->sentences(20,true),
+            'tanggal' => $this->faker->dateTimeBetween("-5 days","now")
         ];
     }
 }

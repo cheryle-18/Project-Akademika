@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\Models\Siswa;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -17,7 +18,10 @@ class SiswaHistoriPoinFactory extends Factory
     public function definition()
     {
         return [
-            //
+            'siswa_id' => $this->faker->randomElement(Siswa::all()->pluck('siswa_id')),
+            'tipe' => $this->faker->numberBetween(0,1),
+            'jumlah' => $this->faker->numberBetween(20,100),
+            'tanggal'=>$this->faker->dateTimeBetween("-5 days","now")
         ];
     }
 }

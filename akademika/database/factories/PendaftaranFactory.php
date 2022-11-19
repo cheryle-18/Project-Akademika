@@ -2,6 +2,8 @@
 
 namespace Database\Factories;
 
+use App\Models\Kursus;
+use App\Models\Siswa;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -17,7 +19,13 @@ class PendaftaranFactory extends Factory
     public function definition()
     {
         return [
-            //
+            'kursus_id' => $this->faker->randomElement(Kursus::all()->pluck('kursus_id')),
+            'siswa_id' => $this->faker->randomElement(Siswa::all()->pluck('siswa_id')),
+            'total' => $this->faker->numberBetween(0,100000),
+            'diskon' => $this->faker->numberBetween(0,30),
+            'grand_total' => $this->faker->numberBetween(0,100000),
+            'cara_bayar' =>  $this->faker->numberBetween(0,1),
+            'status' =>  $this->faker->numberBetween(0,2),
         ];
     }
 }

@@ -2,6 +2,8 @@
 
 namespace Database\Factories;
 
+use App\Models\Pengumuman;
+use App\Models\Siswa;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -17,7 +19,9 @@ class SiswaPengumumanFactory extends Factory
     public function definition()
     {
         return [
-            //
+            'pengumuman_id' => $this->faker->randomElement(Pengumuman::all()->pluck('pengumuman_id')),
+            'siswa_id' => $this->faker->randomElement(Siswa::all()->pluck('siswa_id')),
+            'status' => $this->faker->numberBetween(0,1),
         ];
     }
 }

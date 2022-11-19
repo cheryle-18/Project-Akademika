@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\Models\Kursus;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -17,7 +18,10 @@ class SubbabFactory extends Factory
     public function definition()
     {
         return [
-            //
+            'kursus_id' => $this->faker->randomElement(Kursus::all()->pluck('kursus_id')),
+            'judul' => $this->faker->words(3,true),
+            'deskripsi' => $this->faker->sentences(20,true),
+            'durasi'=> $this->faker->numberBetween(100,190),
         ];
     }
 }

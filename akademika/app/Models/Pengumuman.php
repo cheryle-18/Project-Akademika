@@ -12,5 +12,5 @@ class Pengumuman extends Model
     protected $table      = "pengumuman";
     protected $primaryKey = "pengumuman_id";
     public $incrementing  = true;
-    public $timestamps    = true;
+    public $timestamps    = false;
 }

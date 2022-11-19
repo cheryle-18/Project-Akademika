@@ -23,6 +23,7 @@ return new class extends Migration
             ('siswa_id')->on('siswa')->onDelete('cascade');
             $table->integer('total_benar');
             $table->integer('total_salah');
+            $table->integer('nilai');
             $table->timestamps();
         });
     }

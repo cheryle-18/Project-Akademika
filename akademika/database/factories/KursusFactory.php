@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\Models\Guru;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -17,7 +18,12 @@ class KursusFactory extends Factory
     public function definition()
     {
         return [
-            //
+            'guru_id' => $this->faker->randomElement(Guru::all()->pluck('guru_id')),
+            'nama' => $this->faker->words(3,true),
+            'deskripsi' => $this->faker->sentences(20,true),
+            'durasi'=> $this->faker->numberBetween(500,10000),
+            'harga' => $this->faker->numberBetween(0,100000),
+            'status'=> $this->faker->numberBetween(0,1),
         ];
     }
 }

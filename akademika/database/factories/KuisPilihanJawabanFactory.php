@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\Models\KuisSoal;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -17,7 +18,8 @@ class KuisPilihanJawabanFactory extends Factory
     public function definition()
     {
         return [
-            //
+            'kuis_soal_id' => $this->faker->randomElement(KuisSoal::all()->pluck('kuis_soal_id')),
+            'jawaban' =>$this->faker->text(15),
         ];
     }
 }
