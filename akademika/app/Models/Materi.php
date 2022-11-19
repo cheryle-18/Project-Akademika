@@ -8,4 +8,9 @@ use Illuminate\Database\Eloquent\Model;
 class Materi extends Model
 {
     use HasFactory;
+
+    protected $table      = "materi";
+    protected $primaryKey = "materi_id";
+    public $incrementing  = true;
+    public $timestamps    = true;
 }

@@ -8,4 +8,9 @@ use Illuminate\Database\Eloquent\Model;
 class Pengumuman extends Model
 {
     use HasFactory;
+
+    protected $table      = "pengumuman";
+    protected $primaryKey = "pengumuman_id";
+    public $incrementing  = true;
+    public $timestamps    = true;
 }
