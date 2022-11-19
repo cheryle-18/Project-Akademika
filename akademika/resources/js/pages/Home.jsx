@@ -25,7 +25,8 @@ const Home = () => {
                 }}
             >
                 <Nav></Nav>
-                <Link to="/admin/home">admin</Link>
+                <Link to="/admin/home">admin</Link><div></div>
+
                 <div class="grid grid-cols-12 mt-10 lg:mt-20">
                     <div class="col-span-12 text-5xl text-center lg:text-start lg:text-7xl xl:text-8xl lg:col-span-7">
                         <div className="relative">

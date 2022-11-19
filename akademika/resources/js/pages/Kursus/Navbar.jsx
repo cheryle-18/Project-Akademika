@@ -144,8 +144,7 @@ const Nav = () => {
                         Masuk
                     </label>
                     <div className="pt-1.5 text-white float-right mr-5 cursor-pointer">
-                    <Link to="/kursus/search">Cari Kursus</Link>
-
+                        Cari Kursus
                     </div>
                 </div>
                 <div className="md:hidden w-full">
@@ -154,7 +153,8 @@ const Nav = () => {
                     </div>
                     <div className="flex justify-center align-center">
                         <div className="cursor-pointer border-2 border-white bg-transparent text-white py-1 px-8 rounded-md hover:bg-custom-blue hover:text-white bg-white w-full sm:w-96 text-center mt-2">
-                            Cari Kursus
+
+                            <Link to="/kursus/search">Cari Kursus</Link>
                         </div>
                     </div>
                     <label for="masukDaftar" onClick={changeDaftarFalse} className="flex justify-center align-center">
