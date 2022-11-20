@@ -9,11 +9,17 @@ const Nav = () => {
 
     const changeDaftarTrue = () => {
         setDaftar(true);
+        document.body.style.overflow = "hidden";
     };
 
     const changeDaftarFalse = () => {
         setDaftar(false);
+        document.body.style.overflow = "hidden";
     };
+
+    const changeScroll = () => {
+        document.body.style.overflow = "auto";
+    }
 
     const cetakDaftar = (
         <div>
@@ -176,7 +182,7 @@ const Nav = () => {
                     <div class="modal-box relative py-10 px-8">
                         <label
                             for="masukDaftar"
-                            class="btn btn-sm absolute bg-transparent text-gray-500 border border-none hover:bg-transparent hover:border-none right-2 top-2 font-bold text-xl"
+                            class="btn btn-sm absolute bg-transparent text-gray-500 border border-none hover:bg-transparent hover:border-none right-2 top-2 font-bold text-xl" onClick={changeScroll}
                         >
                             ✕
                         </label>

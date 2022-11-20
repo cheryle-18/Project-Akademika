@@ -6,6 +6,7 @@ import Nav from "./Nav";
 import { Link } from "react-router-dom";
 import Logo from "../../images/logo_akademika.png";
 import Logo2 from "../../images/logo_akademika2.png";
+import Logo3 from "../../images/logo_akademika3.png";
 import teknologiLogo from "../../images/Teknologi_Informasi.png";
 import openBookImg from "../../images/openBook.png";
 import eLearningImg from "../../images/eLearning.png";
@@ -50,6 +51,27 @@ const Home = () => {
         },
     ]);
 
+    const [testimonis, setTestimoni] = useState([
+        {
+            msg: "Lorem ipsum dolor sit, amet consectetur adipisicing elit. Omnis fugiat incidunt cumque reprehenderit accusantium dolorum voluptatibus aut mollitia quos, accusamus vel. Iusto ullam assumenda officia non amet, quam molestiae culpa?",
+            img: "https://s3-alpha-sig.figma.com/img/83b1/31fd/9e1ac65719d0990ca684d4cac776f5a4?Expires=1669593600&Signature=FKaqB0T66mN3OCggvalALSRAiT8~~8Z581XjDc6Kd4nahQyg5AorWoQRy1JOXtG3MvWju3WEMzRAnRESsXI9KSRhsPmIXByLynSS9NQqxHBWTAJnWYfdaJgGe4WSitRr1dMRle0VzDZ4MZDHvNe4EgTkGka9A8n0YsLfMnJ2WWX-kwi1htzXQDRrEUf8-PqnnbxieSphRRwNoBYnEr6U04WFy5ydD3sF32UFPtF7P8DVoBfI-hPO7~9D4I1Tk28NjmhHpGfwk-98nmiPPSFB0U1ZBsaWVFMByVbFT5m9EFdm0EBprvuz0UJ~BxABYD-Fz3LAJxl~JoQFH2iXY6x0Hw__&Key-Pair-Id=APKAINTVSUGEWH5XD5UA",
+            nama: "Jane Doe",
+            lulusan: "Lulusan Kursus Data Science & Statistika",
+        },
+        {
+            msg: "Lorem ipsum dolor sit, amet consectetur adipisicing elit. Omnis fugiat incidunt cumque reprehenderit accusantium dolorum voluptatibus aut mollitia quos, accusamus vel. Iusto ullam assumenda officia non amet, quam molestiae culpa?",
+            img: "https://s3-alpha-sig.figma.com/img/83b1/31fd/9e1ac65719d0990ca684d4cac776f5a4?Expires=1669593600&Signature=FKaqB0T66mN3OCggvalALSRAiT8~~8Z581XjDc6Kd4nahQyg5AorWoQRy1JOXtG3MvWju3WEMzRAnRESsXI9KSRhsPmIXByLynSS9NQqxHBWTAJnWYfdaJgGe4WSitRr1dMRle0VzDZ4MZDHvNe4EgTkGka9A8n0YsLfMnJ2WWX-kwi1htzXQDRrEUf8-PqnnbxieSphRRwNoBYnEr6U04WFy5ydD3sF32UFPtF7P8DVoBfI-hPO7~9D4I1Tk28NjmhHpGfwk-98nmiPPSFB0U1ZBsaWVFMByVbFT5m9EFdm0EBprvuz0UJ~BxABYD-Fz3LAJxl~JoQFH2iXY6x0Hw__&Key-Pair-Id=APKAINTVSUGEWH5XD5UA",
+            nama: "Jane Doe",
+            lulusan: "Lulusan Kursus Data Science & Statistika",
+        },
+        {
+            msg: "Lorem ipsum dolor sit, amet consectetur adipisicing elit. Omnis fugiat incidunt cumque reprehenderit accusantium dolorum voluptatibus aut mollitia quos, accusamus vel. Iusto ullam assumenda officia non amet, quam molestiae culpa?",
+            img: "https://s3-alpha-sig.figma.com/img/83b1/31fd/9e1ac65719d0990ca684d4cac776f5a4?Expires=1669593600&Signature=FKaqB0T66mN3OCggvalALSRAiT8~~8Z581XjDc6Kd4nahQyg5AorWoQRy1JOXtG3MvWju3WEMzRAnRESsXI9KSRhsPmIXByLynSS9NQqxHBWTAJnWYfdaJgGe4WSitRr1dMRle0VzDZ4MZDHvNe4EgTkGka9A8n0YsLfMnJ2WWX-kwi1htzXQDRrEUf8-PqnnbxieSphRRwNoBYnEr6U04WFy5ydD3sF32UFPtF7P8DVoBfI-hPO7~9D4I1Tk28NjmhHpGfwk-98nmiPPSFB0U1ZBsaWVFMByVbFT5m9EFdm0EBprvuz0UJ~BxABYD-Fz3LAJxl~JoQFH2iXY6x0Hw__&Key-Pair-Id=APKAINTVSUGEWH5XD5UA",
+            nama: "Jane Doe",
+            lulusan: "Lulusan Kursus Data Science & Statistika",
+        },
+    ]);
+
     const cetakJelajah = jelajahs.map((jelajah, index) => (
         <div className="col-span-12 md:col-span-6 flex justify-center items-center h-10 md:h-24 rounded-lg border-1 bg-custom-light-blue2 border-2 border-solid border-custom-blue hover:bg-custom-blue hover:text-white cursor-pointer text-2xl md:text-xl lg:text-2xl xl:text-3xl">
             <FontAwesomeIcon icon={jelajah.icon} className="mr-2" />
@@ -57,10 +79,32 @@ const Home = () => {
         </div>
     ));
 
+    const cetakTestimoni = testimonis.map((testimoni, index) => (
+        <div className="col-span-12 md:col-span-6 xl:col-span-4">
+            <div className="bg-white rounded-lg minh-400px font-semibold p-10">
+                <div className="text-left text-2xl text-custom-blue h-280px overflow-hidden">
+                    "{testimoni.msg}"
+                </div>
+                <div className="flex justify-start items-center pt-10">
+                    <div
+                        className="rounded-full w-20 h-20 bg-cover overflow-hidden flex-shrink-0"
+                        style={{ backgroundImage: `url(${testimoni.img})` }}
+                    />
+                    <div className="h-full flex flex-col justify-center items-start ml-5">
+                        <div className="text-gray-400">{testimoni.nama}</div>
+                        <div className="text-gray-400 text-sm">
+                            {testimoni.lulusan}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    ));
+
     return (
-        <div className="">
+        <div className="relative">
             <div
-                className="relative min-h-screen w-full z-0 px-4 sm:px-16 md:px-24"
+                className="static min-h-screen w-full z-0 px-4 sm:px-16 md:px-24"
                 style={{
                     backgroundImage:
                         "linear-gradient(to bottom right, rgb(13,90,162), rgb(152,204,234))",
@@ -70,7 +114,7 @@ const Home = () => {
                 <Link to="/admin/home">admin</Link>
                 <div></div>
 
-                <div className="grid grid-cols-12 mt-10 lg:mt-20">
+                <div className="grid grid-cols-12 mt-0 md:mt-10 lg:mt-20">
                     <div className="col-span-12 text-5xl text-center lg:text-start lg:text-7xl xl:text-8xl lg:col-span-7">
                         <div className="relative">
                             <div
@@ -171,9 +215,6 @@ const Home = () => {
                     </div>
                 </div>
             </div>
-            {/* <div className="absolute bottom-0 z-1 py-2 w-full bg-custom-blue text-center text-white font-normal">
-                @ Akademika
-            </div> */}
             <div className="flex justify-center items-center w-full xl:min-h-80vh z-0 px-4 sm:px-16 md:px-24 bg-white">
                 <div className="w-full min-h-screen xl:h-90vh bg-custom-light-blue rounded-xl p-3 md:p-6 pr-0 lg:pl-20">
                     <div className="grid grid-cols-12">
@@ -275,10 +316,55 @@ const Home = () => {
                     {cetakJelajah}
                 </div>
                 <div className="text-right pt-1">
-                    <Link to={"/"} className="text-custom-blue text-xl hover:text-blue-700">
+                    <Link
+                        to={"/"}
+                        className="text-custom-blue text-xl hover:text-blue-700"
+                    >
                         <b>Lihat Semua Kursus</b>
                     </Link>
                 </div>
+            </div>
+            <div className="relative min-h-screen w-full z-0 bg-custom-blue px-4 sm:px-16 md:px-24 pb-10">
+                <div
+                    className="text-white text-5xl pt-20"
+                    style={{
+                        letterSpacing: "-1px",
+                        fontFamily: "initial",
+                    }}
+                >
+                    Testimoni Siswa
+                </div>
+                <div className="grid grid-cols-12 gap-4 mt-10">
+                    {cetakTestimoni}
+                </div>
+            </div>
+            <div className="relative min-h-80vh w-full z-0 bg-white px-4 sm:px-16 md:px-24 pt-4 lg:pt-14 pb-20">
+                <div className="grid grid-cols-12">
+                    <div className="col-span-12 lg:col-span-6">
+                        <img src={Logo3} alt="" />
+                    </div>
+                    <div className="col-span-12 lg:col-span-6 h-full flex flex-col justify-center items-start">
+                        <div
+                            className="text-4xl sm:text-5xl xl:text-7xl text-custom-blue"
+                            style={{
+                                letterSpacing: "-1px",
+                                fontFamily: "initial",
+                            }}
+                        >
+                            Tunggu apa lagi?
+                        </div>
+                        <div className="pt-10 text-2xl">Belajar tanpa batas dengan Akademika</div>
+                        <button
+                            type="button"
+                            className="mt-6 py-2 px-4 bg-custom-blue hover:bg-white hover:text-custom-blue text-white transition ease-in duration-200 text-center text-base font-normal shadow-md rounded-lg w-full xl:w-52"
+                        >
+                            Lihat Semua Kursus
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <div className="absolute bottom-0 z-1 py-2 w-full bg-custom-blue text-center text-white font-normal">
+                @ Akademika
             </div>
         </div>
     );
