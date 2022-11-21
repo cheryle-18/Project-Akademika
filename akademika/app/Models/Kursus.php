@@ -24,19 +24,19 @@ class Kursus extends Model
     }
     function pesan()
     {
-        return $this->belongsToMany(Siswa::class,'pesan','kursus_id','siswa_id');
+        return $this->belongsToMany(Siswa::class,'pesan','kursus_id','siswa_id')->withPivot("pesan_id","guru_id","isi","tanggal");
     }
     function pendaftaran()
     {
-        return $this->belongsToMany(Siswa::class,'pendaftaran','kursus_id','siswa_id');
+        return $this->belongsToMany(Siswa::class,'pendaftaran','kursus_id','siswa_id')->withPivot("pendaftaran_id","total","diskon","grand_total","cara_bayar","status");
     }
     function pengambil()
     {
-        return $this->belongsToMany(Siswa::class,'siswa_kursus','kursus_id','siswa_id');
+        return $this->belongsToMany(Siswa::class,'siswa_kursus','kursus_id','siswa_id')->withPivot("siswa_kursus_id","nilai_akhir","grade","keterangan","status");
     }
     function siswa_subbab()
     {
-        return $this->hasMany(SiswaSubbab::class,'kursus_id','siswa_subbab_id');
+        return $this->hasMany(SiswaSubbab::class,'kursus_id','kursus_id');
     }
     function histori()
     {

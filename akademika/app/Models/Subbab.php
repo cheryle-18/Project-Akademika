@@ -14,6 +14,11 @@ class Subbab extends Model
     public $incrementing  = true;
     public $timestamps    = true;
 
+    function kursus()
+    {
+        return $this->belongsTo(Kursus::class,'kursus_id','kursus_id');
+    }
+
     function materi()
     {
         return $this->hasMany(Materi::class,'subbab_id','subbab_id');
@@ -22,5 +27,9 @@ class Subbab extends Model
     function kuis()
     {
         return $this->hasMany(Kuis::class,'subbab_id','subbab_id');
+    }
+    function siswa()
+    {
+        return $this->belongsToMany(Siswa::class,"siswa_subbab", "subbab_id","siswa_id")->withPivot("siswa_subbab_id","kursus_id","status");
     }
 }

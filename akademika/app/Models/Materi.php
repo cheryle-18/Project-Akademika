@@ -13,4 +13,10 @@ class Materi extends Model
     protected $primaryKey = "materi_id";
     public $incrementing  = true;
     public $timestamps    = true;
+
+    function subbab()
+    {
+        return $this->belongsTo(Subbab::class,'subbab_id','subbab_id');
+    }
+    
 }
