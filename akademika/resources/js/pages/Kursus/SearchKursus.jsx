@@ -17,6 +17,27 @@ import CourseCard from "./CourseCard";
 
 
 const SearchKursus = () => {
+    const [listCourse, setListCourse] = useState([
+        {
+            nama: "Pengembangan Website Front-End Dasar 1",
+            harga: 250000,
+            deskripsi: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Commodi, dolorem?",
+            durasi: 40
+        },
+        {
+            nama: "Pengembangan Website Front-End Dasar 2",
+            harga: 250000,
+            deskripsi: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Commodi, dolorem?",
+            durasi: 40
+        },
+        {
+            nama: "Pengembangan Website Front-End Dasar 3",
+            harga: 250000,
+            deskripsi: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Commodi, dolorem?",
+            durasi: 40
+        },
+    ])
+
     return (
         <div className="min-h-screen w-screen">
             <div class="px-4 sm:px-16 md:px-24 drawer-side bg-custom-blue overflow-y-auto flex-none">
@@ -32,24 +53,24 @@ const SearchKursus = () => {
                             <input
                                 type="text"
                                 placeholder="Cari Kursus"
-                                class="form-select appearance-none w-3/6 px-4 py-2 text-base font-normal text-gray-700 bg-white bg-clip-padding bg-no-repeat border-2 border-gray-500 rounded-md focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
+                                className="form-select appearance-none w-3/6 px-4 py-2 text-base font-normal text-gray-700 bg-white bg-clip-padding bg-no-repeat border-2 border-gray-500 rounded-md focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
                             />
 
-                            <select class="form-select appearance-none w-1/6 px-4 py-2 text-base font-normal text-gray-700 bg-white bg-clip-padding bg-no-repeat border-2 border-gray-500 rounded-md focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none">
+                            <select className="form-select appearance-none w-1/6 px-4 py-2 text-base font-normal text-gray-700 bg-white bg-clip-padding bg-no-repeat border-2 border-gray-500 rounded-md focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none">
                                 <option selected>Kategori</option>
                                 <option value="1">One</option>
                                 <option value="2">Two</option>
                                 <option value="3">Three</option>
                             </select>
 
-                            <select class="form-select appearance-none w-1/6 px-4 py-2 text-base font-normal text-gray-700 bg-white bg-clip-padding bg-no-repeat border-2 border-gray-500 rounded-md focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none">
+                            <select className="form-select appearance-none w-1/6 px-4 py-2 text-base font-normal text-gray-700 bg-white bg-clip-padding bg-no-repeat border-2 border-gray-500 rounded-md focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none">
                                 <option selected>Harga</option>
                                 <option value="1">One</option>
                                 <option value="2">Two</option>
                                 <option value="3">Three</option>
                             </select>
 
-                            <select class="form-select appearance-none w-1/6 px-4 py-2 text-base font-normal text-gray-700 bg-white bg-clip-padding bg-no-repeat border-2 border-gray-500 rounded-md focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none">
+                            <select className="form-select appearance-none w-1/6 px-4 py-2 text-base font-normal text-gray-700 bg-white bg-clip-padding bg-no-repeat border-2 border-gray-500 rounded-md focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none">
                                 <option selected>Urutan</option>
                                 <option value="1">One</option>
                                 <option value="2">Two</option>
@@ -59,9 +80,13 @@ const SearchKursus = () => {
                     </form>
 
                     <div class="mt-10 flex flex-wrap gap-10 w-full">
-                        <CourseCard />
-                        <CourseCard />
-                        <CourseCard />
+                        {
+                            listCourse.map((n, index) => {
+                                return(
+                                    <CourseCard course={n} key={index} />
+                                )
+                            })
+                        }
                     </div>
 
                     <div class="flex justify-center mt-36">

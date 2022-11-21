@@ -1,14 +1,7 @@
 import React, { useState, useEffect } from "react";
 import clockLogo from "../../../images/Clock.png";
 
-const CourseCard = () => {
-    const [course, setCourse] = useState({
-        nama: "Pengembangan Website Front-End Dasar",
-        harga: 250000,
-        deskripsi: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Commodi, dolorem?",
-        durasi: 40
-    })
-
+const CourseCard = (course) => {
     return(
         <div className="flex flex-col md:flex-row md:max-w-xl rounded-lg bg-white shadow-lg w-1/2 h-auto">
             <img
@@ -18,13 +11,13 @@ const CourseCard = () => {
             />
             <div className="p-6 flex flex-col justify-start">
                 <h5 className="text-gray-900 text-xl font-semibold mb-2">
-                    {course.nama}
+                    {course.course.nama}
                 </h5>
                 <p className="text-gray-900 text-base mb-4">
-                    Rp {course.harga}
+                    Rp {course.course.harga}
                 </p>
                 <p className="text-gray-600 text-base mb-5">
-                    {course.deskripsi}
+                    {course.course.deskripsi}
                 </p>
 
                 <div className="text-gray-600 text-base flex">
@@ -35,7 +28,7 @@ const CourseCard = () => {
                             src={clockLogo}
                             alt=""
                         />
-                        {course.durasi} jam
+                        {course.course.durasi} jam
                     </span>
                     <span>
                         <a href="" className="ml-auto">
