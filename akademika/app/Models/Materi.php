@@ -18,5 +18,7 @@ class Materi extends Model
     {
         return $this->belongsTo(Subbab::class,'subbab_id','subbab_id');
     }
+
     
+
 }

@@ -13,4 +13,17 @@ class Kuis extends Model
     protected $primaryKey = "kuis_id";
     public $incrementing  = true;
     public $timestamps    = true;
+
+    function subbab()
+    {
+        return $this->belongsTo(Subbab::class,'subbab_id','subbab_id');
+    }
+    function soal()
+    {
+        return $this->hasMany(KuisSoal::class,'kuis_id','kuis_id');
+    }
+    function siswa()
+    {
+        # code...
+    }
 }
