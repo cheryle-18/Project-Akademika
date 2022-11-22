@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Route } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCoffee } from "@fortawesome/free-solid-svg-icons";
 import { Link } from "react-router-dom";
+import { Input, Radio } from "@material-tailwind/react";
 
 const Nav = () => {
     const [isDaftar, setDaftar] = useState(true);
@@ -17,58 +18,56 @@ const Nav = () => {
 
     const cetakDaftar = (
         <div>
-            <h3 class="text-3xl font-bold text-custom-blue">
+            <h3 className="text-3xl font-bold text-custom-blue">
                 Daftar Akademika
             </h3>
-            <p class="py-4">
-                <input
+            <p className="py-2 mt-2">
+                <Input
                     type="text"
-                    placeholder="Nama Lengkap"
-                    class="input input-bordered w-full border-2 border-gray-500 rounded-md placeholder-gray-700"
+                    label="Nama Lengkap"
+                    class="input input-bordered w-full border-2 border-gray-500 rounded-md"
                 />
             </p>
-            <p class="py-2">
-                <input
+            <p className="py-2">
+                <Input
                     type="text"
-                    placeholder="Email"
-                    class="input input-bordered w-full border-2 border-gray-500 rounded-md placeholder-gray-700"
+                    label="Email"
+                    class="input input-bordered w-full border-2 border-gray-500 rounded-md"
                 />
             </p>
-            <p class="py-2">
-                <input
+            <p className="py-2">
+                <Input
                     type="text"
-                    placeholder="Password"
-                    class="input input-bordered w-full border-2 border-gray-500 rounded-md placeholder-gray-700"
+                    label="Password"
+                    class="input input-bordered w-full border-2 border-gray-500 rounded-md"
                 />
             </p>
-            <p class="py-2">
-                <input
+            <p className="py-2">
+                <Input
                     type="text"
-                    placeholder="Konfirmasi Password"
-                    class="input input-bordered w-full border-2 border-gray-500 rounded-md placeholder-gray-700"
+                    label="Konfirmasi Password"
+                    class="input input-bordered w-full border-2 border-gray-500 rounded-md"
                 />
             </p>
-            <div className="pt-2">
-                Daftar Sebagai:&nbsp;&nbsp;&nbsp;
-                <input
-                    type="radio"
+            <div className="py-2 flex">
+                <span className="mr-2 my-auto">Daftar Sebagai:</span>
+                <Radio
                     id="guru"
-                    name="fav_language"
+                    name="type"
                     value="guru"
+                    label="Guru"
                 />
-                <label for="guru">&nbsp;Guru</label>
-                &nbsp;&nbsp;&nbsp;&nbsp;
-                <input
+                <Radio
                     type="radio"
                     id="siswa"
-                    name="fav_language"
+                    name="type"
                     value="siswa"
+                    label="Siswa"
                 />
-                <label for="siswa">&nbsp;Siswa</label>
             </div>
-            <div className="w-full py-2 mt-4 bg-custom-blue text-white text-center rounded-md">
+            <button className="w-full py-2 mt-4 bg-custom-blue text-white text-center rounded-md">
                 Buat Akun
-            </div>
+            </button>
             <div className="w-full mt-4 flex justify-center text-custom-blue">
                 <div>Sudah punya akun?&nbsp;</div>
                 {/* <label for="daftar">Masuk Sekarang</label> */}
@@ -86,19 +85,19 @@ const Nav = () => {
     );
     const cetakMasuk = (
         <div>
-            <h3 class="text-3xl font-bold text-custom-blue">Masuk</h3>
-            <p class="py-4">
+            <h3 className="text-3xl font-bold text-custom-blue">Masuk</h3>
+            <p className="py-4">
                 <input
                     type="text"
                     placeholder="Email"
-                    class="input input-bordered w-full border-2 border-gray-500 rounded-md placeholder-gray-700"
+                    className="input input-bordered w-full border-2 border-gray-500 rounded-md placeholder-gray-700"
                 />
             </p>
-            <p class="py-2">
+            <p className="py-2">
                 <input
                     type="text"
                     placeholder="Password"
-                    class="input input-bordered w-full border-2 border-gray-500 rounded-md placeholder-gray-700"
+                    className="input input-bordered w-full border-2 border-gray-500 rounded-md placeholder-gray-700"
                 />
             </p>
             <div className="w-full">

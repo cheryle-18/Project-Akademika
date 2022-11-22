@@ -10,6 +10,7 @@ import SiswaAdmin from "./pages/Admin/SiswaAdmin";
 //kursus
 import SearchKursus from "./pages/Kursus/SearchKursus";
 import Home from './pages/Home';
+import KursusDetail from "./pages/Kursus/KursusDetail";
 
 const Index = () => {
     return(
@@ -37,6 +38,9 @@ const Index = () => {
           {/* kursus */}
           <Route exact path="/kursus/search">
             <SearchKursus></SearchKursus>
+          </Route>
+          <Route exact path="/kursus/detail">
+            <KursusDetail></KursusDetail>
           </Route>
         </Switch>
       </Router>

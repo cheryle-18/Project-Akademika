@@ -13,6 +13,8 @@ import { Link } from "react-router-dom";
 // import searchLogo from "/akademika/resources/images/Search.png";
 import searchLogo from "../../../images/Search.png";
 import droplistLogo from "../../../images/Collapse_Arrow.png";
+import { Input } from "@material-tailwind/react";
+import { Select, Option } from "@material-tailwind/react";
 import CourseCard from "./CourseCard";
 
 
@@ -40,7 +42,7 @@ const SearchKursus = () => {
 
     return (
         <div className="min-h-screen w-screen">
-            <div class="px-4 sm:px-16 md:px-24 drawer-side bg-custom-blue overflow-y-auto flex-none">
+            <div className="px-4 sm:px-16 md:px-24 drawer-side bg-custom-blue overflow-y-auto flex-none">
                 <Nav></Nav>
             </div>
             <div className="bg-gray-100 overflow-auto h-77vh px-4 sm:px-14 md:px-20">
@@ -50,32 +52,31 @@ const SearchKursus = () => {
                 <div>
                     <form action="" method="post">
                         <div className="flex gap-x-4">
-                            <input
-                                type="text"
-                                placeholder="Cari Kursus"
-                                className="form-select appearance-none w-3/6 px-4 py-2 text-base font-normal text-gray-700 bg-white bg-clip-padding bg-no-repeat border-2 border-gray-500 rounded-md focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
-                            />
-
-                            <select className="form-select appearance-none w-1/6 px-4 py-2 text-base font-normal text-gray-700 bg-white bg-clip-padding bg-no-repeat border-2 border-gray-500 rounded-md focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none">
-                                <option selected>Kategori</option>
-                                <option value="1">One</option>
-                                <option value="2">Two</option>
-                                <option value="3">Three</option>
-                            </select>
-
-                            <select className="form-select appearance-none w-1/6 px-4 py-2 text-base font-normal text-gray-700 bg-white bg-clip-padding bg-no-repeat border-2 border-gray-500 rounded-md focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none">
-                                <option selected>Harga</option>
-                                <option value="1">One</option>
-                                <option value="2">Two</option>
-                                <option value="3">Three</option>
-                            </select>
-
-                            <select className="form-select appearance-none w-1/6 px-4 py-2 text-base font-normal text-gray-700 bg-white bg-clip-padding bg-no-repeat border-2 border-gray-500 rounded-md focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none">
-                                <option selected>Urutan</option>
-                                <option value="1">One</option>
-                                <option value="2">Two</option>
-                                <option value="3">Three</option>
-                            </select>
+                            <div className="w-3/6">
+                                <Input label="Cari Kursus"
+                                    type="text"
+                                    className="form-select appearance-none px-4 py-2 text-base font-normal text-gray-700 bg-white bg-clip-padding bg-no-repeat focus:outline-none"
+                                />
+                            </div>
+                            <div className="w-1/6">
+                                <Select label="Kategori" className="form-select appearance-none px-4 py-2 text-base font-normal text-gray-700 bg-white bg-clip-padding bg-no-repeat rounded-md focus:outline-none">
+                                    <Option value="1">One</Option>
+                                    <Option value="2">Two</Option>
+                                    <Option value="3">Three</Option>
+                                </Select>
+                            </div>
+                            <div className="w-1/6">
+                                <Select label="Harga" className="form-select appearance-none px-4 py-2 text-base font-normal text-gray-700 bg-white bg-clip-padding bg-no-repeat rounded-md focus:outline-none">
+                                    <Option value="1">Tertinggi</Option>
+                                    <Option value="2">Terendah</Option>
+                                </Select>
+                            </div>
+                            <div className="w-1/6">
+                                <Select label="Urutkan" className="form-select appearance-none px-4 py-2 text-base font-normal text-gray-700 bg-white bg-clip-padding bg-no-repeat rounded-md focus:outline-none">
+                                    <Option value="1">Asc</Option>
+                                    <Option value="2">Desc</Option>
+                                </Select>
+                            </div>
                         </div>
                     </form>
 
