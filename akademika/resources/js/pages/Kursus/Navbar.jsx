@@ -87,16 +87,16 @@ const Nav = () => {
         <div>
             <h3 className="text-3xl font-bold text-custom-blue">Masuk</h3>
             <p className="py-4">
-                <input
+                <Input
                     type="text"
-                    placeholder="Email"
+                    label="Email"
                     className="input input-bordered w-full border-2 border-gray-500 rounded-md placeholder-gray-700"
                 />
             </p>
             <p className="py-2">
-                <input
+                <Input
                     type="text"
-                    placeholder="Password"
+                    label="Password"
                     className="input input-bordered w-full border-2 border-gray-500 rounded-md placeholder-gray-700"
                 />
             </p>
