@@ -13,4 +13,13 @@ class SiswaLaporan extends Model
     protected $primaryKey = "siswa_laporan_id";
     public $incrementing  = true;
     public $timestamps    = true;
+
+    function siswa()
+    {
+        return $this->belongsTo(Siswa::class,'siswa_id','siswa_id');
+    }
+    function guru()
+    {
+        return $this->belongsTo(Guru::class,'guru_id','guru_id');
+    }
 }

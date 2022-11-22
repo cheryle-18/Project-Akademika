@@ -13,4 +13,9 @@ class KursusHistori extends Model
     protected $primaryKey = "kursus_histori_id";
     public $incrementing  = true;
     public $timestamps    = false;
+
+    function kursus()
+    {
+        return $this->belongsTo(Kursus::class,'kursus_id','kursus_id');
+    }
 }

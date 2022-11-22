@@ -13,4 +13,13 @@ class SiswaPengumuman extends Model
     protected $primaryKey = "siswa_pengumuman_id";
     public $incrementing  = true;
     public $timestamps    = true;
+
+    function pengumuman()
+    {
+        return $this->belongsTo(Pengumuman::class,'pengumuman_id','pengumuman_id');
+    }
+    function siswa()
+    {
+        return $this->belongsTo(Siswa::class,'siswa_id','siswa_id');
+    }
 }

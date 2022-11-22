@@ -13,4 +13,18 @@ class Pesan extends Model
     protected $primaryKey = "pesan_id";
     public $incrementing  = true;
     public $timestamps    = false;
+
+    function siswa()
+    {
+        return $this->belongsTo(Siswa::class,'siswa_id','siswa_id');
+    }
+    function kursus()
+    {
+        return $this->belongsTo(Kursus::class,'kursus_id','kursus_id');
+    }
+    function guru()
+    {
+        return $this->belongsTo(Guru::class,'guru_id','guru_id');
+    }
+
 }

@@ -13,4 +13,9 @@ class GuruHistoriWallet extends Model
     protected $primaryKey = "guru_histori_wallet_id";
     public $incrementing  = true;
     public $timestamps    = false;
+
+    function guru()
+    {
+        return $this->belongsTo(Guru::class,'guru_id','guru_id');
+    }
 }

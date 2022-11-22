@@ -13,4 +13,13 @@ class SiswaKursus extends Model
     protected $primaryKey = "siswa_kursus_id";
     public $incrementing  = true;
     public $timestamps    = true;
+
+    function kursus()
+    {
+       return $this->belongsTo(Kursus::class,'kursus_id','kursus_id');
+    }
+    function siswa()
+    {
+        return $this->belongsTo(Siswa::class,'siswa_id','siswa_id');
+    }
 }

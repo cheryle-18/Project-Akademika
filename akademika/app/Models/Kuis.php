@@ -24,6 +24,6 @@ class Kuis extends Model
     }
     function siswa()
     {
-        # code...
+        return $this->belongsToMany(Siswa::class,'siswa_kuis','kuis_id','siswa_id')->withPivot("siswa_kuis_id","total_benar","total_salah","nilai");
     }
 }

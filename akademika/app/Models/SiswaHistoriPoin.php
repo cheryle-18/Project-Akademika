@@ -13,4 +13,9 @@ class SiswaHistoriPoin extends Model
     protected $primaryKey = "siswa_histori_poin_id";
     public $incrementing  = true;
     public $timestamps    = false;
+
+    function siswa()
+    {
+        return $this->belongsTo(Siswa::class,'siswa_id','siswa_id');
+    }
 }
