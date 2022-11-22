@@ -24,7 +24,7 @@ class KuisSoal extends Model
     }
     function penjawab()
     {
-        return $this->belongsToMany(Siswa::class,"siswa_jawaban","kuis_soal_id","siswa_id");
+        return $this->belongsToMany(Siswa::class,"siswa_jawaban","kuis_soal_id","siswa_id")->withPivot("siswa_jawaban_id","kuis_pilihan_jawaban_id");
     }
-    
+
 }
