@@ -46,7 +46,7 @@ const Index = () => {
             <KursusDetail></KursusDetail>
           </Route>
           {/* siswa */}
-          <Route exact path="/siswa/pengumuman/detail">
+          <Route exact path="/siswa/kursus/pengumuman">
             <PengumumanKursus></PengumumanKursus>
           </Route>
           <Route exact path="/siswa/kursus/detail">

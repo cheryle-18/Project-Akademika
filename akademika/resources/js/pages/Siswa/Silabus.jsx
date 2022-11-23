@@ -1,4 +1,5 @@
 import React, { useState, useEffect, Fragment } from "react";
+import { useHistory } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faClock } from "@fortawesome/free-solid-svg-icons";
 import Nav from "./Navbar";
@@ -45,6 +46,24 @@ const Silabus = () => {
         setOpen(open === value ? 0 : value);
     };
 
+    //tabs
+    let history = useHistory()
+    const [title, setTitle] = useState("materi");
+    const classSelected = "float-left bg-white text-custom-blue py-1 px-4 rounded-sm mx-1 cursor-pointer";
+    const classOther = "float-left hover:bg-gray-200 hover:text-custom-blue py-1 px-4 rounded-sm mx-1 cursor-pointer";
+
+    const onClickMateri = () => {
+        setTitle("materi")
+        let  path = "/siswa/kursus/detail"
+        history.push(path)
+    };
+
+    const onClickPengumuman = () => {
+        setTitle("pengumuman")
+        let  path = "/siswa/kursus/pengumuman"
+        history.push(path)
+    };
+
     return(
         <div className="min-h-screen w-full overflow-x-hidden flex flex-col">
             <div className="px-4 sm:px-16 md:px-24 drawer-side bg-custom-blue overflow-y-auto flex-none">
@@ -52,7 +71,7 @@ const Silabus = () => {
             </div>
             <div className="banner">
                 <div
-                className="static h-96 w-full z-0 px-4 sm:px-16 md:px-20 py-20 flex"
+                className="static h-80 w-full z-0 px-4 sm:px-16 md:px-20 py-20 flex"
                 style={{
                     backgroundImage:
                         "linear-gradient(to bottom right, rgb(13,90,162), rgb(152,204,234))",
@@ -71,11 +90,40 @@ const Silabus = () => {
                     </div>
                 </div>
             </div>
-            <div className="tabs">
-
-            </div>
-            <div className="silabus p-16 m-0 w-full overflow-x-none bg-gray-100">
-                <div className="font-bold text-3xl text-blue-900 mb-5">
+            <div className="silabus px-4 sm:px-16 md:px-24 py-6 w-full overflow-x-none bg-gray-100">
+                <div className="tabs w-auto">
+                    {/* <Tabs value="materi">
+                        <TabsHeader className="bg-blue-900 opacity-100 p-2 text-white">
+                            <Tab key="materi" value="materi" className="px-3">
+                                Materi
+                            </Tab>
+                            <Tab key="pengumuman" value="pengumuman" className="px-3">
+                                Pengumuman
+                            </Tab>
+                        </TabsHeader>
+                    </Tabs> */}
+                    <div className="bg-custom-blue text-white inline-block text-base tracking-wide p-1 py-2 rounded-md mb-10 mt-4">
+                    <div
+                        className={
+                            (title == "materi" && classSelected) ||
+                            (title != "materi" && classOther)
+                        }
+                        onClick={onClickMateri}
+                    >
+                        Materi
+                    </div>
+                    <div
+                        className={
+                            (title == "pengumuman" && classSelected) ||
+                            (title != "pengumuman" && classOther)
+                        }
+                        onClick={onClickPengumuman}
+                    >
+                        Pengumuman
+                    </div>
+                </div>
+                </div>
+                <div className="font-bold text-3xl text-blue-900 mb-6">
                     Silabus Kursus
                 </div>
                 <Fragment>
