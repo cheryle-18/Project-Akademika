@@ -56,7 +56,6 @@ const Nav = () => {
                 console.log(data.user);
             } else {
                 setLoginFailed(true);
-                alert(data);
             }
         });
     };
