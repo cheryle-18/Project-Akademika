@@ -12,6 +12,8 @@ import SearchKursus from "./pages/Kursus/SearchKursus";
 import Home from './pages/Home';
 import KursusDetail from "./pages/Kursus/KursusDetail";
 import PengumumanKursus from "./pages/Siswa/PengumumanKursus";
+import Silabus from "./pages/Siswa/Silabus";
+import Kuis from "./pages/Siswa/Kuis";
 
 const Index = () => {
     return(
@@ -43,8 +45,15 @@ const Index = () => {
           <Route exact path="/kursus/detail">
             <KursusDetail></KursusDetail>
           </Route>
+          {/* siswa */}
           <Route exact path="/siswa/pengumuman/detail">
             <PengumumanKursus></PengumumanKursus>
+          </Route>
+          <Route exact path="/siswa/kursus/detail">
+            <Silabus></Silabus>
+          </Route>
+          <Route exact path="siswa/kursus/kuis">
+            <Kuis></Kuis>
           </Route>
         </Switch>
       </Router>
