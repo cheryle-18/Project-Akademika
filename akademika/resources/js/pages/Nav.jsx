@@ -8,7 +8,7 @@ import { Alert } from "@material-tailwind/react";
 
 const Nav = () => {
     const [isLoginFailed, setLoginFailed] = useState(false);
-    const [registerFailed, setRegisterFailed] = useState("success");
+    const [registerFailed, setRegisterFailed] = useState("awal");
     const [isDaftar, setDaftar] = useState(true);
     //login attribs
     const { http, setToken } = AuthUser();
@@ -28,14 +28,14 @@ const Nav = () => {
         setDaftar(true);
         document.body.style.overflow = "hidden";
         setLoginFailed(false);
-        setRegisterFailed("success");
+        setRegisterFailed("awal");
     };
 
     const changeDaftarFalse = () => {
         setDaftar(false);
         document.body.style.overflow = "hidden";
         setLoginFailed(false);
-        setRegisterFailed("success");
+        setRegisterFailed("awal");
     };
 
     const changeScroll = () => {
@@ -79,7 +79,7 @@ const Nav = () => {
 
     const cetakDaftar = (
         <div>
-            {registerFailed!="success" && (
+            {(registerFailed!="success" && registerFailed!="awal") && (
                 <Alert severity="error" className="bg-red-400 mb-6">
                     {registerFailed}
                 </Alert>
