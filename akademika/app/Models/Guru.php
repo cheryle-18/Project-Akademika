@@ -4,8 +4,10 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Foundation\Auth\User as Authenticatable;
+use Tymon\JWTAuth\Contracts\JWTSubject;
 
-class Guru extends Model
+class Guru extends Authenticatable implements JWTSubject
 {
     use HasFactory;
 
@@ -13,6 +15,45 @@ class Guru extends Model
     protected $primaryKey = "guru_id";
     public $incrementing  = true;
     public $timestamps    = true;
+    protected $appends = ["role_text"];
+
+    protected $fillable = [
+        'username',
+        'password',
+        'nama',
+        'email',
+        'telp',
+        'total_wallet',
+        'status',
+        'email_verified_at',
+        'created_at',
+        'updated_at'
+    ];
+
+    public function getRoleTextAttribute()
+    {
+        return "guru";
+    }
+
+         /**
+     * Get the identifier that will be stored in the subject claim of the JWT.
+     *
+     * @return mixed
+     */
+    public function getJWTIdentifier()
+    {
+        return $this->getKey();
+    }
+
+    /**
+     * Return a key value array, containing any custom claims to be added to the JWT.
+     *
+     * @return array
+     */
+    public function getJWTCustomClaims()
+    {
+        return [];
+    }
 
     function kursus()
     {

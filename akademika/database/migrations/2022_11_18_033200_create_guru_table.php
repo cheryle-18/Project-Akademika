@@ -21,7 +21,7 @@ return new class extends Migration
             $table->string('email',50)->unique();
             $table->string('telp',50)->nullable();
             $table->integer('total_wallet')->nullable();
-            $table->tinyInteger('status');
+            $table->tinyInteger('status')->default(1);
             $table->dateTime('email_verified_at')->nullable();
             $table->timestamps();
         });
