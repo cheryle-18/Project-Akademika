@@ -20,7 +20,7 @@ const PengumumanKursus = () => {
 
     const onClickMateri = () => {
         setTitle("materi");
-        let  path = "/siswa/kursus/detail"
+        let path = "/siswa/kursus/detail"
         history.push(path)
     };
 
