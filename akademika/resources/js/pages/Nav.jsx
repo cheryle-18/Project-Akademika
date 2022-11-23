@@ -75,9 +75,6 @@ const Nav = () => {
             let data = res.data;
             setRegisterFailed(data);
             console.log(data);
-            if(data=="success"){
-                setDaftar(false);
-            }
         });
     };
 
@@ -86,6 +83,11 @@ const Nav = () => {
             {registerFailed!="success" && (
                 <Alert severity="error" className="bg-red-400 mb-6">
                     {registerFailed}
+                </Alert>
+            )}
+            {registerFailed=="success" && (
+                <Alert severity="error" className="bg-green-400 mb-6">
+                    Berhasil Daftar!
                 </Alert>
             )}
             <h3 className="text-3xl font-bold text-custom-blue">
@@ -180,7 +182,7 @@ const Nav = () => {
         <div>
             {isLoginFailed && (
                 <Alert severity="error" className="bg-red-400 mb-6">
-                    Login Failed
+                    Gagal Masuk!
                 </Alert>
             )}
             <h3 className="text-3xl font-bold text-custom-blue">Masuk</h3>
