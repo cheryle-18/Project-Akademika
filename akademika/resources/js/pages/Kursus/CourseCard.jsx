@@ -1,12 +1,13 @@
 import React, { useState, useEffect } from "react";
 import clockLogo from "../../../images/Clock.png";
+import CardPic from "../../../images/card_pic.png";
 
 const CourseCard = (course) => {
     return(
         <div className="flex flex-col md:flex-row md:max-w-xl rounded-lg bg-white shadow-lg w-1/2 h-auto">
             <img
                 className=" w-full h-full md:h-auto object-cover md:w-48 rounded-t-lg md:rounded-none md:rounded-l-lg"
-                src="../card_pic.png"
+                src={CardPic}
                 alt=""
             />
             <div className="p-6 flex flex-col justify-start">

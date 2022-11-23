@@ -41,11 +41,11 @@ const SearchKursus = () => {
     ])
 
     return (
-        <div className="min-h-screen w-screen">
+        <div className="min-h-screen h-auto w-full bg-gray-100 flex flex-col">
             <div className="px-4 sm:px-16 md:px-24 drawer-side bg-custom-blue overflow-y-auto flex-none">
                 <Nav></Nav>
             </div>
-            <div className="bg-gray-100 overflow-auto h-77vh px-4 sm:px-14 md:px-20">
+            <div className="bg-gray-100 overflow-x-hidden h-auto px-4 sm:px-14 md:px-20">
                 <div className="bg-blue-100 px-7 py-7 w-full z-0 my-10 border-2 rounded-md">
                     <span className="text-2xl font-bold">Semua Kursus</span>
                 </div>
@@ -90,7 +90,7 @@ const SearchKursus = () => {
                         }
                     </div>
 
-                    <div class="flex justify-center mt-36">
+                    <div class="flex justify-center mt-24 mb-10">
                         <nav aria-label="Page navigation example">
                             <ul class="flex list-style-none">
                                 <li class="page-item">

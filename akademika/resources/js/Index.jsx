@@ -14,6 +14,9 @@ import KursusDetail from "./pages/Kursus/KursusDetail";
 import PengumumanKursus from "./pages/Siswa/PengumumanKursus";
 import Silabus from "./pages/Siswa/Silabus";
 import Kuis from "./pages/Siswa/Kuis";
+import KursusDiterbitkan from "./pages/Guru/KursusDiterbitkan";
+import KursusProses from "./pages/Guru/KursusProses";
+import TambahKursus from "./pages/Guru/TambahKursus";
 
 const Index = () => {
     return(
@@ -37,6 +40,16 @@ const Index = () => {
           </Route>
           <Route exact path="/admin/master/laporan">
             <LaporanAdmin></LaporanAdmin>
+          </Route>
+          {/* guru */}
+          <Route exact path="/guru/kursus/diterbitkan">
+            <KursusDiterbitkan></KursusDiterbitkan>
+          </Route>
+          <Route exact path="/guru/kursus/diproses">
+            <KursusProses></KursusProses>
+          </Route>
+          <Route exact path="/guru/kursus/tambah">
+            <TambahKursus></TambahKursus>
           </Route>
           {/* kursus */}
           <Route exact path="/kursus/search">
