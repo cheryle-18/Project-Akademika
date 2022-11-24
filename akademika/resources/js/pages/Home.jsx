@@ -356,7 +356,7 @@ const Home = () => {
                         <div className="pt-10 text-2xl">Belajar tanpa batas dengan Akademika</div>
                         <button
                             type="button"
-                            className="mt-6 py-2 px-4 bg-custom-blue hover:bg-white hover:text-custom-blue text-white transition ease-in duration-200 text-center text-base font-normal shadow-md rounded-lg w-full xl:w-32"
+                            className="mt-6 py-2 px-4 bg-custom-blue hover:bg-custom-light-blue hover:text-custom-blue text-white transition ease-in duration-200 text-center text-base font-normal shadow-md rounded-lg w-full xl:w-32"
                         >
                             Buat Akun
                         </button>
