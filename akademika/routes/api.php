@@ -32,7 +32,6 @@ Route::group(['middleware'=>'api'],function ()
     Route::post('me', [AuthController::class,'me']);
 
     Route::prefix('verify')->group(function () {
-        // Route::get('/', 'auth\VerificationController@index')->name('verification.notice');
         Route::get('{id}/{role}/{hash}', [VerificationController::class,'verify'])->name('verification.verify');
         Route::post('notification', [VerificationController::class,'send'])->name('verification.send');
     });

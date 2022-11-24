@@ -17,9 +17,6 @@ use Illuminate\Support\Facades\URL;
 class VerificationController extends Controller
 {
     //
-    public function index(){
-        // return view('auth.verify-email',['team' => getUserApi()]);
-    }
     public function send(){
         $user = getLoginedUser();
         $id = null;

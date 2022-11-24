@@ -17,6 +17,8 @@ import Kuis from "./pages/Siswa/Kuis";
 import KursusDiterbitkan from "./pages/Guru/KursusDiterbitkan";
 import KursusProses from "./pages/Guru/KursusProses";
 import TambahKursus from "./pages/Guru/TambahKursus";
+import ForgotPassword from "./pages/ForgotPassword";
+import ResetPassword from "./pages/ResetPassword";
 
 const Index = () => {
     return(
@@ -24,6 +26,12 @@ const Index = () => {
         <Switch>
           <Route exact path="/">
             <Home></Home>
+          </Route>
+          <Route exact path="/forgot-password">
+            <ForgotPassword />
+          </Route>
+          <Route exact path="/reset-password/:token">
+            <ResetPassword />
           </Route>
           {/* admin */}
           <Route exact path="/admin/home">
