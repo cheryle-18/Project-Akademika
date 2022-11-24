@@ -2,6 +2,7 @@ import React, { useState, useEffect, Fragment } from "react";
 import CourseCard from "../Kursus/CourseCard";
 import GuruNav from "./Navbar";
 import Tabs from "./Tabs";
+import { Input, Option, Select, Textarea } from "@material-tailwind/react";
 
 const ReportSiswa = () => {
     const [listSiswa, setListSiswa] = useState([
@@ -50,9 +51,10 @@ const ReportSiswa = () => {
                         <div className="flex justify-start w-44">
                             Nama Siswa
                         </div>
-                        <input
+                        <Input
                             type="text"
-                            placeholder=""
+                            name="nama"
+                            label="Nama"
                             className="input input-bordered w-full border-2 h-10 border-gray-500 rounded-md placeholder-gray-700"
                             onChange={(e) => setLoginPassword(e.target.value)}
                             required
@@ -60,9 +62,10 @@ const ReportSiswa = () => {
                     </div>
                     <div className="flex justify-start items-start mt-4">
                         <div className="flex justify-start w-44">Deskripsi</div>
-                        <textarea
+                        <Textarea
                             type="textarea"
-                            placeholder=""
+                            name="deskripsi"
+                            label="Deskripsi"
                             className="textarea textarea-bordered w-full border-2 h-32 border-gray-500 rounded-md placeholder-gray-700"
                             onChange={(e) => setLoginPassword(e.target.value)}
                             required
@@ -72,9 +75,10 @@ const ReportSiswa = () => {
                         <div className="flex justify-start w-44">
                             Link Bukti
                         </div>
-                        <input
+                        <Input
                             type="text"
-                            placeholder=""
+                            name="link"
+                            label="Link"
                             className="input input-bordered w-full border-2 h-10 border-gray-500 rounded-md placeholder-gray-700"
                             onChange={(e) => setLoginPassword(e.target.value)}
                             required
