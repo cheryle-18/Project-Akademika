@@ -20,6 +20,7 @@ import TambahKursus from "./pages/Guru/TambahKursus";
 import ReportSiswa from "./pages/Guru/ReportSiswa";
 import ForgotPassword from "./pages/ForgotPassword";
 import ResetPassword from "./pages/ResetPassword";
+import DetailKursus from "./pages/Guru/DetailKursus";
 
 const Index = () => {
     return (
@@ -59,6 +60,9 @@ const Index = () => {
                 </Route>
                 <Route exact path="/guru/kursus/tambah">
                     <TambahKursus></TambahKursus>
+                </Route>
+                <Route exact path="/guru/kursus/detail">
+                    <DetailKursus></DetailKursus>
                 </Route>
                 <Route exact path="/guru/report/siswa">
                     <ReportSiswa></ReportSiswa>
