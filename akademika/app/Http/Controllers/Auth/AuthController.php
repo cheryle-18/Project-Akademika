@@ -4,10 +4,15 @@ namespace App\Http\Controllers\Auth;
 
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\Controller;
+use App\Mail\VerifyEmail;
 use App\Models\Guru;
 use App\Models\Siswa;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\URL;
 use Illuminate\Support\Facades\Validator;
 
 class AuthController extends Controller
@@ -102,7 +107,6 @@ class AuthController extends Controller
             $message = array_values($messages)[0][0];
             return $message;
         }
-
     }
 
     public function register(Request $request)
@@ -113,13 +117,36 @@ class AuthController extends Controller
             $credentials['password'] = Hash::make(request('password'));
             //register
             if($credentials['role'] == 'siswa'){
-                //register as siswa
-                Siswa::create($credentials);
+
+                //register as siswa & mail
+                $siswa = Siswa::create($credentials);
+                $url =  URL::temporarySignedRoute(
+                    'verification.verify',
+                    Carbon::now()->addMinutes(Config::get('auth.verification.expire', 60)),
+                    [
+                        'id' => $siswa->siswa_id,
+                        'role'=> $siswa->role_text,
+                        'hash' => sha1($siswa->email),
+                    ]
+                );
+                Mail::to($siswa->email)->send(new VerifyEmail($siswa, $url));
             }
             else{
-                //register as guru
-                Guru::create($credentials);
+                //register as guru & mail
+                $guru = Guru::create($credentials);
+
+                $url =  URL::temporarySignedRoute(
+                    'verification.verify',
+                    Carbon::now()->addMinutes(Config::get('auth.verification.expire', 60)),
+                    [
+                        'id' => $guru->guru_id,
+                        'role'=> $guru->role_text,
+                        'hash' => sha1($guru->email),
+                    ]
+                );
+                Mail::to($guru->email)->send(new VerifyEmail($guru, $url));
             }
+
             return response()->json('success');
         }
         else{

@@ -1,8 +1,10 @@
 <?php
 
 use App\Http\Controllers\Auth\AuthController;
+use App\Http\Controllers\Auth\VerificationController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use Mockery\VerificationDirector;
 
 /*
 |--------------------------------------------------------------------------
@@ -29,5 +31,10 @@ Route::group(['middleware'=>'api'],function ()
     Route::post('refresh', [AuthController::class,'refresh']);
     Route::post('me', [AuthController::class,'me']);
 
+    Route::prefix('verify')->group(function () {
+        // Route::get('/', 'auth\VerificationController@index')->name('verification.notice');
+        Route::get('{id}/{role}/{hash}', [VerificationController::class,'verify'])->name('verification.verify');
+        Route::post('notification', [VerificationController::class,'send'])->name('verification.send');
+    });
 });
 
