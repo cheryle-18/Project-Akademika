@@ -9,7 +9,7 @@ import { Alert, Input, Radio } from "@material-tailwind/react";
 const Nav = () => {
     const [isLoginFailed, setLoginFailed] = useState(false);
     const [registerFailed, setRegisterFailed] = useState("awal");
-    const [isDaftar, setDaftar] = useState(true);
+    const [openNow, setOpenNow] = useState("daftar");
     //login attribs
     const { http, setToken } = AuthUser();
     const [loginEmail, setLoginEmail] = useState();
@@ -24,15 +24,33 @@ const Nav = () => {
     const [registerConfirmPassword, setRegisterConfirmPassword] = useState();
     const [registerRole, setRegisterRole] = useState();
 
-    const changeDaftarTrue = () => {
-        setDaftar(true);
+    //forgot password
+    //   const { http } = AuthUser();
+    const [clicked, setClicked] = useState(false);
+    const [email, setEmail] = useState("");
+    function onForgotPassword(e) {
+        setClicked(true);
+        http.post("forgot-password", { email: email }).then((res) => {
+            console.log(res);
+        });
+    }
+
+    const changeOpenNowDaftar = () => {
+        setOpenNow("daftar");
         document.body.style.overflow = "hidden";
         setLoginFailed(false);
         setRegisterFailed("awal");
     };
 
-    const changeDaftarFalse = () => {
-        setDaftar(false);
+    const changeOpenNowMasuk = () => {
+        setOpenNow("masuk");
+        document.body.style.overflow = "hidden";
+        setLoginFailed(false);
+        setRegisterFailed("awal");
+    };
+
+    const changeOpenNowForgotPassword = () => {
+        setOpenNow("forgot-password");
         document.body.style.overflow = "hidden";
         setLoginFailed(false);
         setRegisterFailed("awal");
@@ -79,12 +97,12 @@ const Nav = () => {
 
     const cetakDaftar = (
         <div>
-            {(registerFailed!="success" && registerFailed!="awal") && (
+            {registerFailed != "success" && registerFailed != "awal" && (
                 <Alert severity="error" className="bg-red-400 mb-6">
                     {registerFailed}
                 </Alert>
             )}
-            {registerFailed=="success" && (
+            {registerFailed == "success" && (
                 <Alert severity="error" className="bg-green-400 mb-6">
                     Berhasil Daftar!
                 </Alert>
@@ -142,12 +160,7 @@ const Nav = () => {
             </p>
             <div className="pt-2 flex">
                 <span className="mr-2 my-auto">Daftar Sebagai:</span>
-                <Radio
-                    id="guru"
-                    name="type"
-                    value="guru"
-                    label="Guru"
-                />
+                <Radio id="guru" name="type" value="guru" label="Guru" />
                 <Radio
                     type="radio"
                     id="siswa"
@@ -165,7 +178,7 @@ const Nav = () => {
             <div className="w-full mt-4 flex justify-center text-custom-blue">
                 <div>Sudah punya akun?&nbsp;</div>
                 <div
-                    onClick={changeDaftarFalse}
+                    onClick={changeOpenNowMasuk}
                     className="font-semibold underline cursor-pointer"
                 >
                     Masuk Sekarang
@@ -200,7 +213,12 @@ const Nav = () => {
                 />
             </p>
             <div className="w-full">
-                <div className="text-right text-custom-blue">Lupa Password</div>
+                <div
+                    className="text-right text-custom-blue cursor-pointer"
+                    onClick={changeOpenNowForgotPassword}
+                >
+                    Lupa Password
+                </div>
             </div>
             <div
                 className="w-full py-2 mt-4 bg-custom-blue text-white text-center rounded-md cursor-pointer"
@@ -211,10 +229,41 @@ const Nav = () => {
             <div className="w-full mt-4 flex justify-center text-custom-blue">
                 <div>Belum punya akun?&nbsp;</div>
                 <div
-                    onClick={changeDaftarTrue}
+                    onClick={changeOpenNowDaftar}
                     className="font-semibold underline cursor-pointer"
                 >
                     Daftar Sekarang
+                </div>
+            </div>
+        </div>
+    );
+    const cetakForgotPassword = (
+        <div>
+            <h3 className="text-3xl font-bold text-custom-blue">
+                Lupa Password?
+            </h3>
+            <p className="py-4">
+                <Input
+                    type="text"
+                    label="Email"
+                    className="input input-bordered w-full border-2 border-gray-500 rounded-md placeholder-gray-700"
+                    onChange={(e) => setEmail(e.target.value)}
+                    required
+                />
+            </p>
+            <div
+                className="w-full py-2 mt-4 bg-custom-blue text-white text-center rounded-md cursor-pointer"
+                onClick={onForgotPassword}
+            >
+                Reset Password
+            </div>
+            <div className="w-full mt-4 flex justify-center text-custom-blue">
+                <div>Sudah punya akun?&nbsp;</div>
+                <div
+                    onClick={changeOpenNowMasuk}
+                    className="font-semibold underline cursor-pointer"
+                >
+                    Masuk Sekarang
                 </div>
             </div>
         </div>
@@ -229,14 +278,14 @@ const Nav = () => {
                     </div>
                     <label
                         htmlFor="masukDaftar"
-                        onClick={changeDaftarTrue}
+                        onClick={changeOpenNowDaftar}
                         className="cursor-pointer border-2 border-white text-custom-blue py-1 px-8 rounded-md hover:bg-custom-blue hover:text-white bg-white float-right"
                     >
                         Daftar
                     </label>
                     <label
                         htmlFor="masukDaftar"
-                        onClick={changeDaftarFalse}
+                        onClick={changeOpenNowMasuk}
                         className="cursor-pointer border-2 border-white bg-transparent text-white py-1 px-8 rounded-md hover:bg-custom-blue hover:text-white bg-white float-right mr-5"
                     >
                         Masuk
@@ -256,7 +305,7 @@ const Nav = () => {
                     </div>
                     <label
                         htmlFor="masukDaftar"
-                        onClick={changeDaftarFalse}
+                        onClick={changeOpenNowMasuk}
                         className="flex justify-center align-center"
                     >
                         <div className="cursor-pointer border-2 border-white bg-transparent text-white py-1 px-8 rounded-md hover:bg-custom-blue hover:text-white bg-white w-full sm:w-96 text-center mt-2">
@@ -265,7 +314,7 @@ const Nav = () => {
                     </label>
                     <label
                         htmlFor="masukDaftar"
-                        onClick={changeDaftarTrue}
+                        onClick={changeOpenNowDaftar}
                         className="flex justify-center align-center"
                     >
                         <div className="cursor-pointer border-2 border-white text-custom-blue py-1 px-8 rounded-md hover:bg-custom-blue hover:text-white bg-white w-full sm:w-96 text-center mt-2">
@@ -290,8 +339,9 @@ const Nav = () => {
                         >
                             ✕
                         </label>
-                        {isDaftar && cetakDaftar}
-                        {!isDaftar && cetakMasuk}
+                        {openNow == "daftar" && cetakDaftar}
+                        {openNow == "masuk" && cetakMasuk}
+                        {openNow == "forgot-password" && cetakForgotPassword}
                     </div>
                 </div>
             </div>
