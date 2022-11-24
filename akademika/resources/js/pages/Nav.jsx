@@ -4,7 +4,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCoffee } from "@fortawesome/free-solid-svg-icons";
 import { Link } from "react-router-dom";
 import AuthUser from "../components/AuthUser";
-import { Alert } from "@material-tailwind/react";
+import { Alert, Input, Radio } from "@material-tailwind/react";
 
 const Nav = () => {
     const [isLoginFailed, setLoginFailed] = useState(false);
@@ -93,72 +93,68 @@ const Nav = () => {
                 Daftar Akademika
             </h3>
             <p className="py-2">
-                <input
+                <Input
                     type="text"
-                    placeholder="Nama Lengkap"
+                    label="Nama Lengkap"
                     className="input input-bordered w-full border-2 border-gray-500 rounded-md placeholder-gray-700"
                     onChange={(e) => setRegisterNama(e.target.value)}
                 />
             </p>
             <p className="py-2">
-                <input
+                <Input
                     type="text"
-                    placeholder="Username"
+                    label="Username"
                     className="input input-bordered w-full border-2 border-gray-500 rounded-md placeholder-gray-700"
                     onChange={(e) => setRegisterUsername(e.target.value)}
                 />
             </p>
             <p className="py-2">
-                <input
+                <Input
                     type="text"
-                    placeholder="Email"
+                    label="Email"
                     className="input input-bordered w-full border-2 border-gray-500 rounded-md placeholder-gray-700"
                     onChange={(e) => setRegisterEmail(e.target.value)}
                 />
             </p>
             <p className="py-2">
-                <input
+                <Input
                     type="text"
-                    placeholder="Telp"
+                    label="Telp"
                     className="input input-bordered w-full border-2 border-gray-500 rounded-md placeholder-gray-700"
                     onChange={(e) => setRegisterTelp(e.target.value)}
                 />
             </p>
             <p className="py-2">
-                <input
+                <Input
                     type="text"
-                    placeholder="Password"
+                    label="Password"
                     className="input input-bordered w-full border-2 border-gray-500 rounded-md placeholder-gray-700"
                     onChange={(e) => setRegisterPassword(e.target.value)}
                 />
             </p>
             <p className="py-2">
-                <input
+                <Input
                     type="text"
-                    placeholder="Konfirmasi Password"
+                    label="Konfirmasi Password"
                     className="input input-bordered w-full border-2 border-gray-500 rounded-md placeholder-gray-700"
                     onChange={(e) => setRegisterConfirmPassword(e.target.value)}
                 />
             </p>
-            <div className="pt-2">
-                Daftar Sebagai:&nbsp;&nbsp;&nbsp;
-                <input
-                    type="radio"
+            <div className="pt-2 flex">
+                <span className="mr-2 my-auto">Daftar Sebagai:</span>
+                <Radio
                     id="guru"
-                    name="fav_language"
+                    name="type"
                     value="guru"
-                    onChange={(e) => setRegisterRole(e.target.value)}
+                    label="Guru"
                 />
-                <label htmlFor="guru">&nbsp;Guru</label>
-                &nbsp;&nbsp;&nbsp;&nbsp;
-                <input
+                <Radio
                     type="radio"
                     id="siswa"
-                    name="fav_language"
+                    name="type"
                     value="siswa"
-                    onChange={(e) => setRegisterRole(e.target.value)}
+                    label="Siswa"
                 />
-                <label htmlFor="siswa">&nbsp;Siswa</label>
             </div>
             <div
                 className="w-full py-2 mt-4 bg-custom-blue text-white text-center rounded-md cursor-pointer"
@@ -186,18 +182,18 @@ const Nav = () => {
             )}
             <h3 className="text-3xl font-bold text-custom-blue">Masuk</h3>
             <p className="py-4">
-                <input
+                <Input
                     type="text"
-                    placeholder="Email"
+                    label="Email"
                     className="input input-bordered w-full border-2 border-gray-500 rounded-md placeholder-gray-700"
                     onChange={(e) => setLoginEmail(e.target.value)}
                     required
                 />
             </p>
             <p className="py-2">
-                <input
+                <Input
                     type="text"
-                    placeholder="Password"
+                    label="Password"
                     className="input input-bordered w-full border-2 border-gray-500 rounded-md placeholder-gray-700"
                     onChange={(e) => setLoginPassword(e.target.value)}
                     required
