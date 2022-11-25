@@ -66,13 +66,13 @@ const KursusAdmin = () => {
 
     const cetakMaster = masters.map((master, index) => (
         <tr className={classBorder}>
-            <td>{index + 1}</td>
-            <td>{master.id}</td>
-            <td>{master.nama}</td>
-            <td>{master.kategori}</td>
-            <td>{master.guru}</td>
-            <td className="text-green-700">{master.status}</td>
-            <td>
+            <td className="text-base">{index + 1}</td>
+            <td className="text-base">{master.id}</td>
+            <td className="text-base">{master.nama}</td>
+            <td className="text-base">{master.kategori}</td>
+            <td className="text-base">{master.guru}</td>
+            <td className="text-green-700 text-base">{master.status}</td>
+            <td className="text-base">
                 <button
                     type="button"
                     className="py-2 px-4  bg-custom-blue hover:bg-blue-900 text-white w-full transition ease-in duration-200 text-center text-base font-normal shadow-md rounded-lg w-20"
@@ -85,12 +85,12 @@ const KursusAdmin = () => {
 
     const cetakPengajuan = pengajuans.map((pengajuan, index) => (
         <tr className={classBorder}>
-            <td>{index + 1}</td>
-            <td>{pengajuan.id}</td>
-            <td>{pengajuan.nama}</td>
-            <td>{pengajuan.kategori}</td>
-            <td>{pengajuan.guru}</td>
-            <td className="text-green-700">{pengajuan.status}</td>
+            <td className="text-base">{index + 1}</td>
+            <td className="text-base">{pengajuan.id}</td>
+            <td className="text-base">{pengajuan.nama}</td>
+            <td className="text-base">{pengajuan.kategori}</td>
+            <td className="text-base">{pengajuan.guru}</td>
+            <td className="text-green-700 text-base">{pengajuan.status}</td>
             <td>
                 <button
                     type="button"
@@ -127,17 +127,17 @@ const KursusAdmin = () => {
                         </div>
                         <div className="clear-both"></div>
                     </div>
-                    <div className="bg-white overflow-y-auto h-77vh p-6 mb-6 rounded-md drop-shadow-lg">
+                    <div className="bg-white overflow-y-auto h-77vh p-4 mb-6 rounded-md drop-shadow-lg">
                         <table className="table table-compact w-full text-black overflow-y-auto whitespace-nowrap">
                             <thead>
                                 <tr>
-                                    <th className="text-center">NO</th>
-                                    <th className="text-center">ID</th>
-                                    <th className="text-center">NAMA KURSUS</th>
-                                    <th className="text-center">KATEGORI</th>
-                                    <th className="text-center">GURU</th>
-                                    <th className="text-center">STATUS</th>
-                                    <th className="text-center">ACTION</th>
+                                    <th className="bg-white text-center text-base">NO</th>
+                                    <th className="bg-white text-center text-base">ID</th>
+                                    <th className="bg-white text-center text-base">NAMA KURSUS</th>
+                                    <th className="bg-white text-center text-base">KATEGORI</th>
+                                    <th className="bg-white text-center text-base">GURU</th>
+                                    <th className="bg-white text-center text-base">STATUS</th>
+                                    <th className="bg-white text-center text-base">ACTION</th>
                                 </tr>
                             </thead>
                             <tbody>

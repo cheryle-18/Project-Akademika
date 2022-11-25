@@ -37,11 +37,11 @@ const SiswaAdmin = () => {
 
     const cetakSiswa = siswas.map((siswa, index) => (
         <tr className={classBorder}>
-            <td className="whitespace-pre-wrap">{index + 1}</td>
-            <td className="whitespace-pre-wrap">{siswa.id}</td>
-            <td className="whitespace-pre-wrap">{siswa.nama}</td>
-            <td className="whitespace-pre-wrap">{siswa.email}</td>
-            <td className="whitespace-pre-wrap">{siswa.status}</td>
+            <td className="whitespace-pre-wrap text-base">{index + 1}</td>
+            <td className="whitespace-pre-wrap text-base">{siswa.id}</td>
+            <td className="whitespace-pre-wrap text-base">{siswa.nama}</td>
+            <td className="whitespace-pre-wrap text-base">{siswa.email}</td>
+            <td className="whitespace-pre-wrap text-base">{siswa.status}</td>
             <td>
                 <button
                     type="button"
@@ -57,16 +57,16 @@ const SiswaAdmin = () => {
         <div className="bg-gray-200 flex">
             <Sidebar now="siswa">
                 <div className="text-2xl p-14 pb-2">
-                    <div className="bg-white overflow-y-auto h-77vh p-6 mb-6 rounded-md drop-shadow-lg">
+                    <div className="bg-white overflow-y-auto h-77vh p-4 mb-6 rounded-md drop-shadow-lg">
                         <table className="table table-compact w-full text-black overflow-y-auto table-auto">
                             <thead>
                                 <tr>
-                                    <th className="text-center">NO</th>
-                                    <th className="text-center">ID</th>
-                                    <th className="text-center">NAMA</th>
-                                    <th className="text-center">EMAIL</th>
-                                    <th className="text-center">STATUS</th>
-                                    <th className="text-center">ACTION</th>
+                                    <th className="bg-white text-center text-base">NO</th>
+                                    <th className="bg-white text-center text-base">ID</th>
+                                    <th className="bg-white text-center text-base">NAMA</th>
+                                    <th className="bg-white text-center text-base">EMAIL</th>
+                                    <th className="bg-white text-center text-base">STATUS</th>
+                                    <th className="bg-white text-center text-base">ACTION</th>
                                 </tr>
                             </thead>
                             <tbody>{cetakSiswa}</tbody>

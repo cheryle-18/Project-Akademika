@@ -3,7 +3,7 @@ import CourseCard from "../Kursus/CourseCard";
 import GuruNav from "./Navbar"
 import Tabs from "./Tabs";
 
-const KursusDiterbitkan = () => {
+const KursusDiterbitkan = (title) => {
 
     return(
         <div className="min-h-screen w-full overflow-x-hidden flex flex-col bg-gray-100">

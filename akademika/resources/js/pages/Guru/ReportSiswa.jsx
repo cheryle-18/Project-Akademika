@@ -23,11 +23,11 @@ const ReportSiswa = () => {
     const classBorder = "text-center border border-b-gray-600 border-x-0";
 
     const cetakSiswa = listSiswa.map((siswa, index) => (
-        <tr className={classBorder}>
-            <td className="whitespace-pre-wrap text-start">{index + 1}</td>
-            <td className="whitespace-pre-wrap text-start">{siswa.nama}</td>
-            <td className="whitespace-pre-wrap text-start">{siswa.deskripsi}</td>
-            <td className="whitespace-pre-wrap text-start">
+        <tr>
+            <td className="whitespace-pre-wrap text-center text-base">{index + 1}</td>
+            <td className="whitespace-pre-wrap text-start text-base">{siswa.nama}</td>
+            <td className="whitespace-pre-wrap text-start text-base">{siswa.deskripsi}</td>
+            <td className="whitespace-pre-wrap text-start text-base">
                 {siswa.status == 1 && "Disetujui"}
                 {siswa.status == 0 && "Diproses"}
             </td>
@@ -110,10 +110,10 @@ const ReportSiswa = () => {
                     <table className="table table-compact w-full text-black overflow-y-auto table-auto bg-white">
                         <thead>
                             <tr>
-                                <th style={{width:"5%"}} className="text-left">NO</th>
-                                <th style={{width:"25%"}} className="text-left">NAMA SISWA</th>
-                                <th style={{width:"62%"}} className="text-left">DESKRIPSI</th>
-                                <th style={{width:"8%"}} className="text-left">STATUS</th>
+                                <th style={{width:"3%"}} className="bg-white text-left text-base">NO</th>
+                                <th style={{width:"27%"}} className="bg-white text-left text-base">NAMA SISWA</th>
+                                <th style={{width:"62%"}} className="bg-white text-left text-base">DESKRIPSI</th>
+                                <th style={{width:"8%"}} className="bg-white text-left text-base">STATUS</th>
                             </tr>
                         </thead>
                         <tbody>{cetakSiswa}</tbody>

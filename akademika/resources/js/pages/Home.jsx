@@ -16,6 +16,49 @@ import clockLogo from "../../images/Clock.png";
 const Home = () => {
     const classItem = "";
 
+    const [links, setLink] = useState([
+        {
+            link: "/admin/home",
+        },
+        {
+            link: "/guru/kursus/diterbitkan",
+        },
+        {
+            link: "/guru/kursus/diproses",
+        },
+        {
+            link: "/guru/kursus/tambah",
+        },
+        {
+            link: "/guru/kursus/detail",
+        },
+        {
+            link: "/guru/report/siswa",
+        },
+        {
+            link: "/kursus/search",
+        },
+        {
+            link: "/kursus/detail",
+        },
+        {
+            link: "/siswa/kursus/pengumuman",
+        },
+        {
+            link: "/siswa/kursus/detail",
+        },
+        {
+            link: "/siswa/kursus/kuis",
+        },
+    ]);
+
+    const cetakLink = links.map((link, index) => (
+        <div>
+            <Link to={link.link}>{link.link}</Link>
+            <div className="clear-both"></div>
+        </div>
+    ));
+
     const [jelajahs, setGuru] = useState([
         {
             title: "Teknologi Informasi",
@@ -110,8 +153,10 @@ const Home = () => {
                         "linear-gradient(to bottom right, rgb(13,90,162), rgb(152,204,234))",
                 }}
             >
+                <div className="fixed left-0 top-0 z-50 font-extrabold bg-white">
+                    {/* {cetakLink} */}
+                </div>
                 <Nav></Nav>
-                <Link to="/admin/home">admin</Link>
                 <div></div>
 
                 <div className="grid grid-cols-12 mt-0 md:mt-10 lg:mt-20">
@@ -353,7 +398,9 @@ const Home = () => {
                         >
                             Tunggu apa lagi?
                         </div>
-                        <div className="pt-10 text-2xl">Belajar tanpa batas dengan Akademika</div>
+                        <div className="pt-10 text-2xl">
+                            Belajar tanpa batas dengan Akademika
+                        </div>
                         <button
                             type="button"
                             className="mt-6 py-2 px-4 bg-custom-blue hover:bg-custom-light-blue hover:text-custom-blue text-white transition ease-in duration-200 text-center text-base font-normal shadow-md rounded-lg w-full xl:w-32"

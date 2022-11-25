@@ -81,7 +81,7 @@ const Index = () => {
                 <Route exact path="/siswa/kursus/detail">
                     <Silabus></Silabus>
                 </Route>
-                <Route exact path="siswa/kursus/kuis">
+                <Route exact path="/siswa/kursus/kuis">
                     <Kuis></Kuis>
                 </Route>
             </Switch>
