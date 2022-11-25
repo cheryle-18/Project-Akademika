@@ -6,11 +6,12 @@ use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Notifications\Notifiable;
 use Tymon\JWTAuth\Contracts\JWTSubject;
 
 class Siswa extends Authenticatable implements JWTSubject,MustVerifyEmail
 {
-    use HasFactory;
+    use HasFactory,Notifiable;
 
     protected $table      = "siswa";
     protected $primaryKey = "siswa_id";

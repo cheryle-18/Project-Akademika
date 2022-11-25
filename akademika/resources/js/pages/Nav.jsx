@@ -27,10 +27,12 @@ const Nav = () => {
     //forgot password
     //   const { http } = AuthUser();
     const [clicked, setClicked] = useState(false);
-    const [email, setEmail] = useState("");
+    const [forgotEmail, setForgotEmail] = useState("");
+
     function onForgotPassword(e) {
         setClicked(true);
-        http.post("forgot-password", { email: email }).then((res) => {
+        http.post("forgot-password", { email: forgotEmail }).then((res) => {
+            //pass forgot password request to laravel api
             console.log(res);
         });
     }
@@ -167,6 +169,7 @@ const Nav = () => {
                     name="type"
                     value="siswa"
                     label="Siswa"
+                    onChange={(e) => setRegisterRole(e.target.value)}
                 />
             </div>
             <div
@@ -247,7 +250,7 @@ const Nav = () => {
                     type="text"
                     label="Email"
                     className="input input-bordered w-full border-2 border-gray-500 rounded-md placeholder-gray-700"
-                    onChange={(e) => setEmail(e.target.value)}
+                    onChange={(e) => setForgotEmail(e.target.value)}
                     required
                 />
             </p>
