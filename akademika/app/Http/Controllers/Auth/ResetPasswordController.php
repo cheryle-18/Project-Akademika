@@ -24,21 +24,22 @@ class ResetPasswordController extends Controller
 
         if(!$validator->fails()) {
             $tokenData = DB::table('password_resets')
-                ->where('token', $json->token)->first();
+                ->where('token',$json->token)->first();
             if (!$tokenData)
             {
-                return false;
+                return "gagal fetch token data";
             }
             else{
                 $user = null;
                 if($tokenData->role == "siswa"){
-                    $user = Guru::where('email',$tokenData->email)->first();
-                }
-                else{
                     $user = Siswa::where('email',$tokenData->email)->first();
                 }
+                else{
+                    $user = Guru::where('email',$tokenData->email)->first();
+                }
 
-                if (!$user) return redirect()->back()->with(['error' => 'Email not found']);
+
+                if (!$user) return "email not found";
 
                 //Hash and update the new password
                 $user->password = Hash::make($request->password);
@@ -49,7 +50,7 @@ class ResetPasswordController extends Controller
                     ->delete();
 
                 //Send Email Reset Success Email
-                return true;
+                return "berhasil";
             }
         }
         else {
