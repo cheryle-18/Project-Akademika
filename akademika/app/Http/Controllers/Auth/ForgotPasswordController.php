@@ -60,7 +60,7 @@ class ForgotPasswordController extends Controller
             $user = Siswa::where('email',$email)->select('email')->first();
         }
         //Generate, the password reset link. The token generated is embedded in the link
-        $url = env('FRONT_URL') . '/reset-password/' . $token . '?email=' . urlencode($user->email);
+        $url = env('APP_URL') . '/reset-password/' . $token . '?email=' . urlencode($user->email);
         try {
             Mail::to($user->email)->send(new ForgotPasswordMail($user, $url));
             return true;

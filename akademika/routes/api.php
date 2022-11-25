@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Auth\AuthController;
 use App\Http\Controllers\Auth\ForgotPasswordController;
+use App\Http\Controllers\Auth\ResetPasswordController;
 use App\Http\Controllers\Auth\VerificationController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -38,5 +39,6 @@ Route::group(['middleware'=>'api'],function ()
     });
 
     Route::post('/forgot-password', [ForgotPasswordController::class, 'sendForgotPassword']);
+    Route::post('/reset-password', [ResetPasswordController::class,'updatePassword']);
 });
 
