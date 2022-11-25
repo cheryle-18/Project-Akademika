@@ -71,9 +71,9 @@ const ResetPassword = () => {
                 className="w-full py-2 mt-4 bg-custom-blue text-white text-center rounded-md cursor-pointer"
                 onClick={handleSubmit}
             >
-                Masuk
+                Reset Password
             </div>
-            <div className="w-full mt-4 flex justify-center text-custom-blue">
+            <div className="w-full flex justify-center text-custom-blue">
                 <Link to="/">
                     <div className="font-semibold underline cursor-pointer">
                         Homepage Akademika
@@ -84,7 +84,7 @@ const ResetPassword = () => {
     );
 
     return (
-        <div className="relative" onLoad={onLoad}>
+        <div className="relative w-full h-full flex justify-center items-center" onLoad={onLoad}>
             {/* <Nav />
             <div className="ilustrasi w-1/2"></div>
             <div className="forgotPassword w-1/2 float-right p-10 mt-6">
@@ -121,77 +121,14 @@ const ResetPassword = () => {
             </div> */}
 
             <div
-                className="static min-h-screen w-full z-0 px-4 sm:px-16 md:px-24"
+                className="static min-h-screen w-full z-0 px-4 sm:px-16 md:px-24 flex justify-center items-center"
                 style={{
                     backgroundImage:
                         "linear-gradient(to bottom right, rgb(13,90,162), rgb(152,204,234))",
                 }}
             >
-                {/* hidden */}
-                <div className="hidden">
-                    <div className="fixed left-0 top-0 z-50 font-extrabold bg-white">
-                        {/* {cetakLink} */}
-                    </div>
-                    <Nav></Nav>
-
-                    <div className="grid grid-cols-12 mt-0 md:mt-10 lg:mt-20">
-                        <div className="col-span-12 text-5xl text-center lg:text-start lg:text-7xl xl:text-8xl lg:col-span-7">
-                            <div className="relative">
-                                <div
-                                    className="text-white font-semibold"
-                                    style={{
-                                        letterSpacing: "-1px",
-                                        fontFamily: "initial",
-                                    }}
-                                >
-                                    Belajar tanpa batas
-                                </div>
-                                <button
-                                    type="button"
-                                    className="my-10 lg:my-0 py-2 px-4  bg-white hover:bg-blue-900 hover:text-white text-custom-blue transition ease-in duration-200 text-center text-base font-normal shadow-md rounded-lg w-full sm:w-96 lg:w-52"
-                                >
-                                    Daftar Sekarang
-                                </button>
-                            </div>
-                        </div>
-                        <div className="col-span-12 px-10 lg:px-0 lg:col-span-5 flex items-center justify-center">
-                            <img
-                                className="object-cover"
-                                style={{ width: "500px" }}
-                                src={Logo}
-                                alt=""
-                            />
-                        </div>
-                    </div>
-                </div>
-                {/* hidden */}
-            </div>
-
-            <div className="hidden">
-                <label
-                    id="reset"
-                    htmlFor="masukReset"
-                    className="cursor-pointer border-2 border-white text-custom-blue py-1 px-8 rounded-md hover:bg-custom-blue hover:text-white bg-white float-right"
-                >
-                    Daftar
-                </label>
-            </div>
-
-            <div className="z-10">
-                <input
-                    type="checkbox"
-                    id="masukReset"
-                    className="modal-toggle"
-                />
-                <div className="modal">
-                    <div className="modal-box relative py-10 px-8">
-                        <Link to="/">
-                            <div className="btn btn-sm absolute bg-transparent text-gray-500 border border-none hover:bg-transparent hover:border-none right-2 top-2 font-bold text-xl cursor-pointer">
-                                ✕
-                            </div>
-                        </Link>
-                        {cetakReset}
-                    </div>
+                <div className="w-400px min-h-200px bg-white rounded-lg p-8">
+                    {cetakReset}
                 </div>
             </div>
         </div>
