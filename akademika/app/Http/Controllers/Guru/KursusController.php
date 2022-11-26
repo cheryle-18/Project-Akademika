@@ -3,7 +3,9 @@
 namespace App\Http\Controllers\Guru;
 
 use App\Http\Controllers\Controller;
+use App\Models\Guru;
 use App\Models\Kursus;
+use App\Models\Siswa;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 
@@ -45,4 +47,14 @@ class KursusController extends Controller
             return $message;
         }
     }
+
+    function getPesan(Request $request)
+    {
+        $guru = Guru::find($request->guru_id);
+        $pesan = $guru->pesan()->where('pesan.kursus_id',$request->kursus_id)->orderBy('pesan.tanggal','ASC')->get();
+        return response()->json([
+            "pesan" => $pesan
+        ]);
+    }
+    
 }

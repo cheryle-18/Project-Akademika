@@ -23,7 +23,8 @@ class PesanFactory extends Factory
             'siswa_id' => $this->faker->randomElement(Siswa::all()->pluck('siswa_id')),
             'kursus_id' => $this->faker->randomElement(Kursus::all()->pluck('kursus_id')),
             'guru_id' => $this->faker->randomElement(Guru::all()->pluck('guru_id')),
-            'isi' => $this->faker->sentences(20,true),
+            'pengirim_role' => $this->faker->randomElement(["siswa","guru"]),
+            'isi' => $this->faker->sentences(1,true),
             'tanggal' => $this->faker->dateTimeBetween("-10 days","now")
         ];
     }
