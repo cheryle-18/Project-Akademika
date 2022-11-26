@@ -64,7 +64,7 @@ class Guru extends Authenticatable implements JWTSubject,MustVerifyEmail
 
     function pesan()
     {
-        return $this->belongsToMany(Siswa::class,'pesan','guru_id','siswa_id')->withPivot("pesan_id","kursus_id","isi","tanggal");
+        return $this->belongsToMany(Siswa::class,'pesan','guru_id','siswa_id')->withPivot("pesan_id","kursus_id","isi","tanggal","pengirim_role");
     }
 
     function histori_wallet()

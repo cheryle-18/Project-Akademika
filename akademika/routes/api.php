@@ -5,6 +5,7 @@ use App\Http\Controllers\Auth\ForgotPasswordController;
 use App\Http\Controllers\Auth\ResetPasswordController;
 use App\Http\Controllers\Auth\VerificationController;
 use App\Http\Controllers\Guru\KursusController;
+use App\Http\Controllers\Siswa\KursusController as SiswaKursusController;
 use App\Http\Controllers\UtilityController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -51,7 +52,17 @@ Route::group(['middleware'=>'api'],function ()
         Route::prefix('kursus')->group(function ()
         {
             Route::post('tambah',[KursusController::class,'tambahKursus']);
+            Route::post('getPesan',[KursusController::class,'getPesan']);
         });
     });
+
+    Route::prefix('siswa')->group(function () {
+        Route::prefix('kursus')->group(function ()
+        {
+            Route::post('getPesan',[SiswaKursusController::class,'getPesan']);
+            Route::post('kirimPesan',[SiswaKursusController::class,'kirimPesan']);
+        });
+    });
+
 });
 

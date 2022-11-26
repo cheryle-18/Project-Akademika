@@ -3,20 +3,12 @@ import { BrowserRouter as Router, Route } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import * as faIcon from "@fortawesome/free-solid-svg-icons";
 import { Link } from "react-router-dom";
-
+import AuthUser from "../../components/AuthUser";
 const Nav = () => {
     const [isOpened, setIsOpened] = useState(false);
-
-    const [chats, setChat] = useState([
-        {
-            msg: "Selamat pagi..",
-            isSiswa: true,
-        },
-        {
-            msg: "Lorem ipsum, dolor sit amet consectetur adipisicing elit. Fuga deserunt repudiandae ex minus atque facere at nemo earum! Hic necessitatibus praesentium libero minima aut amet numquam, maxime debitis possimus exercitationem.Lorem ipsum, dolor sit amet consectetur adipisicing elit. Fuga deserunt repudiandae ex minus atque facere at nemo earum! Hic necessitatibus praesentium libero minima aut amet numquam, maxime debitis possimus exercitationem.",
-            isSiswa: false,
-        },
-    ]);
+    const {http,user} = AuthUser();
+    const [chats, setChat] = useState([]);
+    const [chatContent,setChatContent] = useState("");
 
     const changeOpened = () => {
         setIsOpened(true);
@@ -28,6 +20,8 @@ const Nav = () => {
 
     const changeToggle = () => {
         setIsOpened(!isOpened);
+        var scrollContent = document.getElementById("scroll_content");
+        scrollContent.scrollTop = scrollContent.scrollHeight;
     };
 
     const classSiswa =
@@ -35,15 +29,45 @@ const Nav = () => {
     const classGuru =
         "float-left mt-4 py-2 px-3 bg-gray-200 rounded-xl rounded-bl-none";
 
+
     const cetakChat = chats.map((chat, index) => (
-        <div
-            className={
-                (chat.isSiswa && classSiswa) || (!chat.isSiswa && classGuru)
-            }
-        >
-            {chat.msg}
+        <div>
+            <div
+                className={
+                    (chat.pivot.pengirim_role == 'siswa' && classSiswa) || (chat.pivot.pengirim_role == 'guru' && classGuru)
+                }
+            >
+                {chat.pivot.isi}
+            </div>
+            <div className="clear-both"></div>
         </div>
     ));
+
+      //to fetch all available chats
+      const fetchDataChat = () => {
+        http.post('/siswa/kursus/getPesan',{
+            siswa_id:user.siswa_id,
+            kursus_id:33
+        }).then((res) => {
+            setChat(res.data.pesan);
+          })
+    }
+
+    const sendMessage = () => {
+        http.post('/siswa/kursus/kirimPesan',{
+            siswa_id:user.siswa_id,
+            kursus_id:33,
+            isi:chatContent
+        }).then((res) => {
+            //refresh
+            console.log(res);
+            fetchDataChat();
+          })
+    }
+
+    useEffect(() => {
+        fetchDataChat();
+    }, []);
 
     return (
         <div className="bg-custom-blue flex w-full px-4 sm:px-16 md:px-24 z-0">
@@ -61,7 +85,7 @@ const Nav = () => {
                             <div className="clear-both"></div>
                         </div>
                     </div>
-                    <div className="w-400px h-200px lg:h-300px p-6 pt-2 overflow-auto bg-white">
+                    <div className="w-400px h-200px lg:h-300px p-6 pt-2 overflow-auto bg-white" id="scroll_content">
                         {cetakChat}
                     </div>
                     <div className="w-400px bg-custom-blue px-4 rounded-b-lg h-fit">
@@ -70,6 +94,7 @@ const Nav = () => {
                                 type="text"
                                 placeholder="Tuliskan pesan..."
                                 class="input input-bordered w-full border-2 text-black rounded-3xl placeholder-gray-700"
+                                onChange={(e)=>{setChatContent(e.target.value)}}
                             />
                         </div>
                         <div
@@ -79,6 +104,7 @@ const Nav = () => {
                             <FontAwesomeIcon
                             className="text-white"
                                 icon={faIcon.faPaperPlane}
+                            onClick={sendMessage}
                             ></FontAwesomeIcon>
                         </div>
                         <div className="clear-both"></div>

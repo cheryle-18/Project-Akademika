@@ -24,6 +24,7 @@ return new class extends Migration
             ('kursus_id')->on('kursus')->onDelete('cascade');
             $table->foreign('guru_id')->references
             ('guru_id')->on('guru')->onDelete('cascade');
+            $table->text('pengirim_role');
             $table->text('isi');
             $table->dateTime('tanggal');
         });
