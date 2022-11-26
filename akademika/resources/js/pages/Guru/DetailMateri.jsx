@@ -10,7 +10,7 @@ const DetailMateri = () => {
     const [judul, setJudul] = useState("JavaScript DOM")
     const [deskripsi,setDeskripsi] = useState("Lorem, ipsum dolor sit amet consectetur adipisicing elit. Quaerat rerum provident perspiciatis iure quas nam.")
     const [bacaan, setBacaan] = useState("Lorem ipsum dolor, sit amet consectetur adipisicing elit. Temporibus enim ipsa pariatur, accusantium eaque obcaecati consequuntur dignissimos minima dolor quos itaque dolores qui. Maxime assumenda, possimus ratione ad commodi mollitia libero eaque quod itaque accusamus sit in doloribus molestias beatae hic. Officia, quia. Aliquid minus aliquam quae earum illo vero!")
-    const [link, setLink] = useState("localhost:8000")
+    const [video, setVideo] = useState()
     const [durasi, setDurasi] = useState(120)
     const {http,user} = AuthUser();
 
@@ -69,6 +69,16 @@ const DetailMateri = () => {
                                     value={bacaan}
                                     onChange={(e) =>setBacaan(e.target.value)}
                                 />
+                            </td>
+                        </tr>
+                        <tr className="p-2">
+                            <td className="py-4 align-top">Video</td>
+                            <td className="flex flex-col py-2">
+                                <label class="block">
+                                    <span class="sr-only">Choose File</span>
+                                    <input type="file" name="video" class="block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded file:border-0 file:text-sm file:font-normal file:bg-blue-900 file:text-white hover:file:bg-blue-700"/>
+                                </label>
+                                <div className="text-gray-500 text-sm mt-1">*upload video penjelasan materi</div>
                             </td>
                         </tr>
                         <tr className="p-2">
