@@ -4,7 +4,7 @@ import GuruNav from "./Navbar"
 import Tabs from "./Tabs";
 import AuthUser from "../../components/AuthUser";
 
-const KursusDiterbitkan = () => {
+const TambahKursus = () => {
     //tabs
     const [title, setTitle] = useState("new");
     const [nama,setNama] = useState();
@@ -100,4 +100,4 @@ const KursusDiterbitkan = () => {
     )
 }
 
-export default KursusDiterbitkan
+export default TambahKursus
