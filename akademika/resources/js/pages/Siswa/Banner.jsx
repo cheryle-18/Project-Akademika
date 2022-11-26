@@ -3,7 +3,7 @@ import React, { useState, useEffect } from "react";
 const Banner = (subbab) => {
     return(
         <div
-        className="static h-96 w-full z-0 px-4 sm:px-16 md:px-20 py-20 flex"
+        className="static h-96 w-full z-0 px-4 sm:px-16 md:px-24 py-20 flex"
         style={{
             backgroundImage:
                 "linear-gradient(to bottom right, rgb(13,90,162), rgb(152,204,234))",
