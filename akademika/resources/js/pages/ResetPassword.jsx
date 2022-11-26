@@ -28,7 +28,8 @@ const ResetPassword = () => {
             password_confirmation: confirm,
             token: token,
         };
-        http.post("reset-password", data).then((res) => {
+        http.post("reset-password",data).then((res) => {
+            console.log(res);
             if (res.data == 1 || res.data) {
                 // history.push("/");
                 console.log(res.data);
@@ -55,7 +56,7 @@ const ResetPassword = () => {
                     onChange={(e) => setPassword(e.target.value)}
                     required
                 />
-            </p> 
+            </p>
             <p className="py-2">
                 <Input
                     type="text"
