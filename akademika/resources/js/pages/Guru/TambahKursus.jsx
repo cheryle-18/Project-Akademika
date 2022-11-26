@@ -1,4 +1,4 @@
-import { Input, Option, Select } from "@material-tailwind/react";
+import { Input, Option, Select, Textarea } from "@material-tailwind/react";
 import React, { useState, useEffect, Fragment } from "react";
 import CourseCard from "../Kursus/CourseCard";
 import GuruNav from "./Navbar"
@@ -73,18 +73,18 @@ const KursusDiterbitkan = () => {
                                 <span className="mr-auto my-auto">jam</span>
                             </td>
                         </tr>
-                        <tr className="p-2 h-40">
-                            <td className="py-4">Deskripsi</td>
+                        <tr className="p-2">
+                            <td className="py-4 align-top">Deskripsi</td>
                             <td>
-                                <Input
-                                    type="text"
+                                <Textarea
                                     label=""
-                                    className="w-full h-24"
+                                    className="w-full"
                                     name="desc"
                                 />
                             </td>
                         </tr>
                     </table>
+                    <button className="btn w-full mt-3 text-base capitalize bg-blue-900 text-white hover:bg-blue-700 font-normal" name="btnSimpan">Simpan</button>
                 </div>
             </div>
         </div>
