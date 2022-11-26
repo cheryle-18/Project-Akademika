@@ -21,7 +21,7 @@ return new class extends Migration
             $table->string('nama',50);
             $table->string('kategori',50);
             $table->text('deskripsi')->nullable();
-            $table->integer('durasi')->nullable();
+            $table->integer('durasi')->default(0);
             $table->integer('harga')->nullable();
             $table->tinyInteger('status');
             $table->timestamps();

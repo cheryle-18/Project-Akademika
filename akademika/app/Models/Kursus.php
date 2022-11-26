@@ -14,6 +14,18 @@ class Kursus extends Model
     public $incrementing  = true;
     public $timestamps    = true;
 
+    protected $fillable = [
+        'guru_id',
+        'nama',
+        'kategori',
+        'deskripsi',
+        'durasi',
+        'harga',
+        'status',
+        'created_at',
+        'updated_at'
+    ];
+
     function subbab()
     {
         return $this->hasMany(Subbab::class,'kursus_id','kursus_id');

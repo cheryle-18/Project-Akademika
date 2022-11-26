@@ -3,10 +3,30 @@ import React, { useState, useEffect, Fragment } from "react";
 import CourseCard from "../Kursus/CourseCard";
 import GuruNav from "./Navbar"
 import Tabs from "./Tabs";
+import AuthUser from "../../components/AuthUser";
 
 const KursusDiterbitkan = () => {
     //tabs
     const [title, setTitle] = useState("new");
+    const [nama,setNama] = useState();
+    const [kategori,setKategori] = useState();
+    const [harga,setHarga] = useState();
+    const [deskripsi,setDeskripsi] = useState();
+    const {http,user} = AuthUser();
+
+    const submitForm = () => {
+        http.post("/guru/kursus/tambah", {
+            guru_id:user.guru_id,
+            nama:nama,
+            kategori:kategori,
+            harga:harga,
+            deskripsi:deskripsi,
+            status:1
+        }).then((res) => {
+            let data = res.data;
+            console.log(data);
+        });
+    }
 
     return(
         <div className="min-h-screen h-full w-full overflow-x-hidden flex flex-col bg-gray-100">
@@ -32,21 +52,22 @@ const KursusDiterbitkan = () => {
                                     label=""
                                     className="w-full"
                                     name="nama"
+                                    onChange={(e) => setNama(e.target.value)}
                                 />
                             </td>
                         </tr>
                         <tr className="p-2">
                             <td className="py-4">Kategori</td>
                             <td>
-                            <Select label="" className="w-full items-end" name="kategori">
-                                <Option>Teknologi Informasi</Option>
-                                <Option>Bisnis dan Ekonomi</Option>
-                                <Option>Logika dan Matematika</Option>
-                                <Option>Bahasa dan Literatur</Option>
-                                <Option>Fisika dan Teknik</Option>
-                                <Option>Pengembangan Diri</Option>
-                                <Option>Kesehatan</Option>
-                                <Option>Kesenian</Option>
+                            <Select className="w-full items-end" name="kategori" onChange={(e)=>setKategori(e)}>
+                                <Option value="Teknologi Informasi">Teknologi Informasi</Option>
+                                <Option value="Bisnis dan Ekonomi">Bisnis dan Ekonomi</Option>
+                                <Option value="Logika dan Matematika">Logika dan Matematika</Option>
+                                <Option value="Bahasa dan Literatur">Bahasa dan Literatur</Option>
+                                <Option value="Fisika dan Teknik">Fisika dan Teknik</Option>
+                                <Option value="Pengembangan Diri">Pengembangan Diri</Option>
+                                <Option value="Kesehatan">Kesehatan</Option>
+                                <Option value="Kesenian">Kesenian</Option>
                             </Select>
                             </td>
                         </tr>
@@ -58,19 +79,8 @@ const KursusDiterbitkan = () => {
                                     label=""
                                     className="w-full"
                                     name="harga"
+                                    onChange={(e)=>setHarga(e.target.value)}
                                 />
-                            </td>
-                        </tr>
-                        <tr className="p-2">
-                            <td className="py-4">Durasi</td>
-                            <td className="flex">
-                                <Input
-                                    type="text"
-                                    label=""
-                                    className="w-1/4"
-                                    name="durasi"
-                                />
-                                <span className="mr-auto my-auto">jam</span>
                             </td>
                         </tr>
                         <tr className="p-2">
@@ -80,11 +90,14 @@ const KursusDiterbitkan = () => {
                                     label=""
                                     className="w-full"
                                     name="desc"
+                                    onChange={(e) =>setDeskripsi(e.target.value)}
                                 />
                             </td>
                         </tr>
                     </table>
-                    <button className="btn w-full mt-3 text-base capitalize bg-blue-900 text-white hover:bg-blue-700 font-normal" name="btnSimpan">Simpan</button>
+                    <button className="btn w-full mt-3 text-base capitalize bg-blue-900 text-white hover:bg-blue-700 font-normal" name="btnSimpan"
+                    onClick={submitForm}
+                    >Simpan</button>
                 </div>
             </div>
         </div>
