@@ -1,6 +1,5 @@
 import { Input, Option, Select, Textarea } from "@material-tailwind/react";
 import React, { useState, useEffect, Fragment } from "react";
-import CourseCard from "../Kursus/CourseCard";
 import GuruNav from "./Navbar"
 import Tabs from "./Tabs";
 import AuthUser from "../../components/AuthUser";
@@ -49,7 +48,6 @@ const KursusDiterbitkan = () => {
                             <td>
                                 <Input
                                     type="text"
-                                    label=""
                                     className="w-full"
                                     name="nama"
                                     onChange={(e) => setNama(e.target.value)}
@@ -76,7 +74,6 @@ const KursusDiterbitkan = () => {
                             <td>
                                 <Input
                                     type="text"
-                                    label=""
                                     className="w-full"
                                     name="harga"
                                     onChange={(e)=>setHarga(e.target.value)}
@@ -85,9 +82,8 @@ const KursusDiterbitkan = () => {
                         </tr>
                         <tr className="p-2">
                             <td className="py-4 align-top">Deskripsi</td>
-                            <td>
+                            <td className="py-2">
                                 <Textarea
-                                    label=""
                                     className="w-full"
                                     name="desc"
                                     onChange={(e) =>setDeskripsi(e.target.value)}

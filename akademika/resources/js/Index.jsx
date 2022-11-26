@@ -21,6 +21,8 @@ import ReportSiswa from "./pages/Guru/ReportSiswa";
 import ForgotPassword from "./pages/ForgotPassword";
 import ResetPassword from "./pages/ResetPassword";
 import DetailKursus from "./pages/Guru/DetailKursus";
+import TambahMateri from "./pages/Guru/TambahMateri";
+import DetailMateri from "./pages/Guru/DetailMateri";
 
 const Index = () => {
     return (
@@ -63,6 +65,12 @@ const Index = () => {
                 </Route>
                 <Route exact path="/guru/kursus/detail">
                     <DetailKursus></DetailKursus>
+                </Route>
+                <Route exact path="/guru/kursus/materi/tambah">
+                    <TambahMateri></TambahMateri>
+                </Route>
+                <Route exact path="/guru/kursus/materi">
+                    <DetailMateri></DetailMateri>
                 </Route>
                 <Route exact path="/guru/report/siswa">
                     <ReportSiswa></ReportSiswa>
