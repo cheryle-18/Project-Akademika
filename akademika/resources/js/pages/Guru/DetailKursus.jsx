@@ -95,19 +95,6 @@ const DetailKursus = () => {
                                 </td>
                             </tr>
                             <tr className="p-2">
-                                <td className="py-4">Durasi</td>
-                                <td className="flex">
-                                    <Input
-                                        type="text"
-                                        label=""
-                                        className="w-1/4"
-                                        name="durasi"
-                                        value={course.durasi}
-                                    />
-                                    <span className="mr-auto my-auto">jam</span>
-                                </td>
-                            </tr>
-                            <tr className="p-2">
                                 <td className="py-4 align-top">Deskripsi</td>
                                 <td>
                                     <Textarea
