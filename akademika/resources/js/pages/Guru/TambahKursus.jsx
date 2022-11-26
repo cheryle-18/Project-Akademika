@@ -91,7 +91,7 @@ const TambahKursus = () => {
                             </td>
                         </tr>
                     </table>
-                    <button className="btn w-full mt-3 text-base capitalize bg-blue-900 text-white hover:bg-blue-700 font-normal" name="btnSimpan"
+                    <button className="btn w-full mt-3 text-base capitalize bg-custom-blue text-white hover:bg-blue-700 font-normal" name="btnSimpan"
                     onClick={submitForm}
                     >Simpan</button>
                 </div>
