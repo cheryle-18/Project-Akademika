@@ -4,6 +4,7 @@ use App\Http\Controllers\Auth\AuthController;
 use App\Http\Controllers\Auth\ForgotPasswordController;
 use App\Http\Controllers\Auth\ResetPasswordController;
 use App\Http\Controllers\Auth\VerificationController;
+use App\Http\Controllers\UtilityController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use Mockery\VerificationDirector;
@@ -40,5 +41,9 @@ Route::group(['middleware'=>'api'],function ()
 
     Route::post('/forgot-password', [ForgotPasswordController::class, 'sendForgotPassword']);
     Route::post('/reset-password', [ResetPasswordController::class,'updatePassword']);
+
+    Route::prefix('get')->group(function () {
+        Route::post('kursus',[UtilityController::class,'getAllKursus']);
+    });
 });
 

@@ -1,44 +1,25 @@
 // import React, { useState, useEffect } from "react";
-import React, { useState } from "react";
-import { BrowserRouter as Router, Route } from "react-router-dom";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {
-    faCoffee,
-    faBookJournalWhills,
-    faBookOpenReader,
-    faBookReader,
-} from "@fortawesome/free-solid-svg-icons";
+import React, { useState,useEffect } from "react";
 import Nav from "./Navbar";
-import { Link } from "react-router-dom";
-// import searchLogo from "/akademika/resources/images/Search.png";
-import searchLogo from "../../../images/Search.png";
-import droplistLogo from "../../../images/Collapse_Arrow.png";
 import { Input } from "@material-tailwind/react";
 import { Select, Option } from "@material-tailwind/react";
 import CourseCard from "./CourseCard";
-
+import AuthUser from "../../components/AuthUser";
 
 const SearchKursus = () => {
-    const [listCourse, setListCourse] = useState([
-        {
-            nama: "Pengembangan Website Front-End Dasar 1",
-            harga: 250000,
-            deskripsi: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Commodi, dolorem?",
-            durasi: 40
-        },
-        {
-            nama: "Pengembangan Website Front-End Dasar 2",
-            harga: 250000,
-            deskripsi: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Commodi, dolorem?",
-            durasi: 40
-        },
-        {
-            nama: "Pengembangan Website Front-End Dasar 3",
-            harga: 250000,
-            deskripsi: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Commodi, dolorem?",
-            durasi: 40
-        },
-    ])
+    const [listCourse, setListCourse] = useState([])
+    const {http} = AuthUser();
+
+    //to fetch all available courses
+    const fetchDataKursus = () => {
+        http.post('/get/kursus').then((res) => {
+            setListCourse(res.data.kursus);
+          })
+    }
+
+    useEffect(() => {
+        fetchDataKursus();
+    }, []);
 
     return (
         <div className="min-h-screen h-auto w-full bg-gray-100 flex flex-col">
@@ -84,7 +65,7 @@ const SearchKursus = () => {
                         {
                             listCourse.map((n, index) => {
                                 return(
-                                    <CourseCard course={n} key={index} />
+                                    <CourseCard course={n} key={index}/>
                                 )
                             })
                         }

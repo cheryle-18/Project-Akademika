@@ -19,6 +19,7 @@ return new class extends Migration
             $table->foreign('guru_id')->references
             ('guru_id')->on('guru')->onDelete('cascade');
             $table->string('nama',50);
+            $table->string('kategori',50);
             $table->text('deskripsi')->nullable();
             $table->integer('durasi')->nullable();
             $table->integer('harga')->nullable();

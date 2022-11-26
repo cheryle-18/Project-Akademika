@@ -61,6 +61,6 @@ class VerificationController extends Controller
             }
         }
 
-        return 'success';
+        return redirect('/');
     }
 }

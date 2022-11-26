@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from "react";
 import clockLogo from "../../../images/Clock.png";
 import CardPic from "../../../images/card_pic.png";
+import { round } from "lodash";
+import {toRupiah} from "../../components/CurrencyUtils";
 
 const CourseCard = (course) => {
     return(
@@ -15,7 +17,7 @@ const CourseCard = (course) => {
                     {course.course.nama}
                 </h5>
                 <p className="text-gray-900 text-base mb-4">
-                    Rp {course.course.harga}
+                    Rp {toRupiah(course.course.harga)}
                 </p>
                 <p className="text-gray-600 text-base mb-5">
                     {course.course.deskripsi}
@@ -29,7 +31,7 @@ const CourseCard = (course) => {
                             src={clockLogo}
                             alt=""
                         />
-                        {course.course.durasi} jam
+                        {round(course.course.durasi / 60)} jam
                     </span>
                     <span>
                         <a href="" className="ml-auto">
