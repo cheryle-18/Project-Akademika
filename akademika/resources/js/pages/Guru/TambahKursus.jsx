@@ -48,7 +48,6 @@ const KursusDiterbitkan = () => {
                             <td>
                                 <Input
                                     type="text"
-                                    label=""
                                     className="w-full"
                                     name="nama"
                                     onChange={(e) => setNama(e.target.value)}
@@ -75,7 +74,6 @@ const KursusDiterbitkan = () => {
                             <td>
                                 <Input
                                     type="text"
-                                    label=""
                                     className="w-full"
                                     name="harga"
                                     onChange={(e)=>setHarga(e.target.value)}
@@ -86,7 +84,6 @@ const KursusDiterbitkan = () => {
                             <td className="py-4 align-top">Deskripsi</td>
                             <td className="py-2">
                                 <Textarea
-                                    label=""
                                     className="w-full"
                                     name="desc"
                                     onChange={(e) =>setDeskripsi(e.target.value)}

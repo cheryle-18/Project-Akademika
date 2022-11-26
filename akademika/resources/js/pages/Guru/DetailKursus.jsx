@@ -60,7 +60,6 @@ const DetailKursus = () => {
                                 <td>
                                     <Input
                                         type="text"
-                                        label=""
                                         className="w-full"
                                         name="nama"
                                         value={course.nama}
@@ -70,7 +69,7 @@ const DetailKursus = () => {
                             <tr className="p-2">
                                 <td className="py-4">Kategori</td>
                                 <td>
-                                <Select label="" className="w-full items-end" name="kategori">
+                                <Select className="w-full items-end" name="kategori">
                                     <Option>Teknologi Informasi</Option>
                                     <Option>Bisnis dan Ekonomi</Option>
                                     <Option>Logika dan Matematika</Option>
@@ -87,7 +86,6 @@ const DetailKursus = () => {
                                 <td>
                                     <Input
                                         type="text"
-                                        label=""
                                         className="w-full"
                                         name="harga"
                                         value={course.harga}
@@ -98,7 +96,6 @@ const DetailKursus = () => {
                                 <td className="py-4 align-top">Deskripsi</td>
                                 <td>
                                     <Textarea
-                                        label=""
                                         className="w-full"
                                         name="desc"
                                     />
