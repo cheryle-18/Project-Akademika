@@ -24,12 +24,14 @@ export default function AuthUser(){
         sessionStorage.setItem('user',JSON.stringify(user));
 
         setUser(user);
-        history.push('/admin/home');
+        history.push('/guru/kursus/diterbitkan');
+        history.go();
     }
 
     const logout = () => {
         sessionStorage.clear();
         history.push('/');
+        history.go();
     }
 
     const http = axios.create({

@@ -16,7 +16,7 @@ const TambahKuis = () => {
     }
 
     useEffect(() => {
-        
+
     }, [ctrSoal])
 
     return(
@@ -66,49 +66,65 @@ const TambahKuis = () => {
                                 </div>
                             </div>
                             <div className="pilihan mt-4">
-                                <div className="border-2 border-gray-300 rounded flex my-1">
+                                <div className="p-1 border-2 border-gray-300 rounded flex my-1">
                                     <Radio
                                         type="radio"
                                         id=""
                                         name="jwbn"
                                         value="pil1"
-                                        label="Pilihan 1"
+                                    />
+                                    <input
+                                        type="text"
+                                        className="border-2 border-gray-300 rounded w-full h-10 mr-3 my-auto px-2 focus:border-blue-300"
+                                        name="pil1"
                                     />
                                     <button className="btn btn-sm bg-blue-900 hover:bg-blue-700 text-white rounded capitalize font-normal ml-auto my-auto mr-2">
                                         X
                                     </button>
                                 </div>
-                                <div className="border-2 border-gray-300 rounded flex my-1">
+                                <div className="p-1 border-2 border-gray-300 rounded flex my-1">
                                     <Radio
                                         type="radio"
                                         id=""
                                         name="jwbn"
                                         value="pil2"
-                                        label="Pilihan 2"
+                                    />
+                                    <input
+                                        type="text"
+                                        className="border-2 border-gray-300 rounded w-full h-10 mr-3 my-auto px-2 focus:border-blue-300"
+                                        name="pil2"
                                     />
                                     <button className="btn btn-sm bg-blue-900 hover:bg-blue-700 text-white rounded capitalize font-normal ml-auto my-auto mr-2">
                                         X
                                     </button>
                                 </div>
-                                <div className="border-2 border-gray-300 rounded flex my-1">
+                                <div className="p-1 border-2 border-gray-300 rounded flex my-1">
                                     <Radio
                                         type="radio"
                                         id=""
                                         name="jwbn"
                                         value="pil3"
-                                        label="Pilihan 3"
+                                    />
+                                    <input
+                                        type="text"
+                                        className="border-2 border-gray-300 rounded w-full h-10 mr-3 my-auto px-2 focus:border-blue-300"
+                                        name="pil3"
                                     />
                                     <button className="btn btn-sm bg-blue-900 hover:bg-blue-700 text-white rounded capitalize font-normal ml-auto my-auto mr-2">
                                         X
                                     </button>
                                 </div>
-                                <div className="border-2 border-gray-300 rounded flex my-1">
+                                <div className="p-1 border-2 border-gray-300 rounded flex my-1">
                                     <Radio
                                         type="radio"
                                         id=""
                                         name="jwbn"
                                         value="pil4"
-                                        label="Pilihan 4"
+                                    />
+                                    <input
+                                        type="text"
+                                        className="border-2 border-gray-300 rounded w-full h-10 mr-3 my-auto px-2 focus:border-blue-300"
+                                        name="pil4"
                                     />
                                     <button className="btn btn-sm bg-blue-900 hover:bg-blue-700 text-white rounded capitalize font-normal ml-auto my-auto mr-2">
                                         X
