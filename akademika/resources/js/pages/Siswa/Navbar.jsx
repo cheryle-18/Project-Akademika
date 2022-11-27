@@ -12,6 +12,7 @@ const Nav = () => {
 
     const last = () => {
         document.getElementById("last").click();
+        document.getElementById("inputMessage").focus();
     };
 
     const changeOpened = () => {
@@ -25,9 +26,7 @@ const Nav = () => {
     const changeToggle = () => {
         setIsOpened(!isOpened);
         // last();
-        setTimeout(last, 50);
-        var scrollContent = document.getElementById("scroll_content");
-        scrollContent.scrollTop = scrollContent.scrollHeight;
+        setTimeout(last, 10);
     };
 
     const classSiswa =
@@ -56,6 +55,7 @@ const Nav = () => {
             kursus_id: 33,
         }).then((res) => {
             setChat(res.data.pesan);
+            setTimeout(last, 10);
         });
     };
 
@@ -68,11 +68,17 @@ const Nav = () => {
             //refresh
             console.log(res);
             fetchDataChat();
+            setTimeout(() => {
+                setChatContent("");
+            }, 10);
         });
     };
 
     useEffect(() => {
-        fetchDataChat();
+        setInterval(() => {
+            fetchDataChat();
+            // console.log("coba");
+        }, 2000);
     }, []);
 
     return (
@@ -102,16 +108,18 @@ const Nav = () => {
                     <div className="w-400px bg-custom-blue px-4 rounded-b-lg h-fit">
                         <div className="w-10/12 p-4 font-semibold float-left">
                             <input
+                                id="inputMessage"
                                 type="text"
                                 placeholder="Tuliskan pesan..."
                                 class="input input-bordered w-full border-2 text-black rounded-3xl placeholder-gray-700"
                                 onChange={(e) => {
                                     setChatContent(e.target.value);
                                 }}
+                                value={chatContent}
                             />
                         </div>
                         <div
-                            className="w-2/12 float-right h-20 -mt-1 flex justify-center items-center text-3xl"
+                            className="w-2/12 float-right h-20 -mt-1 flex justify-center items-center text-3xl cursor-pointer"
                             style={{ rotate: "50deg" }}
                         >
                             <FontAwesomeIcon
