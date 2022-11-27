@@ -58,6 +58,8 @@ module.exports = withMT({
                 "250px": "250px",
                 "280px": "280px",
                 "300px": "300px",
+                "350px": "350px",
+                "380px": "380px",
                 "400px": "400px",
                 "500px": "500px",
                 "600px": "600px",

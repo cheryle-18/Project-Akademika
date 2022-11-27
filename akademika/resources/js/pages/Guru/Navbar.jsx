@@ -51,13 +51,15 @@ const GuruNav = () => {
     ));
 
     //to fetch all available chats
-    const fetchDataChat = () => {
+    const fetchDataChat = (isLast) => {
         http.post("/siswa/kursus/getPesan", {
             siswa_id: user.siswa_id,
             kursus_id: 33,
         }).then((res) => {
             setChat(res.data.pesan);
-            setTimeout(last, 10);
+            if (isLast) {
+                setTimeout(last, 10);
+            }
         });
     };
 
@@ -69,17 +71,18 @@ const GuruNav = () => {
         }).then((res) => {
             //refresh
             console.log(res);
-            fetchDataChat();
+            fetchDataChat(true);
             setTimeout(() => {
                 setChatContent("");
+                last();
             }, 10);
         });
     };
 
     useEffect(() => {
+        fetchDataChat(true);
         setInterval(() => {
-            fetchDataChat();
-            // console.log("coba");
+            fetchDataChat(false);
         }, 2000);
     }, []);
 
@@ -100,10 +103,20 @@ const GuruNav = () => {
                         </div>
                     </div>
                     <div
-                        className="w-400px h-200px lg:h-300px p-6 pt-2 overflow-auto bg-white"
-                        id="scroll_content"
+                        className="w-400px h-200px lg:h-300px p-6 pt-4 overflow-auto bg-white"
+                        id="scroll_content relative"
                     >
-                        <a id="last" href="#section" className=""></a>
+                        <a
+                            id="last"
+                            href="#section"
+                            className="absolute top-0 right-0 w-full flex justify-center items-center mt-16 hover:text-custom-blue"
+                        >
+                            <div className="bg-white w-350px flex justify-center items-center -mt-2">
+                                <div className="px-1 py-1 bg-light-blue-50 w-fit rounded-lg">
+                                    Lihat Chat Terakhir
+                                </div>
+                            </div>
+                        </a>
                         {cetakChat}
                         <div id="section" className=""></div>
                     </div>
