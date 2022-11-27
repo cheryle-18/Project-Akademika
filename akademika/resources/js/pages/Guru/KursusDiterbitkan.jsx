@@ -1,11 +1,30 @@
 import React, { useState, useEffect, Fragment } from "react";
 import CourseCard from "../Kursus/CourseCard";
-import GuruNav from "./Navbar"
+import GuruNav from "./Navbar";
 import Tabs from "./Tabs";
 
-const KursusDiterbitkan = (title) => {
+const KursusDiterbitkan = () => {
+    const [listCourse, setListCourse] = useState([
+        {
+            nama: "Pengembangan Website Front-End Dasar 1",
+            harga: 250000,
+            deskripsi:
+                "Lorem ipsum dolor sit amet consectetur adipisicing elit. Commodi, dolorem?",
+            durasi: 40,
+        },
+        {
+            nama: "Pengembangan Website Front-End Dasar 2",
+            harga: 250000,
+            deskripsi:
+                "Lorem ipsum dolor sit amet consectetur adipisicing elit. Commodi, dolorem?",
+            durasi: 40,
+        },
+    ]);
 
-    return(
+    //tabs
+    const [title, setTitle] = useState("live");
+
+    return (
         <div className="min-h-screen w-full overflow-x-hidden flex flex-col bg-gray-100">
             <div className="px-4 sm:px-16 md:px-24 drawer-side bg-custom-blue overflow-y-auto flex-none">
                 <GuruNav />
@@ -15,8 +34,13 @@ const KursusDiterbitkan = (title) => {
                     <Tabs titleParam={title}></Tabs>
                 </div>
             </div>
+            <div className="content flex flex-wrap gap-10 w-full px-24">
+                {listCourse.map((n, index) => {
+                    return <CourseCard course={n} key={index} />;
+                })}
+            </div>
         </div>
-    )
-}
+    );
+};
 
 export default KursusDiterbitkan;
