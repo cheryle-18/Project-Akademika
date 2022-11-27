@@ -2,7 +2,7 @@ import React, { useState, useEffect, Fragment } from "react";
 import { useHistory } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import * as faIcon from "@fortawesome/free-solid-svg-icons";
-import Navbar from "./Navbar";
+import GuruNav from "./Navbar";
 import { Input, Textarea } from "@material-tailwind/react";
 
 const TambahPengumuman = () => {
@@ -43,7 +43,7 @@ const TambahPengumuman = () => {
 
     return (
         <div className="min-h-screen h-full w-full overflow-x-hidden flex flex-col bg-gray-100">
-            <Navbar></Navbar>
+            <GuruNav></GuruNav>
             <div className="banner">
                 <div
                 className="static h-80 w-full z-0 px-4 sm:px-16 md:px-24 py-20 flex"

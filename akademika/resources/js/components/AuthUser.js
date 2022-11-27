@@ -30,7 +30,7 @@ export default function AuthUser(){
             history.go();
         }
         else{
-            history.push('/siswa/kursus/detail');
+            history.push('/siswa/kursus');
             history.go();
         }
     }

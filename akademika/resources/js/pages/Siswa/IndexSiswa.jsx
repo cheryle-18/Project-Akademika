@@ -5,6 +5,7 @@ import PengumumanKursus from "./PengumumanKursus";
 import Silabus from "./Silabus";
 import Materi from "./Materi";
 import NilaiKuis from "./NilaiKuis";
+import KursusSaya from "./KursusSaya";
 
 const IndexSiswa = () => {
     return (
@@ -15,6 +16,9 @@ const IndexSiswa = () => {
                 </Route>
                 <Route exact path="/siswa/kursus/detail">
                     <Silabus></Silabus>
+                </Route>
+                <Route exact path="/siswa/kursus">
+                    <KursusSaya></KursusSaya>
                 </Route>
                 <Route exact path="/siswa/kursus/materi">
                     <Materi></Materi>

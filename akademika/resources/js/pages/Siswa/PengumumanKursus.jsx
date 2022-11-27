@@ -4,12 +4,7 @@ import { Button } from "@material-tailwind/react";
 import { BrowserRouter as Router, Route } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import * as faIcon from "@fortawesome/free-solid-svg-icons";
-import Navbar from "./Navbar";
-import {
-    Accordion,
-    AccordionHeader,
-    AccordionBody,
-} from "@material-tailwind/react";
+import SiswaNav from "./Navbar";
 
 const PengumumanKursus = () => {
     const classSelected = "float-left bg-white text-custom-blue py-1 px-4 rounded-sm mx-1 cursor-pointer";
@@ -64,7 +59,9 @@ const PengumumanKursus = () => {
 
     return (
         <div className="relative bg-gray-100">
-            <Navbar></Navbar>
+            <div className="px-4 sm:px-16 md:px-24 drawer-side bg-custom-blue overflow-y-auto flex-none">
+                <SiswaNav />
+            </div>
             <div className="banner">
                 <div
                 className="static h-80 w-full z-0 px-4 sm:px-16 md:px-24 py-20 flex"

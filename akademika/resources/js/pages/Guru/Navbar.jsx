@@ -156,7 +156,7 @@ const GuruNav = () => {
             <div className="my-5 w-full">
                 {/* layar besar */}
                 <div className="hidden md:block">
-                    <div className="text-3xl font-semibold text-white float-left -ml-14">
+                    <div className="text-3xl font-semibold text-white float-left">
                         <Link to="/">Akademika</Link>
                     </div>
                     <div className="pt-1.5 text-white float-right cursor-pointer">
