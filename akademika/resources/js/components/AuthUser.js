@@ -24,8 +24,15 @@ export default function AuthUser(){
         sessionStorage.setItem('user',JSON.stringify(user));
 
         setUser(user);
-        history.push('/guru/kursus/diterbitkan');
-        history.go();
+
+        if(user.role_text == 'guru'){
+            history.push('/guru/kursus/diterbitkan');
+            history.go();
+        }
+        else{
+            history.push('/siswa/kursus/detail');
+            history.go();
+        }
     }
 
     const logout = () => {
