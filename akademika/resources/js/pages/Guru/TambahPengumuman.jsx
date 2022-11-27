@@ -1,17 +1,11 @@
 import React, { useState, useEffect, Fragment } from "react";
 import { useHistory } from "react-router-dom";
-import { Button } from "@material-tailwind/react";
-import { BrowserRouter as Router, Route } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import * as faIcon from "@fortawesome/free-solid-svg-icons";
 import Navbar from "./Navbar";
-import {
-    Accordion,
-    AccordionHeader,
-    AccordionBody,
-} from "@material-tailwind/react";
+import { Input, Textarea } from "@material-tailwind/react";
 
-const PengumumanKursus = () => {
+const TambahPengumuman = () => {
     const classSelected = "float-left bg-white text-custom-blue py-1 px-4 rounded-sm mx-1 cursor-pointer";
     const classOther = "float-left hover:bg-gray-200 hover:text-custom-blue py-1 px-4 rounded-sm mx-1 cursor-pointer";
 
@@ -20,13 +14,13 @@ const PengumumanKursus = () => {
 
     const onClickMateri = () => {
         setTitle("materi");
-        let path = "/siswa/kursus/detail"
+        let path = "/guru/kursus/detail"
         history.push(path)
     };
 
     const onClickPengumuman = () => {
         setTitle("pengumuman");
-        let  path = "/siswa/kursus/pengumuman"
+        let  path = "/guru/kursus/pengumuman"
         history.push(path)
     };
 
@@ -47,23 +41,8 @@ const PengumumanKursus = () => {
         },
     ]);
 
-    const cetakMsg = msgs.map((msg, index) => (
-        <div className="min-h-0 p-6 bg-white mt-2 rounded shadow-lg">
-            <div className="flex">
-                <div className="col-span-1 h-full my-auto text-3xl ml-2">
-                    <FontAwesomeIcon
-                        icon={faIcon.faBullhorn}
-                    ></FontAwesomeIcon>
-                </div>
-                <div className="ml-6">
-                    {msg.isi}
-                </div>
-            </div>
-        </div>
-    ));
-
     return (
-        <div className="relative bg-gray-100">
+        <div className="min-h-screen h-full w-full overflow-x-hidden flex flex-col bg-gray-100">
             <Navbar></Navbar>
             <div className="banner">
                 <div
@@ -110,17 +89,67 @@ const PengumumanKursus = () => {
                 </div>
             </div>
 
-            <div className="static min-h-0 w-full z-0 px-4 sm:px-16 md:px-24 bg-gray-100">
-                <div className="text-blue-900 text-3xl font-semibold">
-                    Pengumuman Baru
+            <div className="content flex flex-wrap gap-10 w-full px-24 pb-10">
+                <div className="w-full h-auto bg-white rounded-lg p-4 flex flex-col">
+                    <table>
+                    <tbody>
+                        <tr className="p-2">
+                            <td className="py-4 align-top">Pengumuman</td>
+                            <td className="py-2">
+                                <Textarea
+                                    className="w-full"
+                                    name="pengumuman"
+                                />
+                            </td>
+                        </tr>
+                        <tr className="p-2">
+                            <td className="py-4 w-1/6 align-top">Link Terkait</td>
+                            <td className="flex flex-col">
+                                <Input
+                                    type="text"
+                                    className="w-full"
+                                    name="link"
+                                />
+                                <div className="text-sm text-gray-500 mt-1">
+                                    *sertakan link terkait pengumuman (opsional)
+                                </div>
+                            </td>
+                        </tr>
+                    </tbody>
+                    </table>
+                    <button className="btn w-full mt-12 text-base capitalize bg-custom-blue text-white hover:bg-blue-700 font-normal" name="btnTambah"
+                    >Tambah Pengumuman</button>
                 </div>
-            </div>
 
-            <div className="static min-h-300px w-full z-0 px-4 sm:px-16 md:px-24 py-10 -mt-7">
-                {cetakMsg}
+                <div className="static min-h-0 w-full z-0 bg-gray-100">
+                    <div className="text-blue-900 text-2xl font-semibold">
+                        Daftar Pengumuman
+                    </div>
+                </div>
+
+                <div className="static min-h-300px w-full z-0 -mt-5">
+                    {
+                        msgs.map((msg, index) => {
+                            return(
+                                <div className="min-h-0 p-6 bg-white mt-2 rounded shadow-lg">
+                                    <div className="flex">
+                                        <div className="col-span-1 h-full my-auto text-3xl ml-2">
+                                            <FontAwesomeIcon
+                                                icon={faIcon.faBullhorn}
+                                            ></FontAwesomeIcon>
+                                        </div>
+                                        <div className="ml-6">
+                                            {msg.isi}
+                                        </div>
+                                    </div>
+                                </div>
+                            )
+                        })
+                    }
+                </div>
             </div>
         </div>
     );
-};
+}
 
-export default PengumumanKursus;
+export default TambahPengumuman

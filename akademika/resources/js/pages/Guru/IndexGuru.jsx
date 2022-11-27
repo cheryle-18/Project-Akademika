@@ -8,6 +8,7 @@ import ReportSiswa from "./ReportSiswa";
 import TambahKuis from "./TambahKuis";
 import TambahKursus from "./TambahKursus";
 import TambahMateri from "./TambahMateri";
+import TambahPengumuman from "./TambahPengumuman";
 
 const IndexGuru = () => {
     return(
@@ -33,6 +34,9 @@ const IndexGuru = () => {
                 </Route>
                 <Route exact path="/guru/kursus/kuis">
                     <TambahKuis></TambahKuis>
+                </Route>
+                <Route exact path="/guru/kursus/pengumuman">
+                    <TambahPengumuman></TambahPengumuman>
                 </Route>
                 <Route exact path="/guru/report/siswa">
                     <ReportSiswa></ReportSiswa>
