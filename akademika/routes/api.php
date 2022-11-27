@@ -53,6 +53,7 @@ Route::group(['middleware'=>'api'],function ()
         {
             Route::post('tambah',[KursusController::class,'tambahKursus']);
             Route::post('getPesan',[KursusController::class,'getPesan']);
+            Route::post('kirimPesan',[KursusController::class,'kirimPesan']);
         });
     });
 

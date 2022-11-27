@@ -12,6 +12,7 @@ const Nav = () => {
 
     const last = () => {
         document.getElementById("last").click();
+        document.getElementById("inputMessage").focus();
     };
 
     const changeOpened = () => {
@@ -25,9 +26,7 @@ const Nav = () => {
     const changeToggle = () => {
         setIsOpened(!isOpened);
         // last();
-        setTimeout(last, 50);
-        var scrollContent = document.getElementById("scroll_content");
-        scrollContent.scrollTop = scrollContent.scrollHeight;
+        setTimeout(last, 10);
     };
 
     const classSiswa =
@@ -50,12 +49,15 @@ const Nav = () => {
     ));
 
     //to fetch all available chats
-    const fetchDataChat = () => {
+    const fetchDataChat = (isLast) => {
         http.post("/siswa/kursus/getPesan", {
             siswa_id: user.siswa_id,
             kursus_id: 33,
         }).then((res) => {
             setChat(res.data.pesan);
+            if (isLast) {
+                setTimeout(last, 10);
+            }
         });
     };
 
@@ -67,12 +69,18 @@ const Nav = () => {
         }).then((res) => {
             //refresh
             console.log(res);
-            fetchDataChat();
+            fetchDataChat(true);
+            setTimeout(() => {
+                setChatContent("");
+            }, 10);
         });
     };
 
     useEffect(() => {
-        fetchDataChat();
+        fetchDataChat(true);
+        setInterval(() => {
+            fetchDataChat(false);
+        }, 2000);
     }, []);
 
     return (
@@ -92,26 +100,38 @@ const Nav = () => {
                         </div>
                     </div>
                     <div
-                        className="w-400px h-200px lg:h-300px p-6 pt-2 overflow-auto bg-white"
-                        id="scroll_content"
+                        className="w-400px h-200px lg:h-300px p-6 pt-4 overflow-auto bg-white"
+                        id="scroll_content relative"
                     >
-                        <a id="last" href="#section" className=""></a>
+                        <a
+                            id="last"
+                            href="#section"
+                            className="absolute top-0 right-0 w-full flex justify-center items-center mt-16 hover:text-custom-blue"
+                        >
+                            <div className="bg-white w-350px flex justify-center items-center -mt-2">
+                                <div className="px-1 py-1 bg-light-blue-50 w-fit rounded-lg">
+                                    Lihat Chat Terakhir
+                                </div>
+                            </div>
+                        </a>
                         {cetakChat}
                         <div id="section" className=""></div>
                     </div>
                     <div className="w-400px bg-custom-blue px-4 rounded-b-lg h-fit">
                         <div className="w-10/12 p-4 font-semibold float-left">
                             <input
+                                id="inputMessage"
                                 type="text"
                                 placeholder="Tuliskan pesan..."
                                 class="input input-bordered w-full border-2 text-black rounded-3xl placeholder-gray-700"
                                 onChange={(e) => {
                                     setChatContent(e.target.value);
                                 }}
+                                value={chatContent}
                             />
                         </div>
                         <div
-                            className="w-2/12 float-right h-20 -mt-1 flex justify-center items-center text-3xl"
+                            className="w-2/12 float-right h-20 -mt-1 flex justify-center items-center text-3xl cursor-pointer"
                             style={{ rotate: "50deg" }}
                         >
                             <FontAwesomeIcon

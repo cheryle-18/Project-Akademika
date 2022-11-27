@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Guru;
 use App\Models\Kursus;
 use App\Models\Siswa;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 
@@ -56,5 +57,15 @@ class KursusController extends Controller
             "pesan" => $pesan
         ]);
     }
-    
+
+    function kirimPesan(Request $request)
+    {
+        //attach
+        $siswa = Siswa::find($request->siswa_id);
+        //kursus
+        $kursus = Kursus::find($request->kursus_id);
+        $siswa->pesan()->attach($kursus,['guru_id'=>$kursus->guru_id,'pengirim_role'=>'guru','isi'=>$request->isi,'tanggal'=>Carbon::now('Asia/Jakarta')]);
+
+        return "sukses";
+    }
 }
