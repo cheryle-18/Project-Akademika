@@ -8,24 +8,26 @@ const TambahMateri = () => {
     const [title, setTitle] = useState("proses")
     const [course, setCourse] = useState("Pengembangan Website Front-End Dasar")
     const [judul, setJudul] = useState()
-    const [deskripsi,setDeskripsi] = useState()
+    const [penjelasan,setPenjelasan] = useState()
     const [bacaan, setBacaan] = useState()
     const [video, setVideo] = useState()
     const [durasi, setDurasi] = useState()
     const {http,user} = AuthUser();
 
+    const onChangeVideoHandler = (e) => {
+        setVideo(e.target.files[0])
+    }
+
     const submitForm = () => {
-        // http.post("/guru/kursus/tambah", {
-        //     guru_id:user.guru_id,
-        //     nama:nama,
-        //     kategori:kategori,
-        //     harga:harga,
-        //     deskripsi:deskripsi,
-        //     status:1
-        // }).then((res) => {
-        //     let data = res.data;
-        //     console.log(data);
-        // });
+        const formData = new FormData();
+        formData.append('video', video);
+        formData.append('subbab_id',22)
+        formData.append('penjelasan',penjelasan)
+
+        http.post("/guru/kursus/materi/tambah",formData).then((res) => {
+            let data = res.data;
+            console.log(data);
+        });
     }
 
     return(
@@ -64,7 +66,7 @@ const TambahMateri = () => {
                                 <Textarea
                                     className="w-full"
                                     name="desc"
-                                    onChange={(e) =>setDeskripsi(e.target.value)}
+                                    onChange={(e) =>setPenjelasan(e.target.value)}
                                 />
                             </td>
                         </tr>
@@ -83,7 +85,8 @@ const TambahMateri = () => {
                             <td className="flex flex-col py-2">
                                 <label class="block">
                                     <span class="sr-only">Choose File</span>
-                                    <input type="file" name="video" class="block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded file:border-0 file:text-sm file:font-normal file:bg-blue-900 file:text-white hover:file:bg-blue-700"/>
+                                    <input type="file" name="video" class="block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded file:border-0 file:text-sm file:font-normal file:bg-blue-900 file:text-white hover:file:bg-blue-700"
+                                     onChange={onChangeVideoHandler}/>
                                 </label>
                                 <div className="text-gray-500 text-sm mt-1">*upload video penjelasan materi</div>
                             </td>

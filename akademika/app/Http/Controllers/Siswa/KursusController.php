@@ -7,6 +7,7 @@ use App\Models\Kursus;
 use App\Models\Siswa;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class KursusController extends Controller
 {
@@ -30,4 +31,6 @@ class KursusController extends Controller
 
         return "sukses";
     }
+
+   
 }

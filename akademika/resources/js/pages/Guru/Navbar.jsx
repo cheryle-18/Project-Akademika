@@ -80,10 +80,10 @@ const GuruNav = () => {
     };
 
     useEffect(() => {
-        fetchDataChat(true);
-        setInterval(() => {
-            fetchDataChat(false);
-        }, 2000);
+        // fetchDataChat(true);
+        // setInterval(() => {
+        //     fetchDataChat(false);
+        // }, 2000);
     }, []);
 
     return (

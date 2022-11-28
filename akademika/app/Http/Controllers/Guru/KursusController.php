@@ -8,6 +8,7 @@ use App\Models\Kursus;
 use App\Models\Siswa;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
 
 class KursusController extends Controller
@@ -69,8 +70,10 @@ class KursusController extends Controller
         return "sukses";
     }
 
-    function uploadMateri()
+    function tambahMateri(Request $request)
     {
-        
+        # code...
+        Storage::disk('google')->put('aa.mp4',$request->video);
+        return 'ok';
     }
 }
