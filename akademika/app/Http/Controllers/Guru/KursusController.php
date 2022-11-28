@@ -68,4 +68,9 @@ class KursusController extends Controller
 
         return "sukses";
     }
+
+    function uploadMateri()
+    {
+        
+    }
 }

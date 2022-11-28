@@ -78,7 +78,6 @@ class AuthController extends Controller
 
     public function login()
     {
-
         $isFound = false;
         $credentials = request(['email', 'password']);
         $validate = json_decode($this->validateDataLogin($credentials)->content());
@@ -117,7 +116,6 @@ class AuthController extends Controller
             $credentials['password'] = Hash::make(request('password'));
             //register
             if($credentials['role'] == 'siswa'){
-
                 //register as siswa & mail
                 $siswa = Siswa::create($credentials);
                 $url =  URL::temporarySignedRoute(

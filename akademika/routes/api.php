@@ -9,6 +9,7 @@ use App\Http\Controllers\Siswa\KursusController as SiswaKursusController;
 use App\Http\Controllers\UtilityController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Storage;
 use Mockery\VerificationDirector;
 
 /*
@@ -65,5 +66,8 @@ Route::group(['middleware'=>'api'],function ()
         });
     });
 
+    Route::post('test', function() {
+        Storage::disk('google')->put('tesat.txt', 'Hello World');
+    });
 });
 
