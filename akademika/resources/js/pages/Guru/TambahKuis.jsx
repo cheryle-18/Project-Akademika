@@ -12,7 +12,15 @@ const TambahKuis = () => {
     const addCount = () => {
         setCtrSoal(ctrSoal+1)
         ctr.push(ctrSoal)
-        console.log(ctr)
+        // console.log(ctr)
+    }
+
+    const handleDelete = (idx) => {
+        console.log(idx)
+        const newCtr =  [...ctr];
+        newCtr.splice(idx, 1)
+        setCtr(newCtr)
+        setCtrSoal(ctrSoal-1)
     }
 
     useEffect(() => {
@@ -39,7 +47,7 @@ const TambahKuis = () => {
                     />
                 </div>
                 <div className="w-1/6">
-                    <button className="btn btn-sm h-9 bg-blue-900 hover:bg-blue-700 text-white rounded capitalize font-normal w-full">
+                    <button className="btn btn-sm h-9 bg-blue-900 hover:bg-blue-700 text-white rounded capitalize font-normal w-full" onClick={ () => handleDelete(index) }>
                         Hapus
                     </button>
                 </div>
