@@ -1,14 +1,16 @@
 import React from "react";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import DetailKursus from "./DetailKursus";
-import DetailMateri from "./DetailMateri";
+import DetailSubbab from "./DetailSubbab";
 import KursusDiterbitkan from "./KursusDiterbitkan";
 import KursusProses from "./KursusProses";
 import ReportSiswa from "./ReportSiswa";
 import TambahKuis from "./TambahKuis";
 import TambahKursus from "./TambahKursus";
-import TambahMateri from "./TambahMateri";
+import TambahSubbab from "./TambahSubbab";
 import TambahPengumuman from "./TambahPengumuman";
+import TambahMateri from "./TambahMateri";
+import EditMateri from "./EditMateri";
 
 const IndexGuru = () => {
     return(
@@ -26,11 +28,17 @@ const IndexGuru = () => {
                 <Route exact path="/guru/kursus/detail">
                     <DetailKursus></DetailKursus>
                 </Route>
+                <Route exact path="/guru/kursus/subbab/tambah">
+                    <TambahSubbab></TambahSubbab>
+                </Route>
+                <Route exact path="/guru/kursus/subbab/detail">
+                    <DetailSubbab></DetailSubbab>
+                </Route>
                 <Route exact path="/guru/kursus/materi/tambah">
                     <TambahMateri></TambahMateri>
                 </Route>
-                <Route exact path="/guru/kursus/materi">
-                    <DetailMateri></DetailMateri>
+                <Route exact path="/guru/kursus/materi/edit">
+                    <EditMateri></EditMateri>
                 </Route>
                 <Route exact path="/guru/kursus/kuis">
                     <TambahKuis></TambahKuis>

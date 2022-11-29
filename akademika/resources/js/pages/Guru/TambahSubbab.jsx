@@ -4,27 +4,16 @@ import GuruNav from "./Navbar"
 import Tabs from "./Tabs";
 import AuthUser from "../../components/AuthUser";
 
-const TambahMateri = () => {
+const TambahSubbab = () => {
     const [title, setTitle] = useState("proses")
     const [course, setCourse] = useState("Pengembangan Website Front-End Dasar")
-    const [bacaan, setBacaan] = useState()
-    const [video, setVideo] = useState()
+    const [judul, setJudul] = useState()
+    const [penjelasan,setPenjelasan] = useState()
+    const [durasi, setDurasi] = useState()
     const {http,user} = AuthUser();
 
-    const onChangeVideoHandler = (e) => {
-        setVideo(e.target.files[0])
-    }
-
     const submitForm = () => {
-        const formData = new FormData();
-        formData.append('video', video);
-        formData.append('subbab_id',22)
-        formData.append('penjelasan',penjelasan)
 
-        http.post("/guru/kursus/materi/tambah",formData).then((res) => {
-            let data = res.data;
-            console.log(data);
-        });
     }
 
     return(
@@ -42,29 +31,41 @@ const TambahMateri = () => {
                     {course}
                 </div>
                 <div className="text-2xl text-blue-900 font-semibold mb-6">
-                    Tambah Materi
+                    Tambah Subbab
                 </div>
                 <div className="w-full h-auto bg-white rounded-lg p-4 flex flex-col">
                     <table>
                         <tr className="p-2">
-                            <td className="py-4 align-top">Bacaan</td>
-                            <td className="py-2">
-                                <Textarea
-                                    className="w-full h-48"
-                                    name="bacaan"
-                                    onChange={(e) =>setBacaan(e.target.value)}
+                            <td className="py-4 w-1/6">Judul</td>
+                            <td>
+                                <Input
+                                    type="text"
+                                    className="w-full"
+                                    name="judul"
+                                    onChange={(e) => setJudul(e.target.value)}
                                 />
                             </td>
                         </tr>
                         <tr className="p-2">
-                            <td className="py-4 align-top">Video</td>
-                            <td className="flex flex-col py-2">
-                                <label class="block">
-                                    <span class="sr-only">Choose File</span>
-                                    <input type="file" name="video" class="block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded file:border-0 file:text-sm file:font-normal file:bg-blue-900 file:text-white hover:file:bg-blue-700"
-                                     onChange={onChangeVideoHandler}/>
-                                </label>
-                                <div className="text-gray-500 text-sm mt-1">*upload video penjelasan materi</div>
+                            <td className="py-4 align-top">Deskripsi</td>
+                            <td className="py-2">
+                                <Textarea
+                                    className="w-full"
+                                    name="desc"
+                                    onChange={(e) =>setPenjelasan(e.target.value)}
+                                />
+                            </td>
+                        </tr>
+                        <tr className="p-2">
+                            <td className="py-4">Durasi</td>
+                            <td className="flex w-1/4 py-2">
+                                <Input
+                                    type="text"
+                                    className=""
+                                    name="durasi"
+                                    onChange={(e) =>setDurasi(e.target.value)}
+                                />
+                                <span className="ml-3 my-auto">menit</span>
                             </td>
                         </tr>
                     </table>
@@ -77,4 +78,4 @@ const TambahMateri = () => {
     )
 }
 
-export default TambahMateri
+export default TambahSubbab

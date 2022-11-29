@@ -12,7 +12,7 @@ const DetailKursus = () => {
         durasi: 40
     })
 
-    const [listMateri, setListMateri] = useState([
+    const [listSubbab, setListSubbab] = useState([
         {
             judul: "HyperText Markup Language (HTML)",
             durasi: 120
@@ -104,10 +104,10 @@ const DetailKursus = () => {
                         </table>
                         <button className="btn w-full mt-3 text-base capitalize bg-blue-900 text-white hover:bg-blue-700 font-normal" name="btnSimpan">Simpan</button>
                     </div>
-                    <div className="subtitle text-xl font-semibold my-3">
-                        Materi Kursus
+                    <div className="subtitle text-xl font-semibold mt-10 mb-3">
+                        Subbab Kursus
                     </div>
-                    <div className="materi bg-white rounded-lg p-3">
+                    <div className="subbab bg-white rounded-lg p-3">
                         <table className="table table-compact w-full text-black">
                             <thead>
                                 <tr>
@@ -119,7 +119,7 @@ const DetailKursus = () => {
                             </thead>
                             <tbody>
                                 {
-                                    listMateri.map((n, index) => {
+                                    listSubbab.map((n, index) => {
                                         return(
                                             <tr>
                                                 <td className="text-center text-base">{index+1}</td>
