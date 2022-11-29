@@ -6,18 +6,117 @@ import GuruNav from "./Navbar";
 const TambahKuis = () => {
     const [title, setTitle] = useState("proses");
     const [course, setCourse] = useState("Pengembangan Website Front-End Dasar")
-    const ctr = [1]
+    const [ctr, setCtr] = useState([1])
     const [ctrSoal, setCtrSoal] = useState(1)
 
     const addCount = () => {
         setCtrSoal(ctrSoal+1)
         ctr.push(ctrSoal)
-        console.log(ctrSoal)
+        console.log(ctr)
     }
 
     useEffect(() => {
-
+        displaySoalCard
     }, [ctrSoal])
+
+    const displaySoalCard = ctr.map((c, index) => (
+        <div className="w-full h-auto bg-white rounded-lg p-4 flex flex-col -mt-4">
+            <div className="flex gap-2">
+                <div className="w-2/3">
+                    <Input
+                        type="text"
+                        label="Pertanyaan"
+                        className=""
+                        name="pertanyaan"
+                    />
+                </div>
+                <div className="w-1/6 mr-2">
+                    <Input
+                        type="text"
+                        label="Nilai"
+                        className=""
+                        name="nilai"
+                    />
+                </div>
+                <div className="w-1/6">
+                    <button className="btn btn-sm h-9 bg-blue-900 hover:bg-blue-700 text-white rounded capitalize font-normal w-full">
+                        Hapus
+                    </button>
+                </div>
+            </div>
+            <div className="pilihan mt-4">
+                <div className="p-1 border-2 border-gray-300 rounded flex my-1">
+                    <Radio
+                        type="radio"
+                        id=""
+                        name="jwbn"
+                        value="pil1"
+                    />
+                    <input
+                        type="text"
+                        className="border-2 border-gray-300 rounded w-full h-10 mr-3 my-auto px-2 focus:border-blue-300"
+                        name="pil1"
+                    />
+                    <button className="btn btn-sm bg-blue-900 hover:bg-blue-700 text-white rounded capitalize font-normal ml-auto my-auto mr-2">
+                        X
+                    </button>
+                </div>
+                <div className="p-1 border-2 border-gray-300 rounded flex my-1">
+                    <Radio
+                        type="radio"
+                        id=""
+                        name="jwbn"
+                        value="pil2"
+                    />
+                    <input
+                        type="text"
+                        className="border-2 border-gray-300 rounded w-full h-10 mr-3 my-auto px-2 focus:border-blue-300"
+                        name="pil2"
+                    />
+                    <button className="btn btn-sm bg-blue-900 hover:bg-blue-700 text-white rounded capitalize font-normal ml-auto my-auto mr-2">
+                        X
+                    </button>
+                </div>
+                <div className="p-1 border-2 border-gray-300 rounded flex my-1">
+                    <Radio
+                        type="radio"
+                        id=""
+                        name="jwbn"
+                        value="pil3"
+                    />
+                    <input
+                        type="text"
+                        className="border-2 border-gray-300 rounded w-full h-10 mr-3 my-auto px-2 focus:border-blue-300"
+                        name="pil3"
+                    />
+                    <button className="btn btn-sm bg-blue-900 hover:bg-blue-700 text-white rounded capitalize font-normal ml-auto my-auto mr-2">
+                        X
+                    </button>
+                </div>
+                <div className="p-1 border-2 border-gray-300 rounded flex my-1">
+                    <Radio
+                        type="radio"
+                        id=""
+                        name="jwbn"
+                        value="pil4"
+                    />
+                    <input
+                        type="text"
+                        className="border-2 border-gray-300 rounded w-full h-10 mr-3 my-auto px-2 focus:border-blue-300"
+                        name="pil4"
+                    />
+                    <button className="btn btn-sm bg-blue-900 hover:bg-blue-700 text-white rounded capitalize font-normal ml-auto my-auto mr-2">
+                        X
+                    </button>
+                </div>
+            </div>
+            <div className="mt-4">
+                <Textarea
+                    label="Pembahasan"
+                />
+            </div>
+        </div>
+    ))
 
     return(
         <div className="min-h-screen h-full w-full overflow-x-hidden flex flex-col bg-gray-100">
@@ -40,107 +139,10 @@ const TambahKuis = () => {
                     </button>
                 </div>
                 {
-                    ctr.map((c, index) => (
-                        <div className="w-full h-auto bg-white rounded-lg p-4 flex flex-col -mt-4">
-                            <div className="flex gap-2">
-                                <div className="w-2/3">
-                                    <Input
-                                        type="text"
-                                        label="Pertanyaan"
-                                        className=""
-                                        name="pertanyaan"
-                                    />
-                                </div>
-                                <div className="w-1/6 mr-2">
-                                    <Input
-                                        type="text"
-                                        label="Nilai"
-                                        className=""
-                                        name="nilai"
-                                    />
-                                </div>
-                                <div className="w-1/6">
-                                    <button className="btn btn-sm h-9 bg-blue-900 hover:bg-blue-700 text-white rounded capitalize font-normal w-full">
-                                        Hapus
-                                    </button>
-                                </div>
-                            </div>
-                            <div className="pilihan mt-4">
-                                <div className="p-1 border-2 border-gray-300 rounded flex my-1">
-                                    <Radio
-                                        type="radio"
-                                        id=""
-                                        name="jwbn"
-                                        value="pil1"
-                                    />
-                                    <input
-                                        type="text"
-                                        className="border-2 border-gray-300 rounded w-full h-10 mr-3 my-auto px-2 focus:border-blue-300"
-                                        name="pil1"
-                                    />
-                                    <button className="btn btn-sm bg-blue-900 hover:bg-blue-700 text-white rounded capitalize font-normal ml-auto my-auto mr-2">
-                                        X
-                                    </button>
-                                </div>
-                                <div className="p-1 border-2 border-gray-300 rounded flex my-1">
-                                    <Radio
-                                        type="radio"
-                                        id=""
-                                        name="jwbn"
-                                        value="pil2"
-                                    />
-                                    <input
-                                        type="text"
-                                        className="border-2 border-gray-300 rounded w-full h-10 mr-3 my-auto px-2 focus:border-blue-300"
-                                        name="pil2"
-                                    />
-                                    <button className="btn btn-sm bg-blue-900 hover:bg-blue-700 text-white rounded capitalize font-normal ml-auto my-auto mr-2">
-                                        X
-                                    </button>
-                                </div>
-                                <div className="p-1 border-2 border-gray-300 rounded flex my-1">
-                                    <Radio
-                                        type="radio"
-                                        id=""
-                                        name="jwbn"
-                                        value="pil3"
-                                    />
-                                    <input
-                                        type="text"
-                                        className="border-2 border-gray-300 rounded w-full h-10 mr-3 my-auto px-2 focus:border-blue-300"
-                                        name="pil3"
-                                    />
-                                    <button className="btn btn-sm bg-blue-900 hover:bg-blue-700 text-white rounded capitalize font-normal ml-auto my-auto mr-2">
-                                        X
-                                    </button>
-                                </div>
-                                <div className="p-1 border-2 border-gray-300 rounded flex my-1">
-                                    <Radio
-                                        type="radio"
-                                        id=""
-                                        name="jwbn"
-                                        value="pil4"
-                                    />
-                                    <input
-                                        type="text"
-                                        className="border-2 border-gray-300 rounded w-full h-10 mr-3 my-auto px-2 focus:border-blue-300"
-                                        name="pil4"
-                                    />
-                                    <button className="btn btn-sm bg-blue-900 hover:bg-blue-700 text-white rounded capitalize font-normal ml-auto my-auto mr-2">
-                                        X
-                                    </button>
-                                </div>
-                            </div>
-                            <div className="mt-4">
-                                <Textarea
-                                    label="Pembahasan"
-                                />
-                            </div>
-                        </div>
-                    ))
+                    displaySoalCard
                 }
                 <div className="w-full">
-                    <button className="btn btn-sm h-10 px-4 bg-blue-900 hover:bg-blue-700 text-white rounded capitalize font-normal ml-auto" onClick={(e) =>addCount()}>
+                    <button className="btn btn-sm h-10 px-4 bg-blue-900 hover:bg-blue-700 text-white rounded capitalize font-normal ml-auto" onClick={ addCount }>
                         Tambah Soal
                     </button>
                 </div>

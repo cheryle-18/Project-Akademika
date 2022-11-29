@@ -3,6 +3,7 @@ import React, { useState, useEffect } from "react";
 import GuruNav from "./Navbar"
 import Tabs from "./Tabs";
 import AuthUser from "../../components/AuthUser";
+import { Link } from "react-router-dom";
 
 const DetailSubbab = () => {
     const [title, setTitle] = useState("proses")
@@ -95,7 +96,6 @@ const DetailSubbab = () => {
                             <tr>
                                 <th className=" bg-white text-center text-base">NO</th>
                                 <th className=" bg-white text-center text-base">BACAAN</th>
-                                <th className=" bg-white text-center text-base">VIDEO</th>
                                 <th className=" bg-white text-center text-base">ACTION</th>
                             </tr>
                         </thead>
@@ -105,8 +105,7 @@ const DetailSubbab = () => {
                                     return(
                                         <tr>
                                             <td className="text-center text-base">{index+1}</td>
-                                            <td className="text-base truncate">{n.bacaan.substring(0, 70)}...</td>
-                                            <td className="text-center text-base">{n.video}</td>
+                                            <td className="text-base truncate">{n.bacaan.substring(0, 100)}...</td>
                                             <td className="text-center">
                                                 <button className="btn btn-sm capitalize bg-blue-900 text-white rounded mr-3 font-normal">Detail</button>
                                                 <button className="btn btn-sm capitalize bg-blue-900 text-white rounded font-normal">Hapus</button>
@@ -123,9 +122,11 @@ const DetailSubbab = () => {
                 </div>
                 <div className="w-full my-3">
                     <div className="mb-3">Tidak ada kuis untuk materi ini</div>
-                    <button className="btn btn-sm h-10 px-4 bg-blue-900 hover:bg-blue-700 text-white rounded capitalize font-normal">
-                        Tambah Kuis
-                    </button>
+                    <Link to="/guru/kursus/kuis">
+                        <button className="btn btn-sm h-10 px-4 bg-blue-900 hover:bg-blue-700 text-white rounded capitalize font-normal">
+                            Tambah Kuis
+                        </button>
+                    </Link>
                 </div>
             </div>
         </div>
