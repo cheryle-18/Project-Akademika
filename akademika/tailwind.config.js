@@ -32,7 +32,10 @@ module.exports = withMT({
                 "250px": "250px",
                 "280px": "280px",
                 "300px": "300px",
+                "330px": "330px",
                 "400px": "400px",
+                "450px": "450px",
+                "430px": "430px",
                 "500px": "500px",
                 "600px": "600px",
                 "700px": "700px",
@@ -53,7 +56,13 @@ module.exports = withMT({
                 "90vh": "90vh",
             },
             width: {
+                "80px": "80px",
+                "85px": "85px",
+                "90px": "90px",
                 "100px": "100px",
+                "130px": "130px",
+                "150px": "150px",
+                "160px": "160px",
                 "200px": "200px",
                 "250px": "250px",
                 "280px": "280px",
@@ -82,6 +91,7 @@ module.exports = withMT({
             },
             inset: {
                 70: "17.4rem",
+                "160px": "160px",
             },
             minHeight: {
                 "100px": "100px",

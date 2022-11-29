@@ -3,6 +3,7 @@ import clockLogo from "../../../images/Clock.png";
 import CardPic from "../../../images/card_pic.png";
 import { round } from "lodash";
 import {toRupiah} from "../../components/CurrencyUtils";
+import { Link } from "react-router-dom";
 
 const CourseCard = (course) => {
     return(
@@ -34,14 +35,14 @@ const CourseCard = (course) => {
                         {round(course.course.durasi / 60)} jam
                     </span>
                     <span>
-                        <a href="" className="ml-auto">
+                        <Link to={"/guru/kursus/diterbitkan/detail"} className="ml-auto">
                             <button
                                 type="button"
                                 class="inline-block ml-auto px-6 py-2.5 bg-custom-blue text-white font-medium text-xs leading-tight uppercase rounded shadow-md hover:bg-blue-800 hover:shadow-lg focus:bg-blue-800 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-800 active:shadow-lg transition duration-150 ease-in-out"
                             >
                                 Detail
                             </button>
-                        </a>
+                        </Link>
                     </span>
                 </div>
             </div>

@@ -1,12 +1,37 @@
-import React, { useState, useEffect } from "react";
-import { BrowserRouter as Router, Route } from "react-router-dom";
+import React, { useState, useEffect, Fragment } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faCoffee } from "@fortawesome/free-solid-svg-icons";
+import { faClock } from "@fortawesome/free-solid-svg-icons";
 import * as faIcon from "@fortawesome/free-solid-svg-icons";
-import { Link } from "react-router-dom";
+import Nav from "./Navbar";
+import {
+    Accordion,
+    AccordionHeader,
+    AccordionBody,
+} from "@material-tailwind/react";
 import AuthUser from "../../components/AuthUser";
 
-const GuruNav = () => {
+function Icon({ id, open }) {
+    return (
+        <svg
+            xmlns="http://www.w3.org/2000/svg"
+            className={`${
+                id === open ? "rotate-180" : ""
+            } h-5 w-5 transition-transform`}
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+            strokeWidth={2}
+        >
+            <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                d="M19 9l-7 7-7-7"
+            />
+        </svg>
+    );
+}
+
+const DetailDiterbitkan = () => {
     const [isOpened, setIsOpened] = useState(false);
     const { http, user } = AuthUser();
     const [siswa_id_now, setSiswaIdNow] = useState(null);
@@ -192,7 +217,7 @@ const GuruNav = () => {
     const getChat = (siswa_id) => {
         var chatNow = null;
         chats.forEach((chat) => {
-            if(chat.pivot.siswa_id === siswa_id){
+            if (chat.pivot.siswa_id === siswa_id) {
                 chatNow = chat;
             }
         });
@@ -224,12 +249,13 @@ const GuruNav = () => {
     ));
 
     const cetakSiswa = siswas.map((siswa, index) => (
-        <div className="pr-2 mt-2">
+        <div className="pl-1 mt-2">
             <div
                 className="mx-2 w-130px bg-white py-2 overflow-x-hidden rounded-lg cursor-pointer overflow-y-hidden"
                 onClick={() => {
                     setSiswaIdNow(siswa.siswa_id);
                     setTimeout(last, 10);
+                    setChatContent("");
                 }}
             >
                 <div className="float-left h-11 flex justify-center items-center w-fit text-3xl">
@@ -287,13 +313,32 @@ const GuruNav = () => {
         // setInterval(() => {
         //     fetchDataChat(false);
         // }, 2000);
-    }, [siswa_id_now]);
+    }, []);
+
+    const [course, setCourse] = useState({
+        nama: "Pengembangan Website Front-End Dasar",
+        kategori: "Teknologi Informasi",
+        deskripsi:
+            "Belajar fundamental dari pengembangan website front-end dengan HTML, CSS, dan JavaScript",
+        harga: 250000,
+        durasi: 40,
+    });
+
+    const [open, setOpen] = useState(0);
+
+    const handleOpen = (value) => {
+        setOpen(open === value ? 0 : value);
+    };
 
     return (
-        <div className="bg-custom-blue flex w-full px-4 sm:px-16 md:px-16">
-            {/* {isOpened && (
-                <div className="fixed bottom-14 lg:bottom-32 right-160px lg:right-72 bg-transparent duration-500 z-10">
-                    <div className="w-150px bg-custom-light-blue px-4 rounded-t-lg relative">
+        <div className="min-h-screen w-full overflow-x-hidden flex flex-col">
+            {isOpened && (
+                // <div className="fixed bottom-14 lg:bottom-32 right-160px lg:right-72 bg-transparent duration-500 z-10 mt-2">
+                <div className="fixed bottom-0 right-160px bg-transparent duration-500 z-10 mt-2">
+                    <div className="w-full relative">
+                        <div className="absolute w-full h-10 bg-custom-blue left-40 rounded-tr-lg"></div>
+                    </div>
+                    <div className="w-150px bg-custom-light-blue px-4 rounded-t-lg relative rounded-tl-lg">
                         <div className="w-full py-4 font-semibold text-white">
                             <div className="float-left"></div>
                             <div
@@ -304,7 +349,7 @@ const GuruNav = () => {
                             </div>
                             <div className="clear-both"></div>
                         </div>
-                        <div className="w-160px h-330px lg:h-430px overflow-auto bg-custom-light-blue top-0 left-0 absolute z-20">
+                        <div className="w-160px h-330px lg:h-430px overflow-auto bg-custom-light-blue top-0 left-0 absolute z-20 rounded-tl-lg">
                             {cetakSiswa}
                         </div>
                     </div>
@@ -341,7 +386,8 @@ const GuruNav = () => {
                 </div>
             )}
             {isOpened && (
-                <div className="fixed bottom-14 lg:bottom-32 right-0 lg:right-32 bg-transparent duration-500 z-10">
+                // <div className="fixed bottom-14 lg:bottom-32 right-0 lg:right-32 bg-transparent duration-500 z-20">
+                <div className="fixed bottom-0 right-0 bg-transparent duration-500 z-20">
                     <div className="w-300px lg:w-400px bg-custom-blue px-4 rounded-tr-lg">
                         <div className="w-full py-4 font-semibold text-white">
                             <div className="float-left">
@@ -377,7 +423,7 @@ const GuruNav = () => {
                         {cetakChat}
                         <div id="section" className=""></div>
                     </div>
-                    <div className="w-300px lg:w-400px bg-custom-blue px-4 rounded-b-lg h-fit">
+                    <div className="w-300px lg:w-400px bg-custom-blue px-4 rounded-br-lg h-fit">
                         <div className="w-10/12 p-4 font-semibold float-left">
                             {siswa_id_now != null && (
                                 <input
@@ -413,41 +459,122 @@ const GuruNav = () => {
                 className="fixed bottom-0 lg:bottom-10 right-0 lg:right-10 p-2 bg-custom-light-blue text-custom-blue rounded-lg text-4xl cursor-pointer duration-500 hover:text-custom-light-blue hover:bg-custom-blue z-10"
             >
                 <FontAwesomeIcon icon={faIcon.faMessage}></FontAwesomeIcon>
-            </div> */}
-            <div className="my-5 w-full">
-                {/* layar besar */}
-                <div className="hidden md:block">
-                    <div className="text-3xl font-semibold text-white float-left">
-                        <Link to="/">Akademika</Link>
+            </div>
+
+            <div className="px-4 sm:px-16 md:px-24 drawer-side bg-custom-blue overflow-y-auto flex-none">
+                <Nav></Nav>
+            </div>
+            <div className="banner">
+                <div
+                    className="static h-96 w-full z-0 px-4 sm:px-16 md:px-16 py-14 flex"
+                    style={{
+                        backgroundImage:
+                            "linear-gradient(to bottom right, rgb(13,90,162), rgb(152,204,234))",
+                    }}
+                >
+                    <div className="w-1/4 p-3 px-0 h-full flex flex-col">
+                        <img
+                            className="w-48 h-48 mb-4 mx-auto object-cover md:rounded-none"
+                            src="/card_pic.png"
+                            alt=""
+                        />
+                        <button className="btn w-48 mx-auto rounded bg-white text-blue-900 border-0 hover:bg-gray-100 capitalize font-medium text-base">
+                            Daftar Sekarang
+                        </button>
                     </div>
-                    <div className="pt-1.5 text-white float-right cursor-pointer">
-                        <Link to="/guru/profile">Halo, Guru</Link>
-                    </div>
-                    <div className="pt-1.5 text-white float-right mr-5 cursor-pointer">
-                        <Link to="/guru/laporan">Laporkan Siswa</Link>
-                    </div>
-                    <div className="pt-1.5 text-white float-right mr-5 cursor-pointer">
-                        <Link to="/guru/kursus">Kursus Saya</Link>
+                    <div className="w-3/4 flex flex-col text-white">
+                        <div className="font-bold text-4xl mb-3">
+                            {course.nama}
+                        </div>
+                        <div className="text-xl mb-3 font-semibold">
+                            {course.kategori}
+                        </div>
+                        <div className="text-lg">{course.deskripsi}</div>
+                        <div className="mt-auto flex text-xl font-semibold">
+                            <span>IDR {course.harga}</span>
+                            <span className="ml-8">
+                                <FontAwesomeIcon
+                                    icon={faClock}
+                                    className="text-white mr-2"
+                                />
+                                {course.durasi} jam
+                            </span>
+                        </div>
                     </div>
                 </div>
-                {/* layar kecil */}
-                <div className="md:hidden w-full">
-                    <div className="text-3xl font-semibold text-white float-left">
-                        <Link to="/">Akademika</Link>
-                    </div>
-                    <div className="pt-1.5 text-white float-right cursor-pointer">
-                        <Link to="/guru/profile">Halo, User</Link>
-                    </div>
-                    <div className="pt-1.5 text-white float-right mr-5 cursor-pointer">
-                        <Link to="/guru/laporan">Laporkan Siswa</Link>
-                    </div>
-                    <div className="pt-1.5 text-white float-right mr-5 cursor-pointer">
-                        <Link to="/guru/kursus">Kursus Saya</Link>
-                    </div>
+            </div>
+            <div className="silabus p-16 m-0 w-full overflow-x-none bg-gray-100">
+                <div className="font-bold text-3xl text-blue-900 mb-5">
+                    Silabus Kursus
                 </div>
+                <Fragment>
+                    <Accordion
+                        open={open === 1}
+                        icon={<Icon id={1} open={open} />}
+                    >
+                        <AccordionHeader
+                            onClick={() => handleOpen(1)}
+                            className="bg-blue-100 p-4 border-2 border-b-0 border-blue-900"
+                        >
+                            HTML
+                        </AccordionHeader>
+                        <AccordionBody className="bg-white p-4 text-base border-2 border-blue-900">
+                            <div className="w-full bg-white flex mb-3">
+                                <span>Materi</span>
+                                <span className="ml-auto">120 Menit</span>
+                            </div>
+                            <div className="w-full bg-white flex">
+                                <span>Kuis</span>
+                                <span className="ml-auto">20 Menit</span>
+                            </div>
+                        </AccordionBody>
+                    </Accordion>
+                    <Accordion
+                        open={open === 2}
+                        icon={<Icon id={2} open={open} />}
+                    >
+                        <AccordionHeader
+                            onClick={() => handleOpen(2)}
+                            className="bg-blue-100 p-4 border-2 border-b-0 border-blue-900"
+                        >
+                            CSS
+                        </AccordionHeader>
+                        <AccordionBody className="bg-white p-4 text-base border-2 border-blue-900">
+                            <div className="w-full bg-white flex mb-3">
+                                <span>Materi</span>
+                                <span className="ml-auto">120 Menit</span>
+                            </div>
+                            <div className="w-full bg-white flex">
+                                <span>Kuis</span>
+                                <span className="ml-auto">20 Menit</span>
+                            </div>
+                        </AccordionBody>
+                    </Accordion>
+                    <Accordion
+                        open={open === 3}
+                        icon={<Icon id={3} open={open} />}
+                    >
+                        <AccordionHeader
+                            onClick={() => handleOpen(3)}
+                            className="bg-blue-100 p-4 border-2 border-blue-900"
+                        >
+                            JavaScript
+                        </AccordionHeader>
+                        <AccordionBody className="bg-white p-4 text-base border-2 border-blue-900">
+                            <div className="w-full bg-white flex mb-3">
+                                <span>Materi</span>
+                                <span className="ml-auto">120 Menit</span>
+                            </div>
+                            <div className="w-full bg-white flex">
+                                <span>Kuis</span>
+                                <span className="ml-auto">20 Menit</span>
+                            </div>
+                        </AccordionBody>
+                    </Accordion>
+                </Fragment>
             </div>
         </div>
     );
 };
 
-export default GuruNav;
+export default DetailDiterbitkan;
