@@ -1,11 +1,13 @@
 <?php
 
+use App\Http\Controllers\Admin\SiswaController as SiswaAdminController;
 use App\Http\Controllers\Auth\AuthController;
 use App\Http\Controllers\Auth\ForgotPasswordController;
 use App\Http\Controllers\Auth\ResetPasswordController;
 use App\Http\Controllers\Auth\VerificationController;
 use App\Http\Controllers\Guru\KursusController;
 use App\Http\Controllers\Siswa\KursusController as SiswaKursusController;
+
 use App\Http\Controllers\UtilityController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -47,6 +49,13 @@ Route::group(['middleware'=>'api'],function ()
 
     Route::prefix('get')->group(function () {
         Route::post('kursus',[UtilityController::class,'getAllKursus']);
+    });
+
+    Route::prefix('admin')->group(function () {
+        Route::prefix('master')->group(function () {
+            Route::post('siswa',[SiswaAdminController::class,'getSiswa']);
+            Route::post('bansiswa',[SiswaAdminController::class,'banSiswa']);
+        });
     });
 
     Route::prefix('guru')->group(function () {

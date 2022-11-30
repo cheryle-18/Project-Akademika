@@ -1,47 +1,52 @@
-import React, { useState } from "react";
+import React, { useState,useEffect } from "react";
 import { Button } from "@material-tailwind/react";
 import { BrowserRouter as Router, Route } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCoffee } from "@fortawesome/free-solid-svg-icons";
 import Sidebar from "./Sidebar";
-
+import AuthUser from "../../components/AuthUser";
 const SiswaAdmin = () => {
-    const [siswas, setSiswa] = useState([
-        {
-            id: "G001",
-            nama: "John Doe",
-            email: "john.doe@gmail.com",
-            status: "Aktif",
-        },
-        {
-            id: "G001",
-            nama: "John Doe",
-            email: "john.doe@gmail.com",
-            status: "Aktif",
-        },
-        {
-            id: "G001",
-            nama: "John Doe",
-            email: "john.doe@gmail.com",
-            status: "Aktif",
-        },
-        {
-            id: "G001",
-            nama: "John Doe",
-            email: "john.doe@gmail.com",
-            status: "Aktif",
-        },
-    ]);
+    const {http} = AuthUser();
+    const fetchDataSiswa = () => {
+        http.post('/admin/master/siswa').then((res) => {
+            setSiswa(res.data.siswa);
+            // console.log(res);
+          })
+    }
+    const banSiswa = (siswa_id) => {
+        console.log(siswa_id);
+        http.post("/admin/master/bansiswa", {
+            siswa_id: siswa_id,
+        }).then((res) => {
+            //refresh
+            console.log(res);
+            fetchDataSiswa(true);
+        });
+    };
+
+    useEffect(() => {
+        fetchDataSiswa();
+    }, []);
+
+    const [siswa, setSiswa] = useState([]);
 
     const classBorder = "text-center border border-b-gray-600 border-x-0";
 
-    const cetakSiswa = siswas.map((siswa, index) => (
+    const cetakSiswa = siswa.map((siswa, index) => (
         <tr className={classBorder}>
             <td className="whitespace-pre-wrap text-base">{index + 1}</td>
-            <td className="whitespace-pre-wrap text-base">{siswa.id}</td>
+            <td className="whitespace-pre-wrap text-base">{siswa.siswa_id}</td>
             <td className="whitespace-pre-wrap text-base">{siswa.nama}</td>
             <td className="whitespace-pre-wrap text-base">{siswa.email}</td>
-            <td className="whitespace-pre-wrap text-base">{siswa.status}</td>
+            <td>
+                <button
+                    type="button"
+                    onClick={() => banSiswa(siswa.siswa_id)}
+                    className="py-2 px-4  bg-blue-600 hover:bg-blue-600 text-white w-20 transition ease-in duration-200 text-center text-base font-normal shadow-md rounded-lg h-10"
+                >
+                    {siswa.status==1 ? "Aktif" : "Banned"}
+                </button>
+            </td>
             <td>
                 <button
                     type="button"
