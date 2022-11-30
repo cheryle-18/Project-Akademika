@@ -1,33 +1,115 @@
 import { Input, Radio, Textarea } from "@material-tailwind/react";
 import React, { useState, useEffect, Fragment } from "react";
-import { Tabs } from "@material-tailwind/react";
+import { useId } from "react";
 import GuruNav from "./Navbar";
+import Tabs from "./Tabs";
 
 const TambahKuis = () => {
     const [title, setTitle] = useState("proses");
     const [course, setCourse] = useState("Pengembangan Website Front-End Dasar")
     const [ctr, setCtr] = useState([1])
     const [ctrSoal, setCtrSoal] = useState(1)
+    const id = useId()
+
+    const [listSoal, setListSoal] = useState([
+        {
+            id: id+0,
+            pertanyaan: "",
+            nilai: 0,
+            jawaban: "",
+            pilihan: [],
+            pembahasan: ""
+        }
+    ])
 
     const addCount = () => {
         setCtrSoal(ctrSoal+1)
-        ctr.push(ctrSoal)
+
+        listSoal.push({
+            id: id+ctrSoal,
+            pertanyaan: "",
+            nilai: 0,
+            jawaban: "",
+            pilihan: [],
+            pembahasan: ""
+        })
         // console.log(ctr)
     }
 
-    const handleDelete = (idx) => {
-        console.log(idx)
-        const newCtr =  [...ctr];
-        newCtr.splice(idx, 1)
-        setCtr(newCtr)
+    const handleDelete = (deleteId) => {
+        console.log(deleteId)
+        const newListSoal = listSoal.filter(e=>e.id!=deleteId)
+        console.log(newListSoal)
+        setListSoal(newListSoal)
+
         setCtrSoal(ctrSoal-1)
+    }
+
+    const updatePertanyaan = (pertanyaan, idx) => {
+        let soal = listSoal[idx]
+        soal.pertanyaan = pertanyaan
+
+        const newListSoal = [...listSoal]
+        newListSoal[idx] = soal
+        setListSoal(newListSoal)
+
+        console.log(listSoal)
+    }
+
+    const updateNilai = (nilai, idx) => {
+        let soal = listSoal[idx]
+        soal.nilai = nilai
+
+        const newListSoal = [...listSoal]
+        newListSoal[idx] = soal
+        setListSoal(newListSoal)
+
+        console.log(listSoal)
+    }
+
+    const updatePilihan = (pilihan, idxPil, idx) => {
+        let soal = listSoal[idx]
+        if(soal.pilihan.length <= idxPil){
+            soal.pilihan.push(pilihan)
+        }
+        else{
+            soal.pilihan[idxPil] = pilihan
+        }
+
+        const newListSoal = [...listSoal]
+        newListSoal[idx] = soal
+        setListSoal(newListSoal)
+
+        console.log(listSoal)
+    }
+
+    const updateJawaban = (idxJwbn, idx) => {
+        let soal = listSoal[idx]
+        soal.jawaban = soal.pilihan[idxJwbn]
+
+        const newListSoal = [...listSoal]
+        newListSoal[idx] = soal
+        setListSoal(newListSoal)
+
+        console.log(listSoal)
+    }
+
+    const updatePembahasan = (pembahasan, idx) => {
+        let soal = listSoal[idx]
+        soal.pembahasan = pembahasan
+
+        const newListSoal = [...listSoal]
+        newListSoal[idx] = soal
+        setListSoal(newListSoal)
+
+        console.log(listSoal)
     }
 
     useEffect(() => {
         displaySoalCard
     }, [ctrSoal])
 
-    const displaySoalCard = ctr.map((c, index) => (
+    const displaySoalCard = listSoal.map((soal, index) => (
         <div className="w-full h-auto bg-white rounded-lg p-4 flex flex-col -mt-4">
             <div className="flex gap-2">
                 <div className="w-2/3">
@@ -36,6 +118,8 @@ const TambahKuis = () => {
                         label="Pertanyaan"
                         className=""
                         name="pertanyaan"
+                        value={soal.pertanyaan}
+                        onChange={ (e) => updatePertanyaan(e.target.value, index) }
                     />
                 </div>
                 <div className="w-1/6 mr-2">
@@ -44,10 +128,12 @@ const TambahKuis = () => {
                         label="Nilai"
                         className=""
                         name="nilai"
+                        value={soal.nilai}
+                        onChange={ (e) => updateNilai(e.target.value, index) }
                     />
                 </div>
                 <div className="w-1/6">
-                    <button className="btn btn-sm h-9 bg-blue-900 hover:bg-blue-700 text-white rounded capitalize font-normal w-full" onClick={ () => handleDelete(index) }>
+                    <button className="btn btn-sm h-9 bg-blue-900 hover:bg-blue-700 text-white rounded capitalize font-normal w-full" onClick={ () => handleDelete(soal.id) }>
                         Hapus
                     </button>
                 </div>
@@ -57,70 +143,73 @@ const TambahKuis = () => {
                     <Radio
                         type="radio"
                         id=""
-                        name="jwbn"
-                        value="pil1"
+                        name={`jwbn${soal.id}`}
+                        checked={soal.jawaban==soal.pilihan[0] && true}
+                        // { ...soal.jawaban==soal.pilihan[0] && checked }
+                        onClick={ () => updateJawaban(0, index) }
                     />
                     <input
                         type="text"
-                        className="border-2 border-gray-300 rounded w-full h-10 mr-3 my-auto px-2 focus:border-blue-300"
+                        className="border-2 border-gray-300 rounded w-full h-10 mr-1 my-auto px-2 focus:border-blue-300"
                         name="pil1"
+                        value={soal.pilihan[0]}
+                        onChange={ (e) => updatePilihan(e.target.value, 0, index) }
                     />
-                    <button className="btn btn-sm bg-blue-900 hover:bg-blue-700 text-white rounded capitalize font-normal ml-auto my-auto mr-2">
-                        X
-                    </button>
                 </div>
                 <div className="p-1 border-2 border-gray-300 rounded flex my-1">
                     <Radio
                         type="radio"
                         id=""
-                        name="jwbn"
-                        value="pil2"
+                        name={`jwbn${soal.id}`}
+                        checked={soal.jawaban==soal.pilihan[1] && true}
+                        onClick={ () => updateJawaban(1, index) }
                     />
                     <input
                         type="text"
-                        className="border-2 border-gray-300 rounded w-full h-10 mr-3 my-auto px-2 focus:border-blue-300"
+                        className="border-2 border-gray-300 rounded w-full h-10 mr-1 my-auto px-2 focus:border-blue-300"
                         name="pil2"
+                        value={soal.pilihan[1]}
+                        onChange={ (e) => updatePilihan(e.target.value, 1, index) }
                     />
-                    <button className="btn btn-sm bg-blue-900 hover:bg-blue-700 text-white rounded capitalize font-normal ml-auto my-auto mr-2">
-                        X
-                    </button>
                 </div>
                 <div className="p-1 border-2 border-gray-300 rounded flex my-1">
                     <Radio
                         type="radio"
                         id=""
-                        name="jwbn"
-                        value="pil3"
+                        name={`jwbn${soal.id}`}
+                        checked={soal.jawaban==soal.pilihan[2] && true}
+                        onClick={ () => updateJawaban(2, index) }
                     />
                     <input
                         type="text"
-                        className="border-2 border-gray-300 rounded w-full h-10 mr-3 my-auto px-2 focus:border-blue-300"
+                        className="border-2 border-gray-300 rounded w-full h-10 mr-1 my-auto px-2 focus:border-blue-300"
                         name="pil3"
+                        value={soal.pilihan[2]}
+                        onChange={ (e) => updatePilihan(e.target.value, 2, index) }
                     />
-                    <button className="btn btn-sm bg-blue-900 hover:bg-blue-700 text-white rounded capitalize font-normal ml-auto my-auto mr-2">
-                        X
-                    </button>
                 </div>
                 <div className="p-1 border-2 border-gray-300 rounded flex my-1">
                     <Radio
                         type="radio"
                         id=""
-                        name="jwbn"
-                        value="pil4"
+                        name={`jwbn${soal.id}`}
+                        checked={soal.jawaban==soal.pilihan[3] && true}
+                        onClick={ () => updateJawaban(3, index) }
                     />
                     <input
                         type="text"
-                        className="border-2 border-gray-300 rounded w-full h-10 mr-3 my-auto px-2 focus:border-blue-300"
+                        className="border-2 border-gray-300 rounded w-full h-10 mr-1 my-auto px-2 focus:border-blue-300"
                         name="pil4"
+                        value={soal.pilihan[3]}
+                        onChange={ (e) => updatePilihan(e.target.value, 3, index) }
                     />
-                    <button className="btn btn-sm bg-blue-900 hover:bg-blue-700 text-white rounded capitalize font-normal ml-auto my-auto mr-2">
-                        X
-                    </button>
                 </div>
             </div>
             <div className="mt-4">
                 <Textarea
                     label="Pembahasan"
+                    value={soal.pembahasan}
+                    onChange={ (e) => updatePembahasan(e.target.value, index) }
                 />
             </div>
         </div>
