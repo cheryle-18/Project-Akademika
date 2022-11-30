@@ -52,7 +52,7 @@ const KursusAdmin = () => {
             <td className="text-base">{master.kursus_id}</td>
             <td className="text-base">{master.nama}</td>
             <td className="text-base">{master.kategori}</td>
-            <td className="text-base">{master.guru_id}</td>
+            <td className="text-base">{master.guru.nama}</td>
             <td className="text-green-700 text-base">{master.status==1 ? "Live" : "Pending"}</td>
             <td className="text-base">
                 <button
@@ -71,7 +71,7 @@ const KursusAdmin = () => {
             <td className="text-base">{pengajuan.kursus_id}</td>
             <td className="text-base">{pengajuan.nama}</td>
             <td className="text-base">{pengajuan.kategori}</td>
-            <td className="text-base">{pengajuan.guru_id}</td>
+            <td className="text-base">{pengajuan.guru.nama}</td>
             <td className="text-green-700 text-base">{pengajuan.status==1 ? "Live" : "Pending"}</td>
             <td>
                 <button

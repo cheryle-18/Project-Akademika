@@ -36,8 +36,8 @@ class SiswaController extends Controller
     function getKursus(Request $request)
     {
         $kursus = Kursus::all();
-        $kursusaktif = Kursus::where('status','=','1')->get();
-        $kursuspending = Kursus::where('status','=','0')->get();
+        $kursusaktif = Kursus::with('guru')->where('status','=','1')->get();
+        $kursuspending = Kursus::with('guru')->where('status','=','0')->get();
         return response()->json([
             "kursus" => $kursus,
             "kursusaktif" => $kursusaktif,
