@@ -60,4 +60,20 @@ class SiswaController extends Controller
         //     "siswa" => $siswa
         // ]);
     }
+
+    function setujuiKursus(Request $request)
+    {
+        $kursus = Kursus::find($request->kursus_id);
+        $kursus->status = 1;
+        $kursus->save();
+        return $request->kursus_id;
+    }
+
+    function batalKursus(Request $request)
+    {
+        $kursus = Kursus::find($request->kursus_id);
+        $kursus->status = 0;
+        $kursus->save();
+        return $request->kursus_id;
+    }
 }
