@@ -30,6 +30,10 @@ class Kursus extends Model
     {
         return $this->hasMany(Subbab::class,'kursus_id','kursus_id');
     }
+    function guru()
+    {
+        return $this->belongsTo(Guru::class,'guru_id','guru_id');
+    }
     function pengumuman()
     {
         return $this->hasMany(Pengumuman::class,'kursus_id','kursus_id');

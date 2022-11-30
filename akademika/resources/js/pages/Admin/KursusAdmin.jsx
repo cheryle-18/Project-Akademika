@@ -26,7 +26,7 @@ const KursusAdmin = () => {
     const fetchDatakursus = () => {
         http.post('/admin/master/kursus').then((res) => {
             setMaster(res.data.kursusaktif);
-            // console.log(res);
+            console.log(res);
           })
 
           http.post('/admin/master/kursus').then((res) => {
