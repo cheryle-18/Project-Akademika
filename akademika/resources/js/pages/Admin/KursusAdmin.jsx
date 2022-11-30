@@ -91,7 +91,11 @@ const KursusAdmin = () => {
                         onClickBatal(master.kursus_id);
                     }}
                     type="button"
+<<<<<<< HEAD
                     className="py-2 px-4  bg-red-800 hover:bg-red-500 text-white transition ease-in duration-200 text-center text-base font-normal shadow-md rounded-lg w-20"
+=======
+                    className="py-2 px-4  bg-custom-blue hover:bg-blue-900 text-white transition ease-in duration-200 text-center text-base font-normal shadow-md rounded-lg w-20"
+>>>>>>> 97f022513a00ec1847c911e24d19bb71f9269320
                 >
                     Batal
                 </button>
@@ -123,7 +127,11 @@ const KursusAdmin = () => {
                         onClickSetuju(pengajuan.kursus_id);
                     }}
                     type="button"
+<<<<<<< HEAD
                     className="py-2 px-4  bg-green-800 hover:bg-green-500 text-white transition ease-in duration-200 text-center text-base font-normal shadow-md rounded-lg w-20"
+=======
+                    className="py-2 px-4  bg-custom-blue hover:bg-blue-900 text-white transition ease-in duration-200 text-center text-base font-normal shadow-md rounded-lg w-20"
+>>>>>>> 97f022513a00ec1847c911e24d19bb71f9269320
                 >
                     Setujui
                 </button>
