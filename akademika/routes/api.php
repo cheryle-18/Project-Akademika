@@ -57,8 +57,11 @@ Route::group(['middleware'=>'api'],function ()
             Route::post('guru',[SiswaAdminController::class,'getGuru']);
             Route::post('bansiswa',[SiswaAdminController::class,'banSiswa']);
 
-            Route::post('kursus',[SiswaAdminController::class,'getKursus']);
-
+            Route::prefix('kursus')->group(function () {
+                Route::post('/',[SiswaAdminController::class,'getKursus']);
+                Route::post('setujui',[SiswaAdminController::class,'setujuiKursus']);
+                Route::post('batal',[SiswaAdminController::class,'batalKursus']);
+            });
         });
     });
 

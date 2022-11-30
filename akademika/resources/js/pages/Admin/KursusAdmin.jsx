@@ -1,4 +1,4 @@
-import React, { useState,useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { Button } from "@material-tailwind/react";
 import { BrowserRouter as Router, Route } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -22,19 +22,40 @@ const KursusAdmin = () => {
         setTitle("pengajuan");
     };
 
-    const {http} = AuthUser();
+    const { http } = AuthUser();
     const fetchDatakursus = () => {
-        http.post('/admin/master/kursus').then((res) => {
+        http.post("/admin/master/kursus").then((res) => {
             setMaster(res.data.kursusaktif);
             console.log(res);
-          })
+        });
 
-          http.post('/admin/master/kursus').then((res) => {
+        http.post("/admin/master/kursus").then((res) => {
             setPengajuan(res.data.kursuspending);
             // console.log(res);
-          })
+        });
+    };
 
-    }
+    const onClickSetuju = (id) => {
+        http.post("/admin/master/kursus/setujui", {
+            kursus_id: id,
+        }).then((res) => {
+            setTimeout(() => {
+                fetchDatakursus();
+            }, 10);
+            console.log(res);
+        });
+    };
+
+    const onClickBatal = (id) => {
+        http.post("/admin/master/kursus/batal", {
+            kursus_id: id,
+        }).then((res) => {
+            setTimeout(() => {
+                fetchDatakursus();
+            }, 10);
+            console.log(res);
+        });
+    };
 
     useEffect(() => {
         fetchDatakursus();
@@ -53,13 +74,26 @@ const KursusAdmin = () => {
             <td className="text-base">{master.nama}</td>
             <td className="text-base">{master.kategori}</td>
             <td className="text-base">{master.guru.nama}</td>
-            <td className="text-green-700 text-base">{master.status==1 ? "Live" : "Pending"}</td>
+            <td className="text-green-700 text-base">
+                {master.status == 1 ? "Live" : "Pending"}
+            </td>
             <td className="text-base">
                 <button
                     type="button"
                     className="py-2 px-4  bg-custom-blue hover:bg-blue-900 text-white transition ease-in duration-200 text-center text-base font-normal shadow-md rounded-lg w-20"
                 >
                     Detail
+                </button>
+            </td>
+            <td className="text-base">
+                <button
+                    onClick={(e) => {
+                        onClickBatal(master.kursus_id);
+                    }}
+                    type="button"
+                    className="py-2 px-4  bg-custom-blue hover:bg-blue-900 text-white transition ease-in duration-200 text-center text-base font-normal shadow-md rounded-lg w-20"
+                >
+                    Batal
                 </button>
             </td>
         </tr>
@@ -72,13 +106,26 @@ const KursusAdmin = () => {
             <td className="text-base">{pengajuan.nama}</td>
             <td className="text-base">{pengajuan.kategori}</td>
             <td className="text-base">{pengajuan.guru.nama}</td>
-            <td className="text-green-700 text-base">{pengajuan.status==1 ? "Live" : "Pending"}</td>
+            <td className="text-red-700 text-base">
+                {pengajuan.status == 1 ? "Live" : "Pending"}
+            </td>
             <td>
                 <button
                     type="button"
                     className="py-2 px-4  bg-custom-blue hover:bg-blue-900 text-white w-20 transition ease-in duration-200 text-center text-base font-normal shadow-md rounded-lg"
                 >
                     Detail
+                </button>
+            </td>
+            <td className="text-base">
+                <button
+                    onClick={(e) => {
+                        onClickSetuju(pengajuan.kursus_id);
+                    }}
+                    type="button"
+                    className="py-2 px-4  bg-custom-blue hover:bg-blue-900 text-white transition ease-in duration-200 text-center text-base font-normal shadow-md rounded-lg w-20"
+                >
+                    Setujui
                 </button>
             </td>
         </tr>
@@ -113,13 +160,30 @@ const KursusAdmin = () => {
                         <table className="table table-compact w-full text-black overflow-y-auto whitespace-nowrap">
                             <thead>
                                 <tr>
-                                    <th className="bg-white text-center text-base">NO</th>
-                                    <th className="bg-white text-center text-base">ID</th>
-                                    <th className="bg-white text-center text-base">NAMA KURSUS</th>
-                                    <th className="bg-white text-center text-base">KATEGORI</th>
-                                    <th className="bg-white text-center text-base">GURU</th>
-                                    <th className="bg-white text-center text-base">STATUS</th>
-                                    <th className="bg-white text-center text-base">ACTION</th>
+                                    <th className="bg-white text-center text-base">
+                                        NO
+                                    </th>
+                                    <th className="bg-white text-center text-base">
+                                        ID
+                                    </th>
+                                    <th className="bg-white text-center text-base">
+                                        NAMA KURSUS
+                                    </th>
+                                    <th className="bg-white text-center text-base">
+                                        KATEGORI
+                                    </th>
+                                    <th className="bg-white text-center text-base">
+                                        GURU
+                                    </th>
+                                    <th className="bg-white text-center text-base">
+                                        STATUS
+                                    </th>
+                                    <th className="bg-white text-center text-base">
+                                        DETAIL
+                                    </th>
+                                    <th className="bg-white text-center text-base">
+                                        ACTION
+                                    </th>
                                 </tr>
                             </thead>
                             <tbody>
