@@ -1,48 +1,34 @@
-import React, { useState } from "react";
+import React, { useState,useEffect } from "react";
 import { Button } from "@material-tailwind/react";
 import { BrowserRouter as Router, Route } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCoffee } from "@fortawesome/free-solid-svg-icons";
 import Sidebar from "./Sidebar";
-
+import AuthUser from "../../components/AuthUser";
 const GuruAdmin = () => {
-    const [gurus, setGuru] = useState([
-        {
-            id: "G001",
-            nama: "John Doe",
-            email: "john.doe@gmail.com",
-            status: "Aktif",
-        },
-        {
-            id: "G001",
-            nama: "John Doe",
-            email: "john.doe@gmail.com",
-            status: "Aktif",
-        },
-        {
-            id: "G001",
-            nama: "John Doe",
-            email: "john.doe@gmail.com",
-            status: "Aktif",
-        },
-        {
-            id: "G001",
-            nama: "John Doe",
-            email: "john.doe@gmail.com",
-            status: "Aktif",
-        },
-    ]);
-
+    const {http} = AuthUser();
+    const fetchDataGuru = () => {
+        http.post('/admin/master/guru').then((res) => {
+            setGuru(res.data.guru);
+            // console.log(res);
+          })
+    }
+    useEffect(() => {
+        fetchDataGuru();
+    }, []);
+    const [gurus, setGuru] = useState([]);
     const classBorder = "text-center border border-b-gray-600 border-x-0";
 
     const cetakGuru = gurus.map((guru, index) => (
         <tbody>
             <tr className={classBorder}>
                 <td className="text-base">{index + 1}</td>
-                <td className="text-base">{guru.id}</td>
+                <td className="text-base">{guru.guru_id}</td>
                 <td className="text-base">{guru.nama}</td>
                 <td className="text-base">{guru.email}</td>
-                <td className="text-base">{guru.status}</td>
+                <td>
+                    {guru.status==1 ? "Aktif" : "Banned"}
+                </td>
                 <td className="text-base">
                     <button
                         type="button"

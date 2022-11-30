@@ -1,9 +1,10 @@
-import React, { useState } from "react";
+import React, { useState,useEffect } from "react";
 import { Button } from "@material-tailwind/react";
 import { BrowserRouter as Router, Route } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCoffee } from "@fortawesome/free-solid-svg-icons";
 import Sidebar from "./Sidebar";
+import AuthUser from "../../components/AuthUser";
 
 const KursusAdmin = () => {
     const classSelected =
@@ -21,57 +22,38 @@ const KursusAdmin = () => {
         setTitle("pengajuan");
     };
 
-    const [masters, setMaster] = useState([
-        {
-            id: "K001",
-            nama: "Pengembangan Web Front-End Dasar",
-            kategori: "Teknologi Informasi",
-            guru: "John Doe",
-            status: "Live",
-        },
-        {
-            id: "K001",
-            nama: "Pengembangan Web Front-End Dasar",
-            kategori: "Teknologi Informasi",
-            guru: "John Doe",
-            status: "Live",
-        },
-        {
-            id: "K001",
-            nama: "Pengembangan Web Front-End Dasar",
-            kategori: "Teknologi Informasi",
-            guru: "John Doe",
-            status: "Live",
-        },
-        {
-            id: "K001",
-            nama: "Pengembangan Web Front-End Dasar",
-            kategori: "Teknologi Informasi",
-            guru: "John Doe",
-            status: "Live",
-        },
-    ]);
+    const {http} = AuthUser();
+    const fetchDatakursus = () => {
+        http.post('/admin/master/kursus').then((res) => {
+            setMaster(res.data.kursusaktif);
+            // console.log(res);
+          })
 
-    const [pengajuans, setPengajuan] = useState([
-        {
-            id: "K010",
-            nama: "Digital Marketing",
-            kategori: "Bisnis dan Ekonomi",
-            guru: "John Doe",
-            status: "Pending",
-        },
-    ]);
+          http.post('/admin/master/kursus').then((res) => {
+            setPengajuan(res.data.kursuspending);
+            // console.log(res);
+          })
+
+    }
+
+    useEffect(() => {
+        fetchDatakursus();
+    }, []);
+
+    const [masters, setMaster] = useState([]);
+
+    const [pengajuans, setPengajuan] = useState([]);
 
     const classBorder = "text-center border border-b-gray-600 border-x-0";
 
     const cetakMaster = masters.map((master, index) => (
         <tr className={classBorder}>
             <td className="text-base">{index + 1}</td>
-            <td className="text-base">{master.id}</td>
+            <td className="text-base">{master.kursus_id}</td>
             <td className="text-base">{master.nama}</td>
             <td className="text-base">{master.kategori}</td>
-            <td className="text-base">{master.guru}</td>
-            <td className="text-green-700 text-base">{master.status}</td>
+            <td className="text-base">{master.guru_id}</td>
+            <td className="text-green-700 text-base">{master.status==1 ? "Live" : "Pending"}</td>
             <td className="text-base">
                 <button
                     type="button"
@@ -86,11 +68,11 @@ const KursusAdmin = () => {
     const cetakPengajuan = pengajuans.map((pengajuan, index) => (
         <tr className={classBorder}>
             <td className="text-base">{index + 1}</td>
-            <td className="text-base">{pengajuan.id}</td>
+            <td className="text-base">{pengajuan.kursus_id}</td>
             <td className="text-base">{pengajuan.nama}</td>
             <td className="text-base">{pengajuan.kategori}</td>
-            <td className="text-base">{pengajuan.guru}</td>
-            <td className="text-green-700 text-base">{pengajuan.status}</td>
+            <td className="text-base">{pengajuan.guru_id}</td>
+            <td className="text-green-700 text-base">{pengajuan.status==1 ? "Live" : "Pending"}</td>
             <td>
                 <button
                     type="button"

@@ -23,6 +23,28 @@ class SiswaController extends Controller
         ]);
     }
 
+    function getGuru(Request $request)
+    {
+        $guru = Guru::all();
+
+        return response()->json([
+            "guru" => $guru
+
+        ]);
+    }
+
+    function getKursus(Request $request)
+    {
+        $kursus = Kursus::all();
+        $kursusaktif = Kursus::where('status','=','1')->get();
+        $kursuspending = Kursus::where('status','=','0')->get();
+        return response()->json([
+            "kursus" => $kursus,
+            "kursusaktif" => $kursusaktif,
+            "kursuspending" => $kursuspending
+        ]);
+    }
+
     function banSiswa(Request $request)
     {
         $siswa = Siswa::find($request->siswa_id);
