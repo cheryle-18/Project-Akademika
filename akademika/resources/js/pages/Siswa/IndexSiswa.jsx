@@ -20,7 +20,7 @@ const IndexSiswa = () => {
                 <Route exact path="/siswa/kursus">
                     <KursusSaya></KursusSaya>
                 </Route>
-                <Route exact path="/siswa/kursus/materi">
+                <Route exact path="/siswa/kursus/materi/:id">
                     <Materi></Materi>
                 </Route>
                 <Route exact path="/siswa/kursus/kuis">

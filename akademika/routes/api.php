@@ -92,6 +92,8 @@ Route::group(['middleware'=>'api'],function ()
         {
             Route::post('getPesan',[SiswaKursusController::class,'getPesan']);
             Route::post('kirimPesan',[SiswaKursusController::class,'kirimPesan']);
+            Route::post('getMateri',[SiswaKursusController::class,'getMateri']);
+            Route::post('getSubbab',[SiswaKursusController::class,'getSubbab']);
         });
     });
 

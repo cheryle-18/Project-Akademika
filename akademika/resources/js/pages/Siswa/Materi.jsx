@@ -8,16 +8,16 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Banner from "./Banner";
 import KuisCard from "./KuisCard";
 import Nav from "./Navbar";
-import { Link } from "react-router-dom";
+import { Link,useParams } from "react-router-dom";
+import AuthUser from "../../components/AuthUser";
 
 const Materi = () => {
     const [src,setSrc] = useState("");
-    const [subbab, setSubbab] = useState({
-        judul: "HTML",
-        deskripsi:
-            "Lorem ipsum dolor sit, amet consectetur adipisicing elit. Quibusdam, laboriosam!",
-    });
-
+    const {id} = useParams();
+    const { http, user } = AuthUser();
+    const [bacaan,setBacaan] = useState("");
+    const [materi,setMateri] = useState([]);
+    const [subbab, setSubbab] = useState([]);
     const [kuiss, setKuis] = useState([
         {
             soal: "Apa kepanjangan dari HTML",
@@ -45,11 +45,39 @@ const Materi = () => {
         <KuisCard kuis={kuis} idx={index + 1}></KuisCard>
     ));
 
+    const fetchMateri = () => {
+        http.post("/siswa/kursus/getMateri", {
+            materi_id:id
+        }).then((res) => {
+            console.log(res);
+            setSrc("https://drive.google.com/file/d/"+res.data.materi.link_video+"/preview");
+            setBacaan(res.data.materi.penjelasan);
+            setMateri(res.data.materi);
+
+            fetchSubbab();
+        })
+    }
+
+    const fetchSubbab = () => {
+        console.log(materi.subbab_id);
+        http.post("/siswa/kursus/getSubbab", {
+            subbab_id:materi.subbab_id
+        }).then((res) => {
+            setSubbab(res.data.subbab);
+            // console.log(subbab);
+            console.log("subbab"+subbab);
+        })
+    }
+
     useEffect(() => {
-    setSrc("https://drive.google.com/file/d/1JOZBkMwOllSNg7ameXnAj1dlagusMeux/preview");
-
-
+        //fetch materi based on id
+        fetchMateri();
     }, []);
+
+    useEffect(() => {
+        //fetch subbab
+        console.log("halo"+subbab);
+    }, [subbab]);
 
     return (
         <div className="bg-gray-100">
@@ -90,76 +118,11 @@ const Materi = () => {
                         Bacaan
                     </div>
                     <p className="indent-14 mt-6">
-                        Lorem ipsum dolor sit amet consectetur, adipisicing
-                        elit. Aliquid dicta ducimus saepe, quia quo, numquam
-                        obcaecati voluptatibus cumque nostrum vitae hic dolorem
-                        aut nesciunt natus. Nesciunt quis asperiores quo
-                        recusandae? Aut aperiam, vitae eaque excepturi
-                        exercitationem eligendi consequatur unde a porro sit
-                        dolore et, quaerat optio debitis cumque voluptas, illo
-                        asperiores nostrum recusandae odit nisi molestias at
-                        alias ut? Excepturi? Eligendi placeat adipisci officia
-                        sed corporis, non debitis perspiciatis quod culpa quidem
-                        fugit quasi rem doloribus suscipit itaque fugiat
-                        voluptates? Dolore ipsum aperiam blanditiis placeat,
-                        nostrum pariatur consectetur similique. Magnam? Quaerat
-                        quisquam commodi libero quibusdam possimus? Delectus
-                        eos, voluptatibus omnis praesentium consectetur quae
-                        labore nulla a incidunt, deleniti quaerat vel molestiae
-                        ducimus nesciunt consequatur veritatis, consequuntur hic
-                        exercitationem maiores reprehenderit? Neque numquam
-                        earum modi labore tempora aperiam hic omnis facilis! Ad,
-                        ut consequuntur dolore mollitia maiores quis, culpa
-                        molestiae voluptatem enim expedita laboriosam veniam
-                        voluptatum fuga delectus! Quas, porro a!
+                        {bacaan}
                     </p>
+
                     <p className="indent-14 mt-6">
-                        Lorem ipsum dolor sit amet consectetur, adipisicing
-                        elit. Aliquid dicta ducimus saepe, quia quo, numquam
-                        obcaecati voluptatibus cumque nostrum vitae hic dolorem
-                        aut nesciunt natus. Nesciunt quis asperiores quo
-                        recusandae? Aut aperiam, vitae eaque excepturi
-                        exercitationem eligendi consequatur unde a porro sit
-                        dolore et, quaerat optio debitis cumque voluptas, illo
-                        asperiores nostrum recusandae odit nisi molestias at
-                        alias ut? Excepturi? Eligendi placeat adipisci officia
-                        sed corporis, non debitis perspiciatis quod culpa quidem
-                        fugit quasi rem doloribus suscipit itaque fugiat
-                        voluptates? Dolore ipsum aperiam blanditiis placeat,
-                        nostrum pariatur consectetur similique. Magnam? Quaerat
-                        quisquam commodi libero quibusdam possimus? Delectus
-                        eos, voluptatibus omnis praesentium consectetur quae
-                        labore nulla a incidunt, deleniti quaerat vel molestiae
-                        ducimus nesciunt consequatur veritatis, consequuntur hic
-                        exercitationem maiores reprehenderit? Neque numquam
-                        earum modi labore tempora aperiam hic omnis facilis! Ad,
-                        ut consequuntur dolore mollitia maiores quis, culpa
-                        molestiae voluptatem enim expedita laboriosam veniam
-                        voluptatum fuga delectus! Quas, porro a!
-                    </p>
-                    <p className="indent-14 mt-6">
-                        Lorem ipsum dolor sit amet consectetur, adipisicing
-                        elit. Aliquid dicta ducimus saepe, quia quo, numquam
-                        obcaecati voluptatibus cumque nostrum vitae hic dolorem
-                        aut nesciunt natus. Nesciunt quis asperiores quo
-                        recusandae? Aut aperiam, vitae eaque excepturi
-                        exercitationem eligendi consequatur unde a porro sit
-                        dolore et, quaerat optio debitis cumque voluptas, illo
-                        asperiores nostrum recusandae odit nisi molestias at
-                        alias ut? Excepturi? Eligendi placeat adipisci officia
-                        sed corporis, non debitis perspiciatis quod culpa quidem
-                        fugit quasi rem doloribus suscipit itaque fugiat
-                        voluptates? Dolore ipsum aperiam blanditiis placeat,
-                        nostrum pariatur consectetur similique. Magnam? Quaerat
-                        quisquam commodi libero quibusdam possimus? Delectus
-                        eos, voluptatibus omnis praesentium consectetur quae
-                        labore nulla a incidunt, deleniti quaerat vel molestiae
-                        ducimus nesciunt consequatur veritatis, consequuntur hic
-                        exercitationem maiores reprehenderit? Neque numquam
-                        earum modi labore tempora aperiam hic omnis facilis! Ad,
-                        ut consequuntur dolore mollitia maiores quis, culpa
-                        molestiae voluptatem enim expedita laboriosam veniam
-                        voluptatum fuga delectus! Quas, porro a!
+
                     </p>
                     <div className="mt-10 mb-20">
                         <div className="float-left">
