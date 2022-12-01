@@ -1,22 +1,24 @@
 import React, { useState, useEffect, Fragment } from "react";
 import CourseCard from "../Kursus/CourseCard";
 import SiswaNav from "./Navbar";
+import AuthUser from "../../components/AuthUser";
+import { useParams } from "react-router-dom";
 
 const KursusSaya = () => {
-    const [listCourse, setListCourse] = useState([
-        {
-            nama: "Pengembangan Website Front-End Dasar 1",
-            harga: 250000,
-            deskripsi: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Commodi, dolorem?",
-            durasi: 40
-        },
-        {
-            nama: "Pengembangan Website Front-End Dasar 2",
-            harga: 250000,
-            deskripsi: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Commodi, dolorem?",
-            durasi: 40
-        },
-    ])
+    const {http,user} = AuthUser()
+    const { id } = useParams();
+    const [listCourse, setListCourse] = useState([])
+    const fetchKursus = () => {
+        http.post("/siswa/kursus/get", {
+            siswa_id: id,
+        }).then((res) => {
+            setListCourse(res.data.kursus);
+        });
+    };
+
+    useEffect(() => {
+        fetchKursus();
+    }, []);
 
     return(
         <div className="min-h-screen w-full overflow-x-hidden flex flex-col bg-gray-100">

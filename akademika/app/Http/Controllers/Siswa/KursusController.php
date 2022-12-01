@@ -37,6 +37,13 @@ class KursusController extends Controller
         return "sukses";
     }
 
+    function getKursus(Request $request)
+    {
+        $kursus = Siswa::find($request->siswa_id)->kursus;
+        return response()->json([
+            "kursus" => $kursus
+        ]);
+    }
    function getMateri(Request $request)
    {
         $materi = Materi::find($request->materi_id);
