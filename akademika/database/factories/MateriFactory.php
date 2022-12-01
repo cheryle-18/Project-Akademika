@@ -19,7 +19,7 @@ class MateriFactory extends Factory
     {
         return [
             'subbab_id' => $this->faker->randomElement(Subbab::all()->pluck('subbab_id')),
-            'link_video' => "https://drive.google.com/drive/folders/".$this->faker->text(50),
+            'link_video' => "1XMjIxq7QnjFn2HeZv7wq7zNyUphHCYJw",
             'penjelasan' => $this->faker->sentences(20,true),
         ];
     }

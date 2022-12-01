@@ -4,7 +4,9 @@ namespace App\Http\Controllers\Siswa;
 
 use App\Http\Controllers\Controller;
 use App\Models\Kursus;
+use App\Models\Materi;
 use App\Models\Siswa;
+use App\Models\Subbab;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
@@ -32,5 +34,18 @@ class KursusController extends Controller
         return "sukses";
     }
 
-   
+   function getMateri(Request $request)
+   {
+        $materi = Materi::find($request->materi_id);
+        return response()->json([
+            "materi" => $materi
+        ]);
+   }
+   function getSubbab(Request $request)
+   {
+        $subbab = Subbab::find($request->subbab_id);
+        return response()->json([
+            "subbab" => $subbab
+        ]);
+   }
 }
