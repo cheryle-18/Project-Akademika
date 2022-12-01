@@ -124,8 +124,10 @@ class KursusController extends Controller
         $validate = json_decode($this->validateDataTambahMateri($request->all())->content(),false);
         if($validate->success){
             //add a new course
-            $video_name = Storage::disk('google')->put('',$request->video);
-            $url = Storage::disk('google')->url($video_name);
+            $ctr = Materi::where('subbab_id',$request->subbab_id)->count();
+            $file_name = 'video_'.$request->subbab_id.'_'.$ctr.'.'.$request->video->getClientOriginalExtension();;
+            $video_name = Storage::disk('google')->putFileAs('',$request->video,$file_name);
+            $url = Storage::disk('google')->url($file_name);
             $newMateri = new Materi();
             $newMateri->subbab_id = $request->subbab_id;
             $newMateri->link_video = $url;

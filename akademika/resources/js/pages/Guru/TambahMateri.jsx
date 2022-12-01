@@ -19,7 +19,8 @@ const TambahMateri = () => {
         const formData = new FormData();
         formData.append('video', video);
         formData.append('subbab_id',22)
-        formData.append('penjelasan',setPenjelasan)
+        formData.append('penjelasan',penjelasan)
+
 
         http.post("/guru/kursus/materi/tambah",formData).then((res) => {
             let data = res.data;
