@@ -58,15 +58,15 @@ const Silabus = () => {
     const classOther = "float-left hover:bg-gray-200 hover:text-custom-blue py-1 px-4 rounded-sm mx-1 cursor-pointer";
 
     const onClickMateri = () => {
-        setTitle("materi")
-        let  path = "/siswa/kursus/detail"
+        setTitle("materi");
+        let path = "/siswa/kursus/"+id+"/detail";
         history.push(path)
     };
 
     const onClickPengumuman = () => {
-        setTitle("pengumuman")
-        let  path = "/siswa/kursus/pengumuman"
-        history.push(path)
+        setTitle("pengumuman");
+        let path = "/siswa/kursus/"+id+"/pengumuman";
+        history.push(path);
     };
 
     return(

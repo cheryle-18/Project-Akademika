@@ -11,7 +11,7 @@ const IndexSiswa = () => {
     return (
         <Router>
             <Switch>
-                <Route exact path="/siswa/kursus/pengumuman">
+                <Route exact path="/siswa/kursus/:id/pengumuman">
                     <PengumumanKursus></PengumumanKursus>
                 </Route>
                 <Route exact path="/siswa/kursus/:id/detail">

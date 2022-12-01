@@ -5,42 +5,57 @@ import { BrowserRouter as Router, Route } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import * as faIcon from "@fortawesome/free-solid-svg-icons";
 import SiswaNav from "./Navbar";
+import AuthUser from "../../components/AuthUser";
+import { useParams } from "react-router-dom";
 
 const PengumumanKursus = () => {
     const classSelected = "float-left bg-white text-custom-blue py-1 px-4 rounded-sm mx-1 cursor-pointer";
     const classOther = "float-left hover:bg-gray-200 hover:text-custom-blue py-1 px-4 rounded-sm mx-1 cursor-pointer";
 
+    const {http,user} = AuthUser()
+    const { id } = useParams();
     let history = useHistory()
     const [title, setTitle] = useState("pengumuman");
+    const [course, setCourse] = useState([]);
+    const [msgs, setMsg] = useState([]);
 
     const onClickMateri = () => {
         setTitle("materi");
-        let path = "/siswa/kursus/detail"
+        let path = "/siswa/kursus/"+id+"/detail"
         history.push(path)
     };
 
     const onClickPengumuman = () => {
         setTitle("pengumuman");
-        let  path = "/siswa/kursus/pengumuman"
+        let  path = "/siswa/kursus/"+id+"/pengumuman"
         history.push(path)
     };
 
-    const [course, setCourse] = useState({
-        "nama" : "Pengembangan Website Front-End Dasar",
-        "kategori" : "Teknologi Informasi",
-        "deskripsi" : "Belajar fundamental dari pengembangan website front-end dengan HTML, CSS, dan JavaScript",
-        "harga" : 250000,
-        "durasi" : 40
-    })
+    const fetchKursus = () => {
+        http.post("/siswa/kursus/getDetail", {
+            kursus_id: id,
+        }).then((res) => {
+            setCourse(res.data.kursus);
+        });
+    };
+    const fetchPengumuman = () => {
+        http.post("/siswa/kursus/getPengumuman", {
+            kursus_id: id,
+        }).then((res) => {
+            setMsg(res.data.pengumuman);
+        });
+    };
 
-    const [msgs, setMsg] = useState([
-        {
-            isi: "Lorem ipsum, dolor sit amet consectetur adipisicing elit. Autem tempore recusandae enim quam, suscipit fugiat a assumenda, vero nam officiis fuga tenetur? Molestias ratione recusandae cum. At, natus? Sunt, autem?"
-        },
-        {
-            isi: "Lorem ipsum, dolor sit amet consectetur adipisicing elit. Autem tempore recusandae enim quam, suscipit fugiat a assumenda, vero nam officiis fuga tenetur? Molestias ratione recusandae cum. At, natus? Sunt, autem?"
-        },
-    ]);
+    useEffect(() => {
+        fetchKursus();
+    }, []);
+
+    useEffect(() => {
+        fetchPengumuman();
+    }, [course]);
+
+
+
 
     const cetakMsg = msgs.map((msg, index) => (
         <div className="min-h-0 p-6 bg-white mt-2 rounded shadow-lg">
@@ -51,7 +66,7 @@ const PengumumanKursus = () => {
                     ></FontAwesomeIcon>
                 </div>
                 <div className="ml-6">
-                    {msg.isi}
+                    {msg.deskripsi}
                 </div>
             </div>
         </div>

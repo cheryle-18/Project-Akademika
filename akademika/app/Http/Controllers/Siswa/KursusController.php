@@ -58,6 +58,13 @@ class KursusController extends Controller
             "materi" => $materi
         ]);
    }
+   function getPengumuman(Request $request)
+   {
+        $pengumuman = Kursus::find($request->kursus_id)->pengumuman;
+        return response()->json([
+            "pengumuman" => $pengumuman
+        ]);
+   }
    function getSubbab(Request $request)
    {
         $subbab = Subbab::find($request->subbab_id);

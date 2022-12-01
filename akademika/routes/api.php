@@ -101,6 +101,7 @@ Route::group(['middleware'=>'api'],function ()
             Route::post('kirimPesan',[SiswaKursusController::class,'kirimPesan']);
             Route::post('getMateri',[SiswaKursusController::class,'getMateri']);
             Route::post('getSubbab',[SiswaKursusController::class,'getSubbab']);
+            Route::post('getPengumuman',[SiswaKursusController::class,'getPengumuman']);
 
             Route::prefix('kuis')->group(function ()
             {
