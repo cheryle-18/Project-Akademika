@@ -8,16 +8,16 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Banner from "./Banner";
 import KuisCard from "./KuisCard";
 import Nav from "./Navbar";
-import { Link,useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import AuthUser from "../../components/AuthUser";
 
 const Materi = () => {
-    const [src,setSrc] = useState("");
-    const {id} = useParams();
+    const [src, setSrc] = useState("");
+    const { id } = useParams();
     const { http, user } = AuthUser();
-    const [bacaan,setBacaan] = useState("");
-    const [materi,setMateri] = useState([]);
-    const [subbab, setSubbab] = useState([]);
+    const [bacaan, setBacaan] = useState("");
+    const [materi, setMateri] = useState([]);
+    const [subbab, setSubbab] = useState(null);
     const [kuiss, setKuis] = useState([
         {
             soal: "Apa kepanjangan dari HTML",
@@ -47,27 +47,30 @@ const Materi = () => {
 
     const fetchMateri = () => {
         http.post("/siswa/kursus/getMateri", {
-            materi_id:id
+            materi_id: id,
         }).then((res) => {
             console.log(res);
-            setSrc("https://drive.google.com/file/d/"+res.data.materi.link_video+"/preview");
+            setSrc(
+                "https://drive.google.com/file/d/" +
+                    res.data.materi.link_video +
+                    "/preview"
+            );
             setBacaan(res.data.materi.penjelasan);
             setMateri(res.data.materi);
-
-            fetchSubbab();
-        })
-    }
+        });
+    };
 
     const fetchSubbab = () => {
         console.log(materi.subbab_id);
         http.post("/siswa/kursus/getSubbab", {
-            subbab_id:materi.subbab_id
+            subbab_id: materi.subbab_id,
         }).then((res) => {
             setSubbab(res.data.subbab);
             // console.log(subbab);
-            console.log("subbab"+subbab);
-        })
-    }
+            console.log("subbab" + res.data.subbab);
+            console.log("subbab" + subbab);
+        });
+    };
 
     useEffect(() => {
         //fetch materi based on id
@@ -75,25 +78,28 @@ const Materi = () => {
     }, []);
 
     useEffect(() => {
-        //fetch subbab
-        console.log("halo"+subbab);
-    }, [subbab]);
+        fetchSubbab();
+        console.log("halo" + subbab);
+    }, [materi]);
 
     return (
         <div className="bg-gray-100">
             <div className="min-h-screen w-full overflow-x-hidden flex flex-col">
-                <div className="drawer-side bg-custom-blue overflow-y-auto flex-none">
-                    <Nav></Nav>
-                </div>
+                <Nav></Nav>
                 <div className="banner">
-                    <Banner subbab={subbab}></Banner>
+                    {subbab != null && <Banner subbab={subbab}></Banner>}
                 </div>
                 <div className="px-4 sm:px-16 md:px-24">
                     <div className="mt-10 text-custom-blue font-semibold text-xl">
                         Video Pembelajaran
                     </div>
                     <div className="w-full h-70vh bg-gray-500 rounded-xl mt-4">
-                        <iframe src={src} width="100%" height="100%" allow="autoplay"></iframe>
+                        <iframe
+                            src={src}
+                            width="100%"
+                            height="100%"
+                            allow="autoplay"
+                        ></iframe>
                         {/* <video controls width="100%">
                         <source src={src} type="video/mp4" />
                         Sorry, your browser doesn't support embedded videos.
@@ -117,13 +123,9 @@ const Materi = () => {
                     <div className="mt-6 text-custom-blue font-semibold text-xl">
                         Bacaan
                     </div>
-                    <p className="indent-14 mt-6">
-                        {bacaan}
-                    </p>
+                    <p className="indent-14 mt-6">{bacaan}</p>
 
-                    <p className="indent-14 mt-6">
-
-                    </p>
+                    <p className="indent-14 mt-6"></p>
                     <div className="mt-10 mb-20">
                         <div className="float-left">
                             <button

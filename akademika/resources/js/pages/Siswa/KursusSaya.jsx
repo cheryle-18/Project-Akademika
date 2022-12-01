@@ -31,7 +31,7 @@ const KursusSaya = () => {
                     {
                         listCourse.map((n, index) => {
                             return(
-                                <CourseCard course={n} key={index} />
+                                <CourseCard kursus_id={1} course={n} key={index} />
                             )
                         })
                     }
@@ -41,4 +41,4 @@ const KursusSaya = () => {
     );
 }
 
-export default KursusSaya
+export default KursusSaya;
