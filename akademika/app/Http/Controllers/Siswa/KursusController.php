@@ -3,6 +3,9 @@
 namespace App\Http\Controllers\Siswa;
 
 use App\Http\Controllers\Controller;
+use App\Models\Kuis;
+use App\Models\KuisPilihanJawaban;
+use App\Models\KuisSoal;
 use App\Models\Kursus;
 use App\Models\Materi;
 use App\Models\Siswa;
@@ -48,4 +51,37 @@ class KursusController extends Controller
             "subbab" => $subbab
         ]);
    }
+
+    function getKuis(Request $req){
+        $kuis = Kuis::where('subbab_id', $req->subbab_id)->first();
+        $listSoal = [];
+        if($kuis){
+            $kuisSoal = KuisSoal::where('kuis_id', $kuis->kuis_id)->get();
+            if(sizeof($kuisSoal) > 0){
+                $ctr = 0;
+                foreach($kuisSoal as $soal){
+                    $pilihan = KuisPilihanJawaban::where('kuis_soal_id', $soal->kuis_soal_id)->get();
+                    $listPilihan = [];
+                    foreach($pilihan as $pil){
+                        $listPilihan[] = $pil->jawaban;
+                    }
+
+                    $soalArr = [
+                        "id" => "ro" . $ctr,
+                        "pertanyaan" => $soal->soal,
+                        "nilai" => $soal->nilai,
+                        "jawaban" => $soal->kunci_jawaban,
+                        "pilihan" => $listPilihan,
+                        "pembahasan" => $soal->pembahasan,
+                    ];
+                    $listSoal[] = $soalArr;
+                    $ctr++;
+                }
+            }
+        }
+
+        return response()->json([
+            "listSoal" => $listSoal
+        ]);
+    }
 }
