@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Guru;
 use App\Models\Kursus;
 use App\Models\Siswa;
+use App\Models\Subbab;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
@@ -26,6 +27,24 @@ class KursusController extends Controller
             'kategori.required'=> "Kategori harus diisi",
             'harga.required'=> "Harga harus diisi",
             'deskripsi.required'=> "Deskripsi harus diisi",
+        ]);
+
+        return response()->json([
+            'success' => !$validator->fails(),
+            'messages'=>$validator->errors(),
+        ]);
+    }
+    public function validateDataTambahSubbab($data){
+        //Cek semua data
+        $validate = [];
+        $validate["judul"] = 'required|string';
+        $validate["deskripsi"] = 'required|string';
+        $validate["durasi"] = 'required';
+
+        $validator = Validator::make($data,$validate,[
+            'judul.required'=> "Nama harus diisi",
+            'deskripsi.required'=> "Deskripsi harus diisi",
+            'durasi.required'=> "Durasi harus diisi",
         ]);
 
         return response()->json([
@@ -70,10 +89,25 @@ class KursusController extends Controller
         return "sukses";
     }
 
+    function tambahSubbab(Request $request)
+    {
+        $validate = json_decode($this->validateDataTambahSubbab($request->all())->content(),false);
+        if($validate->success){
+            //add a new course
+            Subbab::create($request->all());
+            return 'Berhasil tambah subbab baru';
+        }
+        else{
+            $messages = get_object_vars($validate->messages);
+            $message = array_values($messages)[0][0];
+            return $message;
+        }
+    }
+
     function tambahMateri(Request $request)
     {
         # code...
-        Storage::disk('google')->put('aa.mp4',$request->video);
+        Storage::disk('google')->put('',$request->video);
         return 'ok';
     }
 }

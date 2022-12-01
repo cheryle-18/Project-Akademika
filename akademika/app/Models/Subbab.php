@@ -14,6 +14,14 @@ class Subbab extends Model
     public $incrementing  = true;
     public $timestamps    = true;
 
+    protected $fillable = [
+        'kursus_id',
+        'judul',
+        'deskripsi',
+        'durasi'
+    ];
+
+
     function kursus()
     {
         return $this->belongsTo(Kursus::class,'kursus_id','kursus_id');

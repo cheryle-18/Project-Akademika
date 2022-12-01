@@ -13,7 +13,15 @@ const TambahSubbab = () => {
     const {http,user} = AuthUser();
 
     const submitForm = () => {
-
+        http.post("/guru/kursus/subbab/tambah", {
+            kursus_id:51,
+            judul:judul,
+            deskripsi:penjelasan,
+            durasi:durasi
+        }).then((res) => {
+            let data = res.data;
+            console.log(data);
+        });
     }
 
     return(
