@@ -19,6 +19,7 @@ const DetailGuru = () => {
     const [registerPassword, setRegisterPassword] = useState();
     const [registerTotalWallet, setRegisterTotalWallet] = useState();
     const [registerStatus, setRegisterStatus] = useState();
+    const [isAktif, setAktif] = useState(true);
 
     const fetchDataGuru = () => {
         http.post("/admin/master/guru/detail", {
@@ -115,13 +116,35 @@ const DetailGuru = () => {
                         </div>
                         <div className="flex justify-start items-center mt-4">
                             <div className="w-40">Status</div>
-                            <div className="w-full">
-                                <Radio
-                                    id="guru"
-                                    name="type"
-                                    value="guru"
-                                    label="Guru"
-                                />
+                            <div className="w-full text-lg">
+                                <div>
+                                    <Radio
+                                        id="aktif"
+                                        name="status"
+                                        label="Aktif"
+                                        onClick={(e) => {
+                                            setRegisterStatus(1);
+                                        }}
+                                    />
+                                    <Radio
+                                        id="tidakaktif"
+                                        name="status"
+                                        label="Tidak Aktif"
+                                        onClick={(e) => {
+                                            setRegisterStatus(0);
+                                        }}
+                                    />
+                                </div>
+                            </div>
+                        </div>
+                        <div>
+                            <div className="float-right">
+                                <button
+                                    type="button"
+                                    className="py-2 px-4  bg-custom-blue hover:bg-blue-900 text-white transition ease-in duration-200 text-center text-base font-normal shadow-md rounded-lg min-w-20"
+                                >
+                                    Simpan Perubahan
+                                </button>
                             </div>
                         </div>
                     </div>
