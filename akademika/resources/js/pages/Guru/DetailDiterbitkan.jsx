@@ -94,105 +94,23 @@ const DetailDiterbitkan = () => {
         },
     ]);
 
-    const [siswas, setSiswa] = useState([
-        {
-            siswa_id: 0,
-            nama: "turner.esteban0",
-        },
-        {
-            siswa_id: 1,
-            nama: "turner.esteban1",
-        },
-        {
-            siswa_id: 2,
-            nama: "turner.esteban2",
-        },
-        {
-            siswa_id: 3,
-            nama: "turner.esteban3",
-        },
-        {
-            siswa_id: 0,
-            nama: "turner.esteban0",
-        },
-        {
-            siswa_id: 1,
-            nama: "turner.esteban1",
-        },
-        {
-            siswa_id: 2,
-            nama: "turner.esteban2",
-        },
-        {
-            siswa_id: 3,
-            nama: "turner.esteban3",
-        },
-        {
-            siswa_id: 0,
-            nama: "turner.esteban0",
-        },
-        {
-            siswa_id: 1,
-            nama: "turner.esteban1",
-        },
-        {
-            siswa_id: 2,
-            nama: "turner.esteban2",
-        },
-        {
-            siswa_id: 3,
-            nama: "turner.esteban3",
-        },
-        {
-            siswa_id: 0,
-            nama: "turner.esteban0",
-        },
-        {
-            siswa_id: 1,
-            nama: "turner.esteban1",
-        },
-        {
-            siswa_id: 2,
-            nama: "turner.esteban2",
-        },
-        {
-            siswa_id: 3,
-            nama: "turner.esteban3",
-        },
-        {
-            siswa_id: 0,
-            nama: "turner.esteban0",
-        },
-        {
-            siswa_id: 1,
-            nama: "turner.esteban1",
-        },
-        {
-            siswa_id: 2,
-            nama: "turner.esteban2",
-        },
-        {
-            siswa_id: 3,
-            nama: "turner.esteban3",
-        },
-        {
-            siswa_id: 0,
-            nama: "turner.esteban0",
-        },
-        {
-            siswa_id: 1,
-            nama: "turner.esteban1",
-        },
-        {
-            siswa_id: 2,
-            nama: "turner.esteban2",
-        },
-        {
-            siswa_id: 3,
-            nama: "turner.esteban3",
-        },
-    ]);
+    const [siswas, setSiswa] = useState([]);
     const [chatContent, setChatContent] = useState("");
+
+
+     //to fetch all available chats
+     const fetchDataSiswa = () => {
+        http.post("/guru/kursus/getSiswa", {
+            kursus_id: 33,
+        }).then((res) => {
+            setSiswa(res.data.siswa);
+            console.log(res);
+        });
+    };
+
+    useEffect(() => {
+        fetchDataSiswa();
+    }, []);
 
     const last = () => {
         document.getElementById("last").click();
