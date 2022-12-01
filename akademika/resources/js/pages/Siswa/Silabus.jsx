@@ -1,17 +1,12 @@
 import React, { useState, useEffect, Fragment } from "react";
-import { useHistory } from "react-router-dom";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faClock } from "@fortawesome/free-solid-svg-icons";
+import { useHistory,useParams } from "react-router-dom";
 import Nav from "./Navbar";
+import AuthUser from "../../components/AuthUser";
+
 import {
   Accordion,
   AccordionHeader,
   AccordionBody,
-  Tabs,
-  TabsHeader,
-  TabsBody,
-  Tab,
-  TabPanel,
 } from "@material-tailwind/react";
 
 function Icon({ id, open }) {
@@ -32,13 +27,23 @@ function Icon({ id, open }) {
 }
 
 const Silabus = () => {
-    const [course, setCourse] = useState({
-        "nama" : "Pengembangan Website Front-End Dasar",
-        "kategori" : "Teknologi Informasi",
-        "deskripsi" : "Belajar fundamental dari pengembangan website front-end dengan HTML, CSS, dan JavaScript",
-        "harga" : 250000,
-        "durasi" : 40
-    })
+    const {http,user} = AuthUser()
+    const { id } = useParams();
+    const [course, setCourse] = useState([])
+
+    const fetchKursus = () => {
+        http.post("/siswa/kursus/getDetail", {
+            kursus_id: id,
+        }).then((res) => {
+            setCourse(res.data.kursus);
+        });
+    };
+
+    useEffect(() => {
+        fetchKursus();
+    }, []);
+
+
 
     const [open, setOpen] = useState(0);
 
@@ -92,16 +97,6 @@ const Silabus = () => {
             </div>
             <div className="silabus px-4 sm:px-16 md:px-24 py-6 w-full overflow-x-none bg-gray-100">
                 <div className="tabs w-auto">
-                    {/* <Tabs value="materi">
-                        <TabsHeader className="bg-blue-900 opacity-100 p-2 text-white">
-                            <Tab key="materi" value="materi" className="px-3">
-                                Materi
-                            </Tab>
-                            <Tab key="pengumuman" value="pengumuman" className="px-3">
-                                Pengumuman
-                            </Tab>
-                        </TabsHeader>
-                    </Tabs> */}
                     <div className="bg-custom-blue text-white inline-block text-base tracking-wide p-1 py-2 rounded-md mb-10 mt-4">
                     <div
                         className={

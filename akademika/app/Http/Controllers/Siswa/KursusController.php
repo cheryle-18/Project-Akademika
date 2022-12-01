@@ -44,6 +44,13 @@ class KursusController extends Controller
             "kursus" => $kursus
         ]);
     }
+    function getDetailKursus(Request $request)
+    {
+        $kursus = Kursus::find($request->kursus_id);
+        return response()->json([
+            "kursus" => $kursus
+        ]);
+    }
    function getMateri(Request $request)
    {
         $materi = Materi::find($request->materi_id);
