@@ -199,10 +199,11 @@ const DetailDiterbitkan = () => {
 
     //to fetch all available chats
     const fetchDataChat = (isLast) => {
-        http.post("/siswa/kursus/getPesan", {
-            siswa_id: user.siswa_id,
+        http.post("/guru/kursus/getPesan", {
+            guru_id: guru.siswa_id,
             kursus_id: 33,
         }).then((res) => {
+            console.log(res);
             setChat(res.data.pesan);
             if (isLast) {
                 setTimeout(last, 10);
@@ -225,13 +226,6 @@ const DetailDiterbitkan = () => {
             }, 10);
         });
     };
-
-    useEffect(() => {
-        // fetchDataChat(true);
-        // setInterval(() => {
-        //     fetchDataChat(false);
-        // }, 2000);
-    }, []);
 
     const [course, setCourse] = useState({
         nama: "Pengembangan Website Front-End Dasar",
