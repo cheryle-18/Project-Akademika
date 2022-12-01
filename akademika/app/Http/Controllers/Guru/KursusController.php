@@ -132,12 +132,13 @@ class KursusController extends Controller
         if($validate->success){
             //add a new course
             $ctr = Materi::where('subbab_id',$request->subbab_id)->count();
-            $file_name = 'video_'.$request->subbab_id.'_'.$ctr.'.'.$request->video->getClientOriginalExtension();;
+            $file_name = 'video_'.$request->subbab_id.'_'.$ctr.'.'.$request->video->getClientOriginalExtension();
             $video_name = Storage::disk('google')->putFileAs('',$request->video,$file_name);
             $url = Storage::disk('google')->url($file_name);
+            $id = $this->getVideoId($url);
             $newMateri = new Materi();
             $newMateri->subbab_id = $request->subbab_id;
-            $newMateri->link_video = $url;
+            $newMateri->link_video = $id;
             $newMateri->penjelasan = $request->penjelasan;
             $newMateri->save();
             return "berhasil tambah materi";
@@ -149,5 +150,13 @@ class KursusController extends Controller
         }
 
         return 'ok';
+    }
+
+    public function getVideoId($url){
+        $link = $url;
+        $pos1 = strpos($link,'=')+1;
+        $pos2 = strpos($link,'&');
+        $id = substr($link,$pos1,$pos2-$pos1);
+        return $id;
     }
 }

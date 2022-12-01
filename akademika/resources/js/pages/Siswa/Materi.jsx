@@ -11,6 +11,7 @@ import Nav from "./Navbar";
 import { Link } from "react-router-dom";
 
 const Materi = () => {
+    const [src,setSrc] = useState("");
     const [subbab, setSubbab] = useState({
         judul: "HTML",
         deskripsi:
@@ -44,6 +45,12 @@ const Materi = () => {
         <KuisCard kuis={kuis} idx={index + 1}></KuisCard>
     ));
 
+    useEffect(() => {
+    setSrc("https://drive.google.com/file/d/1JOZBkMwOllSNg7ameXnAj1dlagusMeux/preview");
+
+
+    }, []);
+
     return (
         <div className="bg-gray-100">
             <div className="min-h-screen w-full overflow-x-hidden flex flex-col">
@@ -57,7 +64,13 @@ const Materi = () => {
                     <div className="mt-10 text-custom-blue font-semibold text-xl">
                         Video Pembelajaran
                     </div>
-                    <div className="w-full min-h-70vh bg-gray-500 rounded-xl mt-4"></div>
+                    <div className="w-full h-70vh bg-gray-500 rounded-xl mt-4">
+                        <iframe src={src} width="100%" height="100%" allow="autoplay"></iframe>
+                        {/* <video controls width="100%">
+                        <source src={src} type="video/mp4" />
+                        Sorry, your browser doesn't support embedded videos.
+                        </video> */}
+                    </div>
                     <div>
                         <div className="float-right">
                             <button
