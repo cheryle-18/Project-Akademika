@@ -7,10 +7,9 @@ import Tabs from "./Tabs";
 const TambahKuis = () => {
     const [title, setTitle] = useState("proses");
     const [course, setCourse] = useState("Pengembangan Website Front-End Dasar")
-    const [ctr, setCtr] = useState([1])
+    const [subbab, setSubbab] = useState("HTML")
     const [ctrSoal, setCtrSoal] = useState(1)
     const id = useId()
-
     const [listSoal, setListSoal] = useState([
         {
             id: id+0,
@@ -37,12 +36,11 @@ const TambahKuis = () => {
     }
 
     const handleDelete = (deleteId) => {
-        console.log(deleteId)
+        // console.log(deleteId)
         const newListSoal = listSoal.filter(e=>e.id!=deleteId)
-        console.log(newListSoal)
         setListSoal(newListSoal)
 
-        setCtrSoal(ctrSoal-1)
+        // setCtrSoal(ctrSoal-1)
     }
 
     const updatePertanyaan = (pertanyaan, idx) => {
@@ -53,7 +51,7 @@ const TambahKuis = () => {
         newListSoal[idx] = soal
         setListSoal(newListSoal)
 
-        console.log(listSoal)
+        // console.log(listSoal)
     }
 
     const updateNilai = (nilai, idx) => {
@@ -64,7 +62,7 @@ const TambahKuis = () => {
         newListSoal[idx] = soal
         setListSoal(newListSoal)
 
-        console.log(listSoal)
+        // console.log(listSoal)
     }
 
     const updatePilihan = (pilihan, idxPil, idx) => {
@@ -80,7 +78,7 @@ const TambahKuis = () => {
         newListSoal[idx] = soal
         setListSoal(newListSoal)
 
-        console.log(listSoal)
+        // console.log(listSoal)
     }
 
     const updateJawaban = (idxJwbn, idx) => {
@@ -91,7 +89,7 @@ const TambahKuis = () => {
         newListSoal[idx] = soal
         setListSoal(newListSoal)
 
-        console.log(listSoal)
+        // console.log(listSoal)
     }
 
     const updatePembahasan = (pembahasan, idx) => {
@@ -102,7 +100,7 @@ const TambahKuis = () => {
         newListSoal[idx] = soal
         setListSoal(newListSoal)
 
-        console.log(listSoal)
+        // console.log(listSoal)
     }
 
     useEffect(() => {

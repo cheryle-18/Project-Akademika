@@ -4,6 +4,9 @@ namespace App\Http\Controllers\Guru;
 
 use App\Http\Controllers\Controller;
 use App\Models\Guru;
+use App\Models\Kuis;
+use App\Models\KuisPilihanJawaban;
+use App\Models\KuisSoal;
 use App\Models\Kursus;
 use App\Models\Materi;
 use App\Models\Siswa;
@@ -158,5 +161,86 @@ class KursusController extends Controller
         $pos2 = strpos($link,'&');
         $id = substr($link,$pos1,$pos2-$pos1);
         return $id;
+    }
+    
+    function validateDataSoal($data){
+        $validate = [];
+        $validate["soal"] = 'required|string';
+        $validate["kunci_jawaban"] = 'required|string';
+        $validate["pembahasan"] = 'required';
+        $validate["nilai"] = 'required|gt:0';
+
+        $validator = Validator::make($data,$validate,[
+            'soal.required'=> "Pertanyaan harus diisi",
+            'kunci_jawaban.required'=> "Kunci jawaban harus dipilih",
+            'pembahasan.required'=> "Pembahasan harus diisi",
+            'nilai.required'=> "Nilai harus diisi",
+        ]);
+
+        return response()->json([
+            'success' => !$validator->fails(),
+            'messages'=>$validator->errors(),
+        ]);
+    }
+
+    function simpanKuis(Request $req){
+        $req->validate([
+            'kursusId' => 'required',
+            'subbabId' => 'required',
+            'listSoal' => 'required',
+        ], [
+
+        ]);
+
+        $kursusId = $req->kursusId;
+        $subbabId = $req->subabId;
+        $listSoal = $req->soal;
+        $kuisId = -1;
+
+        //find if kuis exists
+        $kuis = Kuis::where('subbab_id', $subbabId)->first();
+        if($kuis){
+            $kuisId = $kuis->id;
+
+            //delete existing soal
+            KuisSoal::where('kuis_id', $kuisId)->delete();
+        }
+        else{
+            //create kuis
+            $kuis = Kuis::insert([
+                "subbab_id" => $subbabId,
+                "jumlah_soal" => sizeof($listSoal)
+            ]);
+            $kuisId = $kuis->id;
+        }
+
+        //insert new soal
+        foreach($listSoal as $soal){
+            $validate = json_decode($this->validateDataSoal($soal),false);
+            if($validate->success){
+                //add soal
+                $newSoal = KuisSoal::insert([
+                    "kuis_id" => $kuisId,
+                    "soal" => $soal->pertanyaan,
+                    "kunci_jawaban" => $soal->jawaban,
+                    "pembahasan" => $soal->pembahasan,
+                    "nilai" => $soal->nilai
+                ]);
+
+                //add pilihan jawaban
+                foreach($soal->pilihan as $pil){
+                    KuisPilihanJawaban::insert([
+                        "kuis_soal_id" => $newSoal->id,
+                        "jawaban" => $pil
+                    ]);
+                }
+                return 'Berhasil tambah kursus baru';
+            }
+            else{
+                $messages = get_object_vars($validate->messages);
+                $message = array_values($messages)[0][0];
+                return $message;
+            }
+        }
     }
 }
