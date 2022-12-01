@@ -5,6 +5,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCoffee } from "@fortawesome/free-solid-svg-icons";
 import Sidebar from "./Sidebar";
 import AuthUser from "../../components/AuthUser";
+import { Link } from "react-router-dom";
 const GuruAdmin = () => {
     const { http } = AuthUser();
     const fetchDataGuru = () => {
@@ -28,12 +29,14 @@ const GuruAdmin = () => {
                 <td className="text-base">{guru.email}</td>
                 <td>{guru.status == 1 ? "Aktif" : "Banned"}</td>
                 <td className="text-base">
-                    <button
-                        type="button"
-                        className="py-2 px-4  bg-custom-blue hover:bg-blue-900 text-white transition ease-in duration-200 text-center text-base font-normal shadow-md rounded-lg w-20"
-                    >
-                        Detail
-                    </button>
+                    <Link to="/admin/master/guru/detail">
+                        <button
+                            type="button"
+                            className="py-2 px-4  bg-custom-blue hover:bg-blue-900 text-white transition ease-in duration-200 text-center text-base font-normal shadow-md rounded-lg w-20"
+                        >
+                            Detail
+                        </button>
+                    </Link>
                 </td>
             </tr>
         </tbody>
