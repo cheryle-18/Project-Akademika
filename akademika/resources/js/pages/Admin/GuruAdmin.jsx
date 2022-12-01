@@ -1,4 +1,4 @@
-import React, { useState,useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { Button } from "@material-tailwind/react";
 import { BrowserRouter as Router, Route } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -6,13 +6,13 @@ import { faCoffee } from "@fortawesome/free-solid-svg-icons";
 import Sidebar from "./Sidebar";
 import AuthUser from "../../components/AuthUser";
 const GuruAdmin = () => {
-    const {http} = AuthUser();
+    const { http } = AuthUser();
     const fetchDataGuru = () => {
-        http.post('/admin/master/guru').then((res) => {
+        http.post("/admin/master/guru").then((res) => {
             setGuru(res.data.guru);
             // console.log(res);
-          })
-    }
+        });
+    };
     useEffect(() => {
         fetchDataGuru();
     }, []);
@@ -26,9 +26,7 @@ const GuruAdmin = () => {
                 <td className="text-base">{guru.guru_id}</td>
                 <td className="text-base">{guru.nama}</td>
                 <td className="text-base">{guru.email}</td>
-                <td>
-                    {guru.status==1 ? "Aktif" : "Banned"}
-                </td>
+                <td>{guru.status == 1 ? "Aktif" : "Banned"}</td>
                 <td className="text-base">
                     <button
                         type="button"
@@ -49,12 +47,24 @@ const GuruAdmin = () => {
                         <table className="table table-compact w-full text-black">
                             <thead>
                                 <tr>
-                                    <th className="bg-white text-center text-base">NO</th>
-                                    <th className="bg-white text-center text-base">ID</th>
-                                    <th className="bg-white text-center text-base">NAMA</th>
-                                    <th className="bg-white text-center text-base">EMAIL</th>
-                                    <th className="bg-white text-center text-base">STATUS</th>
-                                    <th className="bg-white text-center text-base">ACTION</th>
+                                    <th className="bg-white text-center text-base">
+                                        NO
+                                    </th>
+                                    <th className="bg-white text-center text-base">
+                                        ID
+                                    </th>
+                                    <th className="bg-white text-center text-base">
+                                        NAMA
+                                    </th>
+                                    <th className="bg-white text-center text-base">
+                                        EMAIL
+                                    </th>
+                                    <th className="bg-white text-center text-base">
+                                        STATUS
+                                    </th>
+                                    <th className="bg-white text-center text-base">
+                                        ACTION
+                                    </th>
                                 </tr>
                             </thead>
                             {cetakGuru}

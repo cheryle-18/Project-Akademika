@@ -152,11 +152,19 @@ class KursusController extends Controller
         return 'ok';
     }
 
-    public function getVideoId($url){
+    function getVideoId($url){
         $link = $url;
         $pos1 = strpos($link,'=')+1;
         $pos2 = strpos($link,'&');
         $id = substr($link,$pos1,$pos2-$pos1);
         return $id;
+    }
+
+    function getDetailGuru(Request $request)
+    {
+        $guru = Guru::find($request->guru_id);
+        return response()->json([
+            "guru" => $guru,
+        ]);
     }
 }

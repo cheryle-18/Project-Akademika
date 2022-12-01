@@ -29,7 +29,6 @@ class SiswaController extends Controller
 
         return response()->json([
             "guru" => $guru
-
         ]);
     }
 
