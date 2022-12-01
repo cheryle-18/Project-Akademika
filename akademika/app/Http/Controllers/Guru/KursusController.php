@@ -87,7 +87,7 @@ class KursusController extends Controller
     function getPesan(Request $request)
     {
         $guru = Guru::find($request->guru_id);
-        $pesan = $guru->pesan()->where('pesan.kursus_id',$request->kursus_id)->orderBy('pesan.tanggal','ASC')->get();
+        $pesan = $guru->pesan()->where('pesan.kursus_id',$request->kursus_id)->where('pesan.siswa_id',$request->siswa_id)->orderBy('pesan.tanggal','ASC')->get();
         return response()->json([
             "pesan" => $pesan
         ]);
@@ -104,12 +104,11 @@ class KursusController extends Controller
     function kirimPesan(Request $request)
     {
         //attach
-        $siswa = Siswa::find($request->siswa_id);
+        $guru = Guru::find($request->guru_id);
         //kursus
         $kursus = Kursus::find($request->kursus_id);
-        $siswa->pesan()->attach($kursus,['guru_id'=>$kursus->guru_id,'pengirim_role'=>'guru','isi'=>$request->isi,'tanggal'=>Carbon::now('Asia/Jakarta')]);
-
-        return "sukses";
+        // $guru->pesan()->attach($kursus,['pengirim_role'=>'guru','isi'=>$request->isi,'siswa_id'=>$request->siswa_id,'tanggal'=>Carbon::now('Asia/Jakarta')]);
+        return "kursus ".$request->kursus_id;
     }
 
     function tambahSubbab(Request $request)

@@ -14,6 +14,15 @@ class Pesan extends Model
     public $incrementing  = true;
     public $timestamps    = false;
 
+    protected $fillable = [
+        'siswa_id',
+        'kursus_id',
+        'guru_id',
+        'pengirim_role',
+        'isi',
+        'tanggal',
+    ];
+
     function siswa()
     {
         return $this->belongsTo(Siswa::class,'siswa_id','siswa_id');

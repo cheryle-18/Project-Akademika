@@ -35,71 +35,13 @@ const DetailDiterbitkan = () => {
     const [isOpened, setIsOpened] = useState(false);
     const { http, user } = AuthUser();
     const [siswa_id_now, setSiswaIdNow] = useState(null);
-    const [chats, setChat] = useState([
-        {
-            pivot: {
-                siswa_id: 0,
-                pengirim_role: "siswa",
-                isi: "Lorem ipsum dolor, sit amet consectetur adipisicing elit. Tempore ullam maiores ad quod impedit nihil consequatur perspiciatis laboriosam. Eum nobis reiciendis pariatur soluta distinctio omnis adipisci reprehenderit illo nam ipsam!",
-            },
-        },
-        {
-            pivot: {
-                siswa_id: 0,
-                pengirim_role: "siswa",
-                isi: "awfkpiawojpfwaopejif",
-            },
-        },
-        {
-            pivot: {
-                siswa_id: 1,
-                pengirim_role: "siswa",
-                isi: "Lorem ipsum dolor, sit amet consectetur adipisicing elit. Tempore ullam maiores ad quod impedit nihil consequatur perspiciatis laboriosam. Eum nobis reiciendis pariatur soluta distinctio omnis adipisci reprehenderit illo nam ipsam!",
-            },
-        },
-        {
-            pivot: {
-                siswa_id: 2,
-                pengirim_role: "siswa",
-                isi: "Lorem ipsum dolor, sit amet consectetur adipisicing elit. Tempore ullam maiores ad quod impedit nihil consequatur perspiciatis laboriosam. Eum nobis reiciendis pariatur soluta distinctio omnis adipisci reprehenderit illo nam ipsam!",
-            },
-        },
-        {
-            pivot: {
-                siswa_id: 0,
-                pengirim_role: "guru",
-                isi: "Lorem ipsum dolor, sit amet consectetur adipisicing elit. Tempore ullam maiores ad quod impedit nihil consequatur perspiciatis laboriosam. Eum nobis reiciendis pariatur soluta distinctio omnis adipisci reprehenderit illo nam ipsam!",
-            },
-        },
-        {
-            pivot: {
-                siswa_id: 1,
-                pengirim_role: "guru",
-                isi: "Lorem ipsum dolor, sit amet consectetur adipisicing elit. Tempore ullam maiores ad quod impedit nihil consequatur perspiciatis laboriosam. Eum nobis reiciendis pariatur soluta distinctio omnis adipisci reprehenderit illo nam ipsam!",
-            },
-        },
-        {
-            pivot: {
-                siswa_id: 2,
-                pengirim_role: "guru",
-                isi: "Lorem ipsum dolor, sit amet consectetur adipisicing elit. Tempore ullam maiores ad quod impedit nihil consequatur perspiciatis laboriosam. Eum nobis reiciendis pariatur soluta distinctio omnis adipisci reprehenderit illo nam ipsam!",
-            },
-        },
-        {
-            pivot: {
-                siswa_id: 2,
-                pengirim_role: "siswa",
-                isi: "ajwjefoiweapfoijaewfoj",
-            },
-        },
-    ]);
+    const [chats, setChat] = useState([]);
 
     const [siswas, setSiswa] = useState([]);
     const [chatContent, setChatContent] = useState("");
 
-
-     //to fetch all available chats
-     const fetchDataSiswa = () => {
+    //to fetch all available chats
+    const fetchDataSiswa = () => {
         http.post("/guru/kursus/getSiswa", {
             kursus_id: 33,
         }).then((res) => {
@@ -112,6 +54,14 @@ const DetailDiterbitkan = () => {
         fetchDataSiswa();
     }, []);
 
+    useEffect(() => {
+        fetchDataChat(true);
+    }, [siswa_id_now]);
+
+    useEffect(() => {
+        // cetakChat();
+        console.log(chats);
+    }, [chats]);
     const last = () => {
         document.getElementById("last").click();
         document.getElementById("inputMessage").focus();
@@ -149,20 +99,15 @@ const DetailDiterbitkan = () => {
 
     const cetakChat = chats.map((chat, index) => (
         <div>
-            {chat.pivot.siswa_id == siswa_id_now && (
-                <div>
-                    <div
-                        className={
-                            (chat.pivot.pengirim_role == "siswa" &&
-                                classSiswa) ||
-                            (chat.pivot.pengirim_role == "guru" && classGuru)
-                        }
-                    >
-                        {chat.pivot.isi}
-                    </div>
-                    <div className="clear-both"></div>
-                </div>
-            )}
+            <div
+                className={
+                    (chat.pivot.pengirim_role == "siswa" && classSiswa) ||
+                    (chat.pivot.pengirim_role == "guru" && classGuru)
+                }
+            >
+                {chat.pivot.isi}
+            </div>
+            <div className="clear-both"></div>
         </div>
     ));
 
@@ -172,7 +117,6 @@ const DetailDiterbitkan = () => {
                 className="mx-2 w-130px bg-white py-2 overflow-x-hidden rounded-lg cursor-pointer overflow-y-hidden"
                 onClick={() => {
                     setSiswaIdNow(siswa.siswa_id);
-                    setTimeout(last, 10);
                     setChatContent("");
                 }}
             >
@@ -199,8 +143,10 @@ const DetailDiterbitkan = () => {
 
     //to fetch all available chats
     const fetchDataChat = (isLast) => {
+        console.log(user.guru_id + " " + siswa_id_now);
         http.post("/guru/kursus/getPesan", {
-            guru_id: guru.siswa_id,
+            guru_id: user.guru_id,
+            siswa_id: siswa_id_now,
             kursus_id: 33,
         }).then((res) => {
             console.log(res);
@@ -212,9 +158,11 @@ const DetailDiterbitkan = () => {
     };
 
     const sendMessage = () => {
+
         http.post("/guru/kursus/kirimPesan", {
-            siswa_id: user.siswa_id,
-            kursus_id: 33,
+            guru_id: user.guru_id,
+            siswa_id:siswa_id_now,
+            kursus_id:33,
             isi: chatContent,
         }).then((res) => {
             //refresh
@@ -289,7 +237,7 @@ const DetailDiterbitkan = () => {
                             <FontAwesomeIcon
                                 className="text-white"
                                 icon={faIcon.faPaperPlane}
-                                onClick={sendMessage}
+                                // onClick={sendMessage}
                             ></FontAwesomeIcon>
                         </div>
                         <div className="clear-both"></div>
