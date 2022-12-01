@@ -92,6 +92,7 @@ const Sidebar = (props) => {
                     </div>
                     <div className="absolute py-2 text-black text-3xl font-semibold mt-12 inline left-2/4 -translate-x-1/2">
                         {props.now == "guru" && "Master Guru"}
+                        {props.now == "guru detail" && "Master Guru Detail"}
                         {props.now == "siswa" && "Master Siswa"}
                         {props.now == "kursus" && "Master Kursus"}
                         {props.now == "laporan" && "Master Laporan"}
@@ -127,6 +128,7 @@ const Sidebar = (props) => {
                     </div>
                     <div className="z-1 absolute left-70 top-0 bg-white py-4 text-black font-semibold text-xl">
                         {props.now == "guru" && "Master Guru"}
+                        {props.now == "guru detail" && "Master Guru Detail"}
                         {props.now == "siswa" && "Master Siswa"}
                         {props.now == "kursus" && "Master Kursus"}
                         {props.now == "laporan" && "Master Laporan"}

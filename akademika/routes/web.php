@@ -24,7 +24,7 @@ Route::get('/reset-password/{token}', function () {
 });
 
 Route::prefix('admin')->group(function () {
-    Route::get('/{path}/{path2?}/{path3?}', function () {
+    Route::get('/{path}/{path2?}/{path3?}/{path4?}', function () {
         return view('admin');
     });
 });
