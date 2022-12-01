@@ -107,8 +107,8 @@ class KursusController extends Controller
         $guru = Guru::find($request->guru_id);
         //kursus
         $kursus = Kursus::find($request->kursus_id);
-        // $guru->pesan()->attach($kursus,['pengirim_role'=>'guru','isi'=>$request->isi,'siswa_id'=>$request->siswa_id,'tanggal'=>Carbon::now('Asia/Jakarta')]);
-        return "kursus ".$request->kursus_id;
+        $guru->pesan()->attach($kursus,['pengirim_role'=>'guru','isi'=>$request->isi,'siswa_id'=>$request->siswa_id,'tanggal'=>Carbon::now('Asia/Jakarta')]);
+        return 'sukses';
     }
 
     function tambahSubbab(Request $request)

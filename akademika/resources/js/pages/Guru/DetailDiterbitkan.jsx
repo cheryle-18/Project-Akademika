@@ -46,7 +46,6 @@ const DetailDiterbitkan = () => {
             kursus_id: 33,
         }).then((res) => {
             setSiswa(res.data.siswa);
-            console.log(res);
         });
     };
 
@@ -58,10 +57,6 @@ const DetailDiterbitkan = () => {
         fetchDataChat(true);
     }, [siswa_id_now]);
 
-    useEffect(() => {
-        // cetakChat();
-        console.log(chats);
-    }, [chats]);
     const last = () => {
         document.getElementById("last").click();
         document.getElementById("inputMessage").focus();
@@ -143,13 +138,11 @@ const DetailDiterbitkan = () => {
 
     //to fetch all available chats
     const fetchDataChat = (isLast) => {
-        console.log(user.guru_id + " " + siswa_id_now);
         http.post("/guru/kursus/getPesan", {
             guru_id: user.guru_id,
             siswa_id: siswa_id_now,
             kursus_id: 33,
         }).then((res) => {
-            console.log(res);
             setChat(res.data.pesan);
             if (isLast) {
                 setTimeout(last, 10);
@@ -166,7 +159,6 @@ const DetailDiterbitkan = () => {
             isi: chatContent,
         }).then((res) => {
             //refresh
-            console.log(res);
             fetchDataChat(true);
             setTimeout(() => {
                 setChatContent("");
