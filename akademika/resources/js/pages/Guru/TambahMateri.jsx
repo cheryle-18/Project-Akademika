@@ -7,7 +7,7 @@ import AuthUser from "../../components/AuthUser";
 const TambahMateri = () => {
     const [title, setTitle] = useState("proses")
     const [course, setCourse] = useState("Pengembangan Website Front-End Dasar")
-    const [bacaan, setBacaan] = useState()
+    const [penjelasan, setPenjelasan] = useState()
     const [video, setVideo] = useState()
     const {http,user} = AuthUser();
 
@@ -19,7 +19,7 @@ const TambahMateri = () => {
         const formData = new FormData();
         formData.append('video', video);
         formData.append('subbab_id',22)
-        formData.append('penjelasan',penjelasan)
+        formData.append('penjelasan',setPenjelasan)
 
         http.post("/guru/kursus/materi/tambah",formData).then((res) => {
             let data = res.data;
@@ -52,7 +52,7 @@ const TambahMateri = () => {
                                 <Textarea
                                     className="w-full h-48"
                                     name="bacaan"
-                                    onChange={(e) =>setBacaan(e.target.value)}
+                                    onChange={(e) =>setPenjelasan(e.target.value)}
                                 />
                             </td>
                         </tr>

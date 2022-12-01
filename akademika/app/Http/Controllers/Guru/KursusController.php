@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Guru;
 use App\Http\Controllers\Controller;
 use App\Models\Guru;
 use App\Models\Kursus;
+use App\Models\Materi;
 use App\Models\Siswa;
 use App\Models\Subbab;
 use Carbon\Carbon;
@@ -52,8 +53,22 @@ class KursusController extends Controller
             'messages'=>$validator->errors(),
         ]);
     }
-
     //
+    public function validateDataTambahMateri($data){
+        //Cek semua data
+        $validate = [];
+        $validate["penjelasan"] = 'required|string';
+
+        $validator = Validator::make($data,$validate,[
+            'penjelasan.required'=> "Bacaan harus diisi",
+        ]);
+
+        return response()->json([
+            'success' => !$validator->fails(),
+            'messages'=>$validator->errors(),
+        ]);
+    }
+
     function tambahKursus(Request $request)
     {
         $validate = json_decode($this->validateDataTambahKursus($request->all())->content(),false);
@@ -106,8 +121,24 @@ class KursusController extends Controller
 
     function tambahMateri(Request $request)
     {
-        # code...
-        Storage::disk('google')->put('',$request->video);
+        $validate = json_decode($this->validateDataTambahMateri($request->all())->content(),false);
+        if($validate->success){
+            //add a new course
+            $video_name = Storage::disk('google')->put('',$request->video);
+            $url = Storage::disk('google')->url($video_name);
+            $newMateri = new Materi();
+            $newMateri->subbab_id = $request->subbab_id;
+            $newMateri->link_video = $url;
+            $newMateri->penjelasan = $request->penjelasan;
+            $newMateri->save();
+            return "berhasil tambah materi";
+        }
+        else{
+            $messages = get_object_vars($validate->messages);
+            $message = array_values($messages)[0][0];
+            return $message;
+        }
+
         return 'ok';
     }
 }
