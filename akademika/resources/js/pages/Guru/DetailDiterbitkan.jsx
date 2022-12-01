@@ -185,8 +185,8 @@ const DetailDiterbitkan = () => {
     return (
         <div className="min-h-screen w-full overflow-x-hidden flex flex-col">
             {isOpened && (
-                // <div className="fixed bottom-14 lg:bottom-32 right-160px lg:right-72 bg-transparent duration-500 z-10 mt-2">
-                <div className="fixed bottom-0 right-160px bg-transparent duration-500 z-10 mt-2">
+                <div className="fixed bottom-14 lg:bottom-10 right-160px lg:right-72 bg-transparent duration-500 z-10 mt-2">
+                {/* <div className="fixed bottom-0 right-160px bg-transparent duration-500 z-10 mt-2"> */}
                     <div className="w-full relative">
                         <div className="absolute w-full h-10 bg-custom-blue left-40 rounded-tr-lg"></div>
                     </div>
@@ -238,8 +238,8 @@ const DetailDiterbitkan = () => {
                 </div>
             )}
             {isOpened && (
-                // <div className="fixed bottom-14 lg:bottom-32 right-0 lg:right-32 bg-transparent duration-500 z-20">
-                <div className="fixed bottom-0 right-0 bg-transparent duration-500 z-20">
+                <div className="fixed bottom-14 lg:bottom-10 right-0 lg:right-32 bg-transparent duration-500 z-20">
+                {/* <div className="fixed bottom-0 right-0 bg-transparent duration-500 z-20"> */}
                     <div className="w-300px lg:w-400px bg-custom-blue px-4 rounded-tr-lg">
                         <div className="w-full py-4 font-semibold text-white">
                             <div className="float-left">
