@@ -33,7 +33,7 @@ const KursusSaya = () => {
                     {
                         listCourse.map((n, index) => {
                             return(
-                                <CourseCard kursus_id={1} course={n} key={index} />
+                                <CourseCard course={n} key={index} />
                             )
                         })
                     }
