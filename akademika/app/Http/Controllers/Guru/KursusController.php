@@ -93,6 +93,14 @@ class KursusController extends Controller
         ]);
     }
 
+    function getSiswa(Request $request)
+    {
+        $siswa = Kursus::find($request->kursus_id)->pengambil;
+        return response()->json([
+            "siswa" => $siswa
+        ]);
+    }
+
     function kirimPesan(Request $request)
     {
         //attach

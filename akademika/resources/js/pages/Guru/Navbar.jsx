@@ -10,163 +10,23 @@ const GuruNav = () => {
     const [isOpened, setIsOpened] = useState(false);
     const { http, user } = AuthUser();
     const [siswa_id_now, setSiswaIdNow] = useState(null);
-    const [chats, setChat] = useState([
-        {
-            pivot: {
-                siswa_id: 0,
-                pengirim_role: "siswa",
-                isi: "Lorem ipsum dolor, sit amet consectetur adipisicing elit. Tempore ullam maiores ad quod impedit nihil consequatur perspiciatis laboriosam. Eum nobis reiciendis pariatur soluta distinctio omnis adipisci reprehenderit illo nam ipsam!",
-            },
-        },
-        {
-            pivot: {
-                siswa_id: 0,
-                pengirim_role: "siswa",
-                isi: "awfkpiawojpfwaopejif",
-            },
-        },
-        {
-            pivot: {
-                siswa_id: 1,
-                pengirim_role: "siswa",
-                isi: "Lorem ipsum dolor, sit amet consectetur adipisicing elit. Tempore ullam maiores ad quod impedit nihil consequatur perspiciatis laboriosam. Eum nobis reiciendis pariatur soluta distinctio omnis adipisci reprehenderit illo nam ipsam!",
-            },
-        },
-        {
-            pivot: {
-                siswa_id: 2,
-                pengirim_role: "siswa",
-                isi: "Lorem ipsum dolor, sit amet consectetur adipisicing elit. Tempore ullam maiores ad quod impedit nihil consequatur perspiciatis laboriosam. Eum nobis reiciendis pariatur soluta distinctio omnis adipisci reprehenderit illo nam ipsam!",
-            },
-        },
-        {
-            pivot: {
-                siswa_id: 0,
-                pengirim_role: "guru",
-                isi: "Lorem ipsum dolor, sit amet consectetur adipisicing elit. Tempore ullam maiores ad quod impedit nihil consequatur perspiciatis laboriosam. Eum nobis reiciendis pariatur soluta distinctio omnis adipisci reprehenderit illo nam ipsam!",
-            },
-        },
-        {
-            pivot: {
-                siswa_id: 1,
-                pengirim_role: "guru",
-                isi: "Lorem ipsum dolor, sit amet consectetur adipisicing elit. Tempore ullam maiores ad quod impedit nihil consequatur perspiciatis laboriosam. Eum nobis reiciendis pariatur soluta distinctio omnis adipisci reprehenderit illo nam ipsam!",
-            },
-        },
-        {
-            pivot: {
-                siswa_id: 2,
-                pengirim_role: "guru",
-                isi: "Lorem ipsum dolor, sit amet consectetur adipisicing elit. Tempore ullam maiores ad quod impedit nihil consequatur perspiciatis laboriosam. Eum nobis reiciendis pariatur soluta distinctio omnis adipisci reprehenderit illo nam ipsam!",
-            },
-        },
-        {
-            pivot: {
-                siswa_id: 2,
-                pengirim_role: "siswa",
-                isi: "ajwjefoiweapfoijaewfoj",
-            },
-        },
-    ]);
+    const [chats, setChat] = useState([]);
 
-    const [siswas, setSiswa] = useState([
-        {
-            siswa_id: 0,
-            nama: "turner.esteban0",
-        },
-        {
-            siswa_id: 1,
-            nama: "turner.esteban1",
-        },
-        {
-            siswa_id: 2,
-            nama: "turner.esteban2",
-        },
-        {
-            siswa_id: 3,
-            nama: "turner.esteban3",
-        },
-        {
-            siswa_id: 0,
-            nama: "turner.esteban0",
-        },
-        {
-            siswa_id: 1,
-            nama: "turner.esteban1",
-        },
-        {
-            siswa_id: 2,
-            nama: "turner.esteban2",
-        },
-        {
-            siswa_id: 3,
-            nama: "turner.esteban3",
-        },
-        {
-            siswa_id: 0,
-            nama: "turner.esteban0",
-        },
-        {
-            siswa_id: 1,
-            nama: "turner.esteban1",
-        },
-        {
-            siswa_id: 2,
-            nama: "turner.esteban2",
-        },
-        {
-            siswa_id: 3,
-            nama: "turner.esteban3",
-        },
-        {
-            siswa_id: 0,
-            nama: "turner.esteban0",
-        },
-        {
-            siswa_id: 1,
-            nama: "turner.esteban1",
-        },
-        {
-            siswa_id: 2,
-            nama: "turner.esteban2",
-        },
-        {
-            siswa_id: 3,
-            nama: "turner.esteban3",
-        },
-        {
-            siswa_id: 0,
-            nama: "turner.esteban0",
-        },
-        {
-            siswa_id: 1,
-            nama: "turner.esteban1",
-        },
-        {
-            siswa_id: 2,
-            nama: "turner.esteban2",
-        },
-        {
-            siswa_id: 3,
-            nama: "turner.esteban3",
-        },
-        {
-            siswa_id: 0,
-            nama: "turner.esteban0",
-        },
-        {
-            siswa_id: 1,
-            nama: "turner.esteban1",
-        },
-        {
-            siswa_id: 2,
-            nama: "turner.esteban2",
-        },
-        {
-            siswa_id: 3,
-            nama: "turner.esteban3",
-        },
-    ]);
+    const [siswas, setSiswa] = useState([]);
+
+     //to fetch all available chats
+     const fetchDataSiswa = () => {
+        http.post("/guru/kursus/getSiswa", {
+            kursus_id: 33,
+        }).then((res) => {
+            setSiswa(res.data.siswa);
+            console.log(res);
+        });
+    };
+
+    useEffect(() => {
+        fetchDataSiswa();
+    }, []);
     const [chatContent, setChatContent] = useState("");
 
     const last = () => {
