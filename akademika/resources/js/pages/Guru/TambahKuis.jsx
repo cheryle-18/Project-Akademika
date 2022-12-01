@@ -3,8 +3,11 @@ import React, { useState, useEffect, Fragment } from "react";
 import { useId } from "react";
 import GuruNav from "./Navbar";
 import Tabs from "./Tabs";
+import AuthUser from "../../components/AuthUser";
+import { Link } from "react-router-dom";
 
 const TambahKuis = () => {
+    const {http,user} = AuthUser()
     const [title, setTitle] = useState("proses");
     const [course, setCourse] = useState("Pengembangan Website Front-End Dasar")
     const [subbab, setSubbab] = useState("HTML")
@@ -21,6 +24,29 @@ const TambahKuis = () => {
         }
     ])
 
+    const fetchDataKuis = () => {
+        setSubbab(11)
+        let url = `/guru/kursus/kuis/getKuis/${subbab}`
+        http.post(url).then((res) => {
+            let temp = res.data.listSoal
+            if(temp.length > 0)
+                setListSoal(temp);
+        })
+        setCtrSoal(listSoal.length)
+    }
+
+    const submitForm = () => {
+        // console.log(listSoal)
+        const formData = new FormData();
+        formData.append('subbabId',2)
+        formData.append('listSoal', JSON.stringify(listSoal))
+
+        http.post("/guru/kursus/kuis/simpan",formData).then((res) => {
+            let data = res.data
+            console.log(data)
+        })
+    }
+
     const addCount = () => {
         setCtrSoal(ctrSoal+1)
 
@@ -32,15 +58,11 @@ const TambahKuis = () => {
             pilihan: [],
             pembahasan: ""
         })
-        // console.log(ctr)
     }
 
     const handleDelete = (deleteId) => {
-        // console.log(deleteId)
         const newListSoal = listSoal.filter(e=>e.id!=deleteId)
         setListSoal(newListSoal)
-
-        // setCtrSoal(ctrSoal-1)
     }
 
     const updatePertanyaan = (pertanyaan, idx) => {
@@ -50,8 +72,6 @@ const TambahKuis = () => {
         const newListSoal = [...listSoal]
         newListSoal[idx] = soal
         setListSoal(newListSoal)
-
-        // console.log(listSoal)
     }
 
     const updateNilai = (nilai, idx) => {
@@ -61,8 +81,6 @@ const TambahKuis = () => {
         const newListSoal = [...listSoal]
         newListSoal[idx] = soal
         setListSoal(newListSoal)
-
-        // console.log(listSoal)
     }
 
     const updatePilihan = (pilihan, idxPil, idx) => {
@@ -77,8 +95,6 @@ const TambahKuis = () => {
         const newListSoal = [...listSoal]
         newListSoal[idx] = soal
         setListSoal(newListSoal)
-
-        // console.log(listSoal)
     }
 
     const updateJawaban = (idxJwbn, idx) => {
@@ -88,8 +104,6 @@ const TambahKuis = () => {
         const newListSoal = [...listSoal]
         newListSoal[idx] = soal
         setListSoal(newListSoal)
-
-        // console.log(listSoal)
     }
 
     const updatePembahasan = (pembahasan, idx) => {
@@ -99,9 +113,11 @@ const TambahKuis = () => {
         const newListSoal = [...listSoal]
         newListSoal[idx] = soal
         setListSoal(newListSoal)
-
-        // console.log(listSoal)
     }
+
+    useEffect(() => {
+        fetchDataKuis()
+    }, [])
 
     useEffect(() => {
         displaySoalCard
@@ -143,7 +159,7 @@ const TambahKuis = () => {
                         id=""
                         name={`jwbn${soal.id}`}
                         checked={soal.jawaban==soal.pilihan[0] && true}
-                        // { ...soal.jawaban==soal.pilihan[0] && checked }
+                        onChange={ () => "" }
                         onClick={ () => updateJawaban(0, index) }
                     />
                     <input
@@ -160,6 +176,7 @@ const TambahKuis = () => {
                         id=""
                         name={`jwbn${soal.id}`}
                         checked={soal.jawaban==soal.pilihan[1] && true}
+                        onChange={ () => "" }
                         onClick={ () => updateJawaban(1, index) }
                     />
                     <input
@@ -176,6 +193,7 @@ const TambahKuis = () => {
                         id=""
                         name={`jwbn${soal.id}`}
                         checked={soal.jawaban==soal.pilihan[2] && true}
+                        onChange={ () => "" }
                         onClick={ () => updateJawaban(2, index) }
                     />
                     <input
@@ -192,6 +210,7 @@ const TambahKuis = () => {
                         id=""
                         name={`jwbn${soal.id}`}
                         checked={soal.jawaban==soal.pilihan[3] && true}
+                        onChange={ () => "" }
                         onClick={ () => updateJawaban(3, index) }
                     />
                     <input
@@ -229,9 +248,16 @@ const TambahKuis = () => {
                 </div>
                 <div className="flex">
                     <span className="text-2xl text-blue-900 font-semibold">Tambah Kuis</span>
-                    <button className="btn btn-sm h-10 bg-blue-900 hover:bg-blue-700 text-white rounded ml-auto mr-3 capitalize font-normal">
-                        Simpan Kuis
-                    </button>
+                    <div className="ml-auto">
+                        <Link to="/guru/kursus/subbab/detail">
+                            <button className="btn btn-sm h-10 bg-blue-900 hover:bg-blue-700 text-white rounded mr-3 capitalize font-normal">
+                                Back
+                            </button>
+                        </Link>
+                        <button className="btn btn-sm h-10 bg-blue-900 hover:bg-blue-700 text-white rounded mr-3 capitalize font-normal" onClick={submitForm}>
+                            Simpan Kuis
+                        </button>
+                    </div>
                 </div>
                 {
                     displaySoalCard

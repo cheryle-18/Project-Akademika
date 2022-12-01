@@ -76,7 +76,6 @@ Route::group(['middleware'=>'api'],function ()
             Route::post('getPesan',[KursusController::class,'getPesan']);
             Route::post('getSiswa',[KursusController::class,'getSiswa']);
             Route::post('kirimPesan',[KursusController::class,'kirimPesan']);
-            Route::post('kuis',[KursusController::class,'simpanKuis']);
 
             Route::prefix('subbab')->group(function () {
                 Route::post('tambah',[KursusController::class,'tambahSubbab']);
@@ -84,6 +83,11 @@ Route::group(['middleware'=>'api'],function ()
 
             Route::prefix('materi')->group(function () {
                 Route::post('tambah',[KursusController::class,'tambahMateri']);
+            });
+
+            Route::prefix('kuis')->group(function () {
+                Route::post('simpan',[KursusController::class,'simpanKuis']);
+                Route::post('getKuis/{subbab_id}',[KursusController::class,'getKuis']);
             });
         });
     });

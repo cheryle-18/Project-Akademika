@@ -164,11 +164,16 @@ class KursusController extends Controller
     }
 
     function validateDataSoal($data){
-        $validate = [];
-        $validate["soal"] = 'required|string';
-        $validate["kunci_jawaban"] = 'required|string';
-        $validate["pembahasan"] = 'required';
-        $validate["nilai"] = 'required|gt:0';
+        $validate = [
+            "soal" => 'required|string',
+            "kunci_jawaban" => 'required|string',
+            "pembahasan" => 'required',
+            "nilai" => 'required|gt:0'
+        ];
+        // $validate["soal"] = 'required|string';
+        // $validate["kunci_jawaban"] = 'required|string';
+        // $validate["pembahasan"] = 'required';
+        // $validate["nilai"] = 'required|gt:0';
 
         $validator = Validator::make($data,$validate,[
             'soal.required'=> "Pertanyaan harus diisi",
@@ -184,64 +189,92 @@ class KursusController extends Controller
     }
 
     function simpanKuis(Request $req){
-        $req->validate([
-            'kursusId' => 'required',
-            'subbabId' => 'required',
-            'listSoal' => 'required',
-        ], [
-
-        ]);
-
-        $kursusId = $req->kursusId;
-        $subbabId = $req->subabId;
-        $listSoal = $req->soal;
+        $subbabId = $req->subbabId;
+        $listSoal = json_decode($req->listSoal);
         $kuisId = -1;
 
         //find if kuis exists
         $kuis = Kuis::where('subbab_id', $subbabId)->first();
         if($kuis){
-            $kuisId = $kuis->id;
+            $kuisId = $kuis->kuis_id;
+            $kuis->jumlah_soal = sizeof($listSoal);
+            $kuis->save();
 
             //delete existing soal
             KuisSoal::where('kuis_id', $kuisId)->delete();
         }
         else{
             //create kuis
-            $kuis = Kuis::insert([
-                "subbab_id" => $subbabId,
-                "jumlah_soal" => sizeof($listSoal)
-            ]);
+            $kuis = new Kuis();
+            $kuis->subbab_id = $subbabId;
+            $kuis->jumlah_soal = sizeof($listSoal);
+            $kuis->save();
             $kuisId = $kuis->id;
         }
 
         //insert new soal
         foreach($listSoal as $soal){
-            $validate = json_decode($this->validateDataSoal($soal),false);
-            if($validate->success){
+            // return $soal;
+            // $validate = json_decode($this->validateDataSoal($soal),false);
+            // if($validate->success){
                 //add soal
-                $newSoal = KuisSoal::insert([
-                    "kuis_id" => $kuisId,
-                    "soal" => $soal->pertanyaan,
-                    "kunci_jawaban" => $soal->jawaban,
-                    "pembahasan" => $soal->pembahasan,
-                    "nilai" => $soal->nilai
-                ]);
+                $newSoal = new KuisSoal();
+                $newSoal->kuis_id = $kuisId;
+                $newSoal->soal = $soal->pertanyaan;
+                $newSoal->kunci_jawaban = $soal->jawaban;
+                $newSoal->pembahasan = $soal->pembahasan;
+                $newSoal->nilai = $soal->nilai;
+                $newSoal->save();
 
                 //add pilihan jawaban
                 foreach($soal->pilihan as $pil){
                     KuisPilihanJawaban::insert([
-                        "kuis_soal_id" => $newSoal->id,
+                        "kuis_soal_id" => $newSoal->kuis_soal_id,
                         "jawaban" => $pil
                     ]);
                 }
-                return 'Berhasil tambah kursus baru';
-            }
-            else{
-                $messages = get_object_vars($validate->messages);
-                $message = array_values($messages)[0][0];
-                return $message;
+                return 'Berhasil tambah kuis';
+            // }
+            // else{
+            //     $messages = get_object_vars($validate->messages);
+            //     // $message = array_values($messages)[0][0];
+            //     $message = $soal->pilihan;
+            //     return $message;
+            // }
+        }
+    }
+
+    function getKuis(Request $req){
+        $kuis = Kuis::where('subbab_id', $req->subbab_id)->first();
+        $listSoal = [];
+        if($kuis){
+            $kuisSoal = KuisSoal::where('kuis_id', $kuis->kuis_id)->get();
+            if(sizeof($kuisSoal) > 0){
+                $ctr = 0;
+                foreach($kuisSoal as $soal){
+                    $pilihan = KuisPilihanJawaban::where('kuis_soal_id', $soal->kuis_soal_id)->get();
+                    $listPilihan = [];
+                    foreach($pilihan as $pil){
+                        $listPilihan[] = $pil->jawaban;
+                    }
+
+                    $soalArr = [
+                        "id" => "ro" . $ctr,
+                        "pertanyaan" => $soal->soal,
+                        "nilai" => $soal->nilai,
+                        "jawaban" => $soal->kunci_jawaban,
+                        "pilihan" => $listPilihan,
+                        "pembahasan" => $soal->pembahasan,
+                    ];
+                    $listSoal[] = $soalArr;
+                    $ctr++;
+                }
             }
         }
+
+        return response()->json([
+            "listSoal" => $listSoal
+        ]);
     }
 
     function getDetailGuru(Request $request)
