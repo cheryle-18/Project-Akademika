@@ -164,16 +164,16 @@ class KursusController extends Controller
     }
 
     function validateDataSoal($data){
-        $validate = [
-            "soal" => 'required|string',
-            "kunci_jawaban" => 'required|string',
-            "pembahasan" => 'required',
-            "nilai" => 'required|gt:0'
-        ];
-        // $validate["soal"] = 'required|string';
-        // $validate["kunci_jawaban"] = 'required|string';
-        // $validate["pembahasan"] = 'required';
-        // $validate["nilai"] = 'required|gt:0';
+        // $validate = [
+        //     "soal" => 'required|string',
+        //     "kunci_jawaban" => 'required|string',
+        //     "pembahasan" => 'required',
+        //     "nilai" => 'required|gt:0'
+        // ];
+        $validate["soal"] = 'required|string';
+        $validate["kunci_jawaban"] = 'required|string';
+        $validate["pembahasan"] = 'required';
+        $validate["nilai"] = 'required|gt:0';
 
         $validator = Validator::make($data,$validate,[
             'soal.required'=> "Pertanyaan harus diisi",
@@ -182,9 +182,11 @@ class KursusController extends Controller
             'nilai.required'=> "Nilai harus diisi",
         ]);
 
+        return $validator; //hapus nanti
+
         return response()->json([
             'success' => !$validator->fails(),
-            'messages'=>$validator->errors(),
+            'messages'=>$validator->errors()
         ]);
     }
 
@@ -192,6 +194,7 @@ class KursusController extends Controller
         $subbabId = $req->subbabId;
         $listSoal = json_decode($req->listSoal);
         $kuisId = -1;
+        // return $listSoal;
 
         //find if kuis exists
         $kuis = Kuis::where('subbab_id', $subbabId)->first();
@@ -211,10 +214,14 @@ class KursusController extends Controller
             $kuis->save();
             $kuisId = $kuis->id;
         }
+        // return $listSoal;
 
         //insert new soal
         foreach($listSoal as $soal){
             // return $soal;
+            // $soalArr = (array) $soal;
+            // $valresponse = $this->validateDataSoal($soalArr);
+            // return json_encode($valresponse->fails());
             // $validate = json_decode($this->validateDataSoal($soal),false);
             // if($validate->success){
                 //add soal
@@ -233,7 +240,6 @@ class KursusController extends Controller
                         "jawaban" => $pil
                     ]);
                 }
-                return 'Berhasil tambah kuis';
             // }
             // else{
             //     $messages = get_object_vars($validate->messages);
@@ -242,6 +248,7 @@ class KursusController extends Controller
             //     return $message;
             // }
         }
+        return 'Berhasil tambah kuis';
     }
 
     function getKuis(Request $req){

@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import Banner from "./Banner";
-import KuisCard from "./KuisCard";
+import PembahasanCard from "./PembahasanCard";
 import Nav from "./Navbar";
 import { Link } from "react-router-dom";
 
@@ -41,7 +41,7 @@ const NilaiKuis = () => {
     ]);
 
     const cetakKuis = kuiss.map((kuis, index) => (
-        <KuisCard kuis={kuis} idx={index + 1}></KuisCard>
+        <PembahasanCard kuis={kuis} idx={index + 1}></PembahasanCard>
     ));
 
     return (

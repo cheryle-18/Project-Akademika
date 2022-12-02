@@ -84,14 +84,17 @@ class KursusController extends Controller
                     $pilihan = KuisPilihanJawaban::where('kuis_soal_id', $soal->kuis_soal_id)->get();
                     $listPilihan = [];
                     foreach($pilihan as $pil){
-                        $listPilihan[] = $pil->jawaban;
+                        $listPilihan[] = [
+                            "id" => $pil->kuis_pilihan_jawaban_id,
+                            "jawaban" => $pil->jawaban
+                        ];
                     }
 
                     $soalArr = [
                         "id" => "ro" . $ctr,
                         "pertanyaan" => $soal->soal,
                         "nilai" => $soal->nilai,
-                        "jawaban" => $soal->kunci_jawaban,
+                        "kunci_jawaban" => $soal->kunci_jawaban,
                         "pilihan" => $listPilihan,
                         "pembahasan" => $soal->pembahasan,
                     ];
@@ -104,5 +107,9 @@ class KursusController extends Controller
         return response()->json([
             "listSoal" => $listSoal
         ]);
+    }
+
+    function jawabKuis(Request $req){
+
     }
 }

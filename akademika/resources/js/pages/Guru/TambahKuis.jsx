@@ -10,7 +10,7 @@ const TambahKuis = () => {
     const {http,user} = AuthUser()
     const [title, setTitle] = useState("proses");
     const [course, setCourse] = useState("Pengembangan Website Front-End Dasar")
-    const [subbab, setSubbab] = useState("HTML")
+    const [subbab, setSubbab] = useState(2)
     const [ctrSoal, setCtrSoal] = useState(1)
     const id = useId()
     const [listSoal, setListSoal] = useState([
@@ -25,14 +25,15 @@ const TambahKuis = () => {
     ])
 
     const fetchDataKuis = () => {
-        setSubbab(11)
         let url = `/guru/kursus/kuis/getKuis/${subbab}`
-        http.post(url).then((res) => {
+        http.get(url).then((res) => {
+            console.log(res.data.listSoal)
             let temp = res.data.listSoal
             if(temp.length > 0)
                 setListSoal(temp);
         })
         setCtrSoal(listSoal.length)
+        console.log(listSoal)
     }
 
     const submitForm = () => {
