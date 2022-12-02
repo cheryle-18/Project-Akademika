@@ -9,6 +9,8 @@ use App\Models\KuisSoal;
 use App\Models\Kursus;
 use App\Models\Materi;
 use App\Models\Siswa;
+use App\Models\SiswaJawaban;
+use App\Models\SiswaKuis;
 use App\Models\Subbab;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -110,6 +112,74 @@ class KursusController extends Controller
     }
 
     function jawabKuis(Request $req){
+        $subbabId = $req->subbabId;
+        $siswaId = $req->siswaId;
+        $listJawaban = json_decode($req->listJawaban);
 
+        $kuis = Kuis::where('subbab_id', $subbabId)->first();
+
+        $benar = 0;
+        $salah = 0;
+        $nilai = 0;
+        foreach($listJawaban as $jwbn){
+            //add to siswa_jawaban
+            $newJwbn = new SiswaJawaban();
+            $newJwbn->kuis_pilihan_jawaban_id = $jwbn->pil_jwbn_id;
+            $newJwbn->kuis_soal_id = $jwbn->soal_id;
+            $newJwbn->save();
+
+            //check jawaban kuis
+            $selected = KuisPilihanJawaban::find($jwbn->pil_jwbn_id);
+            $soal = KuisSoal::find($jwbn->soal_id);
+            if($soal->kunci_jwbn == $selected->jawaban){
+                $benar++;
+                $nilai += $soal->nilai;
+            }
+            else{
+                $salah++;
+            }
+        }
+
+        //add to siswa_kuis
+        $newSKuis = new SiswaKuis();
+        $newSKuis->kuis_id = $kuis->kuis_id;
+        $newSKuis->siswa_id = $siswaId;
+        $newSKuis->total_benar = $benar;
+        $newSKuis->total_salah = $salah;
+        $newSKuis->nilai = $nilai;
+        $newSKuis->save();
+
+        return 'Berhasil submit kuis';
+    }
+
+    function getSiswaKuis(Request $req){
+        $subbabId = $req->subbabId;
+        $siswaId = $req->siswaId;
+
+        $kuis = Kuis::where('subbab_id', $subbabId)->first();
+        $soal = KuisSoal::where('kuis_id', $kuis->kuis_id)->first();
+        $siswaKuis = SiswaKuis::where('siswa_id', $siswaId)->where('kuis_id', $kuis->kuis_id)->first();
+
+        $siswaJawaban = SiswaJawaban::where('siswa_id', $siswaId)->where('kuis_soal_id', $soal->kuis_soal_id)->get();
+        $listJwbn = [];
+
+        foreach($siswaJawaban as $jwbn){
+            $valueJwbn = KuisPilihanJawaban::where('kuis_pilihan_jawaban_id', $jwbn->kuis_pilihan_jawaban_id)->first();
+            $listJwbn[] = [
+                "soal_id" => $jwbn->kuis_soal_id,
+                "jawaban" => $valueJwbn->jawaban
+            ];
+        }
+
+        $hasilKuis = [
+            "nilai" => $siswaKuis->nilai,
+            "benar" => $siswaKuis->total_benar,
+            "salah" => $siswaKuis->total_salah,
+            "listJwbn" => $listJwbn
+        ];
+
+        return response()->json([
+            "hasilKuis" => $hasilKuis
+        ]);
     }
 }

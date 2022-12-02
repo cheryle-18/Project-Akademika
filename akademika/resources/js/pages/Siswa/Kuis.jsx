@@ -18,15 +18,29 @@ const Kuis = () => {
     });
     const [listSoal, setListSoal] = useState([
         {
-            kuis_soal_id: 1,
-            pertanyaan: "Apa kepanjangan dari HTML",
+            id: 0,
+            pertanyaan: "Apa itu HTML?",
+            nilai: 10,
+            kunci_jawaban: "hypertext markup language",
             pilihan: [
-                "HyperText Markup Language",
-                "HyperText Markup Language",
-                "HyperText Markup Language",
-                "HyperText Markup Language",
+                {
+                    id: 1,
+                    jawaban: "html"
+                },
+                {
+                    id: 2,
+                    jawaban: "html"
+                },
+                {
+                    id: 3,
+                    jawaban: "html"
+                },
+                {
+                    id: 4,
+                    jawaban: "html"
+                },
             ],
-            kunci_jawaban: "HyperText Markup Language",
+            pembahasan: "lorem ipsum"
         }
     ]);
     const [listJawaban, setListJawaban] = useState([])
@@ -35,7 +49,7 @@ const Kuis = () => {
         let url = `/siswa/kursus/kuis/get/${subbab.id}`
         http.get(url).then((res) => {
             setListSoal(res.data.listSoal)
-            generateListJwbn()
+            generateListJwbn
             console.log(listSoal)
             console.log(listJawaban)
         })
@@ -82,11 +96,12 @@ const Kuis = () => {
                         <div className="col-span-12 xl:col-span-6 bg-custom-light-blue rounded-md">
                             <Radio
                                 id={`${soal.id}${index2}`}
-                                name="jawaban"
+                                name={`jawaban${soal.id}`}
                                 value={pil.id}
                                 label={pil.jawaban}
                                 className="text-black font-semibold"
-                                onClick={ (e) => selectAnswer(e.target.value, soal.id,index) }
+                                onChange={() => ""}
+                                onClick={ (e) => selectAnswer(e.target.value, soal.id, index) }
                             />
                         </div>
                     ))}
@@ -119,14 +134,14 @@ const Kuis = () => {
                     {cetakKuis}
                     <div className="mt-10">
                         <div className="float-right">
-                            <Link to="/siswa/kursus/nilai">
+                            {/* <Link to="/siswa/kursus/nilai"> */}
                                 <button
                                     className="btn w-full mt-3 text-base capitalize bg-custom-blue text-white hover:bg-blue-700 font-normal rounded-md py-2"
                                     name="" onClick={ submitForm }
                                 >
                                     Selesai &nbsp;&nbsp; &gt;
                                 </button>
-                            </Link>
+                            {/* </Link> */}
                         </div>
                         <div className="clear-both"></div>
                     </div>
