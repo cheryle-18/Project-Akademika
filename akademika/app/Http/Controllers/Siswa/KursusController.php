@@ -154,29 +154,31 @@ class KursusController extends Controller
     }
 
     function getResultKuis(Request $req){
-        $subbabId = $req->subbabId;
-        $siswaId = $req->siswaId;
+        $subbabId = $req->subbab_id;
+        // $siswaId = $req->siswaId;
+        $siswaId = 1; //dapet id siswa darimana?
 
         $kuis = Kuis::where('subbab_id', $subbabId)->first();
-        $soal = KuisSoal::where('kuis_id', $kuis->kuis_id)->first();
+        $soal = KuisSoal::where('kuis_id', $kuis->kuis_id)->get();
         $siswaKuis = SiswaKuis::where('siswa_id', $siswaId)->where('kuis_id', $kuis->kuis_id)->first();
 
-        $siswaJawaban = SiswaJawaban::where('siswa_id', $siswaId)->where('kuis_soal_id', $soal->kuis_soal_id)->get();
         $listJwbn = [];
+        foreach($soal as $s){
+            $jwbn = SiswaJawaban::where('siswa_id', $siswaId)->where('kuis_soal_id', $s->kuis_soal_id)->first();
 
-        foreach($siswaJawaban as $jwbn){
-            $valueJwbn = KuisPilihanJawaban::where('kuis_pilihan_jawaban_id', $jwbn->kuis_pilihan_jawaban_id)->first();
-            $listJwbn[] = [
+            $valueJwbn = KuisPilihanJawaban::find($jwbn->kuis_pilihan_jawaban_id);
+            $jawaban = [
                 "soal_id" => $jwbn->kuis_soal_id,
                 "jawaban" => $valueJwbn->jawaban
             ];
+            $listJwbn[] = $jawaban;
         }
 
         $hasilKuis = [
             "nilai" => $siswaKuis->nilai,
             "benar" => $siswaKuis->total_benar,
             "salah" => $siswaKuis->total_salah,
-            "listJwbn" => $listJwbn
+            "listJawaban" => $listJwbn
         ];
 
         return response()->json([

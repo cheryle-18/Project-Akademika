@@ -14,8 +14,7 @@ const Kuis = () => {
     const [subbab, setSubbab] = useState({
         id: 2,
         judul: "HTML",
-        deskripsi:
-            "Lorem ipsum dolor sit, amet consectetur adipisicing elit. Quibusdam, laboriosam!",
+        deskripsi: "Lorem ipsum dolor sit, amet consectetur adipisicing elit. Quibusdam, laboriosam!",
     });
     const [listSoal, setListSoal] = useState([]);
     const [listJawaban, setListJawaban] = useState([])

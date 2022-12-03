@@ -5,7 +5,7 @@ import * as faIcon from "@fortawesome/free-solid-svg-icons";
 import { Link } from "react-router-dom";
 import { Alert, Input, Radio } from "@material-tailwind/react";
 
-const PembahasanCard = (kuis) => {
+const PembahasanCard = (kuis, jawaban) => {
     var ctr = 0;
 
     var classBenar = "col-span-12 xl:col-span-6 bg-green-100 rounded-md";
@@ -13,19 +13,21 @@ const PembahasanCard = (kuis) => {
     var classDefault =
         "col-span-12 xl:col-span-6 bg-custom-light-blue rounded-md";
 
-    const checkClass = (pil) => {
+    const checkClass = (jawaban) => {
         if (kuis.kuis.kunci_jawaban == null) {
             return classDefault;
-        } else if (pil == kuis.kuis.jawaban) {
+        } else if (jawaban.jawaban == kuis.kuis.kunci_jawaban) {
             return classBenar;
         } else if (
-            pil != kuis.kuis.jawaban &&
-            pil == kuis.kuis.kunci_jawaban
+            jawaban.jawaban != kuis.kuis.kunci_jawaban &&
+            jawaban.jawaban == kuis.kuis.kunci_jawaban
         ) {
             return classSalah;
         }
         return classDefault;
     };
+
+
 
     return (
         <div className="relative p-4 mt-6 pr-0">
@@ -54,11 +56,10 @@ const PembahasanCard = (kuis) => {
                 <div className="grid grid-cols-12 mt-4 gap-4">
                     {kuis.kuis.pilihan.map((pil, index) => (
                         // <div className="col-span-12 xl:col-span-6 bg-custom-light-blue rounded-md">
-                        <div className={checkClass(pil)}>
+                        <div className={checkClass(jawaban)}>
                             <Radio
                                 id={`${kuis.idx}${ctr++}`}
                                 name="jawaban"
-                                value={pil}
                                 label={pil}
                                 className="text-black font-semibold"
                             />
