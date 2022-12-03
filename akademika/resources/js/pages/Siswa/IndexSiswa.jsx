@@ -26,7 +26,7 @@ const IndexSiswa = () => {
                 <Route exact path="/siswa/kursus/kuis">
                     <Kuis></Kuis>
                 </Route>
-                <Route exact path="/siswa/kursus/nilai">
+                <Route exact path="/siswa/kursus/kuis/nilai">
                     <NilaiKuis></NilaiKuis>
                 </Route>
             </Switch>

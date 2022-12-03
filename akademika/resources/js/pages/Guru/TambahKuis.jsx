@@ -39,7 +39,7 @@ const TambahKuis = () => {
     const submitForm = () => {
         // console.log(listSoal)
         const formData = new FormData();
-        formData.append('subbabId',2)
+        formData.append('subbabId', subbab)
         formData.append('listSoal', JSON.stringify(listSoal))
 
         http.post("/guru/kursus/kuis/simpan",formData).then((res) => {

@@ -107,7 +107,7 @@ Route::group(['middleware'=>'api'],function ()
             {
                 Route::get('get/{subbab_id}',[SiswaKursusController::class,'getKuis']);
                 Route::post('submit',[SiswaKursusController::class,'submitKuis']);
-                Route::get('result',[SiswaKursusController::class,'getResultKuis']);
+                Route::get('getResult',[SiswaKursusController::class,'getResultKuis']);
             });
         });
     });

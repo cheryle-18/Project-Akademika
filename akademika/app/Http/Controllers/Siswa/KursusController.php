@@ -93,7 +93,7 @@ class KursusController extends Controller
                     }
 
                     $soalArr = [
-                        "id" => "ro" . $ctr,
+                        "id" => $soal->kuis_soal_id,
                         "pertanyaan" => $soal->soal,
                         "nilai" => $soal->nilai,
                         "kunci_jawaban" => $soal->kunci_jawaban,
@@ -111,7 +111,7 @@ class KursusController extends Controller
         ]);
     }
 
-    function jawabKuis(Request $req){
+    function submitKuis(Request $req){
         $subbabId = $req->subbabId;
         $siswaId = $req->siswaId;
         $listJawaban = json_decode($req->listJawaban);
@@ -126,12 +126,13 @@ class KursusController extends Controller
             $newJwbn = new SiswaJawaban();
             $newJwbn->kuis_pilihan_jawaban_id = $jwbn->pil_jwbn_id;
             $newJwbn->kuis_soal_id = $jwbn->soal_id;
+            $newJwbn->siswa_id = $siswaId;
             $newJwbn->save();
 
             //check jawaban kuis
             $selected = KuisPilihanJawaban::find($jwbn->pil_jwbn_id);
             $soal = KuisSoal::find($jwbn->soal_id);
-            if($soal->kunci_jwbn == $selected->jawaban){
+            if($soal->kunci_jawaban == $selected->jawaban){
                 $benar++;
                 $nilai += $soal->nilai;
             }
@@ -152,7 +153,7 @@ class KursusController extends Controller
         return 'Berhasil submit kuis';
     }
 
-    function getSiswaKuis(Request $req){
+    function getResultKuis(Request $req){
         $subbabId = $req->subbabId;
         $siswaId = $req->siswaId;
 

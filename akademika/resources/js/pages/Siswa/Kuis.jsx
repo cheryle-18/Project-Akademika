@@ -5,6 +5,7 @@ import Nav from "./Navbar";
 import AuthUser from "../../components/AuthUser";
 import { Link } from "react-router-dom";
 import { Radio } from "@material-tailwind/react";
+import { useHistory } from "react-router-dom";
 
 const Kuis = () => {
     const {http,user} = AuthUser()
@@ -16,42 +17,18 @@ const Kuis = () => {
         deskripsi:
             "Lorem ipsum dolor sit, amet consectetur adipisicing elit. Quibusdam, laboriosam!",
     });
-    const [listSoal, setListSoal] = useState([
-        {
-            id: 0,
-            pertanyaan: "Apa itu HTML?",
-            nilai: 10,
-            kunci_jawaban: "hypertext markup language",
-            pilihan: [
-                {
-                    id: 1,
-                    jawaban: "html"
-                },
-                {
-                    id: 2,
-                    jawaban: "html"
-                },
-                {
-                    id: 3,
-                    jawaban: "html"
-                },
-                {
-                    id: 4,
-                    jawaban: "html"
-                },
-            ],
-            pembahasan: "lorem ipsum"
-        }
-    ]);
+    const [listSoal, setListSoal] = useState([]);
     const [listJawaban, setListJawaban] = useState([])
+    const [siswa, setSiswa] = useState({
+        id: 2,
+        nama: "Cloyd Shanahan"
+    })
+    const [submitData, setSubmitData] = useState("")
 
     const fetchDataKuis = () => {
         let url = `/siswa/kursus/kuis/get/${subbab.id}`
         http.get(url).then((res) => {
             setListSoal(res.data.listSoal)
-            generateListJwbn
-            console.log(listSoal)
-            console.log(listJawaban)
         })
     }
 
@@ -64,7 +41,7 @@ const Kuis = () => {
         })
     }
 
-    const selectAnswer = (soal_id, pil_jwbn_id, idx) => {
+    const selectAnswer = (pil_jwbn_id, soal_id, idx) => {
         let temp = listJawaban[idx]
         if(temp.soal_id = soal_id){
             temp.pil_jwbn_id = pil_jwbn_id
@@ -77,7 +54,26 @@ const Kuis = () => {
 
     const submitForm = () => {
         console.log(listJawaban)
+        const formData = new FormData()
+        formData.append('subbabId', subbab.id)
+        formData.append('siswaId', siswa.id)
+        formData.append('listJawaban', JSON.stringify(listJawaban))
+
+        http.post("/siswa/kursus/kuis/submit",formData).then((res) => {
+            let data = res.data
+            console.log(data)
+            setSubmitData(data)
+        })
     }
+
+    const redirect = () => {
+        const history = useHistory()
+        history.push("/siswa/kursus/kuis/nilai")
+    }
+
+    // useEffect(() => {
+    //     redirect()
+    // }, [submitData])
 
     const cetakKuis = listSoal.map((soal, index) => (
         // <KuisCard kuis={soal} idx={index+1} key={soal.kuis_soal_id}></KuisCard>
@@ -116,6 +112,9 @@ const Kuis = () => {
 
     useEffect(() => {
         cetakKuis
+        generateListJwbn()
+        console.log(listSoal)
+        console.log(listJawaban)
     }, [listSoal])
 
     return (
