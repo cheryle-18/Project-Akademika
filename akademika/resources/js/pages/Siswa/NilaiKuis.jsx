@@ -16,69 +16,28 @@ const NilaiKuis = () => {
     const [listSoal, setListSoal] = useState([])
     const [hasilKuis, setHasilKuis] = useState([])
 
-    // const fetchDataKuis = () => {
-    //     let url = `/siswa/kursus/kuis/get/${subbab.id}`
-    //     http.get(url).then((res) => {
-    //         setListSoal(res.data.listSoal)
-    //         // console.log(res.data.listSoal)
-    //     })
-    //     console.log("tes list soal")
-    // }
+    const fetchDataKuis = () => {
+        let url = `/siswa/kursus/kuis/get/${subbab.id}`
+        http.get(url).then((res) => {
+            if(res.data.listSoal){
+                setListSoal(res.data.listSoal)
+            }
+        })
+    }
 
-    // const fetchDataJawaban = () => {
-    //     let url = `/siswa/kursus/kuis/getResult/${subbab.id}`
-    //     http.get(url).then((res) => {
-    //         console.log(res.data.hasilKuis)
-    //         setHasilKuis(res.data.hasilKuis)
-    //     })
-    //     console.log("tes list jwbn")
-    // }
-
-    // useEffect(() => {
-    //     fetchDataKuis()
-    //     // fetchDataJawaban()
-    // }, [])
-
-    // useEffect(() => {
-    //     (async() =>{
-    //         fetchDataKuis()
-    //         fetchDataJawaban()
-    //     })()
-    // }, [])
-
-    // useEffect(() => {
-    //     console.log(listSoal)
-    // }, [listSoal])
+    const fetchDataJawaban = () => {
+        let url = `/siswa/kursus/kuis/getResult/${subbab.id}`
+        http.get(url).then((res) => {
+            if(res.data.hasilKuis){
+                setHasilKuis(res.data.hasilKuis)
+            }
+        })
+    }
 
     useEffect(() => {
-        const fetchDataKuis = () => {
-            let url = `/siswa/kursus/kuis/get/${subbab.id}`
-            http.get(url).then((res) => {
-                setListSoal(res.data.listSoal)
-            })
-            setListSoal([1,2,3])
-        }
-
-        const fetchDataJawaban = () => {
-            let url = `/siswa/kursus/kuis/getResult/${subbab.id}`
-            http.get(url).then((res) => {
-                setHasilKuis(res.data.hasilKuis)
-            })
-        }
-
         fetchDataKuis()
         fetchDataJawaban()
     }, [])
-
-    useEffect(() => {
-        // cetakKuis
-        console.log(hasilKuis)
-        console.log(listSoal)
-    }, [hasilKuis, listSoal])
-
-    const cetakKuis = listSoal.map((soal, index) => (
-        <PembahasanCard kuis={soal} jawaban={hasilKuis.listJawaban[index]} idx={index + 1}></PembahasanCard>
-    ))
 
     return (
         <div className="bg-gray-100">
@@ -95,13 +54,27 @@ const NilaiKuis = () => {
                             Nilai Anda
                         </div>
                         <div className="text-custom-blue p-14 bg-white rounded-lg shadow-lg text-5xl font-semibold mt-10">
-                            {/* {hasilKuis.nilai} */}
+                            {hasilKuis.nilai}
                         </div>
                     </div>
                     <div className="mt-10 text-custom-blue font-semibold text-xl">
                         Pembahasan
                     </div>
-                    {cetakKuis}
+                    {
+                        listSoal.map((soal, index) =>{
+                            if(hasilKuis.listJawaban){
+                                console.log(hasilKuis.listJawaban[index])
+                                return(
+                                    <PembahasanCard kuis={soal} jawaban={hasilKuis.listJawaban[index]} idx={index + 1}></PembahasanCard>
+                                )
+                            }
+                            else{
+                                return(
+                                    <div></div>
+                                )
+                            }
+                        })
+                    }
                     <div className="mt-10">
                         <div className="">
                             <Link to="/siswa/kursus/materi">
