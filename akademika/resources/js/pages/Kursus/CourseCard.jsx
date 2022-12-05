@@ -37,7 +37,7 @@ const CourseCard = (course) => {
                     </span>
                     <span>
                         <Link to={
-                            (course.course.kursus_id == null && "/guru/kursus/diterbitkan/detail") ||
+                            (course.course.kursus_id == null && "/guru/kursus/detail") ||
                             (course.course.kursus_id != null && ("/siswa/kursus/"+course.course.kursus_id+"/detail"))
                             } className="ml-auto">
                             <button

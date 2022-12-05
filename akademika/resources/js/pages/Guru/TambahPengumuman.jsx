@@ -4,6 +4,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import * as faIcon from "@fortawesome/free-solid-svg-icons";
 import GuruNav from "./Navbar";
 import { Input, Textarea } from "@material-tailwind/react";
+import TabsKursus from "./TabsKursus";
 
 const TambahPengumuman = () => {
     const classSelected = "float-left bg-white text-custom-blue py-1 px-4 rounded-sm mx-1 cursor-pointer";
@@ -44,7 +45,7 @@ const TambahPengumuman = () => {
     return (
         <div className="min-h-screen h-full w-full overflow-x-hidden flex flex-col bg-gray-100">
             <GuruNav></GuruNav>
-            <div className="banner">
+            {/* <div className="banner">
                 <div
                 className="static h-80 w-full z-0 px-4 sm:px-16 md:px-24 py-20 flex"
                 style={{
@@ -64,10 +65,10 @@ const TambahPengumuman = () => {
                         </div>
                     </div>
                 </div>
-            </div>
+            </div> */}
 
             <div className="static min-h-0 w-full z-0 px-4 sm:px-16 md:px-24 py-10">
-                <div className="bg-custom-blue text-white inline-block text-base tracking-wide p-1 py-2 rounded-md">
+                {/* <div className="bg-custom-blue text-white inline-block text-base tracking-wide p-1 py-2 rounded-md">
                     <div
                         className={
                             (title == "materi" && classSelected) ||
@@ -86,7 +87,11 @@ const TambahPengumuman = () => {
                     >
                         Pengumuman
                     </div>
-                </div>
+                </div> */}
+
+                 <div className="tabs w-auto">
+                        <TabsKursus titleParam={title}></TabsKursus>
+                 </div>
             </div>
 
             <div className="content flex flex-wrap gap-10 w-full px-24 pb-10">
