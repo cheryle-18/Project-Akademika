@@ -11,7 +11,7 @@ const DetailGuru = () => {
     let history = useHistory();
     const { http } = AuthUser();
     const [guru, setGuru] = useState([]);
-
+    const [updateFailed, setUpdateFailed] = useState("awal");
     const [registerNama, setRegisterNama] = useState();
     const [registerUsername, setRegisterUsername] = useState();
     const [registerTelp, setRegisterTelp] = useState();
@@ -51,7 +51,7 @@ const DetailGuru = () => {
         }).then((res) => {
             let data = res.data;
                 console.log(data);
-
+                setUpdateFailed("success");
             // if (data.access_token != null && data.user != null) {
             //     //login success
             //     setToken(res.data.user, res.data.access_token);
@@ -66,6 +66,16 @@ const DetailGuru = () => {
         <div className="bg-gray-200 flex">
             <Sidebar now="guru detail">
                 <div className="text-2xl p-14 pb-2">
+                {updateFailed != "success"  && updateFailed != "awal" && (
+                <Alert severity="error" className="bg-red-400 mb-6">
+                    Gagal Update!
+                </Alert>
+            )}
+            {updateFailed == "success" && (
+                <Alert severity="error" className="bg-green-400 mb-6">
+                    Berhasil Update!
+                </Alert>
+            )}
                     <div className="bg-white overflow-y-auto h-77vh p-4 mb-6 rounded-md drop-shadow-lg overflow-x-auto text-black">
                         <div className="flex justify-start items-center mt-4">
                             <div className="w-40">Username</div>

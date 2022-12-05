@@ -91,6 +91,6 @@ class AdminController extends Controller
                 "status" => $request->status
             ]);
         // $kursus->status = 0;
-        return "Berhasil Update";
+        return "success";
     }
 }
