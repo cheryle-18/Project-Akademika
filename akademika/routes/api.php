@@ -54,7 +54,10 @@ Route::group(['middleware'=>'api'],function ()
 
     Route::prefix('admin')->group(function () {
         Route::prefix('master')->group(function () {
-            Route::post('siswa',[AdminController::class,'getSiswa']);
+            Route::prefix('siswa')->group(function () {
+                Route::post('/',[AdminController::class,'getSiswa']);
+                Route::post('/detail',[AdminController::class,'getDetailSiswa']);
+            });
             Route::post('bansiswa',[AdminController::class,'banSiswa']);
 
             Route::prefix('guru')->group(function () {

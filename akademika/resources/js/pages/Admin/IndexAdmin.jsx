@@ -1,6 +1,7 @@
 import React from "react";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import DetailGuru from "./DetailGuru";
+import DetailSiswa from "./DetailSiswa";
 import GuruAdmin from "./GuruAdmin";
 import HomeAdmin from "./HomeAdmin";
 import KursusAdmin from "./KursusAdmin";
@@ -22,6 +23,9 @@ const IndexAdmin = () => {
                 </Route>
                 <Route exact path="/admin/master/siswa">
                     <SiswaAdmin></SiswaAdmin>
+                </Route>
+                <Route exact path="/admin/master/siswa/detail">
+                    <DetailSiswa></DetailSiswa>
                 </Route>
                 <Route exact path="/admin/master/kursus">
                     <KursusAdmin></KursusAdmin>
