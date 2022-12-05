@@ -21,10 +21,10 @@ const GuruNav = () => {
                         <Link to="/guru/profile">Halo, Guru</Link>
                     </div>
                     <div className="pt-1.5 text-white float-right mr-5 cursor-pointer">
-                        <Link to="/guru/laporan">Laporkan Siswa</Link>
+                        <Link to="/guru/report/siswa">Laporkan Siswa</Link>
                     </div>
                     <div className="pt-1.5 text-white float-right mr-5 cursor-pointer">
-                        <Link to="/guru/kursus">Kursus Saya</Link>
+                        <Link to="/guru/kursus/diterbitkan">Kursus Saya</Link>
                     </div>
                 </div>
                 {/* layar kecil */}
@@ -36,10 +36,10 @@ const GuruNav = () => {
                         <Link to="/guru/profile">Halo, User</Link>
                     </div>
                     <div className="pt-1.5 text-white float-right mr-5 cursor-pointer">
-                        <Link to="/guru/laporan">Laporkan Siswa</Link>
+                        <Link to="/guru/report/siswa">Laporkan Siswa</Link>
                     </div>
                     <div className="pt-1.5 text-white float-right mr-5 cursor-pointer">
-                        <Link to="/guru/kursus">Kursus Saya</Link>
+                        <Link to="/guru/kursus/diterbitkan">Kursus Saya</Link>
                     </div>
                 </div>
             </div>
