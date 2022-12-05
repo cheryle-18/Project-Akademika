@@ -12,6 +12,7 @@ import TambahPengumuman from "./TambahPengumuman";
 import TambahMateri from "./TambahMateri";
 import EditMateri from "./EditMateri";
 import DetailDiterbitkan from "./DetailDiterbitkan";
+import ProfileGuru from "./ProfileGuru";
 
 const IndexGuru = () => {
     return(
@@ -49,6 +50,9 @@ const IndexGuru = () => {
                 </Route>
                 <Route exact path="/guru/report/siswa">
                     <ReportSiswa></ReportSiswa>
+                </Route>
+                <Route exact path="/guru/profile">
+                    <ProfileGuru></ProfileGuru>
                 </Route>
                 {/* <Route exact path="/guru/kursus/diterbitkan/detail">
                     <DetailKursus></DetailKursus>
