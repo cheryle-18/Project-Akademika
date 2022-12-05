@@ -1,7 +1,7 @@
 import { Button, Input, Option, Select, Textarea } from "@material-tailwind/react";
 import React, { useState, useEffect, Fragment } from "react";
 import GuruNav from "./Navbar"
-import Tabs from "./Tabs";
+import TabsKursus from "./TabsKursus";
 
 const DetailKursus = () => {
     const [course, setCourse] = useState({
@@ -27,17 +27,18 @@ const DetailKursus = () => {
         },
     ])
 
-    const [title, setTitle] = useState("proses")
+    const [title, setTitle] = useState("materi")
 
     return(
-        <div className="min-h-screen w-full overflow-x-hidden flex flex-col bg-gray-100">
-            <div className="px-4 sm:px-16 md:px-24 drawer-side bg-custom-blue overflow-y-auto flex-none">
+        <div className="min-h-screen h-full w-full overflow-x-hidden flex flex-col bg-gray-100">
+            {/* <div className="px-4 sm:px-16 md:px-24 drawer-side bg-custom-blue overflow-y-auto flex-none"> */}
                 <GuruNav />
-            </div>
-            <div className="px-4 sm:px-16 md:px-24 py-6 w-full overflow-x-none bg-gray-100">
-                <div className="tabs w-auto">
-                    <Tabs titleParam={title}></Tabs>
-                </div>
+            {/* </div> */}
+
+            <div className="static min-h-0 w-full z-0 px-4 sm:px-16 md:px-24 py-10">
+            <div className="tabs w-auto">
+                        <TabsKursus titleParam={title}></TabsKursus>
+                 </div>
             </div>
             <div className="content w-full px-24">
                 <div className="flex">
