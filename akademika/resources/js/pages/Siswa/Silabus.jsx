@@ -213,12 +213,14 @@ const Silabus = (props) => {
                     </div>
                 </div>
             )}
-            <div
-                onClick={changeToggle}
-                className="fixed bottom-0 lg:bottom-10 right-0 lg:right-10 p-2 bg-custom-light-blue text-custom-blue rounded-lg text-4xl cursor-pointer duration-500 hover:text-custom-light-blue hover:bg-custom-blue z-10"
-            >
-                <FontAwesomeIcon icon={faIcon.faMessage}></FontAwesomeIcon>
-            </div>
+            {props.isGuest == null && (
+                <div
+                    onClick={changeToggle}
+                    className="fixed bottom-0 lg:bottom-10 right-0 lg:right-10 p-2 bg-custom-light-blue text-custom-blue rounded-lg text-4xl cursor-pointer duration-500 hover:text-custom-light-blue hover:bg-custom-blue z-10"
+                >
+                    <FontAwesomeIcon icon={faIcon.faMessage}></FontAwesomeIcon>
+                </div>
+            )}
             <div className="px-4 sm:px-16 md:px-24 drawer-side bg-custom-blue overflow-y-auto flex-none">
                 {props.isGuest == null && <SiswaNav></SiswaNav>}
                 {props.isGuest != null && <GuestNav></GuestNav>}
