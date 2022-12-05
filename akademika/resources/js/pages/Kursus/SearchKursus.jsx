@@ -1,6 +1,6 @@
 // import React, { useState, useEffect } from "react";
 import React, { useState, useEffect } from "react";
-import Nav from "./Navbar";
+import Nav from "../Nav";
 import SiswaNav from "../Siswa/Navbar";
 import { Input } from "@material-tailwind/react";
 import { Select, Option } from "@material-tailwind/react";

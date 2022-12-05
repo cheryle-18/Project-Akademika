@@ -1,6 +1,7 @@
 import React, { useState, useEffect, Fragment } from "react";
 import { useHistory, useParams } from "react-router-dom";
-import Nav from "./Navbar";
+import SiswaNav from "./Navbar";
+import GuestNav from "../Nav";
 import AuthUser from "../../components/AuthUser";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import * as faIcon from "@fortawesome/free-solid-svg-icons";
@@ -32,7 +33,7 @@ function Icon({ id, open }) {
     );
 }
 
-const Silabus = () => {
+const Silabus = (props) => {
     const { http, user } = AuthUser();
     const { id } = useParams();
     const [course, setCourse] = useState([]);
@@ -219,7 +220,8 @@ const Silabus = () => {
                 <FontAwesomeIcon icon={faIcon.faMessage}></FontAwesomeIcon>
             </div>
             <div className="px-4 sm:px-16 md:px-24 drawer-side bg-custom-blue overflow-y-auto flex-none">
-                <Nav></Nav>
+                {props.isGuest == null && <SiswaNav></SiswaNav>}
+                {props.isGuest != null && <GuestNav></GuestNav>}
             </div>
             <div className="banner">
                 <div
