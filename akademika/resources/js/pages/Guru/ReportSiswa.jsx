@@ -36,9 +36,9 @@ const ReportSiswa = () => {
 
     return (
         <div className="min-h-screen w-full overflow-x-hidden flex flex-col bg-gray-100">
-            <div className="px-4 sm:px-16 md:px-24 drawer-side bg-custom-blue overflow-y-auto flex-none">
+            {/* <div className="px-4 sm:px-16 md:px-24 drawer-side bg-custom-blue overflow-y-auto flex-none"> */}
                 <GuruNav />
-            </div>
+            {/* </div> */}
             <div className="static w-full z-0 px-4 sm:px-16 md:px-24">
                 <div className="text-3xl font-semibold mt-10">
                     Laporkan Siswa
