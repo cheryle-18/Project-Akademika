@@ -39,6 +39,29 @@ const DetailGuru = () => {
         fetchDataGuru();
     }, []);
 
+    const submitUpdateForm = () => {
+        //api call
+        http.post("/admin/master/guru/update", {
+            username: registerUsername,
+            nama: registerNama,
+            password: registerPassword,
+            telp: registerTelp,
+            total_wallet: registerTotalWallet,
+            status: registerStatus,
+        }).then((res) => {
+            let data = res.data;
+                console.log(data);
+
+            // if (data.access_token != null && data.user != null) {
+            //     //login success
+            //     setToken(res.data.user, res.data.access_token);
+            //     document.body.style.overflow = "auto";
+            // } else {
+            //     setLoginFailed(true);
+            // }
+        });
+    };
+
     return (
         <div className="bg-gray-200 flex">
             <Sidebar now="guru detail">
@@ -53,7 +76,7 @@ const DetailGuru = () => {
                                     className="input input-bordered w-full border-2 border-gray-500 rounded-md placeholder-gray-700 text-black"
                                     value={registerUsername}
                                     onChange={(e) =>
-                                        setRegisterNama(e.target.value)
+                                        setRegisterUsername(e.target.value)
                                     }
                                 />
                             </div>
@@ -81,7 +104,7 @@ const DetailGuru = () => {
                                     className="input input-bordered w-full border-2 border-gray-500 rounded-md placeholder-gray-700 text-black"
                                     value={registerNama}
                                     onChange={(e) =>
-                                        registerNama(e.target.value)
+                                        setRegisterNama(e.target.value)
                                     }
                                 />
                             </div>
@@ -95,7 +118,7 @@ const DetailGuru = () => {
                                     className="input input-bordered w-full border-2 border-gray-500 rounded-md placeholder-gray-700 text-black"
                                     value={registerTelp}
                                     onChange={(e) =>
-                                        registerNama(e.target.value)
+                                        setRegisterTelp(e.target.value)
                                     }
                                 />
                             </div>
@@ -109,7 +132,7 @@ const DetailGuru = () => {
                                     className="input input-bordered w-full border-2 border-gray-500 rounded-md placeholder-gray-700 text-black"
                                     value={registerTotalWallet}
                                     onChange={(e) =>
-                                        registerNama(e.target.value)
+                                        setRegisterTotalWallet(e.target.value)
                                     }
                                 />
                             </div>
@@ -118,22 +141,49 @@ const DetailGuru = () => {
                             <div className="w-40">Status</div>
                             <div className="w-full text-lg">
                                 <div>
+                                {registerStatus == 1 ?
+                                 <div>
                                     <Radio
-                                        id="aktif"
-                                        name="status"
-                                        label="Aktif"
-                                        onClick={(e) => {
-                                            setRegisterStatus(1);
-                                        }}
-                                    />
-                                    <Radio
-                                        id="tidakaktif"
-                                        name="status"
-                                        label="Tidak Aktif"
-                                        onClick={(e) => {
-                                            setRegisterStatus(0);
-                                        }}
-                                    />
+                                    id="aktif"
+                                    name="status"
+                                    label="Aktif"
+                                    checked
+                                    onClick={(e) => {
+                                        setRegisterStatus(1);
+                                    }}
+                                 />
+                                <Radio
+                                    id="tidakaktif"
+                                    name="status"
+                                    label="Tidak Aktif"
+                                    onClick={(e) => {
+                                        setRegisterStatus(0);
+                                    }}
+                                />
+                                 </div>
+                                :
+                              <div>
+                                  <Radio
+                                    id="aktif"
+                                    name="status"
+                                    label="Aktif"
+                                    onClick={(e) => {
+                                        setRegisterStatus(1);
+                                    }}
+                                 />
+                                <Radio
+                                    id="tidakaktif"
+                                    name="status"
+                                    label="Tidak Aktif"
+                                    checked
+                                    onClick={(e) => {
+                                        setRegisterStatus(0);
+                                    }}
+                                />
+                              </div>
+                               }
+
+
                                 </div>
                             </div>
                         </div>
@@ -141,6 +191,7 @@ const DetailGuru = () => {
                             <div className="float-right">
                                 <button
                                     type="button"
+                                    onClick={submitUpdateForm}
                                     className="py-2 px-4  bg-custom-blue hover:bg-blue-900 text-white transition ease-in duration-200 text-center text-base font-normal shadow-md rounded-lg min-w-20"
                                 >
                                     Simpan Perubahan

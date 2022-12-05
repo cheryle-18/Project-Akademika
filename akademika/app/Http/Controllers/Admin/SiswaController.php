@@ -75,4 +75,21 @@ class SiswaController extends Controller
         $kursus->save();
         return $request->kursus_id;
     }
+
+    function updateGuru(Request $request)
+    {
+        // $guru = Guru::find($request->kursus_id);
+        // dd($request);
+        Guru::where('username','=', $request->username)->update(
+            [
+                "username" => $request->username,
+                "nama" => $request->nama,
+                "password" => $request->password,
+                "telp" => $request->telp,
+                "total_wallet" => $request->total_wallet,
+                "status" => $request->status
+            ]);
+        // $kursus->status = 0;
+        return "Berhasil Update";
+    }
 }
