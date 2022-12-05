@@ -7,6 +7,7 @@ import { faCoffee } from "@fortawesome/free-solid-svg-icons";
 import Sidebar from "./Sidebar";
 import AuthUser from "../../components/AuthUser";
 import { Alert, Input, Radio } from "@material-tailwind/react";
+import { Link } from "react-router-dom";
 const DetailGuru = () => {
     let history = useHistory();
     const { http } = AuthUser();
@@ -50,8 +51,8 @@ const DetailGuru = () => {
             status: registerStatus,
         }).then((res) => {
             let data = res.data;
-                console.log(data);
-                setUpdateFailed("success");
+            console.log(data);
+            setUpdateFailed("success");
             // if (data.access_token != null && data.user != null) {
             //     //login success
             //     setToken(res.data.user, res.data.access_token);
@@ -66,16 +67,16 @@ const DetailGuru = () => {
         <div className="bg-gray-200 flex">
             <Sidebar now="guru detail">
                 <div className="text-2xl p-14 pb-2">
-                {updateFailed != "success"  && updateFailed != "awal" && (
-                <Alert severity="error" className="bg-red-400 mb-6">
-                    Gagal Update!
-                </Alert>
-            )}
-            {updateFailed == "success" && (
-                <Alert severity="error" className="bg-green-400 mb-6">
-                    Berhasil Update!
-                </Alert>
-            )}
+                    {updateFailed != "success" && updateFailed != "awal" && (
+                        <Alert severity="error" className="bg-red-400 mb-6">
+                            Gagal Update!
+                        </Alert>
+                    )}
+                    {updateFailed == "success" && (
+                        <Alert severity="error" className="bg-green-400 mb-6">
+                            Berhasil Update!
+                        </Alert>
+                    )}
                     <div className="bg-white overflow-y-auto h-77vh p-4 mb-6 rounded-md drop-shadow-lg overflow-x-auto text-black">
                         <div className="flex justify-start items-center mt-4">
                             <div className="w-40">Username</div>
@@ -151,49 +152,47 @@ const DetailGuru = () => {
                             <div className="w-40">Status</div>
                             <div className="w-full text-lg">
                                 <div>
-                                {registerStatus == 1 ?
-                                 <div>
-                                    <Radio
-                                    id="aktif"
-                                    name="status"
-                                    label="Aktif"
-                                    checked
-                                    onClick={(e) => {
-                                        setRegisterStatus(1);
-                                    }}
-                                 />
-                                <Radio
-                                    id="tidakaktif"
-                                    name="status"
-                                    label="Tidak Aktif"
-                                    onClick={(e) => {
-                                        setRegisterStatus(0);
-                                    }}
-                                />
-                                 </div>
-                                :
-                              <div>
-                                  <Radio
-                                    id="aktif"
-                                    name="status"
-                                    label="Aktif"
-                                    onClick={(e) => {
-                                        setRegisterStatus(1);
-                                    }}
-                                 />
-                                <Radio
-                                    id="tidakaktif"
-                                    name="status"
-                                    label="Tidak Aktif"
-                                    checked
-                                    onClick={(e) => {
-                                        setRegisterStatus(0);
-                                    }}
-                                />
-                              </div>
-                               }
-
-
+                                    {registerStatus == 1 ? (
+                                        <div>
+                                            <Radio
+                                                id="aktif"
+                                                name="status"
+                                                label="Aktif"
+                                                checked
+                                                onClick={(e) => {
+                                                    setRegisterStatus(1);
+                                                }}
+                                            />
+                                            <Radio
+                                                id="tidakaktif"
+                                                name="status"
+                                                label="Tidak Aktif"
+                                                onClick={(e) => {
+                                                    setRegisterStatus(0);
+                                                }}
+                                            />
+                                        </div>
+                                    ) : (
+                                        <div>
+                                            <Radio
+                                                id="aktif"
+                                                name="status"
+                                                label="Aktif"
+                                                onClick={(e) => {
+                                                    setRegisterStatus(1);
+                                                }}
+                                            />
+                                            <Radio
+                                                id="tidakaktif"
+                                                name="status"
+                                                label="Tidak Aktif"
+                                                checked
+                                                onClick={(e) => {
+                                                    setRegisterStatus(0);
+                                                }}
+                                            />
+                                        </div>
+                                    )}
                                 </div>
                             </div>
                         </div>
