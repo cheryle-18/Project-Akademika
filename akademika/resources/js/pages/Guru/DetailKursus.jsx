@@ -1,9 +1,14 @@
 import { Button, Input, Option, Select, Textarea } from "@material-tailwind/react";
 import React, { useState, useEffect, Fragment } from "react";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Link } from "react-router-dom";
 import GuruNav from "./Navbar"
 import TabsKursus from "./TabsKursus";
-
+import {
+    faArrowAltCircleLeft,
+    faArrowCircleLeft,
+    faArrowLeft,
+} from "@fortawesome/free-solid-svg-icons";
 
 const DetailKursus = () => {
     const [course, setCourse] = useState({
@@ -38,6 +43,22 @@ const DetailKursus = () => {
             {/* </div> */}
 
             <div className="static min-h-0 w-full z-0 px-4 sm:px-16 md:px-24 py-10">
+            <div className="tabs text-2xl text-custom-blue">
+                    <Link
+                        to="/guru/kursus/diterbitkan"
+                        className="rounded-xl py-2"
+                    >
+                        <div className="float-left">
+                            <FontAwesomeIcon
+                                icon={faArrowCircleLeft}
+                            ></FontAwesomeIcon>
+                        </div>
+                        <div className="float-left ml-4 text-custom-blue inline underline">
+                            Kembali Ke Kursus Saya
+                        </div>
+                        <div className="clear-both"></div>
+                    </Link>
+                </div>
             <div className="tabs w-auto">
                         <TabsKursus titleParam={title}></TabsKursus>
                  </div>
