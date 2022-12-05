@@ -1,11 +1,16 @@
 import React, { useState, useEffect, Fragment } from "react";
-import { useHistory } from "react-router-dom";
+import { Link,useHistory } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import * as faIcon from "@fortawesome/free-solid-svg-icons";
 import GuruNav from "./Navbar";
 import { Input, Textarea } from "@material-tailwind/react";
 import TabsKursus from "./TabsKursus";
 
+import {
+    faArrowAltCircleLeft,
+    faArrowCircleLeft,
+    faArrowLeft,
+} from "@fortawesome/free-solid-svg-icons";
 const TambahPengumuman = () => {
     const classSelected = "float-left bg-white text-custom-blue py-1 px-4 rounded-sm mx-1 cursor-pointer";
     const classOther = "float-left hover:bg-gray-200 hover:text-custom-blue py-1 px-4 rounded-sm mx-1 cursor-pointer";
@@ -89,6 +94,22 @@ const TambahPengumuman = () => {
                     </div>
                 </div> */}
 
+            <div className="tabs text-2xl text-custom-blue mb-4">
+                    <Link
+                        to="/guru/kursus/diterbitkan"
+                        className="rounded-xl py-2"
+                    >
+                        <div className="float-left">
+                            <FontAwesomeIcon
+                                icon={faArrowCircleLeft}
+                            ></FontAwesomeIcon>
+                        </div>
+                        <div className="float-left ml-4 text-custom-blue inline underline">
+                            Kembali Ke Kursus Saya
+                        </div>
+                        <div className="clear-both"></div>
+                    </Link>
+            </div>
                  <div className="tabs w-auto">
                         <TabsKursus titleParam={title}></TabsKursus>
                  </div>

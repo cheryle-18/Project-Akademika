@@ -58,7 +58,7 @@ const DetailKursus = () => {
                         </div>
                         <div className="clear-both"></div>
                     </Link>
-                </div>
+            </div>
             <div className="tabs w-auto">
                         <TabsKursus titleParam={title}></TabsKursus>
                  </div>
