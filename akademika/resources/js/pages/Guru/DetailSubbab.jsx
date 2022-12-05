@@ -36,6 +36,7 @@ const DetailSubbab = () => {
                 <div className="tabs w-auto">
                     <Tabs titleParam={title}></Tabs>
                 </div>
+                
             </div>
             <div className="content flex flex-col flex-wrap w-full px-24 pb-16">
                 <div className="text-3xl text-blue-900 font-semibold mb-4">

@@ -1,7 +1,9 @@
 import { Button, Input, Option, Select, Textarea } from "@material-tailwind/react";
 import React, { useState, useEffect, Fragment } from "react";
+import { Link } from "react-router-dom";
 import GuruNav from "./Navbar"
 import TabsKursus from "./TabsKursus";
+
 
 const DetailKursus = () => {
     const [course, setCourse] = useState({
@@ -127,7 +129,9 @@ const DetailKursus = () => {
                                                 <td className="text-base">{n.judul}</td>
                                                 <td className="text-center text-base">{n.durasi} menit</td>
                                                 <td className="text-center">
+                                                <Link to="/guru/kursus/subbab/detail">
                                                     <button className="btn btn-sm capitalize bg-blue-900 text-white rounded mr-3 font-normal">Detail</button>
+                                                </Link>
                                                     <button className="btn btn-sm capitalize bg-blue-900 text-white rounded font-normal">Hapus</button>
                                                 </td>
                                             </tr>
