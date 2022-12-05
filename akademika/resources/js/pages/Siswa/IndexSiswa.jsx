@@ -6,11 +6,15 @@ import Silabus from "./Silabus";
 import Materi from "./Materi";
 import NilaiKuis from "./NilaiKuis";
 import KursusSaya from "./KursusSaya";
+import SearchKursus from "../Kursus/SearchKursus"
 
 const IndexSiswa = () => {
     return (
         <Router>
             <Switch>
+                <Route exact path="/siswa/kursus/search">
+                    <SearchKursus isSiswa={true}></SearchKursus>
+                </Route>
                 <Route exact path="/siswa/kursus/:id/pengumuman">
                     <PengumumanKursus></PengumumanKursus>
                 </Route>

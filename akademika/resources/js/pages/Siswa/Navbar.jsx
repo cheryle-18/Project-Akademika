@@ -26,7 +26,7 @@ const Nav = () => {
                         <Link to="/kursus/search">Kursus Saya</Link>
                     </div>
                     <div className="pt-1.5 text-white float-right mr-5 cursor-pointer">
-                        <Link to="/kursus/search">Cari Kursus</Link>
+                        <Link to="/siswa/kursus/search">Cari Kursus</Link>
                     </div>
                 </div>
                 {/* layar kecil */}
@@ -41,7 +41,7 @@ const Nav = () => {
                         <Link to="/kursus/search">Kursus Saya</Link>
                     </div>
                     <div className="pt-1.5 text-white float-right mr-5 cursor-pointer">
-                        <Link to="/kursus/search">Cari Kursus</Link>
+                        <Link to="/siswa/kursus/search">Cari Kursus</Link>
                     </div>
                 </div>
             </div>
