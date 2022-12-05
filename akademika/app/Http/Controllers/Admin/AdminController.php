@@ -93,4 +93,12 @@ class AdminController extends Controller
         // $kursus->status = 0;
         return "success";
     }
+
+    function getDetailSiswa(Request $request)
+    {
+        $siswa = Guru::find($request->siswa_id);
+        return response()->json([
+            "siswa" => $siswa,
+        ]);
+    }
 }
