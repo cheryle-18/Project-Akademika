@@ -11,7 +11,8 @@ use Carbon\Carbon;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
 
-class SiswaController extends Controller
+
+class AdminController extends Controller
 {
     function getSiswa(Request $request)
     {

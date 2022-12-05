@@ -1,6 +1,7 @@
 <?php
 
-use App\Http\Controllers\Admin\SiswaController as SiswaAdminController;
+
+use App\Http\Controllers\Admin\AdminController as AdminController;
 use App\Http\Controllers\Auth\AuthController;
 use App\Http\Controllers\Auth\ForgotPasswordController;
 use App\Http\Controllers\Auth\ResetPasswordController;
@@ -53,19 +54,19 @@ Route::group(['middleware'=>'api'],function ()
 
     Route::prefix('admin')->group(function () {
         Route::prefix('master')->group(function () {
-            Route::post('siswa',[SiswaAdminController::class,'getSiswa']);
-            Route::post('bansiswa',[SiswaAdminController::class,'banSiswa']);
+            Route::post('siswa',[AdminController::class,'getSiswa']);
+            Route::post('bansiswa',[AdminController::class,'banSiswa']);
 
             Route::prefix('guru')->group(function () {
-                Route::post('/',[SiswaAdminController::class,'getGuru']);
+                Route::post('/',[AdminController::class,'getGuru']);
                 Route::post('/detail',[KursusController::class,'getDetailGuru']);
-                Route::post('/update',[SiswaAdminController::class,'updateGuru']);
+                Route::post('/update',[AdminController::class,'updateGuru']);
             });
 
             Route::prefix('kursus')->group(function () {
-                Route::post('/',[SiswaAdminController::class,'getKursus']);
-                Route::post('setujui',[SiswaAdminController::class,'setujuiKursus']);
-                Route::post('batal',[SiswaAdminController::class,'batalKursus']);
+                Route::post('/',[AdminController::class,'getKursus']);
+                Route::post('setujui',[AdminController::class,'setujuiKursus']);
+                Route::post('batal',[AdminController::class,'batalKursus']);
             });
         });
     });
