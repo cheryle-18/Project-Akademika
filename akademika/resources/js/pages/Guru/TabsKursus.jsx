@@ -31,6 +31,15 @@ const TabsKursus = ({titleParam}) => {
                         }
                         onClick={onClickMateri}
                     >
+                        Home Kursus
+                    </div>
+                    <div
+                        className={
+                            (title == "materi" && classSelected) ||
+                            (title != "materi" && classOther)
+                        }
+                        onClick={onClickMateri}
+                    >
                         Detail Kursus
                     </div>
                     <div

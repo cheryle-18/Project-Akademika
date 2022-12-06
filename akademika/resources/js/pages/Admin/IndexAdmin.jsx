@@ -7,11 +7,15 @@ import HomeAdmin from "./HomeAdmin";
 import KursusAdmin from "./KursusAdmin";
 import LaporanAdmin from "./LaporanAdmin";
 import SiswaAdmin from "./SiswaAdmin";
+import Home from "../Home";
 
 const IndexAdmin = () => {
     return(
         <Router>
             <Switch>
+            <Route exact path="/">
+                    <Home></Home>
+                </Route>
                 <Route exact path="/admin/home">
                     <HomeAdmin></HomeAdmin>
                 </Route>

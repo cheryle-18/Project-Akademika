@@ -57,9 +57,9 @@ const IndexGuru = () => {
                 <Route exact path="/guru/profile">
                     <ProfileGuru></ProfileGuru>
                 </Route>
-                {/* <Route exact path="/guru/kursus/diterbitkan/detail">
-                    <DetailKursus></DetailKursus>
-                </Route> */}
+                <Route exact path="/guru/kursus/diterbitkan/detail">
+                    <DetailDiterbitkan></DetailDiterbitkan>
+                </Route>
             </Switch>
         </Router>
     )

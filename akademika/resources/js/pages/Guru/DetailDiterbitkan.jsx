@@ -330,9 +330,9 @@ const DetailDiterbitkan = () => {
                             src="/card_pic.png"
                             alt=""
                         />
-                        <button className="btn w-48 mx-auto rounded bg-white text-blue-900 border-0 hover:bg-gray-100 capitalize font-medium text-base">
+                        {/* <button className="btn w-48 mx-auto rounded bg-white text-blue-900 border-0 hover:bg-gray-100 capitalize font-medium text-base">
                             Daftar Sekarang
-                        </button>
+                        </button> */}
                     </div>
                     <div className="w-3/4 flex flex-col text-white">
                         <div className="font-bold text-4xl mb-3">
