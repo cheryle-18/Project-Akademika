@@ -208,14 +208,14 @@ const DetailSubbab = () => {
                 <div className="w-full my-3">
                 {
                     kuis !=null ?
-                    (<Link to="/guru/kursus/kuis">
+                    (<Link to={"/guru/kursus/"+kursus_id+"/subbab/"+subbab_id+"/kuis"}>
                     <button className="btn btn-sm h-10 px-4 bg-blue-900 hover:bg-blue-700 text-white rounded capitalize font-normal">
                         Lihat Kuis
                     </button>
                     </Link>):(
                         <div>
                           <div className="mb-3">Tidak ada kuis untuk materi ini</div>
-                          <Link to="/guru/kursus/kuis">
+                          <Link to={"/guru/kursus/"+kursus_id+"/subbab/"+subbab_id+"/kuis"}>
                               <button className="btn btn-sm h-10 px-4 bg-blue-900 hover:bg-blue-700 text-white rounded capitalize font-normal">
                                   Tambah Kuis
                               </button>

@@ -27,6 +27,7 @@ const TambahKursus = () => {
         });
     }
 
+
     return(
         <div className="min-h-screen h-full w-full overflow-x-hidden flex flex-col bg-gray-100">
             {/* <div className="px-4 sm:px-16 md:px-24 drawer-side bg-custom-blue overflow-y-auto flex-none"> */}

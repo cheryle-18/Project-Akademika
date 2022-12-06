@@ -4,7 +4,7 @@ import { useId } from "react";
 import GuruNav from "./Navbar";
 import Tabs from "./Tabs";
 import AuthUser from "../../components/AuthUser";
-import { Link } from "react-router-dom";
+import { Link,useParams } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
     faArrowAltCircleLeft,
@@ -15,9 +15,9 @@ import {
 
 const TambahKuis = () => {
     const {http,user} = AuthUser()
+    const {kursus_id,subbab_id} = useParams()
     const [title, setTitle] = useState("proses");
-    const [course, setCourse] = useState("Pengembangan Website Front-End Dasar")
-    const [subbab, setSubbab] = useState(20)
+    const [course, setCourse] = useState([])
     const [ctrSoal, setCtrSoal] = useState(1)
     const id = useId()
     const [listSoal, setListSoal] = useState([
@@ -32,7 +32,7 @@ const TambahKuis = () => {
     ])
 
     const fetchDataKuis = () => {
-        let url = `/guru/kursus/kuis/getKuis/${subbab}`
+        let url = `/guru/kursus/kuis/getKuis/${subbab_id}`
         http.get(url).then((res) => {
             console.log(res.data.listSoal)
             let temp = res.data.listSoal
@@ -46,7 +46,7 @@ const TambahKuis = () => {
     const submitForm = () => {
         // console.log(listSoal)
         const formData = new FormData();
-        formData.append('subbabId', subbab)
+        formData.append('subbabId', subbab_id)
         formData.append('listSoal', JSON.stringify(listSoal))
 
         http.post("/guru/kursus/kuis/simpan",formData).then((res) => {
@@ -123,7 +123,18 @@ const TambahKuis = () => {
         setListSoal(newListSoal)
     }
 
+    const fetchKursus = () => {
+        http.post("/guru/kursus/get", {
+            guru_id:user.guru_id,
+            kursus_id: kursus_id,
+        }).then((res) => {
+            setCourse(res.data.kursus);
+        });
+    };
+
+
     useEffect(() => {
+        fetchKursus()
         fetchDataKuis()
     }, [])
 
@@ -252,7 +263,7 @@ const TambahKuis = () => {
 
             <div className="tabs text-xl text-custom-blue">
                     <Link
-                        to="/guru/kursus/detail"
+                        to={"/guru/kursus/"+kursus_id+"/subbab/"+subbab_id+"/detail"}
                         className="rounded-xl py-2"
                     >
                         <div className="float-left">
@@ -269,7 +280,7 @@ const TambahKuis = () => {
             </div>
             <div className="content flex flex-col flex-wrap gap-10 w-full px-24 pb-10">
                 <div className="text-3xl text-blue-900 font-semibold mb-4">
-                    {course}
+                    {course.nama}
                 </div>
                 <div className="flex">
                     <span className="text-2xl text-blue-900 font-semibold">Tambah Kuis</span>
