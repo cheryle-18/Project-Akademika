@@ -85,7 +85,6 @@ Route::group(['middleware'=>'api'],function ()
             Route::post('tambahPengumuman',[KursusController::class,'tambahPengumuman']);
             Route::post('getPengumuman',[KursusController::class,'getPengumuman']);
 
-
             Route::post('getPesan',[KursusController::class,'getPesan']);
             Route::post('getSiswa',[KursusController::class,'getSiswa']);
             Route::post('kirimPesan',[KursusController::class,'kirimPesan']);
@@ -97,6 +96,8 @@ Route::group(['middleware'=>'api'],function ()
             Route::post('getAllMateri',[KursusController::class,'getAllMateri']);
             Route::post('getKuis',[KursusController::class,'getKuisSubbab']);
             Route::post('getAllSubbabKuis',[KursusController::class,'getAllSubbabKuis']);
+
+            Route::post('getAllLaporan',[KursusController::class,'getAllLaporan']);
 
             Route::prefix('subbab')->group(function () {
                 Route::post('tambah',[KursusController::class,'tambahSubbab']);

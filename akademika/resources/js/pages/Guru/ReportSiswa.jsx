@@ -3,36 +3,72 @@ import CourseCard from "../Kursus/CourseCard";
 import GuruNav from "./Navbar";
 import Tabs from "./Tabs";
 import { Input, Option, Select, Textarea } from "@material-tailwind/react";
+import AuthUser from "../../components/AuthUser";
 
 const ReportSiswa = () => {
-    const [listSiswa, setListSiswa] = useState([
-        {
-            nama: "Lorem Ipsum",
-            deskripsi:
-                "Lorem ipsum dolor sit, amet consectetur adipisicing elit. Unde, laboriosam, eos impedit vitae excepturi officiis exercitationem atque maxime non nemo est necessitatibus id dolor odit, eaque rem ex reiciendis ratione!",
-            status: 1,
-        },
-        {
-            nama: "Lorem Ipsum",
-            deskripsi:
-                "Lorem ipsum dolor sit, amet consectetur adipisicing elit. Unde, laboriosam, eos impedit vitae excepturi officiis exercitationem atque maxime non nemo est necessitatibus id dolor odit, eaque rem ex reiciendis ratione!",
-            status: 0,
-        },
-    ]);
+    const { http, user } = AuthUser()
+    const [listCourse, setListCourse] = useState([])
+    const [selectedCourse,setSelectedCourse] = useState(null)
+    const [selectedSiswa,setSelectedSiswa] = useState(null)
+    const [listSiswa, setListSiswa] = useState([]);
+    const [listLaporan, setListLaporan] = useState([]);
+
+    const fetchKursus = () => {
+        http.post("/guru/kursus/getAllKursus", {
+            guru_id: user.guru_id,
+            type:'semua'
+        }).then((res) => {
+            setListCourse(res.data.kursus);
+        });
+    };
+
+
+    const fetchSiswa = () => {
+        http.post("/guru/kursus/getSiswa", {
+            kursus_id: selectedCourse,
+        }).then((res) => {
+            setListSiswa(res.data.siswa)
+        });
+    };
+
+    const fetchLaporan = () => {
+        http.post("/guru/kursus/getAllLaporan", {
+            guru_id:user.guru_id
+        }).then((res) => {
+            setListLaporan(res.data.laporan);
+            // console.log(res.data.laporan)
+        });
+    };
+
+    useEffect(() => {
+        fetchKursus();
+        fetchLaporan();
+    }, []);
+
+    useEffect(() => {
+        fetchSiswa();
+    }, [selectedCourse]);
+
+    const changeKursusSelected = (e) => {
+        setSelectedCourse(e)
+    }
+
 
     const classBorder = "text-center border border-b-gray-600 border-x-0";
 
-    const cetakSiswa = listSiswa.map((siswa, index) => (
+    const cetakLaporan= listLaporan.map((laporan, index) => (
         <tr>
             <td className="whitespace-pre-wrap text-center text-base">{index + 1}</td>
-            <td className="whitespace-pre-wrap text-start text-base">{siswa.nama}</td>
-            <td className="whitespace-pre-wrap text-start text-base">{siswa.deskripsi}</td>
+            <td className="whitespace-pre-wrap text-start text-base">{laporan.nama}</td>
+            <td className="whitespace-pre-wrap text-start text-base">{laporan.pivot.deskripsi}</td>
             <td className="whitespace-pre-wrap text-start text-base">
-                {siswa.status == 1 && "Disetujui"}
-                {siswa.status == 0 && "Diproses"}
+                {laporan.pivot.status == 1 && "Disetujui"}
+                {laporan.pivot.status == 0 && "Diproses"}
             </td>
         </tr>
     ));
+
+
 
     return (
         <div className="min-h-screen w-full overflow-x-hidden flex flex-col bg-gray-100">
@@ -47,7 +83,23 @@ const ReportSiswa = () => {
 
             <div className="px-4 sm:px-16 md:px-24 py-6">
                 <div className="bg-white overflow-y-auto min-h-8 p-2 md:p-6 rounded-xl drop-shadow-lg">
-                    <div className="flex justify-start items-center">
+                <div className="flex justify-start items-center">
+
+                <div className="flex justify-start w-44">
+                            Pilih Kursus
+                        </div>
+                        <Select className="w-full items-end" name="kategori" value={selectedCourse} onChange={changeKursusSelected}>
+
+                         {listCourse.map((n, index) => {
+                            return (
+                                <Option value={n.kursus_id} key={n.kursus_id}>
+                                {n.nama}
+                                </Option>
+                            );
+                         })}
+                        </Select>
+                </div>
+                    <div className="flex justify-start items-center mt-4">
                         <div className="flex justify-start w-44">
                             Pilih Siswa
                         </div>
@@ -59,9 +111,15 @@ const ReportSiswa = () => {
                             onChange={(e) => setLoginPassword(e.target.value)}
                             required
                         /> */}
-                         <Select className="w-full items-end" name="kategori" onChange={(e)=>setKategori(e)} value="1">
-                                <Option value="1">Budi</Option>
-                                <Option value="2">Tono</Option>
+                         <Select className="w-full items-end" name="kategori" onChange={(e)=>setSelectedSiswa(e)} value="1">
+
+                         {listSiswa.map((n, index) => {
+                            return (
+                                <Option value={n.siswa_id} key={n.siswa_id}>
+                                {n.nama}
+                                </Option>
+                            );
+                         })}
 
                         </Select>
                     </div>
@@ -121,7 +179,7 @@ const ReportSiswa = () => {
                                 <th style={{width:"8%"}} className="bg-white text-left text-base">STATUS</th>
                             </tr>
                         </thead>
-                        <tbody>{cetakSiswa}</tbody>
+                        <tbody>{cetakLaporan}</tbody>
                     </table>
                 </div>
             </div>
