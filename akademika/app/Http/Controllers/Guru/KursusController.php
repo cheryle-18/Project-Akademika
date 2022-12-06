@@ -184,6 +184,13 @@ class KursusController extends Controller
         ]);
     }
 
+    function doEdit(Request $request)
+    {
+        # code...
+        Kursus::where('kursus_id',$request->kursus_id)->update($request->all());
+        return 'success edit';
+    }
+
     function kirimPesan(Request $request)
     {
         //attach

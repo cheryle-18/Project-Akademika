@@ -20,7 +20,7 @@ class KursusFactory extends Factory
         return [
             'guru_id' => $this->faker->randomElement(Guru::all()->pluck('guru_id')),
             'nama' => $this->faker->words(3,true),
-            'kategori' => $this->faker->randomElement(['Teknologi Informasi','Logika dan Matematika','Fisika dan Teknik','Kesehatan','Bisnis dan Ekonomi','Bahasa dan Literatur','Pengembangan diri','Kesenian']),
+            'kategori' => $this->faker->randomElement(['Teknologi Informasi','Logika dan Matematika','Fisika dan Teknik','Kesehatan','Bisnis dan Ekonomi','Bahasa dan Literatur','Pengembangan Diri','Kesenian']),
             'deskripsi' => $this->faker->sentences(4,true),
             'durasi'=> $this->faker->numberBetween(500,10000),
             'harga' => $this->faker->numberBetween(0,100000),

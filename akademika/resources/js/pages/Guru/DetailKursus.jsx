@@ -19,6 +19,11 @@ const DetailKursus = () => {
     const {kursus_id} = useParams()
 
     const [course, setCourse] = useState([])
+    const [selectedKategori,setSelectedKategori] = useState(null)
+    const [edtNama,setEdtNama] = useState(null)
+    const [edtHarga,setEdtHarga] = useState(null)
+    const [edtDeskripsi,setEdtDeskripsi] = useState(null)
+    const [edtDurasi,setEdtDurasi] = useState(null)
 
     const [listSubbab, setListSubbab] = useState([])
 
@@ -29,6 +34,11 @@ const DetailKursus = () => {
         }).then((res) => {
             console.log(res.data.kursus);
             setCourse(res.data.kursus);
+            setSelectedKategori(res.data.kursus.kategori)
+            setEdtNama(res.data.kursus.nama)
+            setEdtHarga(res.data.kursus.harga)
+            setEdtDeskripsi(res.data.kursus.deskripsi)
+            setEdtDurasi(res.data.kursus.durasi)
         });
     };
 
@@ -40,6 +50,19 @@ const DetailKursus = () => {
         });
     };
 
+    const submitEdit = () => {
+        http.post("/guru/kursus/doEdit", {
+            kursus_id:kursus_id,
+            kategori:selectedKategori,
+            nama:edtNama,
+            harga:edtHarga,
+            deskripsi:edtDeskripsi,
+            durasi:edtDurasi
+        }).then((res) => {
+            console.log(res.data)
+            fetchKursus()
+        });
+    };
 
     useEffect(() => {
         fetchKursus();
@@ -98,22 +121,23 @@ const DetailKursus = () => {
                                         type="text"
                                         className="w-full"
                                         name="nama"
-                                        value={course.nama}
+                                        defaultValue={course.nama}
+                                        onChange={(e)=>{setEdtNama(e.target.value)}}
                                     />
                                 </td>
                             </tr>
                             <tr className="p-2">
                                 <td className="py-4">Kategori</td>
                                 <td>
-                                <Select className="w-full items-end" name="kategori">
-                                    <Option>Teknologi Informasi</Option>
-                                    <Option>Bisnis dan Ekonomi</Option>
-                                    <Option>Logika dan Matematika</Option>
-                                    <Option>Bahasa dan Literatur</Option>
-                                    <Option>Fisika dan Teknik</Option>
-                                    <Option>Pengembangan Diri</Option>
-                                    <Option>Kesehatan</Option>
-                                    <Option>Kesenian</Option>
+                                <Select className="w-full items-end" name="kategori"value={selectedKategori}  onChange={(e)=>{setSelectedKategori(e)}}>
+                                    <Option value="Teknologi Informasi">Teknologi Informasi</Option>
+                                    <Option value="Bisnis dan Ekonomi">Bisnis dan Ekonomi</Option>
+                                    <Option value="Logika dan Matematika">Logika dan Matematika</Option>
+                                    <Option value="Bahasa dan Literatur">Bahasa dan Literatur</Option>
+                                    <Option value="Fisika dan Teknik">Fisika dan Teknik</Option>
+                                    <Option value="Pengembangan Diri">Pengembangan Diri</Option>
+                                    <Option value="Kesehatan">Kesehatan</Option>
+                                    <Option value="Kesenian">Kesenian</Option>
                                 </Select>
                                 </td>
                             </tr>
@@ -124,7 +148,20 @@ const DetailKursus = () => {
                                         type="text"
                                         className="w-full"
                                         name="harga"
-                                        value={course.harga}
+                                        defaultValue={course.harga}
+                                        onChange={(e)=>{setEdtHarga(e.target.value)}}
+                                    />
+                                </td>
+                            </tr>
+                            <tr className="p-2">
+                                <td className="py-4 w-1/6">Durasi Kursus</td>
+                                <td>
+                                    <Input
+                                        type="text"
+                                        className="w-full"
+                                        name="durasi"
+                                        defaultValue={course.durasi}
+                                        onChange={(e)=>{setEdtDurasi(e.target.value)}}
                                     />
                                 </td>
                             </tr>
@@ -134,11 +171,13 @@ const DetailKursus = () => {
                                     <Textarea
                                         className="w-full"
                                         name="desc"
+                                        defaultValue={course.deskripsi}
+                                        onChange={(e)=>{setEdtDeskripsi(e.target.value)}}
                                     />
                                 </td>
                             </tr>
                         </table>
-                        <button className="btn w-full mt-3 text-base capitalize bg-blue-900 text-white hover:bg-blue-700 font-normal" name="btnSimpan">Simpan</button>
+                        <button className="btn w-full mt-3 text-base capitalize bg-blue-900 text-white hover:bg-blue-700 font-normal" name="btnSimpan" onClick={submitEdit}>Simpan</button>
                     </div>
                     <div className="subtitle text-xl font-semibold mt-10 mb-3">
                         Subbab Kursus

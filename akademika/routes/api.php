@@ -98,6 +98,8 @@ Route::group(['middleware'=>'api'],function ()
 
             Route::post('getAllLaporan',[KursusController::class,'getAllLaporan']);
 
+            Route::post('doEdit',[KursusController::class,'doEdit']);
+
             Route::prefix('subbab')->group(function () {
                 Route::post('tambah',[KursusController::class,'tambahSubbab']);
             });
