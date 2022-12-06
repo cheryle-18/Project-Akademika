@@ -158,6 +158,11 @@ const DetailSubbab = () => {
                         </tbody>
                     </table>
                 </div>
+                <Link to="/guru/kursus/materi/tambah">
+                        <button className="btn btn-sm h-10 px-4 mt-4 bg-blue-900 hover:bg-blue-700 text-white rounded capitalize font-normal">
+                            Tambah Materi
+                        </button>
+                    </Link>
                 <div className="text-2xl text-blue-900 font-semibold mt-10 mb-4">
                     Kuis
                 </div>

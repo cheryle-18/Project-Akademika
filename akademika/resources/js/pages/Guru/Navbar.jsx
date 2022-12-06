@@ -34,7 +34,7 @@ const GuruNav = () => {
                                         Akun Saya
                                     </div>
                                 </Link>
-                                <Link to="/guru/logout">
+                                <Link to="/">
                                     <div className="w-full h-10 flex justify-start items-center hover:bg-gray-200 rounded-lg pl-4">
                                         Logout
                                     </div>

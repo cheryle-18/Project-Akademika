@@ -3,6 +3,13 @@ import React, { useState, useEffect } from "react";
 import GuruNav from "./Navbar"
 import Tabs from "./Tabs";
 import AuthUser from "../../components/AuthUser";
+import { Link } from "react-router-dom";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import {
+    faArrowAltCircleLeft,
+    faArrowCircleLeft,
+    faArrowLeft,
+} from "@fortawesome/free-solid-svg-icons";
 
 const TambahSubbab = () => {
     const [title, setTitle] = useState("proses")
@@ -30,9 +37,25 @@ const TambahSubbab = () => {
                 <GuruNav />
             </div>
             <div className="px-4 sm:px-16 md:px-24 py-6 w-full overflow-x-none bg-gray-100">
-                <div className="tabs w-auto">
+                {/* <div className="tabs w-auto">
                     <Tabs titleParam={title}></Tabs>
-                </div>
+                </div> */}
+                  <div className="tabs text-2xl text-custom-blue mb-4">
+                    <Link
+                        to="/guru/kursus/detail"
+                        className="rounded-xl py-2"
+                    >
+                        <div className="float-left">
+                            <FontAwesomeIcon
+                                icon={faArrowCircleLeft}
+                            ></FontAwesomeIcon>
+                        </div>
+                        <div className="float-left ml-4 text-custom-blue inline underline">
+                            Kembali ke detail kursus
+                        </div>
+                        <div className="clear-both"></div>
+                    </Link>
+            </div>
             </div>
             <div className="content flex flex-col flex-wrap w-full px-24 pb-16">
                 <div className="text-3xl text-blue-900 font-semibold mb-4">

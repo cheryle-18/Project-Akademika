@@ -3,6 +3,14 @@ import React, { useState, useEffect } from "react";
 import GuruNav from "./Navbar"
 import Tabs from "./Tabs";
 import AuthUser from "../../components/AuthUser";
+import { Link } from "react-router-dom";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import {
+    faArrowAltCircleLeft,
+    faArrowCircleLeft,
+    faArrowLeft,
+    faCloudUploadAlt,
+} from "@fortawesome/free-solid-svg-icons";
 
 const TambahMateri = () => {
     const [title, setTitle] = useState("proses")
@@ -30,12 +38,28 @@ const TambahMateri = () => {
 
     return(
         <div className="min-h-screen h-full w-full overflow-x-hidden flex flex-col bg-gray-100">
-            <div className="px-4 sm:px-16 md:px-24 drawer-side bg-custom-blue overflow-y-auto flex-none">
+            {/* <div className="px-4 sm:px-16 md:px-24 drawer-side bg-custom-blue overflow-y-auto flex-none"> */}
                 <GuruNav />
-            </div>
+            {/* </div> */}
             <div className="px-4 sm:px-16 md:px-24 py-6 w-full overflow-x-none bg-gray-100">
-                <div className="tabs w-auto">
+                {/* <div className="tabs w-auto">
                     <Tabs titleParam={title}></Tabs>
+                </div> */}
+                  <div className="tabs text-2xl text-custom-blue">
+                    <Link
+                        to="/guru/kursus/subbab/detail"
+                        className="rounded-xl py-2"
+                    >
+                        <div className="float-left">
+                            <FontAwesomeIcon
+                                icon={faArrowCircleLeft}
+                            ></FontAwesomeIcon>
+                        </div>
+                        <div className="float-left ml-4 text-custom-blue inline underline">
+                            Kembali ke detail subbab
+                        </div>
+                        <div className="clear-both"></div>
+                    </Link>
                 </div>
             </div>
             <div className="content flex flex-col flex-wrap w-full px-24 pb-16">

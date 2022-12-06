@@ -42,7 +42,7 @@ const DetailKursus = () => {
                 <GuruNav />
             {/* </div> */}
 
-            <div className="static min-h-0 w-full z-0 px-4 sm:px-16 md:px-24 py-10">
+            <div className="static min-h-0 w-full z-0 px-4 sm:px-16 md:px-24 py-6">
             <div className="tabs text-2xl text-custom-blue mb-4">
                     <Link
                         to="/guru/kursus/diterbitkan"
@@ -163,9 +163,13 @@ const DetailKursus = () => {
                         </table>
                     </div>
                     <div className="w-full my-3">
-                        <button className="btn btn-sm h-10 px-4 bg-blue-900 hover:bg-blue-700 text-white rounded capitalize font-normal float-right">
-                            Tambah
-                        </button>
+                        <Link
+                            to="/guru/kursus/subbab/tambah">
+                                <button className="btn btn-sm h-10 px-4 bg-blue-900 hover:bg-blue-700 text-white rounded capitalize font-normal float-right">
+                                Tambah Subbab
+                                </button>
+                        </Link>
+
                     </div>
                 </div>
             </div>

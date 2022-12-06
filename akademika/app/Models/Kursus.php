@@ -4,10 +4,11 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Kursus extends Model
 {
-    use HasFactory;
+    use HasFactory,SoftDeletes;
 
     protected $table      = "kursus";
     protected $primaryKey = "kursus_id";

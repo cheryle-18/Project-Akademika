@@ -72,7 +72,7 @@ const TambahPengumuman = () => {
                 </div>
             </div> */}
 
-            <div className="static min-h-0 w-full z-0 px-4 sm:px-16 md:px-24 py-10">
+            <div className="static min-h-0 w-full z-0 px-4 sm:px-16 md:px-24 py-6">
                 {/* <div className="bg-custom-blue text-white inline-block text-base tracking-wide p-1 py-2 rounded-md">
                     <div
                         className={

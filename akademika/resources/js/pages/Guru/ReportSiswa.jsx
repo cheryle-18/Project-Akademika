@@ -49,16 +49,21 @@ const ReportSiswa = () => {
                 <div className="bg-white overflow-y-auto min-h-8 p-2 md:p-6 rounded-xl drop-shadow-lg">
                     <div className="flex justify-start items-center">
                         <div className="flex justify-start w-44">
-                            Nama Siswa
+                            Pilih Siswa
                         </div>
-                        <Input
+                        {/* <Input
                             type="text"
                             name="nama"
                             label="Nama"
                             className="input input-bordered w-full border-2 h-10 border-gray-500 rounded-md placeholder-gray-700"
                             onChange={(e) => setLoginPassword(e.target.value)}
                             required
-                        />
+                        /> */}
+                         <Select className="w-full items-end" name="kategori" onChange={(e)=>setKategori(e)} value="1">
+                                <Option value="1">Budi</Option>
+                                <Option value="2">Tono</Option>
+
+                        </Select>
                     </div>
                     <div className="flex justify-start items-start mt-4">
                         <div className="flex justify-start w-44">Deskripsi</div>

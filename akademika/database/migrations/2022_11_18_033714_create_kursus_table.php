@@ -25,6 +25,7 @@ return new class extends Migration
             $table->integer('harga')->nullable();
             $table->tinyInteger('status');
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 
