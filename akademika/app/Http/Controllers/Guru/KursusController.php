@@ -11,6 +11,7 @@ use App\Models\Kursus;
 use App\Models\Materi;
 use App\Models\Pengumuman;
 use App\Models\Siswa;
+use App\Models\SiswaLaporan;
 use App\Models\Subbab;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -171,6 +172,15 @@ class KursusController extends Controller
         $siswa = Kursus::find($request->kursus_id)->pengambil;
         return response()->json([
             "siswa" => $siswa
+        ]);
+    }
+
+    function getAllLaporan(Request $request)
+    {
+        $guru = Guru::find($request->guru_id);
+        $laporan = $guru->laporan()->get();
+        return response()->json([
+            "laporan" => $laporan
         ]);
     }
 
@@ -365,6 +375,10 @@ class KursusController extends Controller
                      }
                  }
             }
+        }
+
+        else if($type == "semua"){
+            $kursus = $guru->kursus()->where('kursus.status',1)->get();
         }
 
         return response()->json([
