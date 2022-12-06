@@ -2,7 +2,7 @@ import React, { useState, useEffect, Fragment } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faClock } from "@fortawesome/free-solid-svg-icons";
 import * as faIcon from "@fortawesome/free-solid-svg-icons";
-import { Link,useHistory,useParams } from "react-router-dom";
+import { Link, useHistory, useParams } from "react-router-dom";
 
 import Nav from "./Navbar";
 import {
@@ -42,7 +42,6 @@ function Icon({ id, open }) {
 }
 
 const DetailDiterbitkan = () => {
-
     const [isOpened, setIsOpened] = useState(false);
     const { http, user } = AuthUser();
     const [siswa_id_now, setSiswaIdNow] = useState(null);
@@ -50,10 +49,14 @@ const DetailDiterbitkan = () => {
 
     const [siswas, setSiswa] = useState([]);
     const [chatContent, setChatContent] = useState("");
-    const [title, setTitle] = useState("home")
-    const {kursus_id} = useParams()
+    const [title, setTitle] = useState("home");
+    const { kursus_id } = useParams();
 
-    const [course, setCourse] = useState([])
+    const [subbab, setKuis] = useState([]);
+
+    const [listSubbab, setListSubbab] = useState([]);
+
+    const [course, setCourse] = useState([]);
 
     //to fetch all available chats
     const fetchDataSiswa = () => {
@@ -66,21 +69,38 @@ const DetailDiterbitkan = () => {
 
     const fetchKursus = () => {
         http.post("/guru/kursus/get", {
-            guru_id:user.guru_id,
+            guru_id: user.guru_id,
             kursus_id: kursus_id,
         }).then((res) => {
             setCourse(res.data.kursus);
         });
     };
 
+    const fetchSubbab = () => {
+        http.post("/guru/kursus/getAllSubbabKuis", {
+            kursus_id: kursus_id,
+        }).then((res) => {
+            setListSubbab(res.data.subbab);
+        });
+    };
+
     useEffect(() => {
         fetchKursus();
         fetchDataSiswa();
+        fetchSubbab();
     }, []);
 
     useEffect(() => {
         fetchDataChat(true);
     }, [siswa_id_now]);
+
+    useEffect(() => {
+        console.log(subbab);
+    }, [subbab]);
+
+    // useEffect(() => {
+    //     console.log(listSubbab);
+    // }, [listSubbab]);
 
     const last = () => {
         document.getElementById("last").click();
@@ -176,11 +196,10 @@ const DetailDiterbitkan = () => {
     };
 
     const sendMessage = () => {
-
         http.post("/guru/kursus/kirimPesan", {
             guru_id: user.guru_id,
-            siswa_id:siswa_id_now,
-            kursus_id:33,
+            siswa_id: siswa_id_now,
+            kursus_id: 33,
             isi: chatContent,
         }).then((res) => {
             //refresh
@@ -192,19 +211,56 @@ const DetailDiterbitkan = () => {
         });
     };
 
-
-
     const [open, setOpen] = useState(0);
 
     const handleOpen = (value) => {
         setOpen(open === value ? 0 : value);
     };
 
+    const checkClassHeader = (index) => {
+        if (listSubbab.length == 1) {
+            return "bg-blue-100 p-4 border-2 border-blue-900";
+        } else if (listSubbab.length > 1 && index == 0) {
+            return "bg-blue-100 p-4 border-2 border-blue-900";
+        }
+        return "bg-blue-100 p-4 border-2 border-t-0 border-blue-900";
+    };
+
+    const cetakSilabus = listSubbab.map((subbab, index) => (
+        <Accordion
+            open={open === index + 1}
+            icon={<Icon id={index + 1} open={open} />}
+        >
+            <AccordionHeader
+                onClick={() => handleOpen(index + 1)}
+                className={checkClassHeader(index)}
+            >
+                {subbab.judul}
+            </AccordionHeader>
+            <AccordionBody className="bg-white p-4 text-base border-2 border-t-0 border-blue-900">
+                <div>
+                    <div className="w-full bg-white flex mb-3">
+                        <span>Materi</span>
+                        <span className="ml-auto">{subbab.durasi} menit</span>
+                    </div>
+                    {subbab.kuis.map((kuis, indexKuis) => (
+                        <div className="w-full bg-white flex">
+                            <span>Kuis</span>
+                            <span className="ml-auto">
+                                {kuis.jumlah_soal} soal
+                            </span>
+                        </div>
+                    ))}
+                </div>
+            </AccordionBody>
+        </Accordion>
+    ));
+
     return (
         <div className="min-h-screen w-full overflow-x-hidden flex flex-col">
             {isOpened && (
                 <div className="fixed bottom-14 lg:bottom-10 right-160px lg:right-72 bg-transparent duration-500 z-10 mt-2">
-                {/* <div className="fixed bottom-0 right-160px bg-transparent duration-500 z-10 mt-2"> */}
+                    {/* <div className="fixed bottom-0 right-160px bg-transparent duration-500 z-10 mt-2"> */}
                     <div className="w-full relative">
                         <div className="absolute w-full h-10 bg-custom-blue left-40 rounded-tr-lg"></div>
                     </div>
@@ -257,7 +313,7 @@ const DetailDiterbitkan = () => {
             )}
             {isOpened && (
                 <div className="fixed bottom-14 lg:bottom-10 right-0 lg:right-32 bg-transparent duration-500 z-20">
-                {/* <div className="fixed bottom-0 right-0 bg-transparent duration-500 z-20"> */}
+                    {/* <div className="fixed bottom-0 right-0 bg-transparent duration-500 z-20"> */}
                     <div className="w-300px lg:w-400px bg-custom-blue px-4 rounded-tr-lg">
                         <div className="w-full py-4 font-semibold text-white">
                             <div className="float-left">
@@ -332,13 +388,13 @@ const DetailDiterbitkan = () => {
             </div>
 
             {/* <div className="px-4 sm:px-16 md:px-24 drawer-side bg-custom-blue overflow-y-auto flex-none"> */}
-                <Nav></Nav>
+            <Nav></Nav>
             {/* </div> */}
 
             <BannerKursus courseParam={course}></BannerKursus>
 
             <div className="static min-h-0 w-full z-0 px-4 sm:px-16 md:px-24 py-6 bg-gray-100">
-            <div className="tabs text-xl text-custom-blue mb-4">
+                <div className="tabs text-xl text-custom-blue mb-4">
                     <Link
                         to="/guru/kursus/diterbitkan"
                         className="rounded-xl py-2"
@@ -353,18 +409,22 @@ const DetailDiterbitkan = () => {
                         </div>
                         <div className="clear-both"></div>
                     </Link>
-            </div>
-            <div className="tabs w-auto">
-                        <TabsKursus titleParam={title} kursus_id={kursus_id}></TabsKursus>
-             </div>
+                </div>
+                <div className="tabs w-auto">
+                    <TabsKursus
+                        titleParam={title}
+                        kursus_id={kursus_id}
+                    ></TabsKursus>
+                </div>
             </div>
 
-            <div className="silabus p-16 m-0 w-full overflow-x-none bg-gray-100">
+            <div className="subbab p-16 m-0 w-full overflow-x-none bg-gray-100">
                 <div className="font-bold text-3xl text-blue-900 mb-5">
                     Silabus Kursus
                 </div>
                 <Fragment>
-                    <Accordion
+                    {cetakSilabus}
+                    {/* <Accordion
                         open={open === 1}
                         icon={<Icon id={1} open={open} />}
                     >
@@ -384,8 +444,8 @@ const DetailDiterbitkan = () => {
                                 <span className="ml-auto">20 Menit</span>
                             </div>
                         </AccordionBody>
-                    </Accordion>
-                    <Accordion
+                    </Accordion> */}
+                    {/* <Accordion
                         open={open === 2}
                         icon={<Icon id={2} open={open} />}
                     >
@@ -426,7 +486,7 @@ const DetailDiterbitkan = () => {
                                 <span className="ml-auto">20 Menit</span>
                             </div>
                         </AccordionBody>
-                    </Accordion>
+                            </Accordion> */}
                 </Fragment>
             </div>
         </div>

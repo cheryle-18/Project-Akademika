@@ -3,7 +3,7 @@ import React, { useState, useEffect } from "react";
 import GuruNav from "./Navbar";
 import Tabs from "./Tabs";
 import AuthUser from "../../components/AuthUser";
-import { Link,useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
     faArrowAltCircleLeft,
@@ -12,10 +12,9 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 
 const DetailSubbab = () => {
-
     const [title, setTitle] = useState("proses");
     const [course, setCourse] = useState([]);
-    const [subbab,setSubbab] = useState([]);
+    const [subbab, setSubbab] = useState([]);
     const [judul, setJudul] = useState("JavaScript DOM");
     const [deskripsi, setDeskripsi] = useState(
         "Lorem, ipsum dolor sit amet consectetur adipisicing elit. Quaerat rerum provident perspiciatis iure quas nam."
@@ -25,12 +24,12 @@ const DetailSubbab = () => {
     const [kuis, setKuis] = useState(null);
 
     const { http, user } = AuthUser();
-    const {kursus_id,subbab_id} = useParams()
+    const { kursus_id, subbab_id } = useParams();
 
     //fetch
     const fetchKursus = () => {
         http.post("/guru/kursus/get", {
-            guru_id:user.guru_id,
+            guru_id: user.guru_id,
             kursus_id: kursus_id,
         }).then((res) => {
             setCourse(res.data.kursus);
@@ -39,7 +38,7 @@ const DetailSubbab = () => {
 
     const fetchSubbab = () => {
         http.post("/guru/kursus/getSubbab", {
-            subbab_id:subbab_id
+            subbab_id: subbab_id,
         }).then((res) => {
             // console.log(res.data.subbab);
             setSubbab(res.data.subbab);
@@ -48,17 +47,16 @@ const DetailSubbab = () => {
 
     const fetchMateri = () => {
         http.post("/guru/kursus/getAllMateri", {
-            subbab_id:subbab_id
+            subbab_id: subbab_id,
         }).then((res) => {
             // console.log(res.data.materi);
             setListMateri(res.data.materi);
         });
     };
 
-
     const fetchKuis = () => {
         http.post("/guru/kursus/getKuis", {
-            subbab_id:subbab_id
+            subbab_id: subbab_id,
         }).then((res) => {
             setKuis(res.data.kuis);
         });
@@ -71,18 +69,17 @@ const DetailSubbab = () => {
         fetchKuis();
     }, []);
 
-
     const submitForm = () => {};
 
     return (
         <div className="min-h-screen h-full w-full overflow-x-hidden flex flex-col bg-gray-100">
             {/* <div className="px-4 sm:px-16 md:px-24 drawer-side bg-custom-blue overflow-y-auto flex-none"> */}
-                <GuruNav />
+            <GuruNav />
             {/* </div> */}
             <div className="px-4 sm:px-16 md:px-24 py-6 w-full overflow-x-none bg-gray-100">
                 <div className="tabs text-xl text-custom-blue">
                     <Link
-                        to={"/guru/kursus/"+kursus_id+"/detail"}
+                        to={"/guru/kursus/" + kursus_id + "/detail"}
                         className="rounded-xl py-2"
                     >
                         <div className="float-left">
@@ -182,7 +179,16 @@ const DetailSubbab = () => {
                                             {n.penjelasan.substring(0, 100)}...
                                         </td>
                                         <td className="text-center">
-                                            <Link to={"/guru/kursus/"+kursus_id+"/subbab/"+subbab_id+"/materi/"+n.materi_id}>
+                                            <Link
+                                                to={
+                                                    "/guru/kursus/" +
+                                                    kursus_id +
+                                                    "/subbab/" +
+                                                    subbab_id +
+                                                    "/materi/" +
+                                                    n.materi_id
+                                                }
+                                            >
                                                 <button className="btn btn-sm capitalize bg-blue-900 text-white rounded mr-3 font-normal">
                                                     Detail
                                                 </button>
@@ -198,33 +204,49 @@ const DetailSubbab = () => {
                     </table>
                 </div>
                 <Link to="/guru/kursus/materi/tambah">
-                        <button className="btn btn-sm h-10 px-4 mt-4 bg-blue-900 hover:bg-blue-700 text-white rounded capitalize font-normal">
-                            Tambah Materi
-                        </button>
-                    </Link>
+                    <button className="btn btn-sm h-10 px-4 mt-4 bg-blue-900 hover:bg-blue-700 text-white rounded capitalize font-normal">
+                        Tambah Materi
+                    </button>
+                </Link>
                 <div className="text-2xl text-blue-900 font-semibold mt-10 mb-4">
                     Kuis
                 </div>
                 <div className="w-full my-3">
-                {
-                    kuis !=null ?
-                    (<Link to={"/guru/kursus/"+kursus_id+"/subbab/"+subbab_id+"/kuis"}>
-                    <button className="btn btn-sm h-10 px-4 bg-blue-900 hover:bg-blue-700 text-white rounded capitalize font-normal">
-                        Lihat Kuis
-                    </button>
-                    </Link>):(
+                    {kuis != null ? (
+                        <Link
+                            to={
+                                "/guru/kursus/" +
+                                kursus_id +
+                                "/subbab/" +
+                                subbab_id +
+                                "/kuis"
+                            }
+                        >
+                            <button className="btn btn-sm h-10 px-4 bg-blue-900 hover:bg-blue-700 text-white rounded capitalize font-normal">
+                                Lihat Kuis
+                            </button>
+                        </Link>
+                    ) : (
                         <div>
-                          <div className="mb-3">Tidak ada kuis untuk materi ini</div>
-                          <Link to={"/guru/kursus/"+kursus_id+"/subbab/"+subbab_id+"/kuis"}>
-                              <button className="btn btn-sm h-10 px-4 bg-blue-900 hover:bg-blue-700 text-white rounded capitalize font-normal">
-                                  Tambah Kuis
-                              </button>
-                          </Link>
+                            <div className="mb-3">
+                                Tidak ada kuis untuk materi ini
+                            </div>
+                            <Link
+                                to={
+                                    "/guru/kursus/" +
+                                    kursus_id +
+                                    "/subbab/" +
+                                    subbab_id +
+                                    "/kuis"
+                                }
+                            >
+                                <button className="btn btn-sm h-10 px-4 bg-blue-900 hover:bg-blue-700 text-white rounded capitalize font-normal">
+                                    Tambah Kuis
+                                </button>
+                            </Link>
                         </div>
-                    )
-                }
-
-            </div>
+                    )}
+                </div>
             </div>
         </div>
     );
