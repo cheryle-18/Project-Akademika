@@ -41,7 +41,7 @@ const DetailSubbab = () => {
                 <GuruNav />
             {/* </div> */}
             <div className="px-4 sm:px-16 md:px-24 py-6 w-full overflow-x-none bg-gray-100">
-                <div className="tabs text-2xl text-custom-blue">
+                <div className="tabs text-xl text-custom-blue">
                     <Link
                         to="/guru/kursus/detail"
                         className="rounded-xl py-2"

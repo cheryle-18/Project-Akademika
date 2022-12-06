@@ -251,6 +251,57 @@ class KursusController extends Controller
         return 'Berhasil tambah kuis';
     }
 
+    function getAllKursus(Request $request)
+    {
+        //$request type
+        $type = $request->type;
+        $guru = Guru::find($request->guru_id);
+        $kursus = [];
+
+        if($type == "diterbitkan"){
+            //status == 1 && kursus_histori status == 1
+           //get kursus
+           $allKursus = $guru->kursus()->where('kursus.status',1)->get();
+           if(count($allKursus)!=0){
+                foreach ($allKursus as $kurs) {
+                    if($kurs->histori()->where('kursus_histori.status',1)->exists()){
+                        $kursus[] = $kurs;
+                    }
+                }
+           }
+
+        }
+        else if($type == "proses"){
+            //status == 0 && kursus_histori status == 3
+            $allKursus = $guru->kursus()->where('kursus.status',0)->get();
+
+            if(count($allKursus)!=0){
+                 foreach ($allKursus as $kurs) {
+                     if($kurs->histori()->where('kursus_histori.status',3)->exists()){
+                         $kursus[] = $kurs;
+                     }
+                 }
+            }
+
+        }
+        else if($type == "draft"){
+            //status == 0 && !in kursus_histori
+            $allKursus = $guru->kursus()->where('kursus.status',1)->get();
+
+            if(count($allKursus)!=0){
+                 foreach ($allKursus as $kurs) {
+                     if(count($kurs->histori) == 0){
+                         $kursus[] = $kurs;
+                     }
+                 }
+            }
+        }
+
+        return response()->json([
+            "kursus" => $kursus
+        ]);
+    }
+
     function getKuis(Request $req){
         $kuis = Kuis::where('subbab_id', $req->subbab_id)->first();
         $listSoal = [];

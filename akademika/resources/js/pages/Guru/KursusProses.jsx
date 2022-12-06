@@ -2,40 +2,41 @@ import React, { useState, useEffect, Fragment } from "react";
 import CourseCard from "../Kursus/CourseCard";
 import GuruNav from "./Navbar"
 import Tabs from "./Tabs";
+import AuthUser from "../../components/AuthUser";
 
 const KursusProses = () => {
-    const [listDiajukan, setListDiajukan] = useState([
-        {
-            nama: "Pengembangan Website Front-End Dasar 1",
-            harga: 250000,
-            deskripsi: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Commodi, dolorem?",
-            durasi: 40
-        },
-        {
-            nama: "Pengembangan Website Front-End Dasar 2",
-            harga: 250000,
-            deskripsi: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Commodi, dolorem?",
-            durasi: 40
-        },
-    ])
+    const { http, user } = AuthUser();
+    const [listDiajukan, setListDiajukan] = useState([])
 
-    const [listDraft, setListDraft] = useState([
-        {
-            nama: "Pengembangan Website Front-End Dasar 1",
-            harga: 250000,
-            deskripsi: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Commodi, dolorem?",
-            durasi: 40
-        },
-        {
-            nama: "Pengembangan Website Front-End Dasar 2",
-            harga: 250000,
-            deskripsi: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Commodi, dolorem?",
-            durasi: 40
-        },
-    ])
+    const [listDraft, setListDraft] = useState([])
 
     //tabs
     const [title, setTitle] = useState("proses");
+
+    const fetchKursusProses = () => {
+        http.post("/guru/kursus/getAllKursus", {
+            guru_id: user.guru_id,
+            type:'proses'
+        }).then((res) => {
+            setListDiajukan(res.data.kursus);
+        });
+    };
+
+    const fetchKursusDraft = () => {
+        http.post("/guru/kursus/getAllKursus", {
+            guru_id: user.guru_id,
+            type:'draft'
+        }).then((res) => {
+            setListDraft(res.data.kursus);
+
+        });
+    };
+
+    useEffect(() => {
+        fetchKursusProses();
+        fetchKursusDraft();
+    }, []);
+
 
     return(
         <div className="min-h-screen w-full overflow-x-hidden flex flex-col bg-gray-100">
@@ -53,11 +54,11 @@ const KursusProses = () => {
                 </div>
                 <div className="diajukan my-6 content flex flex-wrap gap-10">
                     {
-                        listDiajukan.map((n, index) => {
+                       listDiajukan.length!=0?(listDiajukan.map((n, index) => {
                             return(
                                 <CourseCard course={n} key={index} />
                             )
-                        })
+                        })):(<div className="text-xl text-blue-900">Tidak ada kursus</div>)
                     }
                 </div>
                 <div className="text-2xl text-blue-900 font-semibold mt-12">
@@ -65,11 +66,11 @@ const KursusProses = () => {
                 </div>
                 <div className="diajukan my-6 content flex flex-wrap gap-10">
                     {
-                        listDraft.map((n, index) => {
+                        listDraft.length!=0?(listDraft.map((n, index) => {
                             return(
                                 <CourseCard course={n} key={index} />
                             )
-                        })
+                        })):(<div className="text-xl text-blue-900">Tidak ada kursus</div>)
                     }
                 </div>
             </div>

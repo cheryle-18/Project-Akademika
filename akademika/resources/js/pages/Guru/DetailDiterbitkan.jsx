@@ -331,7 +331,7 @@ const DetailDiterbitkan = () => {
             <BannerKursus courseParam={course}></BannerKursus>
 
             <div className="static min-h-0 w-full z-0 px-4 sm:px-16 md:px-24 py-6 bg-gray-100">
-            <div className="tabs text-2xl text-custom-blue mb-4">
+            <div className="tabs text-xl text-custom-blue mb-4">
                     <Link
                         to="/guru/kursus/diterbitkan"
                         className="rounded-xl py-2"

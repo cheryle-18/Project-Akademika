@@ -96,7 +96,7 @@ const TambahPengumuman = () => {
                     </div>
                 </div> */}
 
-            <div className="tabs text-2xl text-custom-blue mb-4">
+            <div className="tabs text-xl text-custom-blue mb-4">
                     <Link
                         to="/guru/kursus/diterbitkan"
                         className="rounded-xl py-2"

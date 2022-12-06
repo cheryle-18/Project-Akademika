@@ -250,7 +250,7 @@ const TambahKuis = () => {
                     <Tabs titleParam={title}></Tabs>
                 </div> */}
 
-            <div className="tabs text-2xl text-custom-blue">
+            <div className="tabs text-xl text-custom-blue">
                     <Link
                         to="/guru/kursus/detail"
                         className="rounded-xl py-2"
