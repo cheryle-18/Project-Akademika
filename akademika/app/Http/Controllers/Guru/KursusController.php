@@ -412,4 +412,12 @@ class KursusController extends Controller
             "guru" => $guru,
         ]);
     }
+
+    function getAllSubbabKuis(Request $request)
+    {
+        $subbab = Subbab::with("kuis")->where("kursus_id",$request->kursus_id)->get();
+        return response()->json([
+            "subbab" => $subbab,
+        ]);
+    }
 }

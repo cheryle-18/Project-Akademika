@@ -96,6 +96,7 @@ Route::group(['middleware'=>'api'],function ()
 
             Route::post('getAllMateri',[KursusController::class,'getAllMateri']);
             Route::post('getKuis',[KursusController::class,'getKuisSubbab']);
+            Route::post('getAllSubbabKuis',[KursusController::class,'getAllSubbabKuis']);
 
             Route::prefix('subbab')->group(function () {
                 Route::post('tambah',[KursusController::class,'tambahSubbab']);
@@ -137,4 +138,3 @@ Route::group(['middleware'=>'api'],function ()
         Storage::disk('google')->put('tesat.txt', 'Hello World');
     });
 });
-
