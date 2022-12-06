@@ -5,8 +5,8 @@ import { round } from "lodash";
 import {toRupiah} from "../../components/CurrencyUtils";
 import { Link } from "react-router-dom";
 
-const CourseCard = (course,key,status) => {
-    console.log(course)
+const CourseCard = (props) => {
+    console.log(props)
     return(
         <div className="flex flex-col md:flex-row md:max-w-xl rounded-lg bg-white shadow-lg w-1/2 h-auto">
             <img
@@ -16,13 +16,13 @@ const CourseCard = (course,key,status) => {
             />
             <div className="p-6 flex flex-col justify-start">
                 <h5 className="text-gray-900 text-xl font-semibold mb-2">
-                    {course.course.nama}
+                    {props.course.nama}
                 </h5>
                 <p className="text-gray-900 text-base mb-4">
-                    Rp {toRupiah(course.course.harga)}
+                    Rp {toRupiah(props.course.harga)}
                 </p>
                 <p className="text-gray-600 text-base mb-5">
-                    {course.course.deskripsi}
+                    {props.course.deskripsi}
                 </p>
 
                 <div className="text-gray-600 text-base flex">
@@ -33,12 +33,12 @@ const CourseCard = (course,key,status) => {
                             src={clockLogo}
                             alt=""
                         />
-                        {round(course.course.durasi / 60)} jam
+                        {round(props.course.durasi / 60)} jam
                     </span>
                     <span>
                         <Link to={
-                            (status == "diterbitkan" && "/guru/kursus/"+course.course.kursus_id+"/home") ||
-                            (status != "diterbitkan" && "/guru/kursus/"+course.course.kursus_id+"/detail")
+                            (props.status == "diterbitkan" && "/guru/kursus/"+props.course.kursus_id+"/home") ||
+                            (props.status != "diterbitkan" && "/guru/kursus/"+props.course.kursus_id+"/detail")
                             } className="ml-auto">
                             <button
                                 type="button"

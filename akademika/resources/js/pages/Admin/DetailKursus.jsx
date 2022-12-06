@@ -12,6 +12,7 @@ import {
     Radio,
     Select,
     MenuItem,
+    Option,
 } from "@material-tailwind/react";
 import { Link } from "react-router-dom";
 // import Autocomplete from "@mui/material/Autocomplete";
@@ -33,6 +34,7 @@ const DetailKursus = (props) => {
     const fetchListGuru = () => {
         http.post("/admin/master/guru/list").then((res) => {
             setListGuru(res.data.listGuru);
+            // setGuru(res.data.listGuru[0]);
         });
     };
 
@@ -50,20 +52,24 @@ const DetailKursus = (props) => {
         });
     };
     useEffect(() => {
-        fetchDataGuru();
+        // fetchDataGuru();
         fetchListGuru();
     }, []);
 
     const handleChange = (e) => {
         var tempGuru = guru;
-        tempGuru.nama = e.target.value;
+        // console.log(e.target);
+        // tempGuru.nama = e.target.value;
+        tempGuru.guru_id = e.target.value;
         setGuru(tempGuru);
-        console.log(tempGuru.nama);
+        alert(guru.guru_id);
+        // console.log(guru);
     };
 
-    // useEffect(() => {
-    //     alert(guru.nama);
-    // }, [guru]);
+    useEffect(() => {
+        fetchDataGuru();
+        console.log(listGuru);
+    }, [listGuru]);
 
     // const submitUpdateForm = () => {
     //     //api call
@@ -110,24 +116,26 @@ const DetailKursus = (props) => {
                                     labelid="select-label"
                                     label="Guru"
                                     id="event-select"
-                                    className="bg-white w-full"
-                                    value={guru.nama}
+                                    className="bg-white w-full text-black"
                                     onChange={handleChange}
+                                    value={guru.guru_id}
+                                    // value={"123"}
                                     align="left"
                                     required
                                 >
-                                    {listGuru.map((g, index) => {
-                                        return (
-                                            <MenuItem
-                                                color="black"
-                                                value={g.guru_id}
-                                                key={g.guru_id}
-                                            >
-                                                {g.nama}
-                                            </MenuItem>
-                                        );
-                                    })}
-                                    {/* <MenuItem>123</MenuItem> */}
+                                    {listGuru.map((g, index) => (
+                                        <Option
+                                            // onClick={() => {
+                                            //     handleChange(g)
+                                            // }}
+                                            value={g.guru_id}
+                                            key={g.guru_id}
+                                        >
+                                            {g.nama}
+                                        </Option>
+                                    ))}
+                                    {/* <Option value={35}>fho23wfh</Option>
+                                    <Option value="123">234</Option> */}
                                 </Select>
                                 {/* <Input
                                     type="text"
