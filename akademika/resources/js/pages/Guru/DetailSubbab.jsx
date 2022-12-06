@@ -22,7 +22,7 @@ const DetailSubbab = () => {
     );
     const [durasi, setDurasi] = useState(120);
     const [listMateri, setListMateri] = useState([]);
-    const [listKuis, setListKuis] = useState([]);
+    const [kuis, setKuis] = useState(null);
 
     const { http, user } = AuthUser();
     const {kursus_id,subbab_id} = useParams()
@@ -57,11 +57,10 @@ const DetailSubbab = () => {
 
 
     const fetchKuis = () => {
-        http.post("/guru/kursus/getAllKuis", {
+        http.post("/guru/kursus/getKuis", {
             subbab_id:subbab_id
         }).then((res) => {
-            // console.log(res.data.materi);
-            setListMateri(res.data.materi);
+            setKuis(res.data.kuis);
         });
     };
 
@@ -69,6 +68,7 @@ const DetailSubbab = () => {
         fetchKursus();
         fetchSubbab();
         fetchMateri();
+        fetchKuis();
     }, []);
 
 
@@ -206,15 +206,25 @@ const DetailSubbab = () => {
                     Kuis
                 </div>
                 <div className="w-full my-3">
-                    
+                {
+                    kuis !=null ?
+                    (<Link to="/guru/kursus/kuis">
+                    <button className="btn btn-sm h-10 px-4 bg-blue-900 hover:bg-blue-700 text-white rounded capitalize font-normal">
+                        Lihat Kuis
+                    </button>
+                    </Link>):(
+                        <div>
+                          <div className="mb-3">Tidak ada kuis untuk materi ini</div>
+                          <Link to="/guru/kursus/kuis">
+                              <button className="btn btn-sm h-10 px-4 bg-blue-900 hover:bg-blue-700 text-white rounded capitalize font-normal">
+                                  Tambah Kuis
+                              </button>
+                          </Link>
+                        </div>
+                    )
+                }
 
-                    <div className="mb-3">Tidak ada kuis untuk materi ini</div>
-                    <Link to="/guru/kursus/kuis">
-                        <button className="btn btn-sm h-10 px-4 bg-blue-900 hover:bg-blue-700 text-white rounded capitalize font-normal">
-                            Tambah Kuis
-                        </button>
-                    </Link>
-                </div>
+            </div>
             </div>
         </div>
     );

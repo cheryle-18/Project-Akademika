@@ -38,9 +38,9 @@ class KursusController extends Controller
             "materi" => $materi
         ]);
     }
-    function getAllKuis(Request $request)
+    function getKuisSubbab(Request $request)
     {
-        $kuis = Kuis::where('subbab_id',$request->subbab_id)->get();
+        $kuis = Kuis::where('subbab_id',$request->subbab_id)->first();
 
         return response()->json([
             "kuis" => $kuis
