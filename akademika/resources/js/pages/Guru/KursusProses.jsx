@@ -56,7 +56,7 @@ const KursusProses = () => {
                     {
                        listDiajukan.length!=0?(listDiajukan.map((n, index) => {
                             return(
-                                <CourseCard course={n} key={index} />
+                                <CourseCard course={n} key={index} status="proses"/>
                             )
                         })):(<div className="text-xl text-blue-900">Tidak ada kursus</div>)
                     }
@@ -68,7 +68,7 @@ const KursusProses = () => {
                     {
                         listDraft.length!=0?(listDraft.map((n, index) => {
                             return(
-                                <CourseCard course={n} key={index} />
+                                <CourseCard course={n} key={index} status="draft" />
                             )
                         })):(<div className="text-xl text-blue-900">Tidak ada kursus</div>)
                     }

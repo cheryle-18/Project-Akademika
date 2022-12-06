@@ -97,6 +97,8 @@ Route::group(['middleware'=>'api'],function ()
             Route::post('getKuis',[KursusController::class,'getKuisSubbab']);
             Route::post('getAllSubbabKuis',[KursusController::class,'getAllSubbabKuis']);
 
+            Route::post('isDiterbitkan',[KursusController::class,'isDiterbitkan']);
+
             Route::post('getAllLaporan',[KursusController::class,'getAllLaporan']);
 
             Route::post('doEdit',[KursusController::class,'doEdit']);

@@ -5,8 +5,8 @@ import { round } from "lodash";
 import {toRupiah} from "../../components/CurrencyUtils";
 import { Link } from "react-router-dom";
 
-const CourseCard = (course) => {
-    console.log(course);
+const CourseCard = (course,key,status) => {
+    console.log(course)
     return(
         <div className="flex flex-col md:flex-row md:max-w-xl rounded-lg bg-white shadow-lg w-1/2 h-auto">
             <img
@@ -37,8 +37,8 @@ const CourseCard = (course) => {
                     </span>
                     <span>
                         <Link to={
-                            (course.course.kursus_id != null && "/guru/kursus/"+course.course.kursus_id+"/home") ||
-                            (course.course.kursus_id == null && ("/siswa/kursus/"+course.course.kursus_id+"/detail"))
+                            (status == "diterbitkan" && "/guru/kursus/"+course.course.kursus_id+"/home") ||
+                            (status != "diterbitkan" && "/guru/kursus/"+course.course.kursus_id+"/detail")
                             } className="ml-auto">
                             <button
                                 type="button"

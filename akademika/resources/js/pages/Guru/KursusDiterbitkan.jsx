@@ -43,7 +43,7 @@ const KursusDiterbitkan = () => {
                     {
                     listCourse.length!=0?(listCourse.map((n, index) => {
                             return(
-                                <CourseCard course={n} key={index} />
+                                <CourseCard course={n} key={index} status="diterbitkan"/>
                             )
                         })):(<div className="text-xl text-blue-900">Tidak ada kursus</div>)
                     }

@@ -31,6 +31,16 @@ class KursusController extends Controller
         ]);
     }
 
+    function isDiterbitkan(Request $request)
+    {
+        $kursus = Kursus::find($request->kursus_id);
+        if($kursus->status == 1 && $kursus->histori()->where('kursus_histori.status',1)->exists())
+        {
+            return 1;
+        }
+        return 0;
+    }
+
     function getAllMateri(Request $request)
     {
         $materi = Materi::where('subbab_id',$request->subbab_id)->get();
