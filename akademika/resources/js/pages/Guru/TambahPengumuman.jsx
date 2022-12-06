@@ -23,15 +23,9 @@ const TambahPengumuman = () => {
     const { http, user } = AuthUser();
 
     const [course, setCourse] = useState([])
+    const [deskripsi,setDeskripsi] = useState("")
 
-    const [msgs, setMsg] = useState([
-        {
-            isi: "Lorem ipsum, dolor sit amet consectetur adipisicing elit. Autem tempore recusandae enim quam, suscipit fugiat a assumenda, vero nam officiis fuga tenetur? Molestias ratione recusandae cum. At, natus? Sunt, autem?"
-        },
-        {
-            isi: "Lorem ipsum, dolor sit amet consectetur adipisicing elit. Autem tempore recusandae enim quam, suscipit fugiat a assumenda, vero nam officiis fuga tenetur? Molestias ratione recusandae cum. At, natus? Sunt, autem?"
-        },
-    ]);
+    const [msgs, setMsg] = useState([]);
 
 
     const fetchKursus = () => {
@@ -44,8 +38,30 @@ const TambahPengumuman = () => {
         });
     };
 
+    const fetchPengumuman = () => {
+        http.post("/guru/kursus/getPengumuman", {
+            guru_id:user.guru_id,
+            kursus_id: id,
+        }).then((res) => {
+            console.log(res.data.pengumuman);
+            setMsg(res.data.pengumuman);
+        });
+    };
+
+    const submitTambah = () => {
+        http.post("/guru/kursus/tambahPengumuman", {
+            kursus_id: id,
+            deskripsi:deskripsi
+        }).then((res) => {
+            fetchPengumuman();
+        });
+    };
+
+
+
     useEffect(() => {
         fetchKursus();
+        fetchPengumuman();
     }, []);
 
 
@@ -129,25 +145,27 @@ const TambahPengumuman = () => {
                                 <Textarea
                                     className="w-full"
                                     name="pengumuman"
+                                    onChange={(e)=>{setDeskripsi(e.target.value)}}
                                 />
                             </td>
                         </tr>
                         <tr className="p-2">
-                            <td className="py-4 w-1/6 align-top">Link Terkait</td>
+                            <td className="w-1/6 align-top"></td>
+                            {/* <td className="py-4 w-1/6 align-top">Link Terkait</td> */}
                             <td className="flex flex-col">
-                                <Input
+                                {/* <Input
                                     type="text"
                                     className="w-full"
                                     name="link"
                                 />
                                 <div className="text-sm text-gray-500 mt-1">
                                     *sertakan link terkait pengumuman (opsional)
-                                </div>
+                                </div> */}
                             </td>
                         </tr>
                     </tbody>
                     </table>
-                    <button className="btn w-full mt-12 text-base capitalize bg-custom-blue text-white hover:bg-blue-700 font-normal" name="btnTambah"
+                    <button className="btn w-full mt-12 text-base capitalize bg-custom-blue text-white hover:bg-blue-700 font-normal" name="btnTambah" onClick={submitTambah}
                     >Tambah Pengumuman</button>
                 </div>
 
@@ -169,7 +187,7 @@ const TambahPengumuman = () => {
                                             ></FontAwesomeIcon>
                                         </div>
                                         <div className="ml-6">
-                                            {msg.isi}
+                                            {msg.deskripsi}
                                         </div>
                                     </div>
                                 </div>

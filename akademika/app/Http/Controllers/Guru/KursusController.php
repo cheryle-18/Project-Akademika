@@ -9,6 +9,7 @@ use App\Models\KuisPilihanJawaban;
 use App\Models\KuisSoal;
 use App\Models\Kursus;
 use App\Models\Materi;
+use App\Models\Pengumuman;
 use App\Models\Siswa;
 use App\Models\Subbab;
 use Carbon\Carbon;
@@ -26,6 +27,21 @@ class KursusController extends Controller
 
         return response()->json([
             "kursus" => $kursus
+        ]);
+    }
+
+    function tambahPengumuman(Request $request)
+    {
+        $newPengumuman = $request->all();
+        $newPengumuman['tanggal'] = Carbon::now('Asia/Jakarta');
+        Pengumuman::create($newPengumuman);
+        return 'sukses tambah pengumuman';
+    }
+    function getPengumuman(Request $request)
+    {
+        $pengumuman = Kursus::find($request->kursus_id)->pengumuman;
+        return response()->json([
+            "pengumuman" => $pengumuman
         ]);
     }
 
