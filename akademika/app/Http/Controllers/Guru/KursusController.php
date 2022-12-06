@@ -18,6 +18,17 @@ use Illuminate\Support\Facades\Validator;
 
 class KursusController extends Controller
 {
+
+    function getKursus(Request $request)
+    {
+        $guru = Guru::find($request->guru_id);
+        $kursus = $guru->kursus()->where('kursus.kursus_id',$request->kursus_id)->first();
+
+        return response()->json([
+            "kursus" => $kursus
+        ]);
+    }
+
     public function validateDataTambahKursus($data){
         //Cek semua data
         $validate = [];

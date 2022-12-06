@@ -1,7 +1,7 @@
 import { Button, Input, Option, Select, Textarea } from "@material-tailwind/react";
 import React, { useState, useEffect, Fragment } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { Link } from "react-router-dom";
+import { Link,useParams } from "react-router-dom";
 import GuruNav from "./Navbar"
 import TabsKursus from "./TabsKursus";
 import BannerKursus from "./BannerKursus";
@@ -11,14 +11,14 @@ import {
     faArrowLeft,
 } from "@fortawesome/free-solid-svg-icons";
 
+import AuthUser from "../../components/AuthUser";
+
 const DetailKursus = () => {
-    const [course, setCourse] = useState({
-        nama: "Pengembangan Website Front-End Dasar 1",
-        kategori: "Teknologi Informasi",
-        harga: 250000,
-        deskripsi: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Commodi, dolorem?",
-        durasi: 40
-    })
+    const { http, user } = AuthUser();
+    const [title, setTitle] = useState("edit")
+    const {id} = useParams()
+
+    const [course, setCourse] = useState([])
 
     const [listSubbab, setListSubbab] = useState([
         {
@@ -35,7 +35,21 @@ const DetailKursus = () => {
         },
     ])
 
-    const [title, setTitle] = useState("edit")
+    const fetchKursus = () => {
+        http.post("/guru/kursus/get", {
+            guru_id:user.guru_id,
+            kursus_id: id,
+        }).then((res) => {
+            console.log(res.data.kursus);
+            setCourse(res.data.kursus);
+        });
+    };
+
+    useEffect(() => {
+        fetchKursus();
+    }, []);
+
+    
 
     return(
         <div className="min-h-screen h-full w-full overflow-x-hidden flex flex-col bg-gray-100">
@@ -61,7 +75,7 @@ const DetailKursus = () => {
                     </Link>
             </div>
             <div className="tabs w-auto">
-                        <TabsKursus titleParam={title}></TabsKursus>
+                        <TabsKursus titleParam={title} id={id}></TabsKursus>
              </div>
             </div>
             <div className="content w-full px-24">

@@ -1,12 +1,11 @@
 import React, { useState, useEffect } from "react";
-import { useHistory } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faClock } from "@fortawesome/free-solid-svg-icons";
-import * as faIcon from "@fortawesome/free-solid-svg-icons";
+import { round } from "lodash";
 
 const BannerKursus = ({courseParam}) => {
     const [course, setCourse] = useState(courseParam)
-
+    // console.log(course)
     return(
         <div className="banner">
             <div
@@ -22,26 +21,24 @@ const BannerKursus = ({courseParam}) => {
                         src="/card_pic.png"
                         alt=""
                     />
-                    {/* <button className="btn w-48 mx-auto rounded bg-white text-blue-900 border-0 hover:bg-gray-100 capitalize font-medium text-base">
-                        Daftar Sekarang
-                    </button> */}
                 </div>
                 <div className="w-3/4 flex flex-col text-white">
                     <div className="font-bold text-4xl mb-3">
-                        {course.nama}
+                        {courseParam.nama}
                     </div>
                     <div className="text-xl mb-3 font-semibold">
-                        {course.kategori}
+                        {courseParam.kategori}
                     </div>
-                    <div className="text-lg">{course.deskripsi}</div>
+                    <div className="text-lg">{courseParam.deskripsi}</div>
                     <div className="mt-auto flex text-xl font-semibold">
-                        <span>IDR {course.harga}</span>
+                        <span>IDR {courseParam.harga}</span>
                         <span className="ml-8">
                             <FontAwesomeIcon
                                 icon={faClock}
                                 className="text-white mr-2"
                             />
-                            {course.durasi} jam
+
+                            {round(courseParam.durasi/60)} jam
                         </span>
                     </div>
                 </div>

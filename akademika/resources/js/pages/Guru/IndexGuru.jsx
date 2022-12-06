@@ -30,7 +30,7 @@ const IndexGuru = () => {
                 <Route exact path="/guru/kursus/tambah">
                     <TambahKursus></TambahKursus>
                 </Route>
-                <Route exact path="/guru/kursus/detail">
+                <Route exact path="/guru/kursus/:id/detail">
                     <DetailKursus></DetailKursus>
                 </Route>
                 <Route exact path="/guru/kursus/subbab/tambah">
@@ -48,7 +48,7 @@ const IndexGuru = () => {
                 <Route exact path="/guru/kursus/kuis">
                     <TambahKuis></TambahKuis>
                 </Route>
-                <Route exact path="/guru/kursus/pengumuman">
+                <Route exact path="/guru/kursus/:id/pengumuman">
                     <TambahPengumuman></TambahPengumuman>
                 </Route>
                 <Route exact path="/guru/report/siswa">
@@ -57,7 +57,7 @@ const IndexGuru = () => {
                 <Route exact path="/guru/profile">
                     <ProfileGuru></ProfileGuru>
                 </Route>
-                <Route exact path="/guru/kursus/home">
+                <Route exact path="/guru/kursus/:id/home">
                     <DetailDiterbitkan></DetailDiterbitkan>
                 </Route>
             </Switch>

@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useHistory } from "react-router-dom";
 
-const TabsKursus = ({titleParam}) => {
+const TabsKursus = ({titleParam,id}) => {
     const [title, setTitle] = useState(titleParam)
 
     const classSelected = "float-left bg-white text-custom-blue py-1 px-4 rounded-sm mx-1 cursor-pointer";
@@ -11,19 +11,19 @@ const TabsKursus = ({titleParam}) => {
 
     const onClickHome = () => {
         setTitle("home");
-        let path = "/guru/kursus/home"
+        let path = "/guru/kursus/"+id+"/home"
         history.push(path)
     };
 
     const onClickEdit = () => {
         setTitle("edit");
-        let path = "/guru/kursus/detail"
+        let path = "/guru/kursus/"+id+"/detail"
         history.push(path)
     };
 
     const onClickPengumuman = () => {
         setTitle("pengumuman");
-        let  path = "/guru/kursus/pengumuman"
+        let  path = "/guru/kursus/"+id+"/pengumuman"
         history.push(path)
     };
 

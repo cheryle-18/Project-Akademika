@@ -79,6 +79,8 @@ Route::group(['middleware'=>'api'],function ()
     Route::prefix('guru')->group(function () {
         Route::prefix('kursus')->group(function ()
         {
+            Route::post('get',[KursusController::class,'getKursus']);
+
             Route::post('tambah',[KursusController::class,'tambahKursus']);
             Route::post('getPesan',[KursusController::class,'getPesan']);
             Route::post('getSiswa',[KursusController::class,'getSiswa']);

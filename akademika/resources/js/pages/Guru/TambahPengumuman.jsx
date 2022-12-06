@@ -1,11 +1,12 @@
 import React, { useState, useEffect, Fragment } from "react";
-import { Link,useHistory } from "react-router-dom";
+import { Link,useHistory,useParams } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import * as faIcon from "@fortawesome/free-solid-svg-icons";
 import GuruNav from "./Navbar";
 import { Input, Textarea } from "@material-tailwind/react";
 import TabsKursus from "./TabsKursus";
 import BannerKursus from "./BannerKursus";
+import AuthUser from "../../components/AuthUser";
 
 import {
     faArrowAltCircleLeft,
@@ -18,26 +19,10 @@ const TambahPengumuman = () => {
 
     let history = useHistory()
     const [title, setTitle] = useState("pengumuman");
+    const {id} = useParams()
+    const { http, user } = AuthUser();
 
-    const onClickMateri = () => {
-        setTitle("materi");
-        let path = "/guru/kursus/detail"
-        history.push(path)
-    };
-
-    const onClickPengumuman = () => {
-        setTitle("pengumuman");
-        let  path = "/guru/kursus/pengumuman"
-        history.push(path)
-    };
-
-    const [course, setCourse] = useState({
-        nama: "Pengembangan Website Front-End Dasar 1",
-        kategori: "Teknologi Informasi",
-        harga: 250000,
-        deskripsi: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Commodi, dolorem?",
-        durasi: 40
-    })
+    const [course, setCourse] = useState([])
 
     const [msgs, setMsg] = useState([
         {
@@ -48,10 +33,27 @@ const TambahPengumuman = () => {
         },
     ]);
 
+
+    const fetchKursus = () => {
+        http.post("/guru/kursus/get", {
+            guru_id:user.guru_id,
+            kursus_id: id,
+        }).then((res) => {
+            console.log(res.data.kursus);
+            setCourse(res.data.kursus);
+        });
+    };
+
+    useEffect(() => {
+        fetchKursus();
+    }, []);
+
+
+
     return (
         <div className="min-h-screen h-full w-full overflow-x-hidden flex flex-col bg-gray-100">
             <GuruNav></GuruNav>
-            <BannerKursus courseParam={course}></BannerKursus>
+            <BannerKursus courseParam={course} id={id}></BannerKursus>
             {/* <div className="banner">
                 <div
                 className="static h-80 w-full z-0 px-4 sm:px-16 md:px-24 py-20 flex"
@@ -113,7 +115,7 @@ const TambahPengumuman = () => {
                     </Link>
             </div>
                  <div className="tabs w-auto">
-                        <TabsKursus titleParam={title}></TabsKursus>
+                        <TabsKursus titleParam={title} id={id}></TabsKursus>
                  </div>
             </div>
 

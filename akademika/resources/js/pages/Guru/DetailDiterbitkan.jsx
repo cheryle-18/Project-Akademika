@@ -2,7 +2,7 @@ import React, { useState, useEffect, Fragment } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faClock } from "@fortawesome/free-solid-svg-icons";
 import * as faIcon from "@fortawesome/free-solid-svg-icons";
-import { Link } from "react-router-dom";
+import { Link,useHistory,useParams } from "react-router-dom";
 
 import Nav from "./Navbar";
 import {
@@ -42,6 +42,7 @@ function Icon({ id, open }) {
 }
 
 const DetailDiterbitkan = () => {
+
     const [isOpened, setIsOpened] = useState(false);
     const { http, user } = AuthUser();
     const [siswa_id_now, setSiswaIdNow] = useState(null);
@@ -50,7 +51,9 @@ const DetailDiterbitkan = () => {
     const [siswas, setSiswa] = useState([]);
     const [chatContent, setChatContent] = useState("");
     const [title, setTitle] = useState("home")
+    const {id} = useParams()
 
+    const [course, setCourse] = useState([])
 
     //to fetch all available chats
     const fetchDataSiswa = () => {
@@ -61,7 +64,18 @@ const DetailDiterbitkan = () => {
         });
     };
 
+    const fetchKursus = () => {
+        http.post("/guru/kursus/get", {
+            guru_id:user.guru_id,
+            kursus_id: id,
+        }).then((res) => {
+            console.log(res.data.kursus);
+            setCourse(res.data.kursus);
+        });
+    };
+
     useEffect(() => {
+        fetchKursus();
         fetchDataSiswa();
     }, []);
 
@@ -179,13 +193,7 @@ const DetailDiterbitkan = () => {
         });
     };
 
-    const [course, setCourse] = useState({
-        nama: "Pengembangan Website Front-End Dasar 1",
-        kategori: "Teknologi Informasi",
-        harga: 250000,
-        deskripsi: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Commodi, dolorem?",
-        durasi: 40
-    })
+
 
     const [open, setOpen] = useState(0);
 
@@ -348,7 +356,7 @@ const DetailDiterbitkan = () => {
                     </Link>
             </div>
             <div className="tabs w-auto">
-                        <TabsKursus titleParam={title}></TabsKursus>
+                        <TabsKursus titleParam={title} id={id}></TabsKursus>
              </div>
             </div>
 
