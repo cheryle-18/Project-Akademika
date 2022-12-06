@@ -101,4 +101,22 @@ class AdminController extends Controller
             "siswa" => $siswa,
         ]);
     }
+
+    function getDetailKursus(Request $request)
+    {
+        $kursus = Kursus::find($request->kursus_id);
+        $guru = Guru::find($kursus->guru_id);
+        return response()->json([
+            "kursus" => $kursus,
+            "guru" => $guru,
+        ]);
+    }
+
+    function getListGuru(Request $request)
+    {
+        $listGuru = Guru::all();
+        return response()->json([
+            "listGuru" => $listGuru,
+        ]);
+    }
 }

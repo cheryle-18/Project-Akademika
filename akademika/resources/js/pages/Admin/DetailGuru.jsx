@@ -152,47 +152,26 @@ const DetailGuru = () => {
                             <div className="w-40">Status</div>
                             <div className="w-full text-lg">
                                 <div>
-                                    {registerStatus == 1 ? (
-                                        <div>
-                                            <Radio
-                                                id="aktif"
-                                                name="status"
-                                                label="Aktif"
-                                                checked
-                                                onClick={(e) => {
-                                                    setRegisterStatus(1);
-                                                }}
-                                            />
-                                            <Radio
-                                                id="tidakaktif"
-                                                name="status"
-                                                label="Tidak Aktif"
-                                                onClick={(e) => {
-                                                    setRegisterStatus(0);
-                                                }}
-                                            />
-                                        </div>
-                                    ) : (
-                                        <div>
-                                            <Radio
-                                                id="aktif"
-                                                name="status"
-                                                label="Aktif"
-                                                onClick={(e) => {
-                                                    setRegisterStatus(1);
-                                                }}
-                                            />
-                                            <Radio
-                                                id="tidakaktif"
-                                                name="status"
-                                                label="Tidak Aktif"
-                                                checked
-                                                onClick={(e) => {
-                                                    setRegisterStatus(0);
-                                                }}
-                                            />
-                                        </div>
-                                    )}
+                                    <div>
+                                        <Radio
+                                            id="aktif"
+                                            name="status"
+                                            label="Aktif"
+                                            checked={registerStatus == 1}
+                                            onClick={(e) => {
+                                                setRegisterStatus(1);
+                                            }}
+                                        />
+                                        <Radio
+                                            id="tidakaktif"
+                                            name="status"
+                                            label="Tidak Aktif"
+                                            checked={registerStatus == 0}
+                                            onClick={(e) => {
+                                                setRegisterStatus(0);
+                                            }}
+                                        />
+                                    </div>
                                 </div>
                             </div>
                         </div>
