@@ -6,19 +6,22 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCoffee } from "@fortawesome/free-solid-svg-icons";
 import Navbar from "./Navbar";
 import AuthUser from "../../components/AuthUser";
+import {toRupiah} from "../../components/CurrencyUtils";
 import { Alert, Input, Radio } from "@material-tailwind/react";
+
+
 const ProfileGuru = () => {
     let history = useHistory();
     const { user, http } = AuthUser();
     const [guru, setGuru] = useState([]);
     const [updateFailed, setUpdateFailed] = useState("awal");
-    const [registerNama, setRegisterNama] = useState();
-    const [registerUsername, setRegisterUsername] = useState();
-    const [registerTelp, setRegisterTelp] = useState();
-    const [registerEmail, setRegisterEmail] = useState();
-    const [registerPassword, setRegisterPassword] = useState();
-    const [registerTotalWallet, setRegisterTotalWallet] = useState();
-    const [registerStatus, setRegisterStatus] = useState();
+    const [nama, setNama] = useState();
+    const [username, setUsername] = useState();
+    const [telp, setTelp] = useState();
+    const [email, setEmail] = useState();
+    const [password, setPassword] = useState();
+    const [totalWallet, setTotalWallet] = useState(0);
+    const [status, setStatus] = useState();
     const [isAktif, setAktif] = useState(true);
 
     const fetchDataGuru = () => {
@@ -26,13 +29,13 @@ const ProfileGuru = () => {
             guru_id: user.guru_id,
         }).then((res) => {
             setGuru(res.data.guru);
-            setRegisterNama(res.data.guru.nama);
-            setRegisterUsername(res.data.guru.username);
-            setRegisterTelp(res.data.guru.telp);
-            setRegisterEmail(res.data.guru.email);
-            setRegisterPassword(res.data.guru.password);
-            setRegisterTotalWallet(res.data.guru.total_wallet);
-            setRegisterStatus(res.data.guru.status);
+            setNama(res.data.guru.nama);
+            setUsername(res.data.guru.username);
+            setTelp(res.data.guru.telp);
+            setEmail(res.data.guru.email);
+            setPassword(res.data.guru.password);
+            setTotalWallet(res.data.guru.total_wallet);
+            setStatus(res.data.guru.status);
         });
     };
     useEffect(() => {
@@ -42,12 +45,12 @@ const ProfileGuru = () => {
     const submitUpdateForm = () => {
         //api call
         http.post("/admin/master/guru/update", {
-            username: registerUsername,
-            nama: registerNama,
-            password: registerPassword,
-            telp: registerTelp,
-            total_wallet: registerTotalWallet,
-            status: registerStatus,
+            username: Username,
+            nama: Nama,
+            password: Password,
+            telp: Telp,
+            total_wallet: TotalWallet,
+            status: Status,
         }).then((res) => {
             let data = res.data;
             console.log(data);
@@ -76,6 +79,9 @@ const ProfileGuru = () => {
                     <div className="text-3xl mb-2 md:mb-10 text-white font-semibold">
                         Akun Saya
                     </div>
+                    <div className="text-3xl mb-2 md:mb-10 text-white font-semibold">
+                        Edit Profile
+                    </div>
                     <div className="p-10 rounded-lg shadow-lg bg-gray-50">
                         <div className="grid grid-cols-12 gap-4">
                             <div className="col-span-12 lg:col-span-6">
@@ -85,9 +91,9 @@ const ProfileGuru = () => {
                                         type="text"
                                         label="Username"
                                         className="input w-full border-none placeholder-gray-700"
-                                        value={registerUsername}
+                                        value={username}
                                         onChange={(e) =>
-                                            setRegisterUsername(e.target.value)
+                                            setUsername(e.target.value)
                                         }
                                         required
                                     />
@@ -100,9 +106,9 @@ const ProfileGuru = () => {
                                         type="text"
                                         label="Password"
                                         className="input w-full border-none placeholder-gray-700"
-                                        value={registerPassword}
+                                        value={password}
                                         onChange={(e) =>
-                                            setRegisterPassword(e.target.value)
+                                            setPassword(e.target.value)
                                         }
                                         required
                                     />
@@ -115,9 +121,9 @@ const ProfileGuru = () => {
                                         type="text"
                                         label="Nama"
                                         className="input w-full border-none placeholder-gray-700"
-                                        value={registerNama}
+                                        value={nama}
                                         onChange={(e) =>
-                                            setRegisterNama(e.target.value)
+                                            setNama(e.target.value)
                                         }
                                         required
                                     />
@@ -130,9 +136,9 @@ const ProfileGuru = () => {
                                         type="text"
                                         label="Email"
                                         className="input w-full border-none placeholder-gray-700"
-                                        value={registerEmail}
+                                        value={email}
                                         onChange={(e) =>
-                                            setRegisterEmail(e.target.value)
+                                            setEmail(e.target.value)
                                         }
                                         required
                                     />
@@ -145,29 +151,15 @@ const ProfileGuru = () => {
                                         type="text"
                                         label="Telp"
                                         className="input w-full border-none placeholder-gray-700"
-                                        value={registerTelp}
+                                        value={telp}
                                         onChange={(e) =>
-                                            setRegisterTelp(e.target.value)
+                                            setTelp(e.target.value)
                                         }
                                         required
                                     />
                                 </div>
                             </div>
-                            {/* <div className="col-span-12 lg:col-span-6">
-                                <div className="mb-2">Total Wallet</div>
-                                <div className="bg-white rounded-md shadow-md">
-                                    <Input
-                                        type="text"
-                                        label="Total Wallet"
-                                        className="input w-full border-none placeholder-gray-700"
-                                        value={registerTotalWallet}
-                                        onChange={(e) =>
-                                            setRegisterTotalWallet(e.target.value)
-                                        }
-                                        required
-                                    />
-                                </div>
-                            </div> */}
+
                         </div>
                         <div className="float-right mt-4">
                             <button
@@ -180,7 +172,36 @@ const ProfileGuru = () => {
                         </div>
                         <div className="clear-both"></div>
                     </div>
+
+                    <div className="text-3xl mt-6 md:mb-6 text-white font-semibold">
+                        Informasi Wallet
+                    </div>
+                    <div className="p-10 mt-4 rounded-lg shadow-lg bg-gray-50">
+                        <div className="grid grid-cols-12 gap-4">
+
+                            <div className="col-span-12 lg:col-span-6">
+                                <div className="mb-2 text-xl">Total Wallet Anda</div>
+                                <div className="mb-2 text-3xl">
+                                    Rp.{toRupiah(totalWallet)}
+                                </div>
+
+                            </div>
+                        </div>
+                        <div className="float-right mt-4">
+                            <button
+                                type="button"
+                                onClick={submitUpdateForm}
+                                className="py-2 px-4  bg-custom-blue hover:bg-blue-900 text-white transition ease-in duration-200 text-center text-base font-normal shadow-md rounded-lg min-w-20"
+                            >
+                                Tarik Penghasilan
+                            </button>
+                        </div>
+                        <div className="clear-both"></div>
+                    </div>
+
                 </div>
+
+
             </div>
         </div>
     );

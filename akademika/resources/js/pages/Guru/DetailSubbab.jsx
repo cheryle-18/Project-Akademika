@@ -37,9 +37,9 @@ const DetailSubbab = () => {
 
     return (
         <div className="min-h-screen h-full w-full overflow-x-hidden flex flex-col bg-gray-100">
-            <div className="px-4 sm:px-16 md:px-24 drawer-side bg-custom-blue overflow-y-auto flex-none">
+            {/* <div className="px-4 sm:px-16 md:px-24 drawer-side bg-custom-blue overflow-y-auto flex-none"> */}
                 <GuruNav />
-            </div>
+            {/* </div> */}
             <div className="px-4 sm:px-16 md:px-24 py-6 w-full overflow-x-none bg-gray-100">
                 <div className="tabs text-2xl text-custom-blue">
                     <Link
@@ -52,7 +52,7 @@ const DetailSubbab = () => {
                             ></FontAwesomeIcon>
                         </div>
                         <div className="float-left ml-4 text-custom-blue inline underline">
-                            Kembali Ke Detail Kursus
+                            Kembali ke detail kursus
                         </div>
                         <div className="clear-both"></div>
                     </Link>
@@ -63,7 +63,7 @@ const DetailSubbab = () => {
                     {course}
                 </div>
                 <div className="text-2xl text-blue-900 font-semibold mb-6">
-                    Detail Materi {judul}
+                    Detail Subbab {judul}
                 </div>
                 <div className="w-full h-auto bg-white rounded-lg p-4 flex flex-col">
                     <table>
@@ -143,9 +143,11 @@ const DetailSubbab = () => {
                                             {n.bacaan.substring(0, 100)}...
                                         </td>
                                         <td className="text-center">
-                                            <button className="btn btn-sm capitalize bg-blue-900 text-white rounded mr-3 font-normal">
-                                                Detail
-                                            </button>
+                                            <Link to="/guru/kursus/materi">
+                                                <button className="btn btn-sm capitalize bg-blue-900 text-white rounded mr-3 font-normal">
+                                                    Detail
+                                                </button>
+                                            </Link>
                                             <button className="btn btn-sm capitalize bg-blue-900 text-white rounded font-normal">
                                                 Hapus
                                             </button>

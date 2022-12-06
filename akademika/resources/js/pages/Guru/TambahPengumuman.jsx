@@ -105,7 +105,7 @@ const TambahPengumuman = () => {
                             ></FontAwesomeIcon>
                         </div>
                         <div className="float-left ml-4 text-custom-blue inline underline">
-                            Kembali Ke Kursus Saya
+                            Kembali ke kursus saya
                         </div>
                         <div className="clear-both"></div>
                     </Link>

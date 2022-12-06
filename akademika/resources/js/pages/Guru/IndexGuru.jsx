@@ -13,11 +13,14 @@ import TambahMateri from "./TambahMateri";
 import EditMateri from "./EditMateri";
 import DetailDiterbitkan from "./DetailDiterbitkan";
 import ProfileGuru from "./ProfileGuru";
-
+import Home from "../Home";
 const IndexGuru = () => {
     return(
         <Router>
             <Switch>
+                <Route exact path="/">
+                    <Home></Home>
+                </Route>
                 <Route exact path="/guru/kursus/diterbitkan">
                     <KursusDiterbitkan></KursusDiterbitkan>
                 </Route>
@@ -39,7 +42,7 @@ const IndexGuru = () => {
                 <Route exact path="/guru/kursus/materi/tambah">
                     <TambahMateri></TambahMateri>
                 </Route>
-                <Route exact path="/guru/kursus/materi/edit">
+                <Route exact path="/guru/kursus/materi">
                     <EditMateri></EditMateri>
                 </Route>
                 <Route exact path="/guru/kursus/kuis">

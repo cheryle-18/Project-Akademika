@@ -1,7 +1,16 @@
 import { Input, Textarea } from "@material-tailwind/react";
 import React, { useState, useEffect } from "react";
 import GuruNav from "./Navbar"
-import Tabs from "./Tabs";
+// import Tabs from "./Tabs";
+import { Link } from "react-router-dom";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import {
+    faArrowAltCircleLeft,
+    faArrowCircleLeft,
+    faArrowLeft,
+    faCloudUploadAlt,
+} from "@fortawesome/free-solid-svg-icons";
+
 import AuthUser from "../../components/AuthUser";
 
 const EditMateri = () => {
@@ -29,20 +38,81 @@ const EditMateri = () => {
 
     return(
         <div className="min-h-screen h-full w-full overflow-x-hidden flex flex-col bg-gray-100">
-            <div className="px-4 sm:px-16 md:px-24 drawer-side bg-custom-blue overflow-y-auto flex-none">
+            {/* <div className="px-4 sm:px-16 md:px-24 drawer-side bg-custom-blue overflow-y-auto flex-none"> */}
                 <GuruNav />
-            </div>
+            {/* </div> */}
             <div className="px-4 sm:px-16 md:px-24 py-6 w-full overflow-x-none bg-gray-100">
-                <div className="tabs w-auto">
-                    <Tabs titleParam={title}></Tabs>
+                {/* <div className="tabs w-auto"> */}
+                    {/* <Tabs titleParam={title}></Tabs> */}
+
+                {/* </div> */}
+                <div className="tabs text-2xl text-custom-blue">
+                    <Link
+                        to="/guru/kursus/detail"
+                        className="rounded-xl py-2"
+                    >
+                        <div className="float-left">
+                            <FontAwesomeIcon
+                                icon={faArrowCircleLeft}
+                            ></FontAwesomeIcon>
+                        </div>
+                        <div className="float-left ml-4 text-custom-blue inline underline">
+                            Kembali ke detail subbab
+                        </div>
+                        <div className="clear-both"></div>
+                    </Link>
                 </div>
             </div>
             <div className="content flex flex-col flex-wrap w-full px-24 pb-16">
-                <div className="text-3xl text-blue-900 font-semibold mb-4">
+                <div className="text-3xl text-blue-900 font-semibold mb-6">
                     {course}
                 </div>
-                <div className="text-2xl text-blue-900 font-semibold mb-6">
-                    Tambah Materi
+                <div className="text-2xl text-blue-900 font-semibold mb-2">
+                    Detail Materi
+                </div>
+
+                    <div className="mt-5 text-custom-blue font-semibold text-xl">
+                        Preview Video
+                    </div>
+                    <div className="w-full h-70vh bg-gray-500 rounded-xl mt-2">
+                        <iframe
+                            src="https://drive.google.com/file/d/1XMjIxq7QnjFn2HeZv7wq7zNyUphHCYJw/preview"
+                            width="100%"
+                            height="100%"
+                            allow="autoplay"
+                        ></iframe>
+                        {/* <video controls width="100%">
+                        <source src={src} type="video/mp4" />
+                        Sorry, your browser doesn't support embedded videos.
+                        </video> */}
+                    </div>
+
+                    <div>
+                        <div className="float-right">
+                            <button
+                                className="btn w-full mt-3 text-base capitalize bg-custom-blue text-white hover:bg-blue-700 font-normal rounded-md py-2"
+                                name=""
+                            >
+                                <FontAwesomeIcon
+                                    icon={faCloudUploadAlt}
+                                    className="mr-2"
+                                ></FontAwesomeIcon>
+                                Unduh
+                            </button>
+                        </div>
+                        <div className="clear-both"></div>
+                    </div>
+
+                    <div className="mt-6 text-custom-blue font-semibold text-xl">
+                    Preview Bacaan
+                    </div>
+                    <p className="indent-14 mt-6">Lorem ipsum dolor sit amet consectetur adipisicing elit. Cupiditate, culpa. Eum sapiente dolores labore ipsa repellendus velit quae optio molestiae tenetur. Non possimus voluptas repudiandae laborum voluptate modi sint quis quam at. In temporibus deserunt ad molestias mollitia odit, iusto dolorum, quis reprehenderit quisquam tempore ullam nobis sint, esse nulla?</p>
+
+                    <p className="indent-14 mt-6"></p>
+
+
+                <div className="text-2xl text-blue-900 font-semibold mb-6 mt-7">
+                    Edit Materi
                 </div>
                 <div className="w-full h-auto bg-white rounded-lg p-4 flex flex-col">
                     <table>
@@ -69,9 +139,9 @@ const EditMateri = () => {
                             </td>
                         </tr>
                     </table>
-                    <button className="btn w-full mt-3 text-base capitalize bg-blue-900 text-white hover:bg-blue-700 font-normal" name="btnTambah"
+                    <button className="btn w-full mt-3 text-base capitalize bg-blue-900 text-white hover:bg-blue-700 font-normal" name="btnEdit"
                     onClick={submitForm}
-                    >Tambah</button>
+                    >Edit Materi</button>
                 </div>
             </div>
         </div>

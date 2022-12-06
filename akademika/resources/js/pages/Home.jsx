@@ -7,11 +7,6 @@ import { Link } from "react-router-dom";
 import Logo from "../../images/logo_akademika.png";
 import Logo2 from "../../images/logo_akademika2.png";
 import Logo3 from "../../images/logo_akademika3.png";
-import teknologiLogo from "../../images/Teknologi_Informasi.png";
-import openBookImg from "../../images/openBook.png";
-import eLearningImg from "../../images/eLearning.png";
-import userDollarCircledImg from "../../images/userDollarCircled.png";
-import clockLogo from "../../images/Clock.png";
 
 const Home = () => {
     const classItem = "";
