@@ -182,7 +182,7 @@ const DetailSubbab = () => {
                                             {n.penjelasan.substring(0, 100)}...
                                         </td>
                                         <td className="text-center">
-                                            <Link to="/guru/kursus/materi">
+                                            <Link to={"/guru/kursus/"+kursus_id+"/subbab/"+subbab_id+"/materi/"+n.materi_id}>
                                                 <button className="btn btn-sm capitalize bg-blue-900 text-white rounded mr-3 font-normal">
                                                     Detail
                                                 </button>

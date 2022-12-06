@@ -38,6 +38,16 @@ class KursusController extends Controller
             "materi" => $materi
         ]);
     }
+
+    function getMateri(Request $request)
+    {
+        $materi = Materi::where('materi_id',$request->materi_id)->first();
+
+        return response()->json([
+            "materi" => $materi
+        ]);
+    }
+
     function getKuisSubbab(Request $request)
     {
         $kuis = Kuis::where('subbab_id',$request->subbab_id)->first();

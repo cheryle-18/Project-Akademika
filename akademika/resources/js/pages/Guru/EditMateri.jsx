@@ -2,7 +2,7 @@ import { Input, Textarea } from "@material-tailwind/react";
 import React, { useState, useEffect } from "react";
 import GuruNav from "./Navbar"
 // import Tabs from "./Tabs";
-import { Link } from "react-router-dom";
+import { Link,useParams } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
     faArrowAltCircleLeft,
@@ -15,11 +15,12 @@ import AuthUser from "../../components/AuthUser";
 
 const EditMateri = () => {
     const [title, setTitle] = useState("proses")
-    const [course, setCourse] = useState("Pengembangan Website Front-End Dasar")
+    const [course, setCourse] = useState([])
     const [bacaan, setBacaan] = useState("Lorem ipsum dolor, sit amet consectetur adipisicing elit. Temporibus enim ipsa pariatur, accusantium eaque obcaecati consequuntur dignissimos minima dolor quos itaque dolores qui. Maxime assumenda, possimus ratione ad commodi mollitia libero eaque quod itaque accusamus sit in doloribus molestias beatae hic. Officia, quia. Aliquid minus aliquam quae earum illo vero!")
     const [video, setVideo] = useState()
     const {http,user} = AuthUser();
-
+    const {kursus_id,subbab_id,materi_id} = useParams()
+    const [materi,setMateri] = useState([])
     const onChangeVideoHandler = (e) => {
         setVideo(e.target.files[0])
     }
@@ -35,6 +36,34 @@ const EditMateri = () => {
         });
     }
 
+    const fetchKursus = () => {
+        http.post("/guru/kursus/get", {
+            guru_id:user.guru_id,
+            kursus_id: kursus_id,
+        }).then((res) => {
+            setCourse(res.data.kursus);
+        });
+    };
+
+    //fetch materi
+    const fetchMateri = () => {
+        http.post("/guru/kursus/materi/get", {
+            materi_id:materi_id
+        }).then((res) => {
+            console.log(res.data.materi);
+            setMateri(res.data.materi);
+        });
+    };
+
+    useEffect(() => {
+        fetchKursus();
+        fetchMateri();
+    }, []);
+
+    // useEffect(() => {
+
+    // },[materi])
+
     return(
         <div className="min-h-screen h-full w-full overflow-x-hidden flex flex-col bg-gray-100">
             {/* <div className="px-4 sm:px-16 md:px-24 drawer-side bg-custom-blue overflow-y-auto flex-none"> */}
@@ -47,7 +76,7 @@ const EditMateri = () => {
                 {/* </div> */}
                 <div className="tabs text-xl text-custom-blue">
                     <Link
-                        to="/guru/kursus/detail"
+                        to={"/guru/kursus/"+kursus_id+"/subbab/"+subbab_id+"/detail"}
                         className="rounded-xl py-2"
                     >
                         <div className="float-left">
@@ -64,7 +93,7 @@ const EditMateri = () => {
             </div>
             <div className="content flex flex-col flex-wrap w-full px-24 pb-16">
                 <div className="text-3xl text-blue-900 font-semibold mb-6">
-                    {course}
+                    {course.nama}
                 </div>
                 <div className="text-2xl text-blue-900 font-semibold mb-2">
                     Detail Materi
@@ -75,7 +104,7 @@ const EditMateri = () => {
                     </div>
                     <div className="w-full h-70vh bg-gray-500 rounded-xl mt-2">
                         <iframe
-                            src="https://drive.google.com/file/d/1XMjIxq7QnjFn2HeZv7wq7zNyUphHCYJw/preview"
+                            src={materi.link_video!=null ?("https://drive.google.com/file/d/"+materi.link_video+"/preview"):("")}
                             width="100%"
                             height="100%"
                             allow="autoplay"
@@ -105,7 +134,7 @@ const EditMateri = () => {
                     <div className="mt-6 text-custom-blue font-semibold text-xl">
                     Preview Bacaan
                     </div>
-                    <p className="indent-14 mt-6">Lorem ipsum dolor sit amet consectetur adipisicing elit. Cupiditate, culpa. Eum sapiente dolores labore ipsa repellendus velit quae optio molestiae tenetur. Non possimus voluptas repudiandae laborum voluptate modi sint quis quam at. In temporibus deserunt ad molestias mollitia odit, iusto dolorum, quis reprehenderit quisquam tempore ullam nobis sint, esse nulla?</p>
+                    <p className="indent-14 mt-6">{materi.penjelasan}</p>
 
                     <p className="indent-14 mt-6"></p>
 
@@ -121,7 +150,7 @@ const EditMateri = () => {
                                 <Textarea
                                     className="w-full h-48"
                                     name="bacaan"
-                                    value={bacaan}
+                                    value={materi.penjelasan}
                                     onChange={(e) =>setBacaan(e.target.value)}
                                 />
                             </td>

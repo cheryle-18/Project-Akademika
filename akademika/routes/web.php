@@ -30,7 +30,7 @@ Route::prefix('admin')->group(function () {
 });
 
 Route::prefix('guru')->group(function () {
-    Route::get('/{path}/{path2?}/{path3?}/{path4?}/{path5?}', function () {
+    Route::get('/{path}/{path2?}/{path3?}/{path4?}/{path5?}/{path6?}', function () {
         return view('guru');
     });
 });
