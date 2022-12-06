@@ -57,7 +57,7 @@ const TambahKursus = () => {
                         <tr className="p-2">
                             <td className="py-4">Kategori</td>
                             <td>
-                            <Select className="w-full items-end" name="kategori" onChange={(e)=>setKategori(e)}>
+                            <Select className="w-full items-end" name="kategori" onChange={(e)=>setKategori(e)} value="Teknologi Informasi">
                                 <Option value="Teknologi Informasi">Teknologi Informasi</Option>
                                 <Option value="Bisnis dan Ekonomi">Bisnis dan Ekonomi</Option>
                                 <Option value="Logika dan Matematika">Logika dan Matematika</Option>

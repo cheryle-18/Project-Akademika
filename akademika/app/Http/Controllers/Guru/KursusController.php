@@ -43,6 +43,15 @@ class KursusController extends Controller
         return response()->json([
             "pengumuman" => $pengumuman
         ]);
+
+    }
+
+    function getAllSubbab(Request $request)
+    {
+        $subbab = Subbab::where('kursus_id',$request->kursus_id)->get();
+        return response()->json([
+            "subbab" => $subbab
+        ]);
     }
 
     public function validateDataTambahKursus($data){

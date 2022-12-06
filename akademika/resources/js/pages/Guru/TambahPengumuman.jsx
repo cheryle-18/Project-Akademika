@@ -19,7 +19,7 @@ const TambahPengumuman = () => {
 
     let history = useHistory()
     const [title, setTitle] = useState("pengumuman");
-    const {id} = useParams()
+    const {kursus_id} = useParams()
     const { http, user } = AuthUser();
 
     const [course, setCourse] = useState([])
@@ -31,7 +31,7 @@ const TambahPengumuman = () => {
     const fetchKursus = () => {
         http.post("/guru/kursus/get", {
             guru_id:user.guru_id,
-            kursus_id: id,
+            kursus_id: kursus_id,
         }).then((res) => {
             console.log(res.data.kursus);
             setCourse(res.data.kursus);
@@ -41,7 +41,7 @@ const TambahPengumuman = () => {
     const fetchPengumuman = () => {
         http.post("/guru/kursus/getPengumuman", {
             guru_id:user.guru_id,
-            kursus_id: id,
+            kursus_id: kursus_id,
         }).then((res) => {
             console.log(res.data.pengumuman);
             setMsg(res.data.pengumuman);
@@ -50,7 +50,7 @@ const TambahPengumuman = () => {
 
     const submitTambah = () => {
         http.post("/guru/kursus/tambahPengumuman", {
-            kursus_id: id,
+            kursus_id: kursus_id,
             deskripsi:deskripsi
         }).then((res) => {
             fetchPengumuman();
@@ -69,7 +69,7 @@ const TambahPengumuman = () => {
     return (
         <div className="min-h-screen h-full w-full overflow-x-hidden flex flex-col bg-gray-100">
             <GuruNav></GuruNav>
-            <BannerKursus courseParam={course} id={id}></BannerKursus>
+            <BannerKursus courseParam={course} id={kursus_id}></BannerKursus>
             {/* <div className="banner">
                 <div
                 className="static h-80 w-full z-0 px-4 sm:px-16 md:px-24 py-20 flex"
@@ -131,7 +131,7 @@ const TambahPengumuman = () => {
                     </Link>
             </div>
                  <div className="tabs w-auto">
-                        <TabsKursus titleParam={title} id={id}></TabsKursus>
+                        <TabsKursus titleParam={title} kursus_id={kursus_id}></TabsKursus>
                  </div>
             </div>
 

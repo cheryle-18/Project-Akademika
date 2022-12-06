@@ -45,23 +45,17 @@ const ProfileGuru = () => {
     const submitUpdateForm = () => {
         //api call
         http.post("/admin/master/guru/update", {
-            username: Username,
-            nama: Nama,
-            password: Password,
-            telp: Telp,
-            total_wallet: TotalWallet,
-            status: Status,
+            username: username,
+            nama: nama,
+            password: password,
+            telp: telp,
+            total_wallet: totalWallet,
+            status: status,
         }).then((res) => {
             let data = res.data;
             console.log(data);
             setUpdateFailed("success");
-            // if (data.access_token != null && data.user != null) {
-            //     //login success
-            //     setToken(res.data.user, res.data.access_token);
-            //     document.body.style.overflow = "auto";
-            // } else {
-            //     setLoginFailed(true);
-            // }
+
         });
     };
 

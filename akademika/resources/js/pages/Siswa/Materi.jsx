@@ -61,14 +61,10 @@ const Materi = () => {
     };
 
     const fetchSubbab = () => {
-        console.log(materi.subbab_id);
         http.post("/siswa/kursus/getSubbab", {
             subbab_id: materi.subbab_id,
         }).then((res) => {
             setSubbab(res.data.subbab);
-            // console.log(subbab);
-            console.log("subbab" + res.data.subbab);
-            console.log("subbab" + subbab);
         });
     };
 
@@ -79,7 +75,6 @@ const Materi = () => {
 
     useEffect(() => {
         fetchSubbab();
-        console.log("halo" + subbab);
     }, [materi]);
 
     return (

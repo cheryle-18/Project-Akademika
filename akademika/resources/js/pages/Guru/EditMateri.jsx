@@ -32,7 +32,6 @@ const EditMateri = () => {
 
         http.post("/guru/kursus/materi/tambah",formData).then((res) => {
             let data = res.data;
-            console.log(data);
         });
     }
 

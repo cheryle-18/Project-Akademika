@@ -51,7 +51,7 @@ const DetailDiterbitkan = () => {
     const [siswas, setSiswa] = useState([]);
     const [chatContent, setChatContent] = useState("");
     const [title, setTitle] = useState("home")
-    const {id} = useParams()
+    const {kursus_id} = useParams()
 
     const [course, setCourse] = useState([])
 
@@ -67,9 +67,8 @@ const DetailDiterbitkan = () => {
     const fetchKursus = () => {
         http.post("/guru/kursus/get", {
             guru_id:user.guru_id,
-            kursus_id: id,
+            kursus_id: kursus_id,
         }).then((res) => {
-            console.log(res.data.kursus);
             setCourse(res.data.kursus);
         });
     };
@@ -356,7 +355,7 @@ const DetailDiterbitkan = () => {
                     </Link>
             </div>
             <div className="tabs w-auto">
-                        <TabsKursus titleParam={title} id={id}></TabsKursus>
+                        <TabsKursus titleParam={title} kursus_id={kursus_id}></TabsKursus>
              </div>
             </div>
 

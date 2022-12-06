@@ -16,40 +16,36 @@ import AuthUser from "../../components/AuthUser";
 const DetailKursus = () => {
     const { http, user } = AuthUser();
     const [title, setTitle] = useState("edit")
-    const {id} = useParams()
+    const {kursus_id} = useParams()
 
     const [course, setCourse] = useState([])
 
-    const [listSubbab, setListSubbab] = useState([
-        {
-            judul: "HyperText Markup Language (HTML)",
-            durasi: 120
-        },
-        {
-            judul: "Cascading Style Sheet (CSS)",
-            durasi: 120
-        },
-        {
-            judul: "JavaScript",
-            durasi: 120
-        },
-    ])
+    const [listSubbab, setListSubbab] = useState([])
 
     const fetchKursus = () => {
         http.post("/guru/kursus/get", {
             guru_id:user.guru_id,
-            kursus_id: id,
+            kursus_id: kursus_id,
         }).then((res) => {
             console.log(res.data.kursus);
             setCourse(res.data.kursus);
         });
     };
 
+    const fetchSubbab = () => {
+        http.post("/guru/kursus/getAllSubbab", {
+            kursus_id:kursus_id
+        }).then((res) => {
+            setListSubbab(res.data.subbab);
+        });
+    };
+
+
     useEffect(() => {
         fetchKursus();
+        fetchSubbab();
     }, []);
 
-    
 
     return(
         <div className="min-h-screen h-full w-full overflow-x-hidden flex flex-col bg-gray-100">
@@ -75,12 +71,12 @@ const DetailKursus = () => {
                     </Link>
             </div>
             <div className="tabs w-auto">
-                        <TabsKursus titleParam={title} id={id}></TabsKursus>
+                        <TabsKursus titleParam={title} kursus_id={kursus_id}></TabsKursus>
              </div>
             </div>
             <div className="content w-full px-24">
                 <div className="flex">
-                    <span className="text-2xl text-blue-900 font-semibold ">Pengembangan Website Front End Dasar 1
+                    <span className="text-2xl text-blue-900 font-semibold ">{course.nama}
                     </span>
                     <button className="btn btn-sm h-10 bg-blue-900 hover:bg-blue-700 text-white rounded ml-auto mr-3 capitalize font-normal">
                         Hapus Kursus
@@ -166,7 +162,7 @@ const DetailKursus = () => {
                                                 <td className="text-base">{n.judul}</td>
                                                 <td className="text-center text-base">{n.durasi} menit</td>
                                                 <td className="text-center">
-                                                <Link to="/guru/kursus/subbab/detail">
+                                                <Link to={"/guru/kursus/"+kursus_id+"/subbab/"+n.subbab_id+"/detail"}>
                                                     <button className="btn btn-sm capitalize bg-blue-900 text-white rounded mr-3 font-normal">Detail</button>
                                                 </Link>
                                                     <button className="btn btn-sm capitalize bg-blue-900 text-white rounded font-normal">Hapus</button>
