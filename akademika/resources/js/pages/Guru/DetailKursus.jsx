@@ -1,8 +1,14 @@
-import { Button, Input, Option, Select, Textarea } from "@material-tailwind/react";
+import {
+    Button,
+    Input,
+    Option,
+    Select,
+    Textarea,
+} from "@material-tailwind/react";
 import React, { useState, useEffect, Fragment } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { Link,useParams } from "react-router-dom";
-import GuruNav from "./Navbar"
+import { Link, useParams } from "react-router-dom";
+import GuruNav from "./Navbar";
 import TabsKursus from "./TabsKursus";
 import BannerKursus from "./BannerKursus";
 import {
@@ -15,8 +21,8 @@ import AuthUser from "../../components/AuthUser";
 
 const DetailKursus = () => {
     const { http, user } = AuthUser();
-    const [title, setTitle] = useState("edit")
-    const {kursus_id} = useParams()
+    const [title, setTitle] = useState("edit");
+    const { kursus_id } = useParams();
 
     const [course, setCourse] = useState([])
     const [selectedKategori,setSelectedKategori] = useState(null)
@@ -25,11 +31,12 @@ const DetailKursus = () => {
     const [edtDeskripsi,setEdtDeskripsi] = useState(null)
     const [edtDurasi,setEdtDurasi] = useState(null)
 
-    const [listSubbab, setListSubbab] = useState([])
+
+    const [listSubbab, setListSubbab] = useState([]);
 
     const fetchKursus = () => {
         http.post("/guru/kursus/get", {
-            guru_id:user.guru_id,
+            guru_id: user.guru_id,
             kursus_id: kursus_id,
         }).then((res) => {
             console.log(res.data.kursus);
@@ -44,11 +51,12 @@ const DetailKursus = () => {
 
     const fetchSubbab = () => {
         http.post("/guru/kursus/getAllSubbab", {
-            kursus_id:kursus_id
+            kursus_id: kursus_id,
         }).then((res) => {
             setListSubbab(res.data.subbab);
         });
     };
+
 
     const submitEdit = () => {
         http.post("/guru/kursus/doEdit", {
@@ -61,6 +69,14 @@ const DetailKursus = () => {
         }).then((res) => {
             console.log(res.data)
             fetchKursus()
+    })}
+
+    const fetchMateri = (subbab_id) => {
+        http.post("/guru/kursus/getAllMateri", {
+            subbab_id: subbab_id,
+        }).then((res) => {
+            // console.log(res.data.materi);
+            return res.data.materi;
         });
     };
 
@@ -69,15 +85,14 @@ const DetailKursus = () => {
         fetchSubbab();
     }, []);
 
-
-    return(
+    return (
         <div className="min-h-screen h-full w-full overflow-x-hidden flex flex-col bg-gray-100">
             {/* <div className="px-4 sm:px-16 md:px-24 drawer-side bg-custom-blue overflow-y-auto flex-none"> */}
-                <GuruNav />
+            <GuruNav />
             {/* </div> */}
             <BannerKursus courseParam={course}></BannerKursus>
             <div className="static min-h-0 w-full z-0 px-4 sm:px-16 md:px-24 py-6">
-            <div className="tabs text-xl text-custom-blue mb-4">
+                <div className="tabs text-xl text-custom-blue mb-4">
                     <Link
                         to="/guru/kursus/diterbitkan"
                         className="rounded-xl py-2"
@@ -92,14 +107,18 @@ const DetailKursus = () => {
                         </div>
                         <div className="clear-both"></div>
                     </Link>
-            </div>
-            <div className="tabs w-auto">
-                        <TabsKursus titleParam={title} kursus_id={kursus_id}></TabsKursus>
-             </div>
+                </div>
+                <div className="tabs w-auto">
+                    <TabsKursus
+                        titleParam={title}
+                        kursus_id={kursus_id}
+                    ></TabsKursus>
+                </div>
             </div>
             <div className="content w-full px-24">
                 <div className="flex">
-                    <span className="text-2xl text-blue-900 font-semibold ">{course.nama}
+                    <span className="text-2xl text-blue-900 font-semibold ">
+                        {course.nama}
                     </span>
                     <button className="btn btn-sm h-10 bg-blue-900 hover:bg-blue-700 text-white rounded ml-auto mr-3 capitalize font-normal">
                         Hapus Kursus
@@ -139,6 +158,7 @@ const DetailKursus = () => {
                                     <Option value="Kesehatan">Kesehatan</Option>
                                     <Option value="Kesenian">Kesenian</Option>
                                 </Select>
+
                                 </td>
                             </tr>
                             <tr className="p-2">
@@ -167,7 +187,7 @@ const DetailKursus = () => {
                             </tr>
                             <tr className="p-2">
                                 <td className="py-4 align-top">Deskripsi</td>
-                                <td>
+                            <td>
                                     <Textarea
                                         className="w-full"
                                         name="desc"
@@ -186,46 +206,68 @@ const DetailKursus = () => {
                         <table className="table table-compact w-full text-black">
                             <thead>
                                 <tr>
-                                    <th className=" bg-white text-center text-base">NO</th>
-                                    <th className=" bg-white text-center text-base">JUDUL</th>
-                                    <th className=" bg-white text-center text-base">DURASI</th>
-                                    <th className=" bg-white text-center text-base">ACTION</th>
+                                    <th className=" bg-white text-center text-base">
+                                        NO
+                                    </th>
+                                    <th className=" bg-white text-center text-base">
+                                        JUDUL
+                                    </th>
+                                    <th className=" bg-white text-center text-base">
+                                        DURASI
+                                    </th>
+                                    <th className=" bg-white text-center text-base">
+                                        ACTION
+                                    </th>
                                 </tr>
                             </thead>
                             <tbody>
-                                {
-                                    listSubbab.map((n, index) => {
-                                        return(
-                                            <tr>
-                                                <td className="text-center text-base">{index+1}</td>
-                                                <td className="text-base">{n.judul}</td>
-                                                <td className="text-center text-base">{n.durasi} menit</td>
-                                                <td className="text-center">
-                                                <Link to={"/guru/kursus/"+kursus_id+"/subbab/"+n.subbab_id+"/detail"}>
-                                                    <button className="btn btn-sm capitalize bg-blue-900 text-white rounded mr-3 font-normal">Detail</button>
+                                {listSubbab.map((n, index) => {
+                                    return (
+                                        <tr>
+                                            <td className="text-center text-base">
+                                                {index + 1}
+                                            </td>
+                                            <td className="text-base">
+                                                {n.judul}
+                                            </td>
+                                            <td className="text-center text-base">
+                                                {n.durasi} menit
+                                            </td>
+                                            <td className="text-center">
+                                                <Link
+                                                    to={
+                                                        "/guru/kursus/" +
+                                                        kursus_id +
+                                                        "/subbab/" +
+                                                        n.subbab_id +
+                                                        "/detail"
+                                                    }
+                                                >
+                                                    <button className="btn btn-sm capitalize bg-blue-900 text-white rounded mr-3 font-normal">
+                                                        Detail
+                                                    </button>
                                                 </Link>
-                                                    <button className="btn btn-sm capitalize bg-blue-900 text-white rounded font-normal">Hapus</button>
-                                                </td>
-                                            </tr>
-                                        )
-                                    })
-                                }
+                                                <button className="btn btn-sm capitalize bg-blue-900 text-white rounded font-normal">
+                                                    Hapus
+                                                </button>
+                                            </td>
+                                        </tr>
+                                    );
+                                })}
                             </tbody>
                         </table>
                     </div>
                     <div className="w-full my-3">
-                        <Link
-                            to="/guru/kursus/subbab/tambah">
-                                <button className="btn btn-sm h-10 px-4 bg-blue-900 hover:bg-blue-700 text-white rounded capitalize font-normal float-right">
+                        <Link to="/guru/kursus/subbab/tambah">
+                            <button className="btn btn-sm h-10 px-4 bg-blue-900 hover:bg-blue-700 text-white rounded capitalize font-normal float-right">
                                 Tambah Subbab
-                                </button>
+                            </button>
                         </Link>
-
                     </div>
                 </div>
             </div>
         </div>
-    )
-}
+    );
+};
 
-export default DetailKursus
+export default DetailKursus;
