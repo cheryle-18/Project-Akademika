@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faClock } from "@fortawesome/free-solid-svg-icons";
 import { round } from "lodash";
+import { toRupiah } from "../../components/CurrencyUtils";
 
 const BannerKursus = ({courseParam}) => {
     const [course, setCourse] = useState(courseParam)
@@ -31,7 +32,10 @@ const BannerKursus = ({courseParam}) => {
                     </div>
                     <div className="text-lg">{courseParam.deskripsi}</div>
                     <div className="mt-auto flex text-xl font-semibold">
-                        <span>IDR {courseParam.harga}</span>
+                        <span>IDR {
+                            courseParam.harga == null ?
+                            (courseParam.harga):toRupiah(courseParam.harga)
+                        }</span>
                         <span className="ml-8">
                             <FontAwesomeIcon
                                 icon={faClock}
