@@ -2,14 +2,24 @@ import React, { useState, useEffect, Fragment } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faClock } from "@fortawesome/free-solid-svg-icons";
 import * as faIcon from "@fortawesome/free-solid-svg-icons";
+import { Link } from "react-router-dom";
+
 import Nav from "./Navbar";
 import {
     Accordion,
     AccordionHeader,
     AccordionBody,
 } from "@material-tailwind/react";
-import AuthUser from "../../components/AuthUser";
 
+import {
+    faArrowAltCircleLeft,
+    faArrowCircleLeft,
+    faArrowLeft,
+} from "@fortawesome/free-solid-svg-icons";
+
+import AuthUser from "../../components/AuthUser";
+import BannerKursus from "./BannerKursus";
+import TabsKursus from "./TabsKursus";
 function Icon({ id, open }) {
     return (
         <svg
@@ -39,6 +49,8 @@ const DetailDiterbitkan = () => {
 
     const [siswas, setSiswa] = useState([]);
     const [chatContent, setChatContent] = useState("");
+    const [title, setTitle] = useState("home")
+
 
     //to fetch all available chats
     const fetchDataSiswa = () => {
@@ -168,13 +180,12 @@ const DetailDiterbitkan = () => {
     };
 
     const [course, setCourse] = useState({
-        nama: "Pengembangan Website Front-End Dasar",
+        nama: "Pengembangan Website Front-End Dasar 1",
         kategori: "Teknologi Informasi",
-        deskripsi:
-            "Belajar fundamental dari pengembangan website front-end dengan HTML, CSS, dan JavaScript",
         harga: 250000,
-        durasi: 40,
-    });
+        deskripsi: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Commodi, dolorem?",
+        durasi: 40
+    })
 
     const [open, setOpen] = useState(0);
 
@@ -316,45 +327,31 @@ const DetailDiterbitkan = () => {
             {/* <div className="px-4 sm:px-16 md:px-24 drawer-side bg-custom-blue overflow-y-auto flex-none"> */}
                 <Nav></Nav>
             {/* </div> */}
-            <div className="banner">
-                <div
-                    className="static h-96 w-full z-0 px-4 sm:px-16 md:px-16 py-14 flex"
-                    style={{
-                        backgroundImage:
-                            "linear-gradient(to bottom right, rgb(13,90,162), rgb(152,204,234))",
-                    }}
-                >
-                    <div className="w-1/4 p-3 px-0 h-full flex flex-col">
-                        <img
-                            className="w-48 h-48 mb-4 mx-auto object-cover md:rounded-none"
-                            src="/card_pic.png"
-                            alt=""
-                        />
-                        {/* <button className="btn w-48 mx-auto rounded bg-white text-blue-900 border-0 hover:bg-gray-100 capitalize font-medium text-base">
-                            Daftar Sekarang
-                        </button> */}
-                    </div>
-                    <div className="w-3/4 flex flex-col text-white">
-                        <div className="font-bold text-4xl mb-3">
-                            {course.nama}
+
+            <BannerKursus courseParam={course}></BannerKursus>
+
+            <div className="static min-h-0 w-full z-0 px-4 sm:px-16 md:px-24 py-6 bg-gray-100">
+            <div className="tabs text-2xl text-custom-blue mb-4">
+                    <Link
+                        to="/guru/kursus/diterbitkan"
+                        className="rounded-xl py-2"
+                    >
+                        <div className="float-left">
+                            <FontAwesomeIcon
+                                icon={faArrowCircleLeft}
+                            ></FontAwesomeIcon>
                         </div>
-                        <div className="text-xl mb-3 font-semibold">
-                            {course.kategori}
+                        <div className="float-left ml-4 text-custom-blue inline underline">
+                            Kembali ke kursus saya
                         </div>
-                        <div className="text-lg">{course.deskripsi}</div>
-                        <div className="mt-auto flex text-xl font-semibold">
-                            <span>IDR {course.harga}</span>
-                            <span className="ml-8">
-                                <FontAwesomeIcon
-                                    icon={faClock}
-                                    className="text-white mr-2"
-                                />
-                                {course.durasi} jam
-                            </span>
-                        </div>
-                    </div>
-                </div>
+                        <div className="clear-both"></div>
+                    </Link>
             </div>
+            <div className="tabs w-auto">
+                        <TabsKursus titleParam={title}></TabsKursus>
+             </div>
+            </div>
+
             <div className="silabus p-16 m-0 w-full overflow-x-none bg-gray-100">
                 <div className="font-bold text-3xl text-blue-900 mb-5">
                     Silabus Kursus

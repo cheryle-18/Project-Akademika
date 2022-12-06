@@ -9,8 +9,14 @@ const TabsKursus = ({titleParam}) => {
 
     let history = useHistory()
 
-    const onClickMateri = () => {
-        setTitle("materi");
+    const onClickHome = () => {
+        setTitle("home");
+        let path = "/guru/kursus/home"
+        history.push(path)
+    };
+
+    const onClickEdit = () => {
+        setTitle("edit");
         let path = "/guru/kursus/detail"
         history.push(path)
     };
@@ -26,21 +32,21 @@ const TabsKursus = ({titleParam}) => {
         <div className="bg-custom-blue text-white inline-block text-base tracking-wide p-1 py-2 rounded-md">
                     <div
                         className={
-                            (title == "materi" && classSelected) ||
-                            (title != "materi" && classOther)
+                            (title == "home" && classSelected) ||
+                            (title != "home" && classOther)
                         }
-                        onClick={onClickMateri}
+                        onClick={onClickHome}
                     >
                         Home Kursus
                     </div>
                     <div
                         className={
-                            (title == "materi" && classSelected) ||
-                            (title != "materi" && classOther)
+                            (title == "edit" && classSelected) ||
+                            (title != "edit" && classOther)
                         }
-                        onClick={onClickMateri}
+                        onClick={onClickEdit}
                     >
-                        Detail Kursus
+                        Detail & Edit Kursus
                     </div>
                     <div
                         className={

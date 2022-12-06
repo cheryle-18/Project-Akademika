@@ -4,6 +4,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Link } from "react-router-dom";
 import GuruNav from "./Navbar"
 import TabsKursus from "./TabsKursus";
+import BannerKursus from "./BannerKursus";
 import {
     faArrowAltCircleLeft,
     faArrowCircleLeft,
@@ -34,14 +35,14 @@ const DetailKursus = () => {
         },
     ])
 
-    const [title, setTitle] = useState("materi")
+    const [title, setTitle] = useState("edit")
 
     return(
         <div className="min-h-screen h-full w-full overflow-x-hidden flex flex-col bg-gray-100">
             {/* <div className="px-4 sm:px-16 md:px-24 drawer-side bg-custom-blue overflow-y-auto flex-none"> */}
                 <GuruNav />
             {/* </div> */}
-
+            <BannerKursus courseParam={course}></BannerKursus>
             <div className="static min-h-0 w-full z-0 px-4 sm:px-16 md:px-24 py-6">
             <div className="tabs text-2xl text-custom-blue mb-4">
                     <Link
@@ -61,11 +62,12 @@ const DetailKursus = () => {
             </div>
             <div className="tabs w-auto">
                         <TabsKursus titleParam={title}></TabsKursus>
-                 </div>
+             </div>
             </div>
             <div className="content w-full px-24">
                 <div className="flex">
-                    <span className="text-2xl text-blue-900 font-semibold ">Pengembangan Website Front End Dasar</span>
+                    <span className="text-2xl text-blue-900 font-semibold ">Pengembangan Website Front End Dasar 1
+                    </span>
                     <button className="btn btn-sm h-10 bg-blue-900 hover:bg-blue-700 text-white rounded ml-auto mr-3 capitalize font-normal">
                         Hapus Kursus
                     </button>
