@@ -64,12 +64,14 @@ Route::group(['middleware'=>'api'],function ()
                 Route::post('/',[AdminController::class,'getGuru']);
                 Route::post('/detail',[KursusController::class,'getDetailGuru']);
                 Route::post('/update',[AdminController::class,'updateGuru']);
+                Route::post('/list',[AdminController::class,'getListGuru']);
             });
 
             Route::prefix('kursus')->group(function () {
                 Route::post('/',[AdminController::class,'getKursus']);
                 Route::post('setujui',[AdminController::class,'setujuiKursus']);
                 Route::post('batal',[AdminController::class,'batalKursus']);
+                Route::post('detail',[AdminController::class,'getDetailKursus']);
             });
         });
     });

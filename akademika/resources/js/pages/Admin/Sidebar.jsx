@@ -2,13 +2,18 @@ import React from "react";
 import { useState } from "react";
 import { Button } from "@material-tailwind/react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faHouseChimney, faUser, faGraduationCap, faFileContract, faSignOut } from "@fortawesome/free-solid-svg-icons";
+import {
+    faHouseChimney,
+    faUser,
+    faGraduationCap,
+    faFileContract,
+    faSignOut,
+} from "@fortawesome/free-solid-svg-icons";
 import { Link } from "react-router-dom";
 import "../../../css/app.css";
 
 const Sidebar = (props) => {
-    const classNow =
-        "px-4 py-3 mt-3 rounded-lg text-blue-800 bg-white";
+    const classNow = "px-4 py-3 mt-3 rounded-lg text-blue-800 bg-white";
     const classMenu =
         "px-4 py-3 mt-3 rounded-lg text-white hover:text-blue-800 bg-custom-blue hover:bg-gray-100";
     const [open, setOpen] = useState(true);
@@ -23,14 +28,19 @@ const Sidebar = (props) => {
             title: "Guru",
             icon: faUser,
             link: "/admin/master/guru",
-            now: props.now == "guru",
+            now: props.now == "guru" || props.now == "guru detail",
         },
-        { title: "Siswa", icon: faUser, link: "/admin/master/siswa", now: props.now == "siswa" },
+        {
+            title: "Siswa",
+            icon: faUser,
+            link: "/admin/master/siswa",
+            now: props.now == "siswa" || props.now == "siswa detail",
+        },
         {
             title: "Kursus",
             icon: faGraduationCap,
             link: "/admin/master/kursus",
-            now: props.now == "kursus",
+            now: props.now == "kursus" || props.now == "kursus detail",
         },
         {
             title: "Laporan",
@@ -96,6 +106,7 @@ const Sidebar = (props) => {
                         {props.now == "siswa detail" && "Master Siswa Detail"}
                         {props.now == "siswa" && "Master Siswa"}
                         {props.now == "kursus" && "Master Kursus"}
+                        {props.now == "kursus detail" && "Master Kursus Detail"}
                         {props.now == "laporan" && "Master Laporan"}
                     </div>
 
@@ -130,8 +141,10 @@ const Sidebar = (props) => {
                     <div className="z-1 absolute left-70 top-0 bg-white py-4 text-black font-semibold text-xl">
                         {props.now == "guru" && "Master Guru"}
                         {props.now == "guru detail" && "Master Guru Detail"}
+                        {props.now == "siswa detail" && "Master Siswa Detail"}
                         {props.now == "siswa" && "Master Siswa"}
                         {props.now == "kursus" && "Master Kursus"}
+                        {props.now == "kursus detail" && "Master Kursus Detail"}
                         {props.now == "laporan" && "Master Laporan"}
                     </div>
                     <div className="z-1 drawer-side bg-custom-blue rounded-r-3xl min-h-screen overflow-y-auto flex-none">

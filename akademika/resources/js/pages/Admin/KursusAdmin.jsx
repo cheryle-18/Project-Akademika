@@ -5,6 +5,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCoffee } from "@fortawesome/free-solid-svg-icons";
 import Sidebar from "./Sidebar";
 import AuthUser from "../../components/AuthUser";
+import { Link } from "react-router-dom";
 
 const KursusAdmin = () => {
     const classSelected =
@@ -78,23 +79,27 @@ const KursusAdmin = () => {
                 {master.status == 1 ? "Live" : "Pending"}
             </td>
             <td className="text-base">
-                <button
-                    type="button"
-                    className="py-2 px-4  bg-custom-blue hover:bg-blue-900 text-white transition ease-in duration-200 text-center text-base font-normal shadow-md rounded-lg w-20"
-                >
-                    Detail
-                </button>
+                <Link to={`/admin/master/kursus/detail/${master.kursus_id}`}>
+                    <button
+                        type="button"
+                        className="py-2 px-4  bg-custom-blue hover:bg-blue-900 text-white transition ease-in duration-200 text-center text-base font-normal shadow-md rounded-lg w-20"
+                    >
+                        Detail
+                    </button>
+                </Link>
             </td>
             <td className="text-base">
-                <button
-                    onClick={(e) => {
-                        onClickBatal(master.kursus_id);
-                    }}
-                    type="button"
-                    className="py-2 px-4  bg-red-800 hover:bg-red-500 text-white transition ease-in duration-200 text-center text-base font-normal shadow-md rounded-lg w-20"
-                >
-                    Batal
-                </button>
+                <Link to="/admin">
+                    <button
+                        onClick={(e) => {
+                            onClickBatal(master.kursus_id);
+                        }}
+                        type="button"
+                        className="py-2 px-4  bg-red-800 hover:bg-red-500 text-white transition ease-in duration-200 text-center text-base font-normal shadow-md rounded-lg w-20"
+                    >
+                        Batal
+                    </button>
+                </Link>
             </td>
         </tr>
     ));
@@ -110,12 +115,14 @@ const KursusAdmin = () => {
                 {pengajuan.status == 1 ? "Live" : "Pending"}
             </td>
             <td>
-                <button
-                    type="button"
-                    className="py-2 px-4  bg-custom-blue hover:bg-blue-900 text-white w-20 transition ease-in duration-200 text-center text-base font-normal shadow-md rounded-lg"
-                >
-                    Detail
-                </button>
+                <Link to={`/admin/master/kursus/detail/${pengajuan.kursus_id}`}>
+                    <button
+                        type="button"
+                        className="py-2 px-4  bg-custom-blue hover:bg-blue-900 text-white w-20 transition ease-in duration-200 text-center text-base font-normal shadow-md rounded-lg"
+                    >
+                        Detail
+                    </button>
+                </Link>
             </td>
             <td className="text-base">
                 <button

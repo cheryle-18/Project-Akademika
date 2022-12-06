@@ -2,6 +2,7 @@ import React from "react";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import DetailGuru from "./DetailGuru";
 import DetailSiswa from "./DetailSiswa";
+import DetailKursus from "./DetailKursus";
 import GuruAdmin from "./GuruAdmin";
 import HomeAdmin from "./HomeAdmin";
 import KursusAdmin from "./KursusAdmin";
@@ -10,10 +11,10 @@ import SiswaAdmin from "./SiswaAdmin";
 import Home from "../Home";
 
 const IndexAdmin = () => {
-    return(
+    return (
         <Router>
             <Switch>
-            <Route exact path="/">
+                <Route exact path="/">
                     <Home></Home>
                 </Route>
                 <Route exact path="/admin/home">
@@ -34,12 +35,15 @@ const IndexAdmin = () => {
                 <Route exact path="/admin/master/kursus">
                     <KursusAdmin></KursusAdmin>
                 </Route>
+                <Route exact path="/admin/master/kursus/detail/:id">
+                    <DetailKursus></DetailKursus>
+                </Route>
                 <Route exact path="/admin/master/laporan">
                     <LaporanAdmin></LaporanAdmin>
                 </Route>
             </Switch>
         </Router>
-    )
-}
+    );
+};
 
-export default IndexAdmin
+export default IndexAdmin;

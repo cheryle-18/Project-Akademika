@@ -39,28 +39,28 @@ const DetailSiswa = () => {
         fetchDataSiswa();
     }, []);
 
-    // const submitUpdateForm = () => {
-    //     //api call
-    //     http.post("/admin/master/siswa/update", {
-    //         username: registerUsername,
-    //         nama: registerNama,
-    //         password: registerPassword,
-    //         telp: registerTelp,
-    //         total_wallet: registerTotalWallet,
-    //         status: registerStatus,
-    //     }).then((res) => {
-    //         let data = res.data;
-    //         console.log(data);
-    //         setUpdateFailed("success");
-    //         // if (data.access_token != null && data.user != null) {
-    //         //     //login success
-    //         //     setToken(res.data.user, res.data.access_token);
-    //         //     document.body.style.overflow = "auto";
-    //         // } else {
-    //         //     setLoginFailed(true);
-    //         // }
-    //     });
-    // };
+    const submitUpdateForm = () => {
+        //api call
+        http.post("/admin/master/siswa/update", {
+            username: registerUsername,
+            nama: registerNama,
+            password: registerPassword,
+            telp: registerTelp,
+            total_wallet: registerTotalWallet,
+            status: registerStatus,
+        }).then((res) => {
+            let data = res.data;
+            console.log(data);
+            setUpdateFailed("success");
+            // if (data.access_token != null && data.user != null) {
+            //     //login success
+            //     setToken(res.data.user, res.data.access_token);
+            //     document.body.style.overflow = "auto";
+            // } else {
+            //     setLoginFailed(true);
+            // }
+        });
+    };
 
     return (
         <div className="bg-gray-200 flex">
@@ -151,47 +151,24 @@ const DetailSiswa = () => {
                             <div className="w-40">Status</div>
                             <div className="w-full text-lg">
                                 <div>
-                                    {registerStatus == 1 ? (
-                                        <div>
-                                            <Radio
-                                                id="aktif"
-                                                name="status"
-                                                label="Aktif"
-                                                checked
-                                                onClick={(e) => {
-                                                    setRegisterStatus(1);
-                                                }}
-                                            />
-                                            <Radio
-                                                id="tidakaktif"
-                                                name="status"
-                                                label="Tidak Aktif"
-                                                onClick={(e) => {
-                                                    setRegisterStatus(0);
-                                                }}
-                                            />
-                                        </div>
-                                    ) : (
-                                        <div>
-                                            <Radio
-                                                id="aktif"
-                                                name="status"
-                                                label="Aktif"
-                                                onClick={(e) => {
-                                                    setRegisterStatus(1);
-                                                }}
-                                            />
-                                            <Radio
-                                                id="tidakaktif"
-                                                name="status"
-                                                label="Tidak Aktif"
-                                                checked
-                                                onClick={(e) => {
-                                                    setRegisterStatus(0);
-                                                }}
-                                            />
-                                        </div>
-                                    )}
+                                    <Radio
+                                        id="aktif"
+                                        name="status"
+                                        label="Aktif"
+                                        checked={registerStatus == 1}
+                                        onClick={(e) => {
+                                            setRegisterStatus(1);
+                                        }}
+                                    />
+                                    <Radio
+                                        id="tidakaktif"
+                                        name="status"
+                                        label="Tidak Aktif"
+                                        checked={registerStatus == 1}
+                                        onClick={(e) => {
+                                            setRegisterStatus(0);
+                                        }}
+                                    />
                                 </div>
                             </div>
                         </div>
