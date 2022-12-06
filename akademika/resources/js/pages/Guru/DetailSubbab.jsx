@@ -3,7 +3,7 @@ import React, { useState, useEffect } from "react";
 import GuruNav from "./Navbar";
 import Tabs from "./Tabs";
 import AuthUser from "../../components/AuthUser";
-import { Link } from "react-router-dom";
+import { Link,useParams } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
     faArrowAltCircleLeft,
@@ -12,26 +12,65 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 
 const DetailSubbab = () => {
+
     const [title, setTitle] = useState("proses");
-    const [course, setCourse] = useState(
-        "Pengembangan Website Front-End Dasar"
-    );
+    const [course, setCourse] = useState([]);
+    const [subbab,setSubbab] = useState([]);
     const [judul, setJudul] = useState("JavaScript DOM");
     const [deskripsi, setDeskripsi] = useState(
         "Lorem, ipsum dolor sit amet consectetur adipisicing elit. Quaerat rerum provident perspiciatis iure quas nam."
     );
     const [durasi, setDurasi] = useState(120);
-    const [listMateri, setListMateri] = useState([
-        {
-            bacaan: "Lorem ipsum dolor, sit amet consectetur adipisicing elit. Temporibus enim ipsa pariatur, accusantium eaque obcaecati consequuntur dignissimos minima dolor quos itaque dolores qui. Maxime assumenda, possimus ratione ad commodi mollitia libero eaque quod itaque accusamus sit in doloribus molestias beatae hic. Officia, quia. Aliquid minus aliquam quae earum illo vero!",
-            video: "google.com",
-        },
-        {
-            bacaan: "Lorem ipsum dolor, sit amet consectetur adipisicing elit. Temporibus enim ipsa pariatur, accusantium eaque obcaecati consequuntur dignissimos minima dolor quos itaque dolores qui. Maxime assumenda, possimus ratione ad commodi mollitia libero eaque quod itaque accusamus sit in doloribus molestias beatae hic. Officia, quia. Aliquid minus aliquam quae earum illo vero!",
-            video: "google.com",
-        },
-    ]);
+    const [listMateri, setListMateri] = useState([]);
+    const [listKuis, setListKuis] = useState([]);
+
     const { http, user } = AuthUser();
+    const {kursus_id,subbab_id} = useParams()
+
+    //fetch
+    const fetchKursus = () => {
+        http.post("/guru/kursus/get", {
+            guru_id:user.guru_id,
+            kursus_id: kursus_id,
+        }).then((res) => {
+            setCourse(res.data.kursus);
+        });
+    };
+
+    const fetchSubbab = () => {
+        http.post("/guru/kursus/getSubbab", {
+            subbab_id:subbab_id
+        }).then((res) => {
+            // console.log(res.data.subbab);
+            setSubbab(res.data.subbab);
+        });
+    };
+
+    const fetchMateri = () => {
+        http.post("/guru/kursus/getAllMateri", {
+            subbab_id:subbab_id
+        }).then((res) => {
+            // console.log(res.data.materi);
+            setListMateri(res.data.materi);
+        });
+    };
+
+
+    const fetchKuis = () => {
+        http.post("/guru/kursus/getAllKuis", {
+            subbab_id:subbab_id
+        }).then((res) => {
+            // console.log(res.data.materi);
+            setListMateri(res.data.materi);
+        });
+    };
+
+    useEffect(() => {
+        fetchKursus();
+        fetchSubbab();
+        fetchMateri();
+    }, []);
+
 
     const submitForm = () => {};
 
@@ -43,7 +82,7 @@ const DetailSubbab = () => {
             <div className="px-4 sm:px-16 md:px-24 py-6 w-full overflow-x-none bg-gray-100">
                 <div className="tabs text-xl text-custom-blue">
                     <Link
-                        to="/guru/kursus/detail"
+                        to={"/guru/kursus/"+kursus_id+"/detail"}
                         className="rounded-xl py-2"
                     >
                         <div className="float-left">
@@ -60,10 +99,10 @@ const DetailSubbab = () => {
             </div>
             <div className="content flex flex-col flex-wrap w-full px-24 pb-16">
                 <div className="text-3xl text-blue-900 font-semibold mb-4">
-                    {course}
+                    {course.nama}
                 </div>
                 <div className="text-2xl text-blue-900 font-semibold mb-6">
-                    Detail Subbab {judul}
+                    Detail Subbab {subbab.judul}
                 </div>
                 <div className="w-full h-auto bg-white rounded-lg p-4 flex flex-col">
                     <table>
@@ -74,7 +113,7 @@ const DetailSubbab = () => {
                                     type="text"
                                     className="w-full"
                                     name="judul"
-                                    value={judul}
+                                    value={subbab.judul}
                                     onChange={(e) => setJudul(e.target.value)}
                                 />
                             </td>
@@ -85,7 +124,7 @@ const DetailSubbab = () => {
                                 <Textarea
                                     className="w-full"
                                     name="desc"
-                                    value={deskripsi}
+                                    value={subbab.deskripsi}
                                     onChange={(e) =>
                                         setDeskripsi(e.target.value)
                                     }
@@ -99,7 +138,7 @@ const DetailSubbab = () => {
                                     type="text"
                                     className=""
                                     name="durasi"
-                                    value={durasi}
+                                    value={subbab.durasi}
                                     onChange={(e) => setDurasi(e.target.value)}
                                 />
                                 <span className="ml-3 my-auto">menit</span>
@@ -111,7 +150,7 @@ const DetailSubbab = () => {
                         name="btnTambah"
                         onClick={submitForm}
                     >
-                        Tambah
+                        Edit
                     </button>
                 </div>
                 <div className="text-2xl text-blue-900 font-semibold mt-10 mb-4">
@@ -140,7 +179,7 @@ const DetailSubbab = () => {
                                             {index + 1}
                                         </td>
                                         <td className="text-base truncate">
-                                            {n.bacaan.substring(0, 100)}...
+                                            {n.penjelasan.substring(0, 100)}...
                                         </td>
                                         <td className="text-center">
                                             <Link to="/guru/kursus/materi">
@@ -167,6 +206,8 @@ const DetailSubbab = () => {
                     Kuis
                 </div>
                 <div className="w-full my-3">
+                    
+
                     <div className="mb-3">Tidak ada kuis untuk materi ini</div>
                     <Link to="/guru/kursus/kuis">
                         <button className="btn btn-sm h-10 px-4 bg-blue-900 hover:bg-blue-700 text-white rounded capitalize font-normal">

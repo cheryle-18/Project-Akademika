@@ -24,25 +24,25 @@ Route::get('/reset-password/{token}', function () {
 });
 
 Route::prefix('admin')->group(function () {
-    Route::get('/{path}/{path2?}/{path3?}/{path4?}', function () {
+    Route::get('/{path}/{path2?}/{path3?}/{path4?}/{path5?}', function () {
         return view('admin');
     });
 });
 
 Route::prefix('guru')->group(function () {
-    Route::get('/{path}/{path2?}/{path3?}/{path4?}', function () {
+    Route::get('/{path}/{path2?}/{path3?}/{path4?}/{path5?}', function () {
         return view('guru');
     });
 });
 
 Route::prefix('kursus')->group(function () {
-    Route::get('/{path}/{path2?}/{path3?}', function () {
+    Route::get('/{path}/{path2?}/{path3?}/{path4?}', function () {
         return view('kursus');
     });
 });
 
 Route::prefix('siswa')->group(function () {
-    Route::get('/{path}/{path2?}/{path3?}', function () {
+    Route::get('/{path}/{path2?}/{path3?}/{path4?}', function () {
         return view('siswa');
     });
 });

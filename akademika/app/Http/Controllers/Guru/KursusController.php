@@ -30,6 +30,23 @@ class KursusController extends Controller
         ]);
     }
 
+    function getAllMateri(Request $request)
+    {
+        $materi = Materi::where('subbab_id',$request->subbab_id)->get();
+
+        return response()->json([
+            "materi" => $materi
+        ]);
+    }
+    function getAllKuis(Request $request)
+    {
+        $kuis = Kuis::where('subbab_id',$request->subbab_id)->get();
+
+        return response()->json([
+            "kuis" => $kuis
+        ]);
+    }
+
     function tambahPengumuman(Request $request)
     {
         $newPengumuman = $request->all();
@@ -37,13 +54,20 @@ class KursusController extends Controller
         Pengumuman::create($newPengumuman);
         return 'sukses tambah pengumuman';
     }
+
     function getPengumuman(Request $request)
     {
         $pengumuman = Kursus::find($request->kursus_id)->pengumuman;
         return response()->json([
             "pengumuman" => $pengumuman
         ]);
-
+    }
+    function getSubbab(Request $request)
+    {
+        $subbab = Subbab::find($request->subbab_id);
+        return response()->json([
+            "subbab" => $subbab
+        ]);
     }
 
     function getAllSubbab(Request $request)

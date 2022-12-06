@@ -17,7 +17,7 @@ const TambahKuis = () => {
     const {http,user} = AuthUser()
     const [title, setTitle] = useState("proses");
     const [course, setCourse] = useState("Pengembangan Website Front-End Dasar")
-    const [subbab, setSubbab] = useState(2)
+    const [subbab, setSubbab] = useState(20)
     const [ctrSoal, setCtrSoal] = useState(1)
     const id = useId()
     const [listSoal, setListSoal] = useState([
