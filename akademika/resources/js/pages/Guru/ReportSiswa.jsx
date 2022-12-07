@@ -74,6 +74,9 @@ const ReportSiswa = () => {
             link: link,
         }).then((res) => {
             fetchLaporan();
+            fetchKursus();
+            setDeskripsi("")
+            setLink("")
             console.log(res.data);
         });
     };
