@@ -10,6 +10,8 @@ const ReportSiswa = () => {
     const [listCourse, setListCourse] = useState([]);
     const [selectedCourse, setSelectedCourse] = useState(null);
     const [selectedSiswa, setSelectedSiswa] = useState(null);
+    const [deskripsi, setDeskripsi] = useState("");
+    const [link, setLink] = useState("");
     const [listSiswa, setListSiswa] = useState([]);
     const [listLaporan, setListLaporan] = useState([]);
 
@@ -19,6 +21,7 @@ const ReportSiswa = () => {
             type: "semua",
         }).then((res) => {
             setListCourse(res.data.kursus);
+            setSelectedCourse(res.data.kursus[0].kursus_id);
         });
     };
 
@@ -27,6 +30,7 @@ const ReportSiswa = () => {
             kursus_id: selectedCourse,
         }).then((res) => {
             setListSiswa(res.data.siswa);
+            setSelectedSiswa(res.data.siswa[0].siswa_id);
         });
     };
 
@@ -42,22 +46,36 @@ const ReportSiswa = () => {
     useEffect(() => {
         fetchKursus();
         fetchLaporan();
-        // setInterval(() => {
-        //     console.log("Kursus : " + selectedCourse);
-        //     console.log("Siswa : " + selectedSiswa);
-        // }, 1000);
     }, []);
 
     useEffect(() => {
         fetchSiswa();
+        console.log("kursus_id : " + selectedCourse);
     }, [selectedCourse]);
 
-    // useEffect(() => {
-    //     console.log(selectedSiswa);
-    // }, [selectedCourse]);
+    useEffect(() => {
+        console.log("siswa_id : " + selectedSiswa);
+
+        console.log(deskripsi);
+        console.log(link);
+    }, [selectedSiswa]);
 
     const changeKursusSelected = (e) => {
-        setSelectedCourse(e);
+        console.log(e.target.value);
+        setSelectedCourse(e.target.value);
+    };
+
+    const submitReportSiswa = () => {
+        // alert("poaejfoiaewjfi");
+        http.post("guru/kursus/reportSiswa", {
+            guru_id: user.guru_id,
+            siswa_id: selectedSiswa,
+            deskripsi: deskripsi,
+            link: link,
+        }).then((res) => {
+            fetchLaporan();
+            console.log(res.data);
+        });
     };
 
     const classBorder = "text-center border border-b-gray-600 border-x-0";
@@ -70,8 +88,8 @@ const ReportSiswa = () => {
             <td className="whitespace-pre-wrap text-start text-base">
                 {laporan.nama}
             </td>
-            <td className="whitespace-pre-wrap text-start text-base">
-                {laporan.pivot.deskripsi}
+            <td className="whitespace-pre-wrap text-start text-base max-w-xl break-all">
+                <p>{laporan.pivot.deskripsi}</p>
             </td>
             <td className="whitespace-pre-wrap text-start text-base">
                 {laporan.pivot.status == 1 && "Disetujui"}
@@ -97,7 +115,7 @@ const ReportSiswa = () => {
                         <div className="flex justify-start w-44">
                             Pilih Kursus
                         </div>
-                        <Select
+                        {/* <Select
                             className="w-full items-end"
                             name="kategori"
                             value={selectedCourse}
@@ -113,7 +131,29 @@ const ReportSiswa = () => {
                                     </Option>
                                 );
                             })}
-                        </Select>
+                        </Select> */}
+                        <select
+                            style={{
+                                padding: "10px 12px",
+                                paddingLeft: "8px",
+                                borderWidth: "1px",
+                            }}
+                            className="w-full bordered border-2 font-normal text-sm border-gray-400 rounded-lg focus:border-blue-600"
+                            onChange={changeKursusSelected}
+                            // value={selectedCourse}
+                            // onChange={handleChange}
+                        >
+                            {listCourse.map((n, index) => {
+                                return (
+                                    <option
+                                        value={n.kursus_id}
+                                        selected={n.kursus_id == selectedCourse}
+                                    >
+                                        {n.nama}
+                                    </option>
+                                );
+                            })}
+                        </select>
                     </div>
                     <div className="flex justify-start items-center mt-4">
                         <div className="flex justify-start w-44">
@@ -127,7 +167,7 @@ const ReportSiswa = () => {
                             onChange={(e) => setLoginPassword(e.target.value)}
                             required
                         /> */}
-                        <Select
+                        {/* <Select
                             className="w-full items-end"
                             name="kategori"
                             onChange={(e) => setSelectedSiswa(e)}
@@ -140,7 +180,32 @@ const ReportSiswa = () => {
                                     </Option>
                                 );
                             })}
-                        </Select>
+                        </Select> */}
+                        <select
+                            style={{
+                                padding: "10px 12px",
+                                paddingLeft: "8px",
+                                borderWidth: "1px",
+                            }}
+                            className="w-full bordered border-2 font-normal text-sm border-gray-400 rounded-lg focus:border-blue-600"
+                            onChange={(e) => {
+                                setSelectedSiswa(e.target.value);
+                                console.log(e.target.value);
+                            }}
+                            // value={selectedCourse}
+                            // onChange={handleChange}
+                        >
+                            {listSiswa.map((n, index) => {
+                                return (
+                                    <option
+                                        value={n.siswa_id}
+                                        selected={n.siswa_id == selectedSiswa}
+                                    >
+                                        {n.nama}
+                                    </option>
+                                );
+                            })}
+                        </select>
                     </div>
                     <div className="flex justify-start items-start mt-4">
                         <div className="flex justify-start w-44">Deskripsi</div>
@@ -149,7 +214,11 @@ const ReportSiswa = () => {
                             name="deskripsi"
                             label="Deskripsi"
                             className="textarea textarea-bordered w-full border-2 h-32 border-gray-500 rounded-md placeholder-gray-700"
-                            onChange={(e) => setLoginPassword(e.target.value)}
+                            onChange={(e) => {
+                                setDeskripsi(e.target.value);
+                                console.log(deskripsi);
+                            }}
+                            value={deskripsi}
                             required
                         />
                     </div>
@@ -162,7 +231,11 @@ const ReportSiswa = () => {
                             name="link"
                             label="Link"
                             className="input input-bordered w-full border-2 h-10 border-gray-500 rounded-md placeholder-gray-700"
-                            onChange={(e) => setLoginPassword(e.target.value)}
+                            onChange={(e) => {
+                                setLink(e.target.value);
+                                console.log(link);
+                            }}
+                            value={link}
                             required
                         />
                     </div>
@@ -174,6 +247,7 @@ const ReportSiswa = () => {
                         </div>
                     </div>
                     <button
+                        onClick={submitReportSiswa}
                         type="button"
                         className="mt-6 py-2 px-4 bg-custom-blue hover:bg-custom-light-blue hover:text-custom-blue text-white transition ease-in duration-200 text-center text-base font-normal shadow-md rounded-md w-full"
                     >

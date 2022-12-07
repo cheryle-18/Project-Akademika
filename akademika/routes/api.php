@@ -105,6 +105,8 @@ Route::group(['middleware'=>'api'],function ()
 
             Route::post('doEdit',[KursusController::class,'doEdit']);
 
+            Route::post('reportSiswa',[KursusController::class,'reportSiswa']);
+
             Route::prefix('subbab')->group(function () {
                 Route::post('tambah',[KursusController::class,'tambahSubbab']);
             });

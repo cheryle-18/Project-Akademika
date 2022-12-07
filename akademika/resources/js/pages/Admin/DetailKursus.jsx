@@ -133,25 +133,24 @@ const DetailKursus = (props) => {
                         <div className="flex justify-start items-center mt-4">
                             <div className="w-40">Guru</div>
                             <div className="w-full" style={{ height: "36px" }}>
-                                <select
-                                    placeholder="Guru"
-                                    style={{
-                                        padding: "10px 12px",
-                                        paddingLeft: "8px",
-                                    }}
-                                    className="w-full bordered border-2 font-normal text-sm border-gray-400 rounded-lg focus:border-blue-600"
-                                    onChange={handleChange}
-                                >
-                                    {listGuru.map((g, index) => (
-                                        <option
-                                            className="py-10"
-                                            value={g.guru_id}
-                                            selected={g.guru_id == guru.guru_id}
-                                        >
-                                            {g.nama}
-                                        </option>
-                                    ))}
-                                </select>
+                                    <select
+                                        placeholder="Guru"
+                                        style={{
+                                            padding: "10px 12px",
+                                            paddingLeft: "8px",
+                                        }}
+                                        className="w-full bordered border-2 font-normal text-sm border-gray-400 rounded-lg focus:border-blue-600"
+                                        onChange={handleChange}
+                                    >
+                                        {listGuru.map((g, index) => (
+                                            <option
+                                                value={g.guru_id}
+                                                selected={g.guru_id == guru.guru_id}
+                                            >
+                                                {g.nama}
+                                            </option>
+                                        ))}
+                                    </select>
                                 {/* <Select
                                     labelid="select-label"
                                     label="Guru"

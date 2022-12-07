@@ -451,4 +451,16 @@ class KursusController extends Controller
             "subbab" => $subbab,
         ]);
     }
+
+    function reportSiswa(Request $request)
+    {
+        $laporan = new SiswaLaporan();
+        $laporan->guru_id = $request->guru_id;
+        $laporan->siswa_id = $request->siswa_id;
+        $laporan->deskripsi = $request->deskripsi;
+        $laporan->status = 0;
+        $laporan->link_bukti_laporan = $request->link;
+        $laporan->save();
+        return "success";
+    }
 }
