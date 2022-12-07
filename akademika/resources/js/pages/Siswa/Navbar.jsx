@@ -23,7 +23,7 @@ const Nav = () => {
                         <Link to="/kursus/search">Halo, User</Link>
                     </div>
                     <div className="pt-1.5 text-white float-right mr-5 cursor-pointer">
-                        <Link to="/kursus/search">Kursus Saya</Link>
+                        <Link to="/siswa/kursus">Kursus Saya</Link>
                     </div>
                     <div className="pt-1.5 text-white float-right mr-5 cursor-pointer">
                         <Link to="/siswa/kursus/search">Cari Kursus</Link>
@@ -38,7 +38,7 @@ const Nav = () => {
                         <Link to="/kursus/search">Halo, User</Link>
                     </div>
                     <div className="pt-1.5 text-white float-right mr-5 cursor-pointer">
-                        <Link to="/kursus/search">Kursus Saya</Link>
+                        <Link to="/siswa/kursus">Kursus Saya</Link>
                     </div>
                     <div className="pt-1.5 text-white float-right mr-5 cursor-pointer">
                         <Link to="/siswa/kursus/search">Cari Kursus</Link>
