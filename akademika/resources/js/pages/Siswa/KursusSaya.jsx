@@ -2,15 +2,13 @@ import React, { useState, useEffect, Fragment } from "react";
 import CourseCard from "../Kursus/CourseCard";
 import SiswaNav from "./Navbar";
 import AuthUser from "../../components/AuthUser";
-import { useParams } from "react-router-dom";
 
 const KursusSaya = () => {
     const { http, user } = AuthUser();
-    const { id } = useParams();
     const [listCourse, setListCourse] = useState([]);
     const fetchKursus = () => {
         http.post("/siswa/kursus/get", {
-            siswa_id: id,
+            siswa_id: user.siswa_id,
         }).then((res) => {
             setListCourse(res.data.kursus);
         });

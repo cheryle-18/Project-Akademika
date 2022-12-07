@@ -35,12 +35,12 @@ function Icon({ id, open }) {
 
 const Silabus = (props) => {
     const { http, user } = AuthUser();
-    const { id } = useParams();
+    const { kursus_id } = useParams();
     const [course, setCourse] = useState([]);
 
     const fetchKursus = () => {
         http.post("/siswa/kursus/getDetail", {
-            kursus_id: id,
+            kursus_id: kursus_id,
         }).then((res) => {
             setCourse(res.data.kursus);
         });
@@ -66,13 +66,13 @@ const Silabus = (props) => {
 
     const onClickMateri = () => {
         setTitle("materi");
-        let path = "/siswa/kursus/" + id + "/detail";
+        let path = "/siswa/kursus/" + kursus_id + "/detail";
         history.push(path);
     };
 
     const onClickPengumuman = () => {
         setTitle("pengumuman");
-        let path = "/siswa/kursus/" + id + "/pengumuman";
+        let path = "/siswa/kursus/" + kursus_id + "/pengumuman";
         history.push(path);
     };
 
@@ -121,7 +121,7 @@ const Silabus = (props) => {
     const fetchDataChat = (isLast) => {
         http.post("/siswa/kursus/getPesan", {
             siswa_id: user.siswa_id,
-            kursus_id: 33,
+            kursus_id: kursus_id,
         }).then((res) => {
             setChat(res.data.pesan);
             if (isLast) {
@@ -133,7 +133,7 @@ const Silabus = (props) => {
     const sendMessage = () => {
         http.post("/siswa/kursus/kirimPesan", {
             siswa_id: user.siswa_id,
-            kursus_id: 33,
+            kursus_id: kursus_id,
             isi: chatContent,
         }).then((res) => {
             //refresh
