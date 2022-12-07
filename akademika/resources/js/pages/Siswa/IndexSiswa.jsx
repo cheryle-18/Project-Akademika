@@ -8,11 +8,14 @@ import NilaiKuis from "./NilaiKuis";
 import KursusSaya from "./KursusSaya";
 import SearchKursus from "../Kursus/SearchKursus"
 import ProfileSiswa from "./ProfileSiswa";
-
+import Home from "../Home";
 const IndexSiswa = () => {
     return (
         <Router>
             <Switch>
+            <Route exact path="/">
+                    <Home></Home>
+                </Route>
                 <Route exact path="/siswa/kursus/search">
                     <SearchKursus isSiswa={true}></SearchKursus>
                 </Route>
