@@ -221,10 +221,10 @@ const Silabus = (props) => {
                     <FontAwesomeIcon icon={faIcon.faMessage}></FontAwesomeIcon>
                 </div>
             )}
-            <div className="px-4 sm:px-16 md:px-24 drawer-side bg-custom-blue overflow-y-auto flex-none">
+            {/* <div className="px-4 sm:px-16 md:px-24 drawer-side bg-custom-blue flex-none"> */}
                 {props.isGuest == null && <SiswaNav></SiswaNav>}
                 {props.isGuest != null && <GuestNav></GuestNav>}
-            </div>
+            {/* </div> */}
             <div className="banner">
                 <div
                     className="static h-80 w-full z-0 px-4 sm:px-16 md:px-20 py-20 flex"

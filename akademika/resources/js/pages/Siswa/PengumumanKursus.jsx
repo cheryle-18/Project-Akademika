@@ -74,9 +74,9 @@ const PengumumanKursus = () => {
 
     return (
         <div className="relative bg-gray-100">
-            <div className="px-4 sm:px-16 md:px-24 drawer-side bg-custom-blue overflow-y-auto flex-none">
+            {/* <div className="px-4 sm:px-16 md:px-24 drawer-side bg-custom-blue overflow-y-auto flex-none"> */}
                 <SiswaNav />
-            </div>
+            {/* </div> */}
             <div className="banner">
                 <div
                 className="static h-80 w-full z-0 px-4 sm:px-16 md:px-24 py-20 flex"
