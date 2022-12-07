@@ -29,7 +29,9 @@ const DetailKursus = (props) => {
     const [durasi, setDurasi] = useState();
     const [harga, setHarga] = useState();
     const [status, setStatus] = useState();
-    const { id } = useParams();
+    const { kursus_id } = useParams();
+
+    const [listSubbab, setListSubbab] = useState([]);
 
     const fetchListGuru = () => {
         http.post("/admin/master/guru/list").then((res) => {
@@ -40,7 +42,7 @@ const DetailKursus = (props) => {
 
     const fetchDataGuru = () => {
         http.post("/admin/master/kursus/detail", {
-            kursus_id: id,
+            kursus_id: kursus_id,
         }).then((res) => {
             setNama(res.data.kursus.nama);
             setKategori(res.data.kursus.kategori);
@@ -51,9 +53,19 @@ const DetailKursus = (props) => {
             setGuru(res.data.guru);
         });
     };
+
+    const fetchSubbab = () => {
+        http.post("/admin/master/kursus/getAllSubbab", {
+            kursus_id: kursus_id,
+        }).then((res) => {
+            setListSubbab(res.data.subbab);
+        });
+    };
+
     useEffect(() => {
         // fetchDataGuru();
         fetchListGuru();
+        fetchSubbab();
     }, []);
 
     const handleChange = (e) => {
@@ -62,7 +74,7 @@ const DetailKursus = (props) => {
         // tempGuru.nama = e.target.value;
         tempGuru.guru_id = e.target.value;
         setGuru(tempGuru);
-        alert(guru.guru_id);
+        console.log(tempGuru.guru_id);
         // console.log(guru);
     };
 
@@ -71,48 +83,76 @@ const DetailKursus = (props) => {
         console.log(listGuru);
     }, [listGuru]);
 
-    // const submitUpdateForm = () => {
-    //     //api call
-    //     http.post("/admin/master/kursus/update", {
-    //         username: registerUsername,
-    //         nama: registerNama,
-    //         password: registerPassword,
-    //         telp: registerTelp,
-    //         total_wallet: registerTotalWallet,
-    //         status: registerStatus,
-    //     }).then((res) => {
-    //         let data = res.data;
-    //         console.log(data);
-    //         setUpdateFailed("success");
-    //         // if (data.access_token != null && data.user != null) {
-    //         //     //login success
-    //         //     setToken(res.data.user, res.data.access_token);
-    //         //     document.body.style.overflow = "auto";
-    //         // } else {
-    //         //     setLoginFailed(true);
-    //         // }
-    //     });
-    // };
+    const submitUpdateForm = () => {
+        //api call
+        http.post("/admin/master/kursus/update", {
+            kursus_id: kursus_id,
+            guru_id: guru.guru_id,
+            nama: nama,
+            kategori: kategori,
+            deskripsi: deskripsi,
+            durasi: durasi,
+            harga: harga,
+            status: status,
+        }).then((res) => {
+            let data = res.data;
+            console.log(data);
+            setUpdateFailed("success");
+            // if (data.access_token != null && data.user != null) {
+            //     //login success
+            //     setToken(res.data.user, res.data.access_token);
+            //     document.body.style.overflow = "auto";
+            // } else {
+            //     setLoginFailed(true);
+            // }
+        });
+    };
 
     return (
         <div className="bg-gray-200 flex">
             <Sidebar now="kursus detail">
                 <div className="text-2xl p-14 pb-2">
-                    {updateFailed != "success" && updateFailed != "awal" && (
-                        <Alert severity="error" className="bg-red-400 mb-6">
-                            Gagal Update!
-                        </Alert>
-                    )}
-                    {updateFailed == "success" && (
-                        <Alert severity="error" className="bg-green-400 mb-6">
-                            Berhasil Update!
-                        </Alert>
-                    )}
-                    <div className="bg-white overflow-y-auto h-77vh p-4 mb-6 rounded-md drop-shadow-lg overflow-x-auto text-black">
+                    <div className="bg-white overflow-y-auto h-77vh px-10 p-4 mb-6 rounded-md drop-shadow-lg overflow-x-auto text-black pb-20">
+                        {updateFailed != "success" &&
+                            updateFailed != "awal" && (
+                                <Alert
+                                    severity="error"
+                                    className="bg-red-400 mb-6"
+                                >
+                                    Gagal Update!
+                                </Alert>
+                            )}
+                        {updateFailed == "success" && (
+                            <Alert
+                                severity="error"
+                                className="bg-green-400 mb-6"
+                            >
+                                Berhasil Update!
+                            </Alert>
+                        )}
                         <div className="flex justify-start items-center mt-4">
                             <div className="w-40">Guru</div>
-                            <div className="w-full">
-                                <Select
+                            <div className="w-full" style={{ height: "36px" }}>
+                                <select
+                                    placeholder="Guru"
+                                    style={{
+                                        padding: "10px 12px",
+                                        paddingLeft: "8px",
+                                    }}
+                                    className="w-full bordered border-2 font-normal text-sm border-gray-400 rounded-lg focus:border-blue-600"
+                                    onChange={handleChange}
+                                >
+                                    {listGuru.map((g, index) => (
+                                        <option
+                                            className="py-10"
+                                            value={g.guru_id}
+                                            selected={g.guru_id == guru.guru_id}
+                                        >
+                                            {g.nama}
+                                        </option>
+                                    ))}
+                                </select>
+                                {/* <Select
                                     labelid="select-label"
                                     label="Guru"
                                     id="event-select"
@@ -134,9 +174,9 @@ const DetailKursus = (props) => {
                                             {g.nama}
                                         </Option>
                                     ))}
-                                    {/* <Option value={35}>fho23wfh</Option>
-                                    <Option value="123">234</Option> */}
-                                </Select>
+                                    <Option value={35}>fho23wfh</Option>
+                                    <Option value="123">234</Option>
+                                </Select> */}
                                 {/* <Input
                                     type="text"
                                     label="Nama"
@@ -178,7 +218,9 @@ const DetailKursus = (props) => {
                                     label="Kategori"
                                     className="input input-bordered w-full border-2 border-gray-500 rounded-md placeholder-gray-700 text-black"
                                     value={kategori}
-                                    onChange={(e) => setNama(e.target.value)}
+                                    onChange={(e) =>
+                                        setKategori(e.target.value)
+                                    }
                                 />
                             </div>
                         </div>
@@ -190,7 +232,9 @@ const DetailKursus = (props) => {
                                     label="Deskripsi"
                                     className="input input-bordered w-full border-2 border-gray-500 rounded-md placeholder-gray-700 text-black"
                                     value={deskripsi}
-                                    onChange={(e) => setNama(e.target.value)}
+                                    onChange={(e) =>
+                                        setDeskripsi(e.target.value)
+                                    }
                                 />
                             </div>
                         </div>
@@ -202,7 +246,7 @@ const DetailKursus = (props) => {
                                     label="Durasi"
                                     className="input input-bordered w-full border-2 border-gray-500 rounded-md placeholder-gray-700 text-black"
                                     value={durasi}
-                                    onChange={(e) => setNama(e.target.value)}
+                                    onChange={(e) => setDurasi(e.target.value)}
                                 />
                             </div>
                         </div>
@@ -214,13 +258,13 @@ const DetailKursus = (props) => {
                                     label="Harga"
                                     className="input input-bordered w-full border-2 border-gray-500 rounded-md placeholder-gray-700 text-black"
                                     value={harga}
-                                    onChange={(e) => setNama(e.target.value)}
+                                    onChange={(e) => setHarga(e.target.value)}
                                 />
                             </div>
                         </div>
                         <div className="flex justify-start items-center mt-4">
-                            <div className="w-40">Status</div>
-                            <div className="w-full text-lg">
+                            <div className="w-52">Status</div>
+                            <div className="w-96 text-lg">
                                 <div>
                                     <Radio
                                         id="aktif"
@@ -242,18 +286,75 @@ const DetailKursus = (props) => {
                                     />
                                 </div>
                             </div>
-                        </div>
-                        <div>
-                            <div className="float-right">
-                                <button
-                                    type="button"
-                                    // onClick={submitUpdateForm}
-                                    className="py-2 px-4  bg-custom-blue hover:bg-blue-900 text-white transition ease-in duration-200 text-center text-base font-normal shadow-md rounded-lg min-w-20"
-                                >
-                                    Simpan Perubahan
-                                </button>
+                            <div className="w-full">
+                                <div className="float-right">
+                                    <button
+                                        type="button"
+                                        onClick={submitUpdateForm}
+                                        className="py-2 px-4  bg-custom-blue hover:bg-blue-900 text-white transition ease-in duration-200 text-center text-base font-normal shadow-md rounded-lg min-w-20"
+                                    >
+                                        Simpan Perubahan
+                                    </button>
+                                </div>
                             </div>
                         </div>
+                        <div className="clear-both"></div>
+                        <div className="flex justify-start items-center mt-4">
+                            <div className="w-40">Subbab</div>
+                        </div>
+                        <table className="table table-compact w-full text-black">
+                            <thead>
+                                <tr>
+                                    <th className=" bg-white text-center text-base">
+                                        NO
+                                    </th>
+                                    <th className=" bg-white text-center text-base">
+                                        JUDUL
+                                    </th>
+                                    <th className=" bg-white text-center text-base">
+                                        DURASI
+                                    </th>
+                                    <th className=" bg-white text-center text-base">
+                                        ACTION
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {listSubbab.map((n, index) => {
+                                    return (
+                                        <tr className="border border-b-gray-600 border-x-0">
+                                            <td className="text-center text-base">
+                                                {index + 1}
+                                            </td>
+                                            <td className="text-base">
+                                                {n.judul}
+                                            </td>
+                                            <td className="text-center text-base">
+                                                {n.durasi} menit
+                                            </td>
+                                            <td className="text-center">
+                                                <Link
+                                                    to={
+                                                        "/guru/kursus/" +
+                                                        kursus_id +
+                                                        "/subbab/" +
+                                                        n.subbab_id +
+                                                        "/detail"
+                                                    }
+                                                >
+                                                    <button className="btn btn-sm capitalize bg-blue-900 text-white rounded mr-3 font-normal">
+                                                        Detail
+                                                    </button>
+                                                </Link>
+                                                <button className="btn btn-sm capitalize bg-blue-900 text-white rounded font-normal">
+                                                    Hapus
+                                                </button>
+                                            </td>
+                                        </tr>
+                                    );
+                                })}
+                            </tbody>
+                        </table>
                     </div>
                 </div>
             </Sidebar>

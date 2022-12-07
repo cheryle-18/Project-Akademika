@@ -26,9 +26,9 @@ const GuruAdmin = () => {
             <td className="text-base">{guru.guru_id}</td>
             <td className="text-base">{guru.nama}</td>
             <td className="text-base">{guru.email}</td>
-            <td>{guru.status == 1 ? "Aktif" : "Banned"}</td>
+            <td className={guru.status == 1 ? "text-green-700" : "text-red-700"}>{guru.status == 1 ? "Aktif" : "Banned"}</td>
             <td className="text-base">
-                <Link to="/admin/master/guru/detail">
+                <Link to={`/admin/master/guru/detail/${guru.guru_id}`}>
                     <button
                         type="button"
                         className="py-2 px-4  bg-custom-blue hover:bg-blue-900 text-white transition ease-in duration-200 text-center text-base font-normal shadow-md rounded-lg w-20"

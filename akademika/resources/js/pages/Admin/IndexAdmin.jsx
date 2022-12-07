@@ -23,19 +23,19 @@ const IndexAdmin = () => {
                 <Route exact path="/admin/master/guru">
                     <GuruAdmin></GuruAdmin>
                 </Route>
-                <Route exact path="/admin/master/guru/detail">
+                <Route exact path="/admin/master/guru/detail/:id">
                     <DetailGuru></DetailGuru>
                 </Route>
                 <Route exact path="/admin/master/siswa">
                     <SiswaAdmin></SiswaAdmin>
                 </Route>
-                <Route exact path="/admin/master/siswa/detail">
+                <Route exact path="/admin/master/siswa/detail/:id">
                     <DetailSiswa></DetailSiswa>
                 </Route>
                 <Route exact path="/admin/master/kursus">
                     <KursusAdmin></KursusAdmin>
                 </Route>
-                <Route exact path="/admin/master/kursus/detail/:id">
+                <Route exact path="/admin/master/kursus/detail/:kursus_id">
                     <DetailKursus></DetailKursus>
                 </Route>
                 <Route exact path="/admin/master/laporan">

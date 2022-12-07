@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Models\Guru;
 use App\Models\Kursus;
 use App\Models\Siswa;
+use App\Models\Subbab;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
@@ -117,6 +118,28 @@ class AdminController extends Controller
         $listGuru = Guru::all();
         return response()->json([
             "listGuru" => $listGuru,
+        ]);
+    }
+
+    function updateKursus(Request $request)
+    {
+        $kursus = Kursus::find($request->kursus_id);
+        $kursus->guru_id = $request->guru_id;
+        $kursus->nama = $request->nama;
+        $kursus->kategori = $request->kategori;
+        $kursus->deskripsi = $request->deskripsi;
+        $kursus->durasi = $request->durasi;
+        $kursus->harga = $request->harga;
+        $kursus->status = $request->status;
+        $kursus->save();
+        return "success";
+    }
+
+    function getAllSubbab(Request $request)
+    {
+        $subbab = Subbab::where('kursus_id',$request->kursus_id)->get();
+        return response()->json([
+            "subbab" => $subbab
         ]);
     }
 }

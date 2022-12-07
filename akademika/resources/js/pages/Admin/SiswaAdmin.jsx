@@ -49,7 +49,7 @@ const SiswaAdmin = () => {
                 </button>
             </td>
             <td>
-                <Link to="/admin/master/siswa/detail">
+                <Link to={`/admin/master/siswa/detail/${siswa.siswa_id}`}>
                     <button
                         type="button"
                         className="py-2 px-4  bg-custom-blue hover:bg-blue-900 text-white w-20 transition ease-in duration-200 text-center text-base font-normal shadow-md rounded-lg h-10"

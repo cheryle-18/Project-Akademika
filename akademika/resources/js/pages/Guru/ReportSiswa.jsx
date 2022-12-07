@@ -6,34 +6,33 @@ import { Input, Option, Select, Textarea } from "@material-tailwind/react";
 import AuthUser from "../../components/AuthUser";
 
 const ReportSiswa = () => {
-    const { http, user } = AuthUser()
-    const [listCourse, setListCourse] = useState([])
-    const [selectedCourse,setSelectedCourse] = useState(null)
-    const [selectedSiswa,setSelectedSiswa] = useState(null)
+    const { http, user } = AuthUser();
+    const [listCourse, setListCourse] = useState([]);
+    const [selectedCourse, setSelectedCourse] = useState(null);
+    const [selectedSiswa, setSelectedSiswa] = useState(null);
     const [listSiswa, setListSiswa] = useState([]);
     const [listLaporan, setListLaporan] = useState([]);
 
     const fetchKursus = () => {
         http.post("/guru/kursus/getAllKursus", {
             guru_id: user.guru_id,
-            type:'semua'
+            type: "semua",
         }).then((res) => {
             setListCourse(res.data.kursus);
         });
     };
 
-
     const fetchSiswa = () => {
         http.post("/guru/kursus/getSiswa", {
             kursus_id: selectedCourse,
         }).then((res) => {
-            setListSiswa(res.data.siswa)
+            setListSiswa(res.data.siswa);
         });
     };
 
     const fetchLaporan = () => {
         http.post("/guru/kursus/getAllLaporan", {
-            guru_id:user.guru_id
+            guru_id: user.guru_id,
         }).then((res) => {
             setListLaporan(res.data.laporan);
             // console.log(res.data.laporan)
@@ -43,24 +42,37 @@ const ReportSiswa = () => {
     useEffect(() => {
         fetchKursus();
         fetchLaporan();
+        // setInterval(() => {
+        //     console.log("Kursus : " + selectedCourse);
+        //     console.log("Siswa : " + selectedSiswa);
+        // }, 1000);
     }, []);
 
     useEffect(() => {
         fetchSiswa();
     }, [selectedCourse]);
 
-    const changeKursusSelected = (e) => {
-        setSelectedCourse(e)
-    }
+    // useEffect(() => {
+    //     console.log(selectedSiswa);
+    // }, [selectedCourse]);
 
+    const changeKursusSelected = (e) => {
+        setSelectedCourse(e);
+    };
 
     const classBorder = "text-center border border-b-gray-600 border-x-0";
 
-    const cetakLaporan= listLaporan.map((laporan, index) => (
+    const cetakLaporan = listLaporan.map((laporan, index) => (
         <tr>
-            <td className="whitespace-pre-wrap text-center text-base">{index + 1}</td>
-            <td className="whitespace-pre-wrap text-start text-base">{laporan.nama}</td>
-            <td className="whitespace-pre-wrap text-start text-base">{laporan.pivot.deskripsi}</td>
+            <td className="whitespace-pre-wrap text-center text-base">
+                {index + 1}
+            </td>
+            <td className="whitespace-pre-wrap text-start text-base">
+                {laporan.nama}
+            </td>
+            <td className="whitespace-pre-wrap text-start text-base">
+                {laporan.pivot.deskripsi}
+            </td>
             <td className="whitespace-pre-wrap text-start text-base">
                 {laporan.pivot.status == 1 && "Disetujui"}
                 {laporan.pivot.status == 0 && "Diproses"}
@@ -68,12 +80,10 @@ const ReportSiswa = () => {
         </tr>
     ));
 
-
-
     return (
         <div className="min-h-screen w-full overflow-x-hidden flex flex-col bg-gray-100">
             {/* <div className="px-4 sm:px-16 md:px-24 drawer-side bg-custom-blue overflow-y-auto flex-none"> */}
-                <GuruNav />
+            <GuruNav />
             {/* </div> */}
             <div className="static w-full z-0 px-4 sm:px-16 md:px-24">
                 <div className="text-3xl font-semibold mt-10">
@@ -83,22 +93,28 @@ const ReportSiswa = () => {
 
             <div className="px-4 sm:px-16 md:px-24 py-6">
                 <div className="bg-white overflow-y-auto min-h-8 p-2 md:p-6 rounded-xl drop-shadow-lg">
-                <div className="flex justify-start items-center">
-
-                <div className="flex justify-start w-44">
+                    <div className="flex justify-start items-center">
+                        <div className="flex justify-start w-44">
                             Pilih Kursus
                         </div>
-                        <Select className="w-full items-end" name="kategori" value={selectedCourse} onChange={changeKursusSelected}>
-
-                         {listCourse.map((n, index) => {
-                            return (
-                                <Option value={n.kursus_id} key={n.kursus_id}>
-                                {n.nama}
-                                </Option>
-                            );
-                         })}
+                        <Select
+                            className="w-full items-end"
+                            name="kategori"
+                            value={selectedCourse}
+                            onChange={changeKursusSelected}
+                        >
+                            {listCourse.map((n, index) => {
+                                return (
+                                    <Option
+                                        value={n.kursus_id}
+                                        key={n.kursus_id}
+                                    >
+                                        {n.nama}
+                                    </Option>
+                                );
+                            })}
                         </Select>
-                </div>
+                    </div>
                     <div className="flex justify-start items-center mt-4">
                         <div className="flex justify-start w-44">
                             Pilih Siswa
@@ -111,16 +127,19 @@ const ReportSiswa = () => {
                             onChange={(e) => setLoginPassword(e.target.value)}
                             required
                         /> */}
-                         <Select className="w-full items-end" name="kategori" onChange={(e)=>setSelectedSiswa(e)} value="1">
-
-                         {listSiswa.map((n, index) => {
-                            return (
-                                <Option value={n.siswa_id} key={n.siswa_id}>
-                                {n.nama}
-                                </Option>
-                            );
-                         })}
-
+                        <Select
+                            className="w-full items-end"
+                            name="kategori"
+                            onChange={(e) => setSelectedSiswa(e)}
+                            value="1"
+                        >
+                            {listSiswa.map((n, index) => {
+                                return (
+                                    <Option value={n.siswa_id} key={n.siswa_id}>
+                                        {n.nama}
+                                    </Option>
+                                );
+                            })}
                         </Select>
                     </div>
                     <div className="flex justify-start items-start mt-4">
@@ -173,10 +192,30 @@ const ReportSiswa = () => {
                     <table className="table table-compact w-full text-black overflow-y-auto table-auto bg-white">
                         <thead>
                             <tr>
-                                <th style={{width:"3%"}} className="bg-white text-left text-base">NO</th>
-                                <th style={{width:"27%"}} className="bg-white text-left text-base">NAMA SISWA</th>
-                                <th style={{width:"62%"}} className="bg-white text-left text-base">DESKRIPSI</th>
-                                <th style={{width:"8%"}} className="bg-white text-left text-base">STATUS</th>
+                                <th
+                                    style={{ width: "3%" }}
+                                    className="bg-white text-left text-base"
+                                >
+                                    NO
+                                </th>
+                                <th
+                                    style={{ width: "27%" }}
+                                    className="bg-white text-left text-base"
+                                >
+                                    NAMA SISWA
+                                </th>
+                                <th
+                                    style={{ width: "62%" }}
+                                    className="bg-white text-left text-base"
+                                >
+                                    DESKRIPSI
+                                </th>
+                                <th
+                                    style={{ width: "8%" }}
+                                    className="bg-white text-left text-base"
+                                >
+                                    STATUS
+                                </th>
                             </tr>
                         </thead>
                         <tbody>{cetakLaporan}</tbody>

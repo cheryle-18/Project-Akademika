@@ -72,6 +72,8 @@ Route::group(['middleware'=>'api'],function ()
                 Route::post('setujui',[AdminController::class,'setujuiKursus']);
                 Route::post('batal',[AdminController::class,'batalKursus']);
                 Route::post('detail',[AdminController::class,'getDetailKursus']);
+                Route::post('update',[AdminController::class,'updateKursus']);
+                Route::post('getAllSubbab',[AdminController::class,'getAllSubbab']);
             });
         });
     });

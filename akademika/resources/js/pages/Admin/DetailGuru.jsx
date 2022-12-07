@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Button } from "@material-tailwind/react";
-import { useHistory } from "react-router-dom";
+import { useHistory, useParams } from "react-router-dom";
 import { BrowserRouter as Router, Route } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCoffee } from "@fortawesome/free-solid-svg-icons";
@@ -11,6 +11,7 @@ import { Link } from "react-router-dom";
 const DetailGuru = () => {
     let history = useHistory();
     const { http } = AuthUser();
+    const { id } = useParams();
     const [guru, setGuru] = useState([]);
     const [updateFailed, setUpdateFailed] = useState("awal");
     const [registerNama, setRegisterNama] = useState();
@@ -24,7 +25,7 @@ const DetailGuru = () => {
 
     const fetchDataGuru = () => {
         http.post("/admin/master/guru/detail", {
-            guru_id: 1,
+            guru_id: id,
         }).then((res) => {
             setGuru(res.data.guru);
             setRegisterNama(res.data.guru.nama);
@@ -67,17 +68,24 @@ const DetailGuru = () => {
         <div className="bg-gray-200 flex">
             <Sidebar now="guru detail">
                 <div className="text-2xl p-14 pb-2">
-                    {updateFailed != "success" && updateFailed != "awal" && (
-                        <Alert severity="error" className="bg-red-400 mb-6">
-                            Gagal Update!
-                        </Alert>
-                    )}
-                    {updateFailed == "success" && (
-                        <Alert severity="error" className="bg-green-400 mb-6">
-                            Berhasil Update!
-                        </Alert>
-                    )}
-                    <div className="bg-white overflow-y-auto h-77vh p-4 mb-6 rounded-md drop-shadow-lg overflow-x-auto text-black">
+                    <div className="bg-white overflow-y-auto h-77vh px-10 p-4 mb-6 rounded-md drop-shadow-lg overflow-x-auto text-black">
+                        {updateFailed != "success" &&
+                            updateFailed != "awal" && (
+                                <Alert
+                                    severity="error"
+                                    className="bg-red-400 mb-6"
+                                >
+                                    Gagal Update!
+                                </Alert>
+                            )}
+                        {updateFailed == "success" && (
+                            <Alert
+                                severity="error"
+                                className="bg-green-400 mb-6"
+                            >
+                                Berhasil Update!
+                            </Alert>
+                        )}
                         <div className="flex justify-start items-center mt-4">
                             <div className="w-40">Username</div>
                             <div className="w-full">

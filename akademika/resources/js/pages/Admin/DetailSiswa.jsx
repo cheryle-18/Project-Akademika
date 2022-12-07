@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Button } from "@material-tailwind/react";
-import { useHistory } from "react-router-dom";
+import { useHistory, useParams } from "react-router-dom";
 import { BrowserRouter as Router, Route } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCoffee } from "@fortawesome/free-solid-svg-icons";
@@ -10,6 +10,7 @@ import { Alert, Input, Radio } from "@material-tailwind/react";
 const DetailSiswa = () => {
     let history = useHistory();
     const { http } = AuthUser();
+    const { id } = useParams();
     const [siswa, setSiswa] = useState([]);
     const [updateFailed, setUpdateFailed] = useState("awal");
     const [registerNama, setRegisterNama] = useState();
@@ -23,7 +24,7 @@ const DetailSiswa = () => {
 
     const fetchDataSiswa = () => {
         http.post("/admin/master/siswa/detail", {
-            siswa_id: 1,
+            siswa_id: id,
         }).then((res) => {
             setSiswa(res.data.siswa);
             setRegisterNama(res.data.siswa.nama);
@@ -76,7 +77,7 @@ const DetailSiswa = () => {
                             Berhasil Update!
                         </Alert>
                     )}
-                    <div className="bg-white overflow-y-auto h-77vh p-4 mb-6 rounded-md drop-shadow-lg overflow-x-auto text-black">
+                    <div className="bg-white overflow-y-auto h-77vh px-10 p-4 mb-6 rounded-md drop-shadow-lg overflow-x-auto text-black">
                         <div className="flex justify-start items-center mt-4">
                             <div className="w-40">Username</div>
                             <div className="w-full">
