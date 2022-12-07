@@ -13,7 +13,7 @@ const PengumumanKursus = () => {
     const classOther = "float-left hover:bg-gray-200 hover:text-custom-blue py-1 px-4 rounded-sm mx-1 cursor-pointer";
 
     const {http,user} = AuthUser()
-    const { id } = useParams();
+    const { kursus_id } = useParams();
     let history = useHistory()
     const [title, setTitle] = useState("pengumuman");
     const [course, setCourse] = useState([]);
@@ -21,26 +21,26 @@ const PengumumanKursus = () => {
 
     const onClickMateri = () => {
         setTitle("materi");
-        let path = "/siswa/kursus/"+id+"/detail"
+        let path = "/siswa/kursus/"+kursus_id+"/detail"
         history.push(path)
     };
 
     const onClickPengumuman = () => {
         setTitle("pengumuman");
-        let  path = "/siswa/kursus/"+id+"/pengumuman"
+        let  path = "/siswa/kursus/"+kursus_id+"/pengumuman"
         history.push(path)
     };
 
     const fetchKursus = () => {
         http.post("/siswa/kursus/getDetail", {
-            kursus_id: id,
+            kursus_id: kursus_id,
         }).then((res) => {
             setCourse(res.data.kursus);
         });
     };
     const fetchPengumuman = () => {
         http.post("/siswa/kursus/getPengumuman", {
-            kursus_id: id,
+            kursus_id: kursus_id,
         }).then((res) => {
             setMsg(res.data.pengumuman);
         });

@@ -4,9 +4,11 @@ import CardPic from "../../../images/card_pic.png";
 import { round } from "lodash";
 import {toRupiah} from "../../components/CurrencyUtils";
 import { Link } from "react-router-dom";
+import AuthUser from "../../components/AuthUser";
 
 const CourseCard = (props) => {
     console.log(props)
+    const {http,user} = AuthUser()
     return(
         <div className="flex flex-col md:flex-row md:max-w-xl rounded-lg bg-white shadow-lg w-1/2 h-auto">
             <img
@@ -37,8 +39,8 @@ const CourseCard = (props) => {
                     </span>
                     <span>
                         <Link to={
-                            (props.status == "diterbitkan" && "/guru/kursus/"+props.course.kursus_id+"/home") ||
-                            (props.status != "diterbitkan" && "/guru/kursus/"+props.course.kursus_id+"/detail")
+                            ((props.status == "diterbitkan" && user.role_text == "guru") && "/guru/kursus/"+props.course.kursus_id+"/home") ||
+                            ((props.status != "diterbitkan" && user.role_text == "guru") && "/guru/kursus/"+props.course.kursus_id+"/detail") || ((user.role_text == "siswa") && "/siswa/kursus/"+props.course.kursus_id+"/detail")
                             } className="ml-auto">
                             <button
                                 type="button"

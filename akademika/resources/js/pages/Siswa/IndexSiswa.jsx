@@ -15,13 +15,13 @@ const IndexSiswa = () => {
                 <Route exact path="/siswa/kursus/search">
                     <SearchKursus isSiswa={true}></SearchKursus>
                 </Route>
-                <Route exact path="/siswa/kursus/:id/pengumuman">
+                <Route exact path="/siswa/kursus/:kursus_id/pengumuman">
                     <PengumumanKursus></PengumumanKursus>
                 </Route>
-                <Route exact path="/siswa/kursus/:id/detail">
+                <Route exact path="/siswa/kursus/:kursus_id/detail">
                     <Silabus></Silabus>
                 </Route>
-                <Route exact path="/siswa/:id/kursus">
+                <Route exact path="/siswa/kursus">
                     <KursusSaya></KursusSaya>
                 </Route>
                 <Route exact path="/siswa/kursus/materi/:id">

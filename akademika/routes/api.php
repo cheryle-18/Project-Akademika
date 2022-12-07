@@ -7,6 +7,7 @@ use App\Http\Controllers\Auth\ForgotPasswordController;
 use App\Http\Controllers\Auth\ResetPasswordController;
 use App\Http\Controllers\Auth\VerificationController;
 use App\Http\Controllers\Guru\KursusController;
+use App\Http\Controllers\Guru\MainController;
 use App\Http\Controllers\Siswa\KursusController as SiswaKursusController;
 
 use App\Http\Controllers\UtilityController;
@@ -79,6 +80,8 @@ Route::group(['middleware'=>'api'],function ()
     });
 
     Route::prefix('guru')->group(function () {
+        Route::post('tarikPenghasilan',[MainController::class,'tarikPenghasilan']);
+
         Route::prefix('kursus')->group(function ()
         {
             Route::post('get',[KursusController::class,'getKursus']);
@@ -104,8 +107,6 @@ Route::group(['middleware'=>'api'],function ()
             Route::post('getAllLaporan',[KursusController::class,'getAllLaporan']);
 
             Route::post('doEdit',[KursusController::class,'doEdit']);
-
-            Route::post('reportSiswa',[KursusController::class,'reportSiswa']);
 
             Route::prefix('subbab')->group(function () {
                 Route::post('tambah',[KursusController::class,'tambahSubbab']);
