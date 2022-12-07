@@ -7,6 +7,7 @@ import Materi from "./Materi";
 import NilaiKuis from "./NilaiKuis";
 import KursusSaya from "./KursusSaya";
 import SearchKursus from "../Kursus/SearchKursus"
+import ProfileSiswa from "./ProfileSiswa";
 
 const IndexSiswa = () => {
     return (
@@ -32,6 +33,9 @@ const IndexSiswa = () => {
                 </Route>
                 <Route exact path="/siswa/kursus/kuis/nilai">
                     <NilaiKuis></NilaiKuis>
+                </Route>
+                <Route exact path="/siswa/profile">
+                    <ProfileSiswa></ProfileSiswa>
                 </Route>
             </Switch>
         </Router>

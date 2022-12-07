@@ -19,8 +19,25 @@ const Nav = () => {
                             icon={faIcon.faUserCircle}
                         ></FontAwesomeIcon>
                     </div>
-                    <div className="pt-1.5 text-white float-right mr-2 cursor-pointer">
-                        <Link to="/kursus/search">Halo, User</Link>
+                    <div className="pt-1.5 text-white float-right cursor-pointer mr-2 relative">
+                        <div class="dropdown dropdown-hover">
+                            Halo, Siswa
+                            <ul
+                                tabindex="0"
+                                class="dropdown-content menu p-2 shadow bg-base-100 w-32 text-black rounded-lg"
+                            >
+                                <Link to="/siswa/profile">
+                                    <div className="w-full h-10 flex justify-start items-center hover:bg-gray-200 rounded-lg pl-4">
+                                        Akun Saya
+                                    </div>
+                                </Link>
+                                <Link to="/">
+                                    <div className="w-full h-10 flex justify-start items-center hover:bg-gray-200 rounded-lg pl-4">
+                                        Logout
+                                    </div>
+                                </Link>
+                            </ul>
+                        </div>
                     </div>
                     <div className="pt-1.5 text-white float-right mr-5 cursor-pointer">
                         <Link to="/siswa/kursus">Kursus Saya</Link>

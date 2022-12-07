@@ -95,9 +95,26 @@ class AdminController extends Controller
         return "success";
     }
 
+    function updateSiswa(Request $request)
+    {
+        // $guru = Guru::find($request->kursus_id);
+        // dd($request);
+        Siswa::where('username','=', $request->username)->update(
+            [
+                "username" => $request->username,
+                "nama" => $request->nama,
+                "password" => $request->password,
+                "telp" => $request->telp,
+                "poin" => $request->poin,
+                "status" => $request->status
+            ]);
+        // $kursus->status = 0;
+        return "success";
+    }
+
     function getDetailSiswa(Request $request)
     {
-        $siswa = Guru::find($request->siswa_id);
+        $siswa = Siswa::find($request->siswa_id);
         return response()->json([
             "siswa" => $siswa,
         ]);
