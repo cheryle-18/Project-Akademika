@@ -59,6 +59,16 @@ const ProfileGuru = () => {
         });
     };
 
+    const tarikPenghasilan = () => {
+        http.post("/guru/tarikPenghasilan", {
+            guru_id:user.guru_id
+        }).then((res) => {
+            let data = res.data;
+            console.log('sukses')
+            fetchDataGuru();
+        });
+    }
+
     return (
         <div className="bg-gray-200 flex">
             <div
@@ -184,7 +194,7 @@ const ProfileGuru = () => {
                         <div className="float-right mt-4">
                             <button
                                 type="button"
-                                onClick={submitUpdateForm}
+                                onClick={tarikPenghasilan}
                                 className="py-2 px-4  bg-custom-blue hover:bg-blue-900 text-white transition ease-in duration-200 text-center text-base font-normal shadow-md rounded-lg min-w-20"
                             >
                                 Tarik Penghasilan

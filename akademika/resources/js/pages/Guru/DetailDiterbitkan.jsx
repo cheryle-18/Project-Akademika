@@ -61,7 +61,7 @@ const DetailDiterbitkan = () => {
     //to fetch all available chats
     const fetchDataSiswa = () => {
         http.post("/guru/kursus/getSiswa", {
-            kursus_id: 33,
+            kursus_id: kursus_id,
         }).then((res) => {
             setSiswa(res.data.siswa);
         });
@@ -98,9 +98,6 @@ const DetailDiterbitkan = () => {
         console.log(subbab);
     }, [subbab]);
 
-    // useEffect(() => {
-    //     console.log(listSubbab);
-    // }, [listSubbab]);
 
     const last = () => {
         document.getElementById("last").click();
