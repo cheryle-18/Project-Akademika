@@ -7,7 +7,7 @@ import {
 } from "@material-tailwind/react";
 import React, { useState, useEffect, Fragment } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { Link, useParams } from "react-router-dom";
+import { Link, useParams,useHistory } from "react-router-dom";
 import GuruNav from "./Navbar";
 import TabsKursus from "./TabsKursus";
 import BannerKursus from "./BannerKursus";
@@ -33,6 +33,8 @@ const DetailKursus = () => {
 
 
     const [listSubbab, setListSubbab] = useState([]);
+
+    let history = useHistory()
 
     const fetchKursus = () => {
         http.post("/guru/kursus/get", {
@@ -69,6 +71,14 @@ const DetailKursus = () => {
         }).then((res) => {
             console.log(res.data)
             fetchKursus()
+    })}
+
+    const submitDelete = () => {
+        http.post("/guru/kursus/doDelete", {
+            kursus_id:kursus_id,
+        }).then((res) => {
+            console.log(res.data)
+            history.push('/guru/kursus/diterbitkan')
     })}
 
     const fetchMateri = (subbab_id) => {
@@ -120,7 +130,7 @@ const DetailKursus = () => {
                     <span className="text-2xl text-blue-900 font-semibold ">
                         {course.nama}
                     </span>
-                    <button className="btn btn-sm h-10 bg-blue-900 hover:bg-blue-700 text-white rounded ml-auto mr-3 capitalize font-normal">
+                    <button className="btn btn-sm h-10 bg-blue-900 hover:bg-blue-700 text-white rounded ml-auto mr-3 capitalize font-normal" onClick={submitDelete}>
                         Hapus Kursus
                     </button>
                     <button className="btn btn-sm h-10 bg-blue-900 hover:bg-blue-700 text-white rounded capitalize font-normal">

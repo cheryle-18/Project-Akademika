@@ -201,6 +201,13 @@ class KursusController extends Controller
         return 'success edit';
     }
 
+    function doDelete(Request $request)
+    {
+        # code...
+        Kursus::where('kursus_id',$request->kursus_id)->delete();
+        return 'success delete';
+    }
+
     function kirimPesan(Request $request)
     {
         //attach
