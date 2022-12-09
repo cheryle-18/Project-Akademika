@@ -101,8 +101,8 @@ const SearchKursus = (props) => {
                                     value="" onChange={(e)=>setFilterModeHarga(e)}
                                 >
                                     <Option value="">Semua</Option>
-                                    <Option value="asc">Tertinggi</Option>
-                                    <Option value="desc">Terendah</Option>
+                                    <Option value="desc">Tertinggi</Option>
+                                    <Option value="asc">Terendah</Option>
                                 </Select>
                             </div>
                             <div className="w-1/6">
