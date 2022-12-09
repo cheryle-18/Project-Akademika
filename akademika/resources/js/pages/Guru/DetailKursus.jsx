@@ -76,16 +76,18 @@ const DetailKursus = () => {
         http.post("/guru/kursus/doDelete", {
             kursus_id: kursus_id,
         }).then((res) => {
-            console.log(res.data)
-            history.push('/guru/kursus/diterbitkan')
-    })}
+            console.log(res.data);
+            history.push("/guru/kursus/diterbitkan");
+        });
+    };
     const submitAjukan = () => {
         http.post("/guru/kursus/doAjukan", {
-            kursus_id:kursus_id,
+            kursus_id: kursus_id,
         }).then((res) => {
-            console.log(res.data)
-            history.push('/guru/kursus/'+kursus_id+'/detail')
-    })}
+            console.log(res.data);
+            history.push("/guru/kursus/" + kursus_id + "/detail");
+        });
+    };
 
     const fetchMateri = (subbab_id) => {
         http.post("/guru/kursus/getAllMateri", {
@@ -122,6 +124,27 @@ const DetailKursus = () => {
             <div className="clear-both"></div>
         </div>
     );
+    const cetakAjukanKursus = (
+        <div>
+            <h3 className="text-3xl font-bold text-custom-blue">
+                Ajukan Kursus
+            </h3>
+
+            <hr className="w-full" />
+            <label htmlFor="konfirmasiAjukan">
+                <div className="py-2 px-4 m-2 mt-4 mb-0 bg-red-600 text-white text-center rounded-md cursor-pointer float-right">
+                    Batal
+                </div>
+            </label>
+            <div
+                onClick={submitAjukan}
+                className="py-2 px-4 m-2 mt-4 mb-0 bg-custom-blue text-white text-center rounded-md cursor-pointer float-right"
+            >
+                Ajukan
+            </div>
+            <div className="clear-both"></div>
+        </div>
+    );
 
     return (
         <div className="min-h-screen h-full w-full overflow-x-hidden flex flex-col bg-gray-100">
@@ -154,22 +177,30 @@ const DetailKursus = () => {
                 </div>
             </div>
             <div className="content w-full px-24">
-                <div className="flex">
-                    <span className="text-2xl text-blue-900 font-semibold ">
-                        {course.nama}
-                    </span>
-{/*
+                <div className="">
+                    <label
+                        htmlFor="konfirmasiAjukan"
+                        className="btn btn-sm h-10 bg-blue-900 hover:bg-blue-700 text-white rounded mr-3 capitalize font-normal float-right"
+                    >
+                        Ajukan Kursus
+                    </label>
                     <label
                         htmlFor="konfirmasiHapus"
-                        className="btn btn-sm h-10 bg-blue-900 hover:bg-blue-700 text-white rounded ml-auto mr-3 capitalize font-normal"
-                    /> */}
-                    <button className="btn btn-sm h-10 bg-blue-900 hover:bg-blue-700 text-white rounded ml-auto mr-3 capitalize font-normal" onClick={submitDelete}>
+                        className="btn btn-sm h-10 bg-blue-900 hover:bg-blue-700 text-white rounded mr-3 capitalize font-normal float-right"
+                    >
+                        Hapus Kursus
+                    </label>
+                    {/* <button className="btn btn-sm h-10 bg-blue-900 hover:bg-blue-700 text-white rounded ml-auto mr-3 capitalize font-normal" onClick={submitDelete}>
                         Hapus Kursus
                     </button>
-                    {/* </button> */}
+
                     <button className="btn btn-sm h-10 bg-blue-900 hover:bg-blue-700 text-white rounded capitalize font-normal" onClick={submitAjukan}>
                         Ajukan Kursus
-                    </button>
+                    </button> */}
+                    <span className="text-2xl text-blue-900 font-semibold float-left">
+                        {course.nama}
+                    </span>
+                    <div className="clear-both"></div>
                 </div>
                 <div className="content my-6 content flex flex-col mt-6">
                     <div className="subtitle text-xl font-semibold mb-3">
@@ -338,7 +369,9 @@ const DetailKursus = () => {
                         </table>
                     </div>
                     <div className="w-full my-3">
-                        <Link to={"/guru/kursus/"+kursus_id+"/subbab/tambah"}>
+                        <Link
+                            to={"/guru/kursus/" + kursus_id + "/subbab/tambah"}
+                        >
                             <button className="btn btn-sm h-10 px-4 bg-blue-900 hover:bg-blue-700 text-white rounded capitalize font-normal float-right">
                                 Tambah Subbab
                             </button>
@@ -362,6 +395,24 @@ const DetailKursus = () => {
                             ✕
                         </label>
                         {cetakKonfirmasiHapus}
+                    </div>
+                </div>
+            </div>
+            <div className="z-10">
+                <input
+                    type="checkbox"
+                    id="konfirmasiAjukan"
+                    className="modal-toggle"
+                />
+                <div className="modal">
+                    <div className="modal-box relative py-10 px-8">
+                        <label
+                            htmlFor="konfirmasiAjukan"
+                            className="btn btn-sm absolute bg-transparent text-gray-500 border border-none hover:bg-transparent hover:border-none right-2 top-2 font-bold text-xl"
+                        >
+                            ✕
+                        </label>
+                        {cetakAjukanKursus}
                     </div>
                 </div>
             </div>
