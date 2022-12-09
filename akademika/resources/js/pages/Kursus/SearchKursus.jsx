@@ -9,20 +9,24 @@ import AuthUser from "../../components/AuthUser";
 
 const SearchKursus = (props) => {
     const [listCourse, setListCourse] = useState([])
+    const [currentItems,setCurrentItems] = useState([]);
     const { http } = AuthUser();
     const [filterName,setFilterName] = useState("")
     const [filterKategori,setFilterKategori] = useState("")
     const [filterModeHarga,setFilterModeHarga] = useState("")
     const [filterModeName,setFilterModeName] = useState("")
 
-    const [itemOffset, setItemOffset] = useState(0)
-    const endOffset = itemOffset + 10; //10 items per page
-    const currentItems = listCourse.slice(itemOffset, endOffset);
     const [pageCount,setPageCount] = useState(0);
+    const [currentPage,setCurrentPage] = useState(0);
 
-    const handleButtonClick = (event) => {
-        const newOffset = (event.target.value * 10);
-        setItemOffset(newOffset);
+    const paginationUnclick = "page-link relative block py-1.5 px-3 border-0 outline-none transition-all duration-300 rounded bg-white text-gray-800 hover:text-white hover:bg-blue-900 focus:shadow-none"
+    const paginationClick = "page-link relative block py-1.5 px-3 border-0 outline-none transition-all duration-300 rounded bg-blue-900 text-white hover:text-white hover:bg-blue-900 focus:shadow-none"
+
+    const repaginate = (index) => {
+        const newOffset = (index * 10);
+        const endOffset = newOffset + 10; //10 items per page
+        setCurrentItems(listCourse.slice(newOffset, endOffset))
+        setCurrentPage(index)
       };
 
     //to fetch all available courses
@@ -35,8 +39,22 @@ const SearchKursus = (props) => {
         }).then((res) => {
             setListCourse(res.data.kursus)
             setPageCount(Math.ceil(res.data.kursus.length / 10))
+            console.log(res.data.kursus.length)
         });
+
     };
+
+    const goTo = (dir) => {
+        if(dir == 'prev'){
+            //check if prev is valid
+            if(currentPage > 0){
+                
+            }
+        }
+        else if (dir == 'next'){
+            //check if next is valid
+        }
+    }
 
 
     useEffect(() => {
@@ -44,9 +62,16 @@ const SearchKursus = (props) => {
     }, []);
 
     useEffect(() => {
+        repaginate(0)
+        setCurrentPage(0)
+    }, [listCourse]);
+
+    useEffect(() => {
         console.log("masuk");
         fetchDataKursus();
     }, [filterName,filterKategori,filterModeHarga,filterModeName]);
+
+
 
     return (
         <div className="min-h-screen h-auto w-full bg-gray-100 flex flex-col">
@@ -132,7 +157,7 @@ const SearchKursus = (props) => {
                     </form>
 
                     <div class="mt-10 flex flex-wrap gap-10 w-full">
-                        {listCourse.map((n, index) => {
+                        {currentItems.map((n, index) => {
                             return <CourseCard course={n} key={index} />;
                         })}
                     </div>
@@ -151,9 +176,10 @@ const SearchKursus = (props) => {
                                 </li>
                             {Array.from({ length: pageCount }).map((it, index) =>
                                 <li class="page-item">
-                                    <a
-                                        class="page-link relative block py-1.5 px-3 border-0 outline-none transition-all duration-300 rounded bg-white text-gray-800 hover:text-white hover:bg-blue-900 focus:shadow-none"
+                                   <a
+                                        class={index == currentPage ? paginationClick:paginationUnclick}
                                         href="#"
+                                        onClick={()=>repaginate(index)}
                                     >
                                         {index+1}
                                     </a>
