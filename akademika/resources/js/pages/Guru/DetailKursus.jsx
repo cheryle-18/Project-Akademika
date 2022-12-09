@@ -163,7 +163,9 @@ const DetailKursus = () => {
                         htmlFor="konfirmasiHapus"
                         className="btn btn-sm h-10 bg-blue-900 hover:bg-blue-700 text-white rounded ml-auto mr-3 capitalize font-normal"
                     />
+                    <button className="btn btn-sm h-10 bg-blue-900 hover:bg-blue-700 text-white rounded ml-auto mr-3 capitalize font-normal" onClick={submitDelete}>
                         Hapus Kursus
+                    </button>
                     {/* </button> */}
                     <button className="btn btn-sm h-10 bg-blue-900 hover:bg-blue-700 text-white rounded capitalize font-normal" onClick={submitAjukan}>
                         Ajukan Kursus
