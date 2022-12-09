@@ -7,7 +7,7 @@ import {
 } from "@material-tailwind/react";
 import React, { useState, useEffect, Fragment } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { Link, useParams,useHistory } from "react-router-dom";
+import { Link, useParams, useHistory } from "react-router-dom";
 import GuruNav from "./Navbar";
 import TabsKursus from "./TabsKursus";
 import BannerKursus from "./BannerKursus";
@@ -24,17 +24,16 @@ const DetailKursus = () => {
     const [title, setTitle] = useState("edit");
     const { kursus_id } = useParams();
 
-    const [course, setCourse] = useState([])
-    const [selectedKategori,setSelectedKategori] = useState(null)
-    const [edtNama,setEdtNama] = useState(null)
-    const [edtHarga,setEdtHarga] = useState(null)
-    const [edtDeskripsi,setEdtDeskripsi] = useState(null)
-    const [edtDurasi,setEdtDurasi] = useState(null)
-
+    const [course, setCourse] = useState([]);
+    const [selectedKategori, setSelectedKategori] = useState(null);
+    const [edtNama, setEdtNama] = useState(null);
+    const [edtHarga, setEdtHarga] = useState(null);
+    const [edtDeskripsi, setEdtDeskripsi] = useState(null);
+    const [edtDurasi, setEdtDurasi] = useState(null);
 
     const [listSubbab, setListSubbab] = useState([]);
 
-    let history = useHistory()
+    let history = useHistory();
 
     const fetchKursus = () => {
         http.post("/guru/kursus/get", {
@@ -43,11 +42,11 @@ const DetailKursus = () => {
         }).then((res) => {
             console.log(res.data.kursus);
             setCourse(res.data.kursus);
-            setSelectedKategori(res.data.kursus.kategori)
-            setEdtNama(res.data.kursus.nama)
-            setEdtHarga(res.data.kursus.harga)
-            setEdtDeskripsi(res.data.kursus.deskripsi)
-            setEdtDurasi(res.data.kursus.durasi)
+            setSelectedKategori(res.data.kursus.kategori);
+            setEdtNama(res.data.kursus.nama);
+            setEdtHarga(res.data.kursus.harga);
+            setEdtDeskripsi(res.data.kursus.deskripsi);
+            setEdtDurasi(res.data.kursus.durasi);
         });
     };
 
@@ -59,27 +58,28 @@ const DetailKursus = () => {
         });
     };
 
-
     const submitEdit = () => {
         http.post("/guru/kursus/doEdit", {
-            kursus_id:kursus_id,
-            kategori:selectedKategori,
-            nama:edtNama,
-            harga:edtHarga,
-            deskripsi:edtDeskripsi,
-            durasi:edtDurasi
+            kursus_id: kursus_id,
+            kategori: selectedKategori,
+            nama: edtNama,
+            harga: edtHarga,
+            deskripsi: edtDeskripsi,
+            durasi: edtDurasi,
         }).then((res) => {
-            console.log(res.data)
-            fetchKursus()
-    })}
+            console.log(res.data);
+            fetchKursus();
+        });
+    };
 
     const submitDelete = () => {
         http.post("/guru/kursus/doDelete", {
-            kursus_id:kursus_id,
+            kursus_id: kursus_id,
         }).then((res) => {
-            console.log(res.data)
-            history.push('/guru/kursus/diterbitkan')
-    })}
+            console.log(res.data);
+            history.push("/guru/kursus/diterbitkan");
+        });
+    };
 
     const fetchMateri = (subbab_id) => {
         http.post("/guru/kursus/getAllMateri", {
@@ -94,6 +94,28 @@ const DetailKursus = () => {
         fetchKursus();
         fetchSubbab();
     }, []);
+
+    const cetakKonfirmasiHapus = (
+        <div>
+            <h3 className="text-3xl font-bold text-custom-blue">
+                Konfirmasi Hapus
+            </h3>
+
+            <hr className="w-full" />
+            <label htmlFor="konfirmasiHapus">
+                <div className="py-2 px-4 m-2 mt-4 mb-0 bg-red-600 text-white text-center rounded-md cursor-pointer float-right">
+                    Batal
+                </div>
+            </label>
+            <div
+                onClick={submitDelete}
+                className="py-2 px-4 m-2 mt-4 mb-0 bg-custom-blue text-white text-center rounded-md cursor-pointer float-right"
+            >
+                Hapus
+            </div>
+            <div className="clear-both"></div>
+        </div>
+    );
 
     return (
         <div className="min-h-screen h-full w-full overflow-x-hidden flex flex-col bg-gray-100">
@@ -130,9 +152,19 @@ const DetailKursus = () => {
                     <span className="text-2xl text-blue-900 font-semibold ">
                         {course.nama}
                     </span>
-                    <button className="btn btn-sm h-10 bg-blue-900 hover:bg-blue-700 text-white rounded ml-auto mr-3 capitalize font-normal" onClick={submitDelete}>
+
+                    <label
+                        htmlFor="konfirmasiHapus"
+                        className="btn btn-sm h-10 bg-blue-900 hover:bg-blue-700 text-white rounded ml-auto mr-3 capitalize font-normal"
+                    >
                         Hapus Kursus
-                    </button>
+                    </label>
+                    {/* <button
+                        className="btn btn-sm h-10 bg-blue-900 hover:bg-blue-700 text-white rounded ml-auto mr-3 capitalize font-normal"
+                        onClick={submitDelete}
+                    >
+                        Hapus Kursus
+                    </button> */}
                     <button className="btn btn-sm h-10 bg-blue-900 hover:bg-blue-700 text-white rounded capitalize font-normal">
                         Ajukan Kursus
                     </button>
@@ -151,24 +183,48 @@ const DetailKursus = () => {
                                         className="w-full"
                                         name="nama"
                                         defaultValue={course.nama}
-                                        onChange={(e)=>{setEdtNama(e.target.value)}}
+                                        onChange={(e) => {
+                                            setEdtNama(e.target.value);
+                                        }}
                                     />
                                 </td>
                             </tr>
                             <tr className="p-2">
                                 <td className="py-4">Kategori</td>
                                 <td>
-                                <Select className="w-full items-end" name="kategori"value={selectedKategori}  onChange={(e)=>{setSelectedKategori(e)}}>
-                                    <Option value="Teknologi Informasi">Teknologi Informasi</Option>
-                                    <Option value="Bisnis dan Ekonomi">Bisnis dan Ekonomi</Option>
-                                    <Option value="Logika dan Matematika">Logika dan Matematika</Option>
-                                    <Option value="Bahasa dan Literatur">Bahasa dan Literatur</Option>
-                                    <Option value="Fisika dan Teknik">Fisika dan Teknik</Option>
-                                    <Option value="Pengembangan Diri">Pengembangan Diri</Option>
-                                    <Option value="Kesehatan">Kesehatan</Option>
-                                    <Option value="Kesenian">Kesenian</Option>
-                                </Select>
-
+                                    <Select
+                                        className="w-full items-end"
+                                        name="kategori"
+                                        value={selectedKategori}
+                                        onChange={(e) => {
+                                            setSelectedKategori(e);
+                                        }}
+                                    >
+                                        <Option value="Teknologi Informasi">
+                                            Teknologi Informasi
+                                        </Option>
+                                        <Option value="Bisnis dan Ekonomi">
+                                            Bisnis dan Ekonomi
+                                        </Option>
+                                        <Option value="Logika dan Matematika">
+                                            Logika dan Matematika
+                                        </Option>
+                                        <Option value="Bahasa dan Literatur">
+                                            Bahasa dan Literatur
+                                        </Option>
+                                        <Option value="Fisika dan Teknik">
+                                            Fisika dan Teknik
+                                        </Option>
+                                        <Option value="Pengembangan Diri">
+                                            Pengembangan Diri
+                                        </Option>
+                                        <Option value="Kesehatan">
+                                            Kesehatan
+                                        </Option>
+                                        <Option value="Kesenian">
+                                            Kesenian
+                                        </Option>
+                                    </Select>
                                 </td>
                             </tr>
                             <tr className="p-2">
@@ -179,7 +235,9 @@ const DetailKursus = () => {
                                         className="w-full"
                                         name="harga"
                                         defaultValue={course.harga}
-                                        onChange={(e)=>{setEdtHarga(e.target.value)}}
+                                        onChange={(e) => {
+                                            setEdtHarga(e.target.value);
+                                        }}
                                     />
                                 </td>
                             </tr>
@@ -191,23 +249,33 @@ const DetailKursus = () => {
                                         className="w-full"
                                         name="durasi"
                                         defaultValue={course.durasi}
-                                        onChange={(e)=>{setEdtDurasi(e.target.value)}}
+                                        onChange={(e) => {
+                                            setEdtDurasi(e.target.value);
+                                        }}
                                     />
                                 </td>
                             </tr>
                             <tr className="p-2">
                                 <td className="py-4 align-top">Deskripsi</td>
-                            <td>
+                                <td>
                                     <Textarea
                                         className="w-full"
                                         name="desc"
                                         defaultValue={course.deskripsi}
-                                        onChange={(e)=>{setEdtDeskripsi(e.target.value)}}
+                                        onChange={(e) => {
+                                            setEdtDeskripsi(e.target.value);
+                                        }}
                                     />
                                 </td>
                             </tr>
                         </table>
-                        <button className="btn w-full mt-3 text-base capitalize bg-blue-900 text-white hover:bg-blue-700 font-normal" name="btnSimpan" onClick={submitEdit}>Simpan</button>
+                        <button
+                            className="btn w-full mt-3 text-base capitalize bg-blue-900 text-white hover:bg-blue-700 font-normal"
+                            name="btnSimpan"
+                            onClick={submitEdit}
+                        >
+                            Simpan
+                        </button>
                     </div>
                     <div className="subtitle text-xl font-semibold mt-10 mb-3">
                         Subbab Kursus
@@ -273,6 +341,25 @@ const DetailKursus = () => {
                                 Tambah Subbab
                             </button>
                         </Link>
+                    </div>
+                </div>
+            </div>
+
+            <div className="z-10">
+                <input
+                    type="checkbox"
+                    id="konfirmasiHapus"
+                    className="modal-toggle"
+                />
+                <div className="modal">
+                    <div className="modal-box relative py-10 px-8">
+                        <label
+                            htmlFor="konfirmasiHapus"
+                            className="btn btn-sm absolute bg-transparent text-gray-500 border border-none hover:bg-transparent hover:border-none right-2 top-2 font-bold text-xl"
+                        >
+                            ✕
+                        </label>
+                        {cetakKonfirmasiHapus}
                     </div>
                 </div>
             </div>
