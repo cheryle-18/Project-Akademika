@@ -8,12 +8,21 @@ import CourseCard from "./CourseCard";
 import AuthUser from "../../components/AuthUser";
 
 const SearchKursus = (props) => {
-    const [listCourse, setListCourse] = useState([]);
+    const [listCourse, setListCourse] = useState([])
     const { http } = AuthUser();
+    const [filterName,setFilterName] = useState("")
+    const [filterKategori,setFilterKategori] = useState("Teknologi Informasi")
+    const [filterModeHarga,setFilterModeHarga] = useState("asc")
+    const [filterModeName,setFilterModeName] = useState("asc")
 
     //to fetch all available courses
     const fetchDataKursus = () => {
-        http.post("/get/kursus").then((res) => {
+        http.post("/get/kursus",{
+            name:filterName,
+            kategori:filterKategori,
+            modeHarga:filterModeHarga,
+            modeName:filterModeName
+        }).then((res) => {
             setListCourse(res.data.kursus);
         });
     };
@@ -21,6 +30,11 @@ const SearchKursus = (props) => {
     useEffect(() => {
         fetchDataKursus();
     }, []);
+
+    useEffect(() => {
+        console.log("masuk");
+        fetchDataKursus();
+    }, [filterName,filterKategori,filterModeHarga,filterModeName]);
 
     return (
         <div className="min-h-screen h-auto w-full bg-gray-100 flex flex-col">
@@ -42,34 +56,59 @@ const SearchKursus = (props) => {
                                     label="Cari Kursus"
                                     type="text"
                                     className="form-select appearance-none px-4 py-2 text-base font-normal text-gray-700 bg-white bg-clip-padding bg-no-repeat focus:outline-none"
+                                    onChange={(e)=>setFilterName(e.target.value)}
                                 />
                             </div>
                             <div className="w-1/6">
                                 <Select
                                     label="Kategori"
                                     className="form-select appearance-none px-4 py-2 text-base font-normal text-gray-700 bg-white bg-clip-padding bg-no-repeat rounded-md focus:outline-none"
+                                    value="Teknologi Informasi" onChange={(e)=>setFilterKategori(e)}
                                 >
-                                    <Option value="1">One</Option>
-                                    <Option value="2">Two</Option>
-                                    <Option value="3">Three</Option>
+                                     <Option value="Teknologi Informasi">
+                                            Teknologi Informasi
+                                        </Option>
+                                        <Option value="Bisnis dan Ekonomi">
+                                            Bisnis dan Ekonomi
+                                        </Option>
+                                        <Option value="Logika dan Matematika">
+                                            Logika dan Matematika
+                                        </Option>
+                                        <Option value="Bahasa dan Literatur">
+                                            Bahasa dan Literatur
+                                        </Option>
+                                        <Option value="Fisika dan Teknik">
+                                            Fisika dan Teknik
+                                        </Option>
+                                        <Option value="Pengembangan Diri">
+                                            Pengembangan Diri
+                                        </Option>
+                                        <Option value="Kesehatan">
+                                            Kesehatan
+                                        </Option>
+                                        <Option value="Kesenian">
+                                            Kesenian
+                                        </Option>
                                 </Select>
                             </div>
                             <div className="w-1/6">
                                 <Select
                                     label="Harga"
                                     className="form-select appearance-none px-4 py-2 text-base font-normal text-gray-700 bg-white bg-clip-padding bg-no-repeat rounded-md focus:outline-none"
+                                    value="asc" onChange={(e)=>setFilterModeHarga(e)}
                                 >
-                                    <Option value="1">Tertinggi</Option>
-                                    <Option value="2">Terendah</Option>
+                                    <Option value="asc">Tertinggi</Option>
+                                    <Option value="desc">Terendah</Option>
                                 </Select>
                             </div>
                             <div className="w-1/6">
                                 <Select
                                     label="Urutkan"
                                     className="form-select appearance-none px-4 py-2 text-base font-normal text-gray-700 bg-white bg-clip-padding bg-no-repeat rounded-md focus:outline-none"
+                                    value="asc" onChange={(e)=>setFilterModeName(e)}
                                 >
-                                    <Option value="1">Asc</Option>
-                                    <Option value="2">Desc</Option>
+                                    <Option value="asc">Asc</Option>
+                                    <Option value="desc">Desc</Option>
                                 </Select>
                             </div>
                         </div>
