@@ -51,6 +51,8 @@ Route::group(['middleware'=>'api'],function ()
 
     Route::prefix('get')->group(function () {
         Route::post('kursus',[UtilityController::class,'getAllKursus']);
+        Route::post('guest/kursus',[UtilityController::class,'getKursus']);
+        Route::post('guest/getAllSubbabKuis',[UtilityController::class,'getAllSubbabKuis']);
     });
 
     Route::prefix('admin')->group(function () {
@@ -139,6 +141,7 @@ Route::group(['middleware'=>'api'],function ()
             Route::post('getMateri',[SiswaKursusController::class,'getMateri']);
             Route::post('getSubbab',[SiswaKursusController::class,'getSubbab']);
             Route::post('getPengumuman',[SiswaKursusController::class,'getPengumuman']);
+            Route::post('getAllSubbabKuis',[SiswaKursusController::class,'getAllSubbabKuis']);
 
             Route::prefix('kuis')->group(function ()
             {

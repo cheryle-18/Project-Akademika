@@ -40,21 +40,23 @@ const CourseCard = (props) => {
                     <span>
                         <Link
                             to={
-                                user != null &&
-                                ((props.status == "diterbitkan" &&
-                                    user.role_text == "guru" &&
-                                    "/guru/kursus/" +
-                                        props.course.kursus_id +
-                                        "/home") ||
-                                    (props.status != "diterbitkan" &&
+                                (user != null &&
+                                    ((props.status == "diterbitkan" &&
                                         user.role_text == "guru" &&
                                         "/guru/kursus/" +
                                             props.course.kursus_id +
-                                            "/detail") ||
-                                    (user.role_text == "siswa" &&
-                                        "/siswa/kursus/" +
-                                            props.course.kursus_id +
-                                            "/detail"))
+                                            "/home") ||
+                                        (props.status != "diterbitkan" &&
+                                            user.role_text == "guru" &&
+                                            "/guru/kursus/" +
+                                                props.course.kursus_id +
+                                                "/detail") ||
+                                        (user.role_text == "siswa" &&
+                                            "/siswa/kursus/" +
+                                                props.course.kursus_id +
+                                                "/detail"))) ||
+                                (user == null &&
+                                    `/guest/kursus/${props.course.kursus_id}/detail`)
                             }
                             className="ml-auto"
                         >

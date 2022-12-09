@@ -42,7 +42,7 @@ const Silabus = (props) => {
     const [listSubbab, setListSubbab] = useState([]);
 
     const fetchKursus = () => {
-        http.post("/siswa/kursus/getDetail", {
+        http.post("/get/guest/kursus", {
             kursus_id: kursus_id,
         }).then((res) => {
             setCourse(res.data.kursus);
@@ -61,7 +61,7 @@ const Silabus = (props) => {
     const [open, setOpen] = useState(0);
 
     const fetchSubbab = () => {
-        http.post("/siswa/kursus/getAllSubbabKuis", {
+        http.post("/get/guest/getAllSubbabKuis", {
             kursus_id: kursus_id,
         }).then((res) => {
             setListSubbab(res.data.subbab);
@@ -76,17 +76,17 @@ const Silabus = (props) => {
     const classOther =
         "float-left hover:bg-gray-200 hover:text-custom-blue py-1 px-4 rounded-sm mx-1 cursor-pointer";
 
-    const onClickMateri = () => {
-        setTitle("materi");
-        let path = "/siswa/kursus/" + kursus_id + "/detail";
-        history.push(path);
-    };
+    // const onClickMateri = () => {
+    //     setTitle("materi");
+    //     let path = "/siswa/kursus/" + kursus_id + "/detail";
+    //     history.push(path);
+    // };
 
-    const onClickPengumuman = () => {
-        setTitle("pengumuman");
-        let path = "/siswa/kursus/" + kursus_id + "/pengumuman";
-        history.push(path);
-    };
+    // const onClickPengumuman = () => {
+    //     setTitle("pengumuman");
+    //     let path = "/siswa/kursus/" + kursus_id + "/pengumuman";
+    //     history.push(path);
+    // };
 
     const [isOpened, setIsOpened] = useState(false);
     const [chats, setChat] = useState([]);
@@ -110,59 +110,59 @@ const Silabus = (props) => {
         // last();
         setTimeout(last, 10);
     };
-    const classSiswa =
-        "float-right mt-4 py-2 px-3 bg-custom-light-blue rounded-xl rounded-br-none";
-    const classGuru =
-        "float-left mt-4 py-2 px-3 bg-gray-200 rounded-xl rounded-bl-none";
+    // const classSiswa =
+    //     "float-right mt-4 py-2 px-3 bg-custom-light-blue rounded-xl rounded-br-none";
+    // const classGuru =
+    //     "float-left mt-4 py-2 px-3 bg-gray-200 rounded-xl rounded-bl-none";
 
-    const cetakChat = chats.map((chat, index) => (
-        <div>
-            <div
-                className={
-                    (chat.pivot.pengirim_role == "siswa" && classSiswa) ||
-                    (chat.pivot.pengirim_role == "guru" && classGuru)
-                }
-            >
-                {chat.pivot.isi}
-            </div>
-            <div className="clear-both"></div>
-        </div>
-    ));
+    // const cetakChat = chats.map((chat, index) => (
+    //     <div>
+    //         <div
+    //             className={
+    //                 (chat.pivot.pengirim_role == "siswa" && classSiswa) ||
+    //                 (chat.pivot.pengirim_role == "guru" && classGuru)
+    //             }
+    //         >
+    //             {chat.pivot.isi}
+    //         </div>
+    //         <div className="clear-both"></div>
+    //     </div>
+    // ));
 
     //to fetch all available chats
-    const fetchDataChat = (isLast) => {
-        http.post("/siswa/kursus/getPesan", {
-            siswa_id: user.siswa_id,
-            kursus_id: kursus_id,
-        }).then((res) => {
-            setChat(res.data.pesan);
-            if (isLast) {
-                setTimeout(last, 10);
-            }
-        });
-    };
+    // const fetchDataChat = (isLast) => {
+    //     http.post("/siswa/kursus/getPesan", {
+    //         siswa_id: user.siswa_id,
+    //         kursus_id: kursus_id,
+    //     }).then((res) => {
+    //         setChat(res.data.pesan);
+    //         if (isLast) {
+    //             setTimeout(last, 10);
+    //         }
+    //     });
+    // };
 
-    const sendMessage = () => {
-        http.post("/siswa/kursus/kirimPesan", {
-            siswa_id: user.siswa_id,
-            kursus_id: kursus_id,
-            isi: chatContent,
-        }).then((res) => {
-            //refresh
-            console.log(res);
-            fetchDataChat(true);
-            setTimeout(() => {
-                setChatContent("");
-            }, 10);
-        });
-    };
+    // const sendMessage = () => {
+    //     http.post("/siswa/kursus/kirimPesan", {
+    //         siswa_id: user.siswa_id,
+    //         kursus_id: kursus_id,
+    //         isi: chatContent,
+    //     }).then((res) => {
+    //         //refresh
+    //         console.log(res);
+    //         fetchDataChat(true);
+    //         setTimeout(() => {
+    //             setChatContent("");
+    //         }, 10);
+    //     });
+    // };
 
-    useEffect(() => {
-        fetchDataChat(true);
-        setInterval(() => {
-            fetchDataChat(false);
-        }, 2000);
-    }, []);
+    // useEffect(() => {
+    //     fetchDataChat(true);
+    //     setInterval(() => {
+    //         fetchDataChat(false);
+    //     }, 2000);
+    // }, []);
 
     const handleOpen = (value) => {
         setOpen(open === value ? 0 : value);
@@ -209,7 +209,7 @@ const Silabus = (props) => {
 
     return (
         <div className="min-h-screen w-full overflow-x-hidden flex flex-col">
-            {isOpened && (
+            {/* {isOpened && (
                 <div className="fixed bottom-14 lg:bottom-10 right-0 lg:right-32 bg-transparent duration-500 z-10">
                     <div className="w-400px bg-custom-blue px-4 rounded-t-lg">
                         <div className="w-full py-4 font-semibold text-white">
@@ -275,11 +275,10 @@ const Silabus = (props) => {
                 >
                     <FontAwesomeIcon icon={faIcon.faMessage}></FontAwesomeIcon>
                 </div>
-            )}
-            {/* <div className="px-4 sm:px-16 md:px-24 drawer-side bg-custom-blue flex-none"> */}
-            {props.isGuest == null && <SiswaNav></SiswaNav>}
-            {props.isGuest != null && <GuestNav></GuestNav>}
-            {/* </div> */}
+            )} */}
+            <div className="px-4 sm:px-16 md:px-24 drawer-side bg-custom-blue flex-none">
+                <GuestNav></GuestNav>
+            </div>
             {/* <div className="banner">
                 <div
                     className="static h-80 w-full z-0 px-4 sm:px-16 md:px-20 py-20 flex"
@@ -313,9 +312,15 @@ const Silabus = (props) => {
                             src="/card_pic.png"
                             alt=""
                         />
-                        <button className="btn w-48 mx-auto rounded bg-white text-blue-900 border-0 hover:bg-gray-100 capitalize font-medium text-base">
+                        <label
+                            htmlFor="masukDaftar"
+                            className="btn w-48 mx-auto rounded bg-white text-blue-900 border-0 hover:bg-gray-100 capitalize font-medium text-base"
+                        >
                             Daftar Sekarang
-                        </button>
+                        </label>
+                        {/* <button className="btn w-48 mx-auto rounded bg-white text-blue-900 border-0 hover:bg-gray-100 capitalize font-medium text-base">
+                            Daftar Sekarang
+                        </button> */}
                     </div>
                     <div className="w-3/4 flex flex-col text-white">
                         <div className="font-bold text-4xl mb-3">
@@ -339,7 +344,7 @@ const Silabus = (props) => {
                 </div>
             </div>
             <div className="silabus px-4 sm:px-16 md:px-24 py-6 w-full overflow-x-none bg-gray-100">
-                <div className="tabs w-auto">
+                {/* <div className="tabs w-auto">
                     <div className="bg-custom-blue text-white inline-block text-base tracking-wide p-1 py-2 rounded-md mb-10 mt-4">
                         <div
                             className={
@@ -360,7 +365,7 @@ const Silabus = (props) => {
                             Pengumuman
                         </div>
                     </div>
-                </div>
+                </div> */}
                 <div className="font-bold text-3xl text-blue-900 mb-6">
                     Silabus Kursus
                 </div>

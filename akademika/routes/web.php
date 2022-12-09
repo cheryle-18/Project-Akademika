@@ -40,6 +40,11 @@ Route::prefix('kursus')->group(function () {
         return view('kursus');
     });
 });
+Route::prefix('guest')->group(function () {
+    Route::get('/{path}/{path2?}/{path3?}/{path4?}', function () {
+        return view('kursus');
+    });
+});
 
 Route::prefix('siswa')->group(function () {
     Route::get('/{path}/{path2?}/{path3?}/{path4?}', function () {

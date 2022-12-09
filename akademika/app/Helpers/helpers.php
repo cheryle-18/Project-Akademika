@@ -4,7 +4,7 @@
 use Illuminate\Support\Facades\Auth;
 
 
-function isLogined()
+function isLogined() 
 {
     if(Auth::guard("api_siswa")->check() || Auth::guard("api_guru")->check()){
         return true;

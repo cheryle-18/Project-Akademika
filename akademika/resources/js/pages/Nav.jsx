@@ -6,10 +6,10 @@ import { Link } from "react-router-dom";
 import AuthUser from "../components/AuthUser";
 import { Alert, Input, Radio } from "@material-tailwind/react";
 
-const Nav = () => {
+const Nav = (props) => {
     const [isLoginFailed, setLoginFailed] = useState(false);
     const [registerFailed, setRegisterFailed] = useState("awal");
-    const [openNow, setOpenNow] = useState("daftar");
+    const [openNow, setOpenNow] = useState("masuk");
     //login attribs
     const { http, setToken } = AuthUser();
     const [loginEmail, setLoginEmail] = useState();
@@ -39,27 +39,28 @@ const Nav = () => {
 
     const changeOpenNowDaftar = () => {
         setOpenNow("daftar");
-        document.body.style.overflow = "hidden";
+        // document.body.style.overflow = "hidden";
         setLoginFailed(false);
         setRegisterFailed("awal");
     };
 
     const changeOpenNowMasuk = () => {
         setOpenNow("masuk");
-        document.body.style.overflow = "hidden";
+        // document.body.style.overflow = "hidden";
         setLoginFailed(false);
         setRegisterFailed("awal");
     };
 
     const changeOpenNowForgotPassword = () => {
         setOpenNow("forgot-password");
-        document.body.style.overflow = "hidden";
+        // document.body.style.overflow = "hidden";
         setLoginFailed(false);
         setRegisterFailed("awal");
     };
 
     const changeScroll = () => {
         document.body.style.overflow = "auto";
+        setOpenNow("masuk");
     };
     const submitLoginForm = () => {
         //api call
@@ -162,7 +163,13 @@ const Nav = () => {
             </p>
             <div className="pt-2 flex">
                 <span className="mr-2 my-auto">Daftar Sebagai:</span>
-                <Radio id="guru" name="type" value="guru" label="Guru" onChange={(e) => setRegisterRole(e.target.value)}/>
+                <Radio
+                    id="guru"
+                    name="type"
+                    value="guru"
+                    label="Guru"
+                    onChange={(e) => setRegisterRole(e.target.value)}
+                />
                 <Radio
                     type="radio"
                     id="siswa"
@@ -294,7 +301,7 @@ const Nav = () => {
                         Masuk
                     </label>
                     <div className="pt-1.5 text-white float-right mr-5 cursor-pointer">
-                        <Link to="/kursus/search">Cari Kursus</Link>
+                        <Link to="/guest/kursus/search">Cari Kursus</Link>
                     </div>
                 </div>
                 <div className="md:hidden w-full">
