@@ -11,9 +11,9 @@ const SearchKursus = (props) => {
     const [listCourse, setListCourse] = useState([])
     const { http } = AuthUser();
     const [filterName,setFilterName] = useState("")
-    const [filterKategori,setFilterKategori] = useState("Teknologi Informasi")
-    const [filterModeHarga,setFilterModeHarga] = useState("asc")
-    const [filterModeName,setFilterModeName] = useState("asc")
+    const [filterKategori,setFilterKategori] = useState("")
+    const [filterModeHarga,setFilterModeHarga] = useState("")
+    const [filterModeName,setFilterModeName] = useState("")
 
     //to fetch all available courses
     const fetchDataKursus = () => {
@@ -63,8 +63,11 @@ const SearchKursus = (props) => {
                                 <Select
                                     label="Kategori"
                                     className="form-select appearance-none px-4 py-2 text-base font-normal text-gray-700 bg-white bg-clip-padding bg-no-repeat rounded-md focus:outline-none"
-                                    value="Teknologi Informasi" onChange={(e)=>setFilterKategori(e)}
+                                    value="" onChange={(e)=>setFilterKategori(e)}
                                 >
+                                     <Option value="">
+                                            Semua
+                                     </Option>
                                      <Option value="Teknologi Informasi">
                                             Teknologi Informasi
                                         </Option>
@@ -95,8 +98,9 @@ const SearchKursus = (props) => {
                                 <Select
                                     label="Harga"
                                     className="form-select appearance-none px-4 py-2 text-base font-normal text-gray-700 bg-white bg-clip-padding bg-no-repeat rounded-md focus:outline-none"
-                                    value="asc" onChange={(e)=>setFilterModeHarga(e)}
+                                    value="" onChange={(e)=>setFilterModeHarga(e)}
                                 >
+                                    <Option value="">Semua</Option>
                                     <Option value="asc">Tertinggi</Option>
                                     <Option value="desc">Terendah</Option>
                                 </Select>
@@ -105,8 +109,9 @@ const SearchKursus = (props) => {
                                 <Select
                                     label="Urutkan"
                                     className="form-select appearance-none px-4 py-2 text-base font-normal text-gray-700 bg-white bg-clip-padding bg-no-repeat rounded-md focus:outline-none"
-                                    value="asc" onChange={(e)=>setFilterModeName(e)}
+                                    value="" onChange={(e)=>setFilterModeName(e)}
                                 >
+                                    <Option value="">Semua</Option>
                                     <Option value="asc">Asc</Option>
                                     <Option value="desc">Desc</Option>
                                 </Select>

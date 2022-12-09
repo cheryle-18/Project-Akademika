@@ -17,13 +17,13 @@ class UtilityController extends Controller
             $kursus = $kursus->where('nama','LIKE',"%".$request->name."%");
             $masuk = $request->name;
         }
-        if($request->has('kategori')){
+        if($request->has('kategori') && $request->kategori !=""){
             $kursus = $kursus->where('kategori',$request->kategori);
         }
-        if($request->has('modeHarga')){
+        if($request->has('modeHarga') && $request->modeHarga !=""){
             $kursus = $kursus->orderBy('harga',$request->modeHarga);
         }
-        if($request->has('modeName')){
+        if($request->has('modeName') && $request->modeName !=""){
             $kursus = $kursus->orderBy('nama',$request->modeName);
         }
         $kursus = $kursus->get();
