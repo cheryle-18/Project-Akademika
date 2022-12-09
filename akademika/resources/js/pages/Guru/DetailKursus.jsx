@@ -158,11 +158,11 @@ const DetailKursus = () => {
                     <span className="text-2xl text-blue-900 font-semibold ">
                         {course.nama}
                     </span>
-
+{/*
                     <label
                         htmlFor="konfirmasiHapus"
                         className="btn btn-sm h-10 bg-blue-900 hover:bg-blue-700 text-white rounded ml-auto mr-3 capitalize font-normal"
-                    />
+                    /> */}
                     <button className="btn btn-sm h-10 bg-blue-900 hover:bg-blue-700 text-white rounded ml-auto mr-3 capitalize font-normal" onClick={submitDelete}>
                         Hapus Kursus
                     </button>
