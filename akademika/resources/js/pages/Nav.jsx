@@ -146,7 +146,7 @@ const Nav = () => {
             </p>
             <p className="py-2">
                 <Input
-                    type="text"
+                    type="password"
                     label="Password"
                     className="input input-bordered w-full border-2 border-gray-500 rounded-md placeholder-gray-700"
                     onChange={(e) => setRegisterPassword(e.target.value)}
@@ -154,7 +154,7 @@ const Nav = () => {
             </p>
             <p className="py-2">
                 <Input
-                    type="text"
+                    type="password"
                     label="Konfirmasi Password"
                     className="input input-bordered w-full border-2 border-gray-500 rounded-md placeholder-gray-700"
                     onChange={(e) => setRegisterConfirmPassword(e.target.value)}
@@ -208,7 +208,7 @@ const Nav = () => {
             </p>
             <p className="py-2">
                 <Input
-                    type="text"
+                    type="password"
                     label="Password"
                     className="input input-bordered w-full border-2 border-gray-500 rounded-md placeholder-gray-700"
                     onChange={(e) => setLoginPassword(e.target.value)}
