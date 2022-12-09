@@ -162,7 +162,7 @@ const Nav = () => {
             </p>
             <div className="pt-2 flex">
                 <span className="mr-2 my-auto">Daftar Sebagai:</span>
-                <Radio id="guru" name="type" value="guru" label="Guru" />
+                <Radio id="guru" name="type" value="guru" label="Guru" onChange={(e) => setRegisterRole(e.target.value)}/>
                 <Radio
                     type="radio"
                     id="siswa"
