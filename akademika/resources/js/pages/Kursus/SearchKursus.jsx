@@ -15,6 +15,16 @@ const SearchKursus = (props) => {
     const [filterModeHarga,setFilterModeHarga] = useState("")
     const [filterModeName,setFilterModeName] = useState("")
 
+    const [itemOffset, setItemOffset] = useState(0)
+    const endOffset = itemOffset + 10; //10 items per page
+    const currentItems = listCourse.slice(itemOffset, endOffset);
+    const [pageCount,setPageCount] = useState(0);
+
+    const handleButtonClick = (event) => {
+        const newOffset = (event.target.value * 10);
+        setItemOffset(newOffset);
+      };
+
     //to fetch all available courses
     const fetchDataKursus = () => {
         http.post("/get/kursus",{
@@ -23,9 +33,11 @@ const SearchKursus = (props) => {
             modeHarga:filterModeHarga,
             modeName:filterModeName
         }).then((res) => {
-            setListCourse(res.data.kursus);
+            setListCourse(res.data.kursus)
+            setPageCount(Math.ceil(res.data.kursus.length / 10))
         });
     };
+
 
     useEffect(() => {
         fetchDataKursus();
@@ -128,7 +140,7 @@ const SearchKursus = (props) => {
                     <div class="flex justify-center mt-24 mb-10">
                         <nav aria-label="Page navigation example">
                             <ul class="flex list-style-none">
-                                <li class="page-item">
+                            <li class="page-item">
                                     <a
                                         class="page-link relative block py-1.5 px-3 border-0 outline-none transition-all duration-300 rounded bg-white text-gray-800 hover:text-white hover:bg-blue-900 focus:shadow-none"
                                         href="#"
@@ -137,30 +149,16 @@ const SearchKursus = (props) => {
                                         <span aria-hidden="true">&laquo;</span>
                                     </a>
                                 </li>
+                            {Array.from({ length: pageCount }).map((it, index) =>
                                 <li class="page-item">
                                     <a
                                         class="page-link relative block py-1.5 px-3 border-0 outline-none transition-all duration-300 rounded bg-white text-gray-800 hover:text-white hover:bg-blue-900 focus:shadow-none"
                                         href="#"
                                     >
-                                        1
+                                        {index+1}
                                     </a>
                                 </li>
-                                <li class="page-item">
-                                    <a
-                                        class="page-link relative block py-1.5 px-3 border-0 outline-none transition-all duration-300 rounded bg-white text-gray-800 hover:text-white hover:bg-blue-900 focus:shadow-none"
-                                        href="#"
-                                    >
-                                        2
-                                    </a>
-                                </li>
-                                <li class="page-item">
-                                    <a
-                                        class="page-link relative block py-1.5 px-3 border-0 outline-none transition-all duration-300 rounded bg-white text-gray-800 hover:text-white hover:bg-blue-900 focus:shadow-none"
-                                        href="#"
-                                    >
-                                        3
-                                    </a>
-                                </li>
+                            )}
                                 <li class="page-item">
                                     <a
                                         class="page-link relative block py-1.5 px-3 border-0 outline-none transition-all duration-300 rounded bg-white text-gray-800 hover:text-white hover:bg-blue-900 focus:shadow-none"
