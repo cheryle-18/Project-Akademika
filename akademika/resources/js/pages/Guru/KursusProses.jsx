@@ -18,7 +18,7 @@ const KursusProses = () => {
             guru_id: user.guru_id,
             type: "proses",
         }).then((res) => {
-            setListDiajukan(res.data.kursus);
+            setListDiajukan(res.data.kursus)
         });
     };
 

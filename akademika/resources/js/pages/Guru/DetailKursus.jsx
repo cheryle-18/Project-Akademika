@@ -30,6 +30,7 @@ const DetailKursus = () => {
     const [edtHarga, setEdtHarga] = useState(null);
     const [edtDeskripsi, setEdtDeskripsi] = useState(null);
     const [edtDurasi, setEdtDurasi] = useState(null);
+    const [tipeKursus,setTipeKursus] = useState("");
 
     const [listSubbab, setListSubbab] = useState([]);
 
@@ -40,13 +41,13 @@ const DetailKursus = () => {
             guru_id: user.guru_id,
             kursus_id: kursus_id,
         }).then((res) => {
-            console.log(res.data.kursus);
             setCourse(res.data.kursus);
             setSelectedKategori(res.data.kursus.kategori);
             setEdtNama(res.data.kursus.nama);
             setEdtHarga(res.data.kursus.harga);
             setEdtDeskripsi(res.data.kursus.deskripsi);
             setEdtDurasi(res.data.kursus.durasi);
+            setTipeKursus(res.data.kursus_type);
         });
     };
 
@@ -125,11 +126,10 @@ const DetailKursus = () => {
         </div>
     );
     const cetakAjukanKursus = (
-        <div>
+        tipeKursus == "draft" && <div>
             <h3 className="text-3xl font-bold text-custom-blue">
                 Ajukan Kursus
             </h3>
-
             <hr className="w-full" />
             <label htmlFor="konfirmasiAjukan">
                 <div className="py-2 px-4 m-2 mt-4 mb-0 bg-red-600 text-white text-center rounded-md cursor-pointer float-right">
@@ -178,12 +178,12 @@ const DetailKursus = () => {
             </div>
             <div className="content w-full px-24">
                 <div className="">
-                    <label
+                    {tipeKursus == "draft" && <label
                         htmlFor="konfirmasiAjukan"
                         className="btn btn-sm h-10 bg-blue-900 hover:bg-blue-700 text-white rounded mr-3 capitalize font-normal float-right"
                     >
                         Ajukan Kursus
-                    </label>
+                    </label>}
                     <label
                         htmlFor="konfirmasiHapus"
                         className="btn btn-sm h-10 bg-blue-900 hover:bg-blue-700 text-white rounded mr-3 capitalize font-normal float-right"

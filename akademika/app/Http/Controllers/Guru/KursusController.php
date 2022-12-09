@@ -27,10 +27,24 @@ class KursusController extends Controller
         $guru = Guru::find($request->guru_id);
         $kursus = $guru->kursus()->where('kursus.kursus_id',$request->kursus_id)->first();
 
+        $kursus_type = "";
+        if($kursus->status == 1 && $kursus->histori()->where('kursus_histori.status',1)->exists())
+        {
+            $kursus_type = "diterbitkan";
+        }
+        else if($kursus->status == 0 && $kursus->histori()->orderBy('tanggal','desc')->first()->status == 3){
+            $kursus_type = "diajukan";
+        }
+        else if($kursus->status == 0 && count($kursus->histori)==0){
+            $kursus_type = "draft";
+        }
+
         return response()->json([
-            "kursus" => $kursus
+            "kursus" => $kursus,
+            "kursus_type" => $kursus_type
         ]);
     }
+
 
     function isDiterbitkan(Request $request)
     {
@@ -209,6 +223,23 @@ class KursusController extends Controller
         return 'success delete';
     }
 
+    function isDraft(Request $request){
+        $kursus = Kursus::find($request->kursus_id);
+        if($kursus->status == 0 && count($kursus->histori)==0){
+            return 1;
+        }
+        return 0;
+    }
+
+    function isDiajukan(Request $request){
+        $kursus = Kursus::find($request->kursus_id);
+        if($kursus->status == 0 && $kursus->histori()->orderBy('tanggal','desc')->first()->status == 3){
+            return 1;
+        }
+        return 0;
+    }
+
+
     function kirimPesan(Request $request)
     {
         //attach
@@ -369,8 +400,10 @@ class KursusController extends Controller
            $allKursus = $guru->kursus()->where('kursus.status',1)->get();
            if(count($allKursus)!=0){
                 foreach ($allKursus as $kurs) {
-                    if($kurs->histori()->where('kursus_histori.status',1)->exists()){
-                        $kursus[] = $kurs;
+                    if(count($kurs->histori)!=0){
+                        if($kurs->histori()->orderBy('tanggal','desc')->first()->status == 1){
+                            $kursus[] = $kurs;
+                        }
                     }
                 }
            }
@@ -379,19 +412,21 @@ class KursusController extends Controller
         else if($type == "proses"){
             //status == 0 && kursus_histori status == 3
             $allKursus = $guru->kursus()->where('kursus.status',0)->get();
-
             if(count($allKursus)!=0){
                  foreach ($allKursus as $kurs) {
-                     if($kurs->histori()->where('kursus_histori.status',3)->exists()){
-                         $kursus[] = $kurs;
-                     }
+                    if(count($kurs->histori)!=0){
+                        if($kurs->histori()->orderBy('tanggal','desc')->first()->status == 3){
+                            $kursus[] = $kurs;
+                        }
+                    }
+
                  }
             }
 
         }
         else if($type == "draft"){
             //status == 0 && !in kursus_histori
-            $allKursus = $guru->kursus()->where('kursus.status',1)->get();
+            $allKursus = $guru->kursus()->where('kursus.status',0)->get();
 
             if(count($allKursus)!=0){
                  foreach ($allKursus as $kurs) {
