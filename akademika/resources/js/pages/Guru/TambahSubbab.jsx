@@ -3,7 +3,7 @@ import React, { useState, useEffect } from "react";
 import GuruNav from "./Navbar"
 import Tabs from "./Tabs";
 import AuthUser from "../../components/AuthUser";
-import { Link } from "react-router-dom";
+import { Link,useParams } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
     faArrowAltCircleLeft,
@@ -18,6 +18,7 @@ const TambahSubbab = () => {
     const [penjelasan,setPenjelasan] = useState()
     const [durasi, setDurasi] = useState()
     const {http,user} = AuthUser();
+    const { kursus_id, subbab_id } = useParams();
 
     const submitForm = () => {
         http.post("/guru/kursus/subbab/tambah", {
@@ -42,7 +43,7 @@ const TambahSubbab = () => {
                 </div> */}
                   <div className="tabs text-xl text-custom-blue mb-4">
                     <Link
-                        to="/guru/kursus/detail"
+                        to={"/guru/kursus/"+kursus_id+"/detail"}
                         className="rounded-xl py-2"
                     >
                         <div className="float-left">

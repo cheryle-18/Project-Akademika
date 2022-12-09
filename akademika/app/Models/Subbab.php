@@ -4,15 +4,17 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Subbab extends Model
 {
-    use HasFactory;
+    use HasFactory,SoftDeletes;
 
     protected $table      = "subbab";
     protected $primaryKey = "subbab_id";
     public $incrementing  = true;
     public $timestamps    = true;
+
 
     protected $fillable = [
         'kursus_id',

@@ -80,6 +80,13 @@ const DetailKursus = () => {
             console.log(res.data)
             history.push('/guru/kursus/diterbitkan')
     })}
+    const submitAjukan = () => {
+        http.post("/guru/kursus/doAjukan", {
+            kursus_id:kursus_id,
+        }).then((res) => {
+            console.log(res.data)
+            history.push('/guru/kursus/'+kursus_id+'/detail')
+    })}
 
     const fetchMateri = (subbab_id) => {
         http.post("/guru/kursus/getAllMateri", {
@@ -133,7 +140,7 @@ const DetailKursus = () => {
                     <button className="btn btn-sm h-10 bg-blue-900 hover:bg-blue-700 text-white rounded ml-auto mr-3 capitalize font-normal" onClick={submitDelete}>
                         Hapus Kursus
                     </button>
-                    <button className="btn btn-sm h-10 bg-blue-900 hover:bg-blue-700 text-white rounded capitalize font-normal">
+                    <button className="btn btn-sm h-10 bg-blue-900 hover:bg-blue-700 text-white rounded capitalize font-normal" onClick={submitAjukan}>
                         Ajukan Kursus
                     </button>
                 </div>
@@ -268,7 +275,7 @@ const DetailKursus = () => {
                         </table>
                     </div>
                     <div className="w-full my-3">
-                        <Link to="/guru/kursus/subbab/tambah">
+                        <Link to={"/guru/kursus/"+kursus_id+"/subbab/tambah"}>
                             <button className="btn btn-sm h-10 px-4 bg-blue-900 hover:bg-blue-700 text-white rounded capitalize font-normal float-right">
                                 Tambah Subbab
                             </button>

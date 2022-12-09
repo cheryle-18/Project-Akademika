@@ -90,6 +90,7 @@ Route::group(['middleware'=>'api'],function ()
             Route::post('tambah',[KursusController::class,'tambahKursus']);
             Route::post('tambahPengumuman',[KursusController::class,'tambahPengumuman']);
             Route::post('getPengumuman',[KursusController::class,'getPengumuman']);
+            Route::post('doAjukan',[KursusController::class,'ajukanKursus']);
 
             Route::post('getPesan',[KursusController::class,'getPesan']);
             Route::post('getSiswa',[KursusController::class,'getSiswa']);

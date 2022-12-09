@@ -21,6 +21,7 @@ return new class extends Migration
             $table->text('link_video')->nullable();
             $table->text('penjelasan')->nullable();
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

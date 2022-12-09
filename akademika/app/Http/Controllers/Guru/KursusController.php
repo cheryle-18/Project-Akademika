@@ -8,6 +8,7 @@ use App\Models\Kuis;
 use App\Models\KuisPilihanJawaban;
 use App\Models\KuisSoal;
 use App\Models\Kursus;
+use App\Models\KursusHistori;
 use App\Models\Materi;
 use App\Models\Pengumuman;
 use App\Models\Siswa;
@@ -408,6 +409,19 @@ class KursusController extends Controller
         return response()->json([
             "kursus" => $kursus
         ]);
+    }
+
+    function ajukanKursus(Request $request)
+    {
+        //push to kursus histori
+        KursusHistori::create([
+            'kursus_id'=>$request->kursus_id,
+            'status'=>3,
+            'deskripsi'=>'pengajuan kursus',
+            'tanggal'=>Carbon::now('Asia/Jakarta')
+        ]);
+
+        return 'success ajukan';
     }
 
     function getKuis(Request $req){

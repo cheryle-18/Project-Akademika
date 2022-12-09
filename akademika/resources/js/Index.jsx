@@ -13,6 +13,9 @@ const Index = () => {
                 <Route exact path="/">
                     <Home></Home>
                 </Route>
+                <Route exact path="/kursus/search">
+                    <SearchKursus></SearchKursus>
+                </Route>
                 <Route exact path="/forgot-password">
                     <ForgotPassword />
                 </Route>

@@ -20,6 +20,7 @@ return new class extends Migration
             ('kursus_id')->on('kursus')->onDelete('cascade');
             $table->text('deskripsi');
             $table->dateTime('tanggal');
+            $table->softDeletes();
         });
     }
 

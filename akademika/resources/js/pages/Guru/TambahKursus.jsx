@@ -20,7 +20,7 @@ const TambahKursus = () => {
             kategori:kategori,
             harga:harga,
             deskripsi:deskripsi,
-            status:1
+            status:0
         }).then((res) => {
             let data = res.data;
             console.log(data);

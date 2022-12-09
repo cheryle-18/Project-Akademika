@@ -22,6 +22,7 @@ return new class extends Migration
             $table->text('deskripsi')->nullable();
             $table->integer('durasi')->nullable();
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

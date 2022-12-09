@@ -14,6 +14,14 @@ class KursusHistori extends Model
     public $incrementing  = true;
     public $timestamps    = false;
 
+    protected $fillable = [
+       'kursus_id',
+       'status',
+       'deskripsi',
+       'tanggal'
+    ];
+
+
     function kursus()
     {
         return $this->belongsTo(Kursus::class,'kursus_id','kursus_id');
