@@ -6,11 +6,13 @@ import { Input } from "@material-tailwind/react";
 import { Select, Option } from "@material-tailwind/react";
 import CourseCard from "./CourseCard";
 import AuthUser from "../../components/AuthUser";
+import {useHistory} from "react-router-dom";
+
 
 const SearchKursus = (props) => {
     const [listCourse, setListCourse] = useState([]);
     const [currentItems, setCurrentItems] = useState([]);
-    const { http } = AuthUser();
+    const { http,token} = AuthUser();
     const [filterName, setFilterName] = useState("");
     const [filterKategori, setFilterKategori] = useState("");
     const [filterModeHarga, setFilterModeHarga] = useState("");
@@ -18,6 +20,12 @@ const SearchKursus = (props) => {
 
     const [pageCount, setPageCount] = useState(0);
     const [currentPage, setCurrentPage] = useState(0);
+
+    const history = useHistory();
+
+    if(props.isSiswa && token == null){
+        return history.push('/')
+    }
 
     const paginationUnclick =
         "page-link relative block py-1.5 px-3 border-0 outline-none transition-all duration-300 rounded bg-white text-gray-800 hover:text-white hover:bg-blue-900 focus:shadow-none";

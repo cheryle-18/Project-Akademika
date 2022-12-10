@@ -38,7 +38,7 @@ function Icon({ id, open }) {
 
 const Silabus = (props) => {
     var payButton = "";
-    const { http, user } = AuthUser();
+    const { http, user,token } = AuthUser();
     const { kursus_id } = useParams();
     const [course, setCourse] = useState([]);
 
@@ -47,6 +47,12 @@ const Silabus = (props) => {
     const [isRegistered, setIsRegistered] = useState(false);
     const [regisData, setRegisData] = useState([]);
     const [isMuncul, setIsMuncul] = useState(false);
+    let history = useHistory();
+
+
+    if(token == null){
+        return history.push('/')
+    }
 
     const fetchKursus = () => {
         http.post("/siswa/kursus/getDetail", {
@@ -97,7 +103,7 @@ const Silabus = (props) => {
     };
 
     //tabs
-    let history = useHistory();
+
     const [title, setTitle] = useState("materi");
     const classSelected =
         "float-left bg-white text-custom-blue py-1 px-4 rounded-sm mx-1 cursor-pointer";
@@ -120,6 +126,10 @@ const Silabus = (props) => {
     const [chats, setChat] = useState([]);
     const [chatContent, setChatContent] = useState("");
     const [isFetched, setIsFetched] = useState(false);
+
+    if(token == null){
+        return history.push('/')
+    }
 
     const last = () => {
         document.getElementById("last").click();

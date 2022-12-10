@@ -1,23 +1,26 @@
 import React, { useState, useEffect, Fragment } from "react";
-import { useHistory } from "react-router-dom";
+import { useHistory,useParams } from "react-router-dom";
 import { Button } from "@material-tailwind/react";
 import { BrowserRouter as Router, Route } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import * as faIcon from "@fortawesome/free-solid-svg-icons";
 import SiswaNav from "./Navbar";
 import AuthUser from "../../components/AuthUser";
-import { useParams } from "react-router-dom";
 
 const PengumumanKursus = () => {
     const classSelected = "float-left bg-white text-custom-blue py-1 px-4 rounded-sm mx-1 cursor-pointer";
     const classOther = "float-left hover:bg-gray-200 hover:text-custom-blue py-1 px-4 rounded-sm mx-1 cursor-pointer";
 
-    const {http,user} = AuthUser()
+    const {http,user,token} = AuthUser()
     const { kursus_id } = useParams();
     let history = useHistory()
     const [title, setTitle] = useState("pengumuman");
     const [course, setCourse] = useState([]);
     const [msgs, setMsg] = useState([]);
+
+    if(token == null){
+        return history.push('/')
+    }
 
     const onClickMateri = () => {
         setTitle("materi");

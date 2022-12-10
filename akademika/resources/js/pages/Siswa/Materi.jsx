@@ -8,17 +8,21 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Banner from "./Banner";
 import KuisCard from "./KuisCard";
 import Nav from "./Navbar";
-import { Link, useParams } from "react-router-dom";
+import { Link, useParams,useHistory } from "react-router-dom";
 import AuthUser from "../../components/AuthUser";
 
 const
 Materi = () => {
     const [src, setSrc] = useState("");
     const { id } = useParams();
-    const { http, user } = AuthUser();
+    const { http, user, token } = AuthUser();
     const [bacaan, setBacaan] = useState("");
     const [materi, setMateri] = useState([]);
     const [subbab, setSubbab] = useState(null);
+    const history = useHistory()
+    if(token == null){
+       return history.push('/')
+    }
     const [kuiss, setKuis] = useState([
         {
             soal: "Apa kepanjangan dari HTML",
@@ -41,6 +45,7 @@ Materi = () => {
             jawaban: "HyperText Markup Language",
         },
     ]);
+
 
     const cetakKuis = kuiss.map((kuis, index) => (
         <KuisCard kuis={kuis} idx={index + 1}></KuisCard>

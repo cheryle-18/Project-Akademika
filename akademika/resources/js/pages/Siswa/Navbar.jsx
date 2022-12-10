@@ -7,6 +7,7 @@ import AuthUser from "../../components/AuthUser";
 const Nav = () => {
 
     const {user,token,logout} = AuthUser()
+    
 
     const logoutSiswa = () => {
         if(token != undefined){
