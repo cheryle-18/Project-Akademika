@@ -98,6 +98,7 @@ const Silabus = (props) => {
             kursus_id: kursus_id,
         }).then((res) => {
             setListSubbab(res.data.subbab);
+            setIsLoading(false);
         });
     };
 
@@ -125,10 +126,13 @@ const Silabus = (props) => {
     const [chats, setChat] = useState([]);
     const [chatContent, setChatContent] = useState("");
     const [isFetched, setIsFetched] = useState(false);
+    const [isLoading, setIsLoading] = useState(true);
 
-    if (token == null) {
-        return history.push("/");
-    }
+    setTimeout(() => {
+        if (token == null) {
+            return history.push("/");
+        }
+    }, 1000);
 
     const last = () => {
         document.getElementById("last").click();
@@ -299,181 +303,200 @@ const Silabus = (props) => {
     ));
 
     return (
-        <div className="min-h-screen w-full overflow-x-hidden flex flex-col bg-gray-100">
-            {isOpened && isRegistered && (
-                <div className="fixed bottom-14 lg:bottom-10 right-0 lg:right-32 bg-transparent duration-500 z-10">
-                    <div className="w-400px bg-custom-blue px-4 rounded-t-lg">
-                        <div className="w-full py-4 font-semibold text-white">
-                            <div className="float-left">Chat Guru</div>
-                            <div
-                                className="float-right cursor-pointer"
-                                onClick={changeClosed}
-                            >
-                                ✕
-                            </div>
-                            <div className="clear-both"></div>
-                        </div>
-                    </div>
-                    <div
-                        className="w-400px h-200px lg:h-300px p-6 pt-4 overflow-auto bg-white"
-                        id="scroll_content relative"
-                    >
-                        <a
-                            id="last"
-                            href="#section"
-                            className="absolute top-0 right-0 w-full flex justify-center items-center mt-16 hover:text-custom-blue"
-                        >
-                            <div className="bg-white w-350px flex justify-center items-center -mt-2">
-                                <div className="px-1 py-1 bg-light-blue-50 w-fit rounded-lg">
-                                    Lihat Chat Terakhir
+        <div>
+            {isLoading || token == null ? (
+                <div className="h-screen w-screen flex justify-center items-center">
+                    <img src="/loading1.gif" className="w-400px" alt="" />
+                </div>
+            ) : (
+                <div className="min-h-screen w-full overflow-x-hidden flex flex-col bg-gray-100">
+                    {isOpened && isRegistered && (
+                        <div className="fixed bottom-14 lg:bottom-10 right-0 lg:right-32 bg-transparent duration-500 z-10">
+                            <div className="w-400px bg-custom-blue px-4 rounded-t-lg">
+                                <div className="w-full py-4 font-semibold text-white">
+                                    <div className="float-left">Chat Guru</div>
+                                    <div
+                                        className="float-right cursor-pointer"
+                                        onClick={changeClosed}
+                                    >
+                                        ✕
+                                    </div>
+                                    <div className="clear-both"></div>
                                 </div>
                             </div>
-                        </a>
-                        {cetakChat}
-                        <div id="section" className=""></div>
-                    </div>
-                    <div className="w-400px bg-custom-blue px-4 rounded-b-lg h-fit">
-                        <div className="w-10/12 p-4 font-semibold float-left">
-                            <input
-                                id="inputMessage"
-                                type="text"
-                                placeholder="Tuliskan pesan..."
-                                class="input input-bordered w-full border-2 text-black rounded-3xl placeholder-gray-700"
-                                onChange={(e) => {
-                                    setChatContent(e.target.value);
-                                }}
-                                value={chatContent}
-                            />
+                            <div
+                                className="w-400px h-200px lg:h-300px p-6 pt-4 overflow-auto bg-white"
+                                id="scroll_content relative"
+                            >
+                                <a
+                                    id="last"
+                                    href="#section"
+                                    className="absolute top-0 right-0 w-full flex justify-center items-center mt-16 hover:text-custom-blue"
+                                >
+                                    <div className="bg-white w-350px flex justify-center items-center -mt-2">
+                                        <div className="px-1 py-1 bg-light-blue-50 w-fit rounded-lg">
+                                            Lihat Chat Terakhir
+                                        </div>
+                                    </div>
+                                </a>
+                                {cetakChat}
+                                <div id="section" className=""></div>
+                            </div>
+                            <div className="w-400px bg-custom-blue px-4 rounded-b-lg h-fit">
+                                <div className="w-10/12 p-4 font-semibold float-left">
+                                    <input
+                                        id="inputMessage"
+                                        type="text"
+                                        placeholder="Tuliskan pesan..."
+                                        class="input input-bordered w-full border-2 text-black rounded-3xl placeholder-gray-700"
+                                        onChange={(e) => {
+                                            setChatContent(e.target.value);
+                                        }}
+                                        value={chatContent}
+                                    />
+                                </div>
+                                <div
+                                    className="w-2/12 float-right h-20 -mt-1 flex justify-center items-center text-3xl cursor-pointer"
+                                    style={{ rotate: "50deg" }}
+                                >
+                                    <FontAwesomeIcon
+                                        className="text-white"
+                                        icon={faIcon.faPaperPlane}
+                                        onClick={sendMessage}
+                                    ></FontAwesomeIcon>
+                                </div>
+                                <div className="clear-both"></div>
+                            </div>
                         </div>
+                    )}
+                    {props.isGuest == null && isRegistered && (
                         <div
-                            className="w-2/12 float-right h-20 -mt-1 flex justify-center items-center text-3xl cursor-pointer"
-                            style={{ rotate: "50deg" }}
+                            onClick={changeToggle}
+                            className="fixed bottom-0 lg:bottom-10 right-0 lg:right-10 p-2 bg-custom-light-blue text-custom-blue rounded-lg text-4xl cursor-pointer duration-500 hover:text-custom-light-blue hover:bg-custom-blue z-10"
                         >
                             <FontAwesomeIcon
-                                className="text-white"
-                                icon={faIcon.faPaperPlane}
-                                onClick={sendMessage}
+                                icon={faIcon.faMessage}
                             ></FontAwesomeIcon>
                         </div>
-                        <div className="clear-both"></div>
-                    </div>
-                </div>
-            )}
-            {props.isGuest == null && isRegistered && (
-                <div
-                    onClick={changeToggle}
-                    className="fixed bottom-0 lg:bottom-10 right-0 lg:right-10 p-2 bg-custom-light-blue text-custom-blue rounded-lg text-4xl cursor-pointer duration-500 hover:text-custom-light-blue hover:bg-custom-blue z-10"
-                >
-                    <FontAwesomeIcon icon={faIcon.faMessage}></FontAwesomeIcon>
-                </div>
-            )}
-            {/* <div className="px-4 sm:px-16 md:px-24 drawer-side bg-custom-blue flex-none"> */}
-            {props.isGuest == null && <SiswaNav></SiswaNav>}
-            {props.isGuest != null && <GuestNav></GuestNav>}
+                    )}
+                    {/* <div className="px-4 sm:px-16 md:px-24 drawer-side bg-custom-blue flex-none"> */}
+                    {props.isGuest == null && <SiswaNav></SiswaNav>}
+                    {props.isGuest != null && <GuestNav></GuestNav>}
 
-            <div className="banner">
-                <div
-                    className="static h-96 w-full z-0 px-4 sm:px-16 md:px-16 py-14 flex"
-                    style={{
-                        backgroundImage:
-                            "linear-gradient(to bottom right, rgb(13,90,162), rgb(152,204,234))",
-                    }}
-                >
-                    <div className="w-1/4 p-3 px-0 h-full flex flex-col">
-                        <img
-                            className="w-48 h-48 mb-4 mx-auto object-cover md:rounded-none"
-                            src="/card_pic.png"
-                            alt=""
-                        />
-
-                        {!isRegistered && isFetched && (
-                            <button
-                                id="pay-button"
-                                onClick={() => {
-                                    setIsMuncul(false);
-                                    snapToken != null &&
-                                        window.snap.pay(snapToken, {
-                                            onSuccess: function (result) {
-                                                /* You may add your own implementation here */
-                                                console.log(result);
-                                            },
-                                            onPending: function (result) {
-                                                /* You may add your own implementation here */
-                                                alert("waiting your payment!");
-                                                console.log(result);
-                                            },
-                                            onError: function (result) {
-                                                /* You may add your own implementation here */
-                                                alert("payment failed!");
-                                                console.log(result);
-                                            },
-                                            onClose: function () {
-                                                /* You may add your own implementation here */
-                                                console.log(result);
-                                            },
-                                        });
-                                }}
-                                className="btn w-48 mx-auto rounded bg-white text-blue-900 border-0 hover:bg-gray-100 capitalize font-medium text-base"
-                            >
-                                Daftar Sekarang
-                            </button>
-                        )}
-                    </div>
-                    <div className="w-3/4 flex flex-col text-white">
-                        <div className="font-bold text-4xl mb-3">
-                            {course.nama}
-                        </div>
-                        <div className="text-xl mb-3 font-semibold">
-                            {course.kategori}
-                        </div>
-                        <div className="text-lg">{course.deskripsi}</div>
-                        <div className="mt-auto flex text-xl font-semibold">
-                            <span>IDR {course.harga}</span>
-                            <span className="ml-8">
-                                <FontAwesomeIcon
-                                    icon={faClock}
-                                    className="text-white mr-2"
+                    <div className="banner">
+                        <div
+                            className="static h-96 w-full z-0 px-4 sm:px-16 md:px-16 py-14 flex"
+                            style={{
+                                backgroundImage:
+                                    "linear-gradient(to bottom right, rgb(13,90,162), rgb(152,204,234))",
+                            }}
+                        >
+                            <div className="w-1/4 p-3 px-0 h-full flex flex-col">
+                                <img
+                                    className="w-48 h-48 mb-4 mx-auto object-cover md:rounded-none"
+                                    src="/card_pic.png"
+                                    alt=""
                                 />
-                                {course.durasi} jam
-                            </span>
+
+                                {!isRegistered && isFetched && (
+                                    <button
+                                        id="pay-button"
+                                        onClick={() => {
+                                            setIsMuncul(false);
+                                            snapToken != null &&
+                                                window.snap.pay(snapToken, {
+                                                    onSuccess: function (
+                                                        result
+                                                    ) {
+                                                        /* You may add your own implementation here */
+                                                        console.log(result);
+                                                    },
+                                                    onPending: function (
+                                                        result
+                                                    ) {
+                                                        /* You may add your own implementation here */
+                                                        alert(
+                                                            "waiting your payment!"
+                                                        );
+                                                        console.log(result);
+                                                    },
+                                                    onError: function (result) {
+                                                        /* You may add your own implementation here */
+                                                        alert(
+                                                            "payment failed!"
+                                                        );
+                                                        console.log(result);
+                                                    },
+                                                    onClose: function () {
+                                                        /* You may add your own implementation here */
+                                                        console.log(result);
+                                                    },
+                                                });
+                                        }}
+                                        className="btn w-48 mx-auto rounded bg-white text-blue-900 border-0 hover:bg-gray-100 capitalize font-medium text-base"
+                                    >
+                                        Daftar Sekarang
+                                    </button>
+                                )}
+                            </div>
+                            <div className="w-3/4 flex flex-col text-white">
+                                <div className="font-bold text-4xl mb-3">
+                                    {course.nama}
+                                </div>
+                                <div className="text-xl mb-3 font-semibold">
+                                    {course.kategori}
+                                </div>
+                                <div className="text-lg">
+                                    {course.deskripsi}
+                                </div>
+                                <div className="mt-auto flex text-xl font-semibold">
+                                    <span>IDR {course.harga}</span>
+                                    <span className="ml-8">
+                                        <FontAwesomeIcon
+                                            icon={faClock}
+                                            className="text-white mr-2"
+                                        />
+                                        {course.durasi} jam
+                                    </span>
+                                </div>
+                            </div>
                         </div>
                     </div>
-                </div>
-            </div>
-            <div className="silabus px-4 sm:px-16 md:px-24 py-6 w-full overflow-x-none bg-gray-100">
-                {isRegistered && (
-                    <div className="tabs w-auto">
-                        <div className="bg-custom-blue text-white inline-block text-base tracking-wide p-1 py-2 rounded-md mb-10 mt-4">
-                            <div
-                                className={
-                                    (title == "materi" && classSelected) ||
-                                    (title != "materi" && classOther)
-                                }
-                                onClick={onClickMateri}
-                            >
-                                Materi
+                    <div className="silabus px-4 sm:px-16 md:px-24 py-6 w-full overflow-x-none bg-gray-100">
+                        {isRegistered && (
+                            <div className="tabs w-auto">
+                                <div className="bg-custom-blue text-white inline-block text-base tracking-wide p-1 py-2 rounded-md mb-10 mt-4">
+                                    <div
+                                        className={
+                                            (title == "materi" &&
+                                                classSelected) ||
+                                            (title != "materi" && classOther)
+                                        }
+                                        onClick={onClickMateri}
+                                    >
+                                        Materi
+                                    </div>
+                                    <div
+                                        className={
+                                            (title == "pengumuman" &&
+                                                classSelected) ||
+                                            (title != "pengumuman" &&
+                                                classOther)
+                                        }
+                                        onClick={onClickPengumuman}
+                                    >
+                                        Pengumuman
+                                    </div>
+                                </div>
                             </div>
-                            <div
-                                className={
-                                    (title == "pengumuman" && classSelected) ||
-                                    (title != "pengumuman" && classOther)
-                                }
-                                onClick={onClickPengumuman}
-                            >
-                                Pengumuman
-                            </div>
+                        )}
+                        <div className="font-bold text-3xl text-blue-900 mb-6">
+                            Silabus Kursus
                         </div>
+                        <Fragment>{cetakSilabus}</Fragment>
                     </div>
-                )}
-                <div className="font-bold text-3xl text-blue-900 mb-6">
-                    Silabus Kursus
                 </div>
-                <Fragment>{cetakSilabus}</Fragment>
-            </div>
-            <script type="text/javascript">
-                {/* // For example trigger on button clicked, or any time you need */}
-                {/* {isClicked && window.snap.pay({ snapToken })} */}
-            </script>
+            )}
         </div>
     );
 };

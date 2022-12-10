@@ -40,6 +40,7 @@ const Silabus = (props) => {
     const [course, setCourse] = useState([]);
 
     const [listSubbab, setListSubbab] = useState([]);
+    const [isLoading, setIsLoading] = useState(true);
 
     const fetchKursus = () => {
         http.post("/get/guest/kursus", {
@@ -65,6 +66,7 @@ const Silabus = (props) => {
             kursus_id: kursus_id,
         }).then((res) => {
             setListSubbab(res.data.subbab);
+            setIsLoading(false);
         });
     };
 
@@ -129,57 +131,63 @@ const Silabus = (props) => {
     ));
 
     return (
-        <div className="min-h-screen w-full overflow-x-hidden flex flex-col bg-gray-100">
-
-            <div className="px-4 sm:px-16 md:px-24 drawer-side bg-custom-blue flex-none">
-                <GuestNav></GuestNav>
-            </div>
-
-            <div className="banner">
-                <div
-                    className="static h-96 w-full z-0 px-4 sm:px-16 md:px-16 py-14 flex"
-                    style={{
-                        backgroundImage:
-                            "linear-gradient(to bottom right, rgb(13,90,162), rgb(152,204,234))",
-                    }}
-                >
-                    <div className="w-1/4 p-3 px-0 h-full flex flex-col">
-                        <img
-                            className="w-48 h-48 mb-4 mx-auto object-cover md:rounded-none"
-                            src="/card_pic.png"
-                            alt=""
-                        />
-                        <label
-                            htmlFor="masukDaftar"
-                            className="btn w-48 mx-auto rounded bg-white text-blue-900 border-0 hover:bg-gray-100 capitalize font-medium text-base"
-                        >
-                            Daftar Sekarang
-                        </label>
-
-                    </div>
-                    <div className="w-3/4 flex flex-col text-white">
-                        <div className="font-bold text-4xl mb-3">
-                            {course.nama}
-                        </div>
-                        <div className="text-xl mb-3 font-semibold">
-                            {course.kategori}
-                        </div>
-                        <div className="text-lg">{course.deskripsi}</div>
-                        <div className="mt-auto flex text-xl font-semibold">
-                            <span>IDR {course.harga}</span>
-                            <span className="ml-8">
-                                <FontAwesomeIcon
-                                    icon={faClock}
-                                    className="text-white mr-2"
-                                />
-                                {course.durasi} jam
-                            </span>
-                        </div>
-                    </div>
+        <div>
+            {isLoading ? (
+                <div className="h-screen w-screen flex justify-center items-center">
+                    <img src="/loading1.gif" className="w-400px" alt="" />
                 </div>
-            </div>
-            <div className="silabus px-4 sm:px-16 md:px-24 py-6 w-full overflow-x-none bg-gray-100">
-                {/* <div className="tabs w-auto">
+            ) : (
+                <div className="min-h-screen w-full overflow-x-hidden flex flex-col bg-gray-100">
+                    <div className="px-4 sm:px-16 md:px-24 drawer-side bg-custom-blue flex-none">
+                        <GuestNav></GuestNav>
+                    </div>
+
+                    <div className="banner">
+                        <div
+                            className="static h-96 w-full z-0 px-4 sm:px-16 md:px-16 py-14 flex"
+                            style={{
+                                backgroundImage:
+                                    "linear-gradient(to bottom right, rgb(13,90,162), rgb(152,204,234))",
+                            }}
+                        >
+                            <div className="w-1/4 p-3 px-0 h-full flex flex-col">
+                                <img
+                                    className="w-48 h-48 mb-4 mx-auto object-cover md:rounded-none"
+                                    src="/card_pic.png"
+                                    alt=""
+                                />
+                                <label
+                                    htmlFor="masukDaftar"
+                                    className="btn w-48 mx-auto rounded bg-white text-blue-900 border-0 hover:bg-gray-100 capitalize font-medium text-base"
+                                >
+                                    Daftar Sekarang
+                                </label>
+                            </div>
+                            <div className="w-3/4 flex flex-col text-white">
+                                <div className="font-bold text-4xl mb-3">
+                                    {course.nama}
+                                </div>
+                                <div className="text-xl mb-3 font-semibold">
+                                    {course.kategori}
+                                </div>
+                                <div className="text-lg">
+                                    {course.deskripsi}
+                                </div>
+                                <div className="mt-auto flex text-xl font-semibold">
+                                    <span>IDR {course.harga}</span>
+                                    <span className="ml-8">
+                                        <FontAwesomeIcon
+                                            icon={faClock}
+                                            className="text-white mr-2"
+                                        />
+                                        {course.durasi} jam
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div className="silabus px-4 sm:px-16 md:px-24 py-6 w-full overflow-x-none bg-gray-100">
+                        {/* <div className="tabs w-auto">
                     <div className="bg-custom-blue text-white inline-block text-base tracking-wide p-1 py-2 rounded-md mb-10 mt-4">
                         <div
                             className={
@@ -201,13 +209,13 @@ const Silabus = (props) => {
                         </div>
                     </div>
                 </div> */}
-                <div className="font-bold text-3xl text-blue-900 mb-6">
-                    Silabus Kursus
+                        <div className="font-bold text-3xl text-blue-900 mb-6">
+                            Silabus Kursus
+                        </div>
+                        <Fragment>{cetakSilabus}</Fragment>
+                    </div>
                 </div>
-                <Fragment>
-                    {cetakSilabus}
-                </Fragment>
-            </div>
+            )}
         </div>
     );
 };

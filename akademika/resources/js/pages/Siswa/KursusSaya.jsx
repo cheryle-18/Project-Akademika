@@ -2,18 +2,19 @@ import React, { useState, useEffect, Fragment } from "react";
 import CourseCard from "../Kursus/CourseCard";
 import SiswaNav from "./Navbar";
 import AuthUser from "../../components/AuthUser";
-import {useHistory} from "react-router-dom";
-
+import { useHistory } from "react-router-dom";
 
 const KursusSaya = () => {
-    const history = useHistory()
-    const { http, user,token } = AuthUser();
-    if(token == null){
-        return history.push('/')
-    }
-    else if(token != null && user.role_text == "guru"){
-        
-    }
+    const history = useHistory();
+    const { http, user, token } = AuthUser();
+    const [isLoading, setIsLoading] = useState(true);
+
+    setTimeout(() => {
+        if (token == null) {
+            return history.push("/");
+        } else if (token != null && user.role_text == "guru") {
+        }
+    }, 1000);
 
     const [listCourse, setListCourse] = useState([]);
     const fetchKursus = () => {
@@ -21,29 +22,35 @@ const KursusSaya = () => {
             siswa_id: user.siswa_id,
         }).then((res) => {
             setListCourse(res.data.kursus);
+            setIsLoading(false);
         });
     };
 
     useEffect(() => {
-
-            fetchKursus();
+        fetchKursus();
     }, []);
 
-
-
     return (
-        <div className="min-h-screen w-full overflow-x-hidden flex flex-col bg-gray-100">
-            <SiswaNav />
-            <div className="content w-full px-24 py-12">
-                <div className="text-3xl text-blue-900 font-semibold">
-                    Kursus Saya
+        <div>
+            {isLoading || token == null ? (
+                <div className="h-screen w-screen flex justify-center items-center">
+                    <img src="/loading1.gif" className="w-400px" alt="" />
                 </div>
-                <div className="w-full mt-10 content flex flex-wrap gap-10">
-                    {listCourse.map((n, index) => {
-                        return <CourseCard course={n} key={index} />;
-                    })}
+            ) : (
+                <div className="min-h-screen w-full overflow-x-hidden flex flex-col bg-gray-100">
+                    <SiswaNav />
+                    <div className="content w-full px-24 py-12">
+                        <div className="text-3xl text-blue-900 font-semibold">
+                            Kursus Saya
+                        </div>
+                        <div className="w-full mt-10 content flex flex-wrap gap-10">
+                            {listCourse.map((n, index) => {
+                                return <CourseCard course={n} key={index} />;
+                            })}
+                        </div>
+                    </div>
                 </div>
-            </div>
+            )}
         </div>
     );
 };
