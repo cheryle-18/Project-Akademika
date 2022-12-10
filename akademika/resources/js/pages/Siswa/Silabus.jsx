@@ -1,5 +1,5 @@
 import React, { useState, useEffect, Fragment } from "react";
-import { useHistory, useParams } from "react-router-dom";
+import { Link, useHistory, useParams } from "react-router-dom";
 import { faClock } from "@fortawesome/free-solid-svg-icons";
 import SiswaNav from "./Navbar";
 import GuestNav from "../Nav";
@@ -46,6 +46,7 @@ const Silabus = (props) => {
     const [snapToken, setSnapToken] = useState(null);
     const [isRegistered, setIsRegistered] = useState(false);
     const [regisData, setRegisData] = useState([]);
+    const [isMuncul, setIsMuncul] = useState(false);
 
     const fetchKursus = () => {
         http.post("/siswa/kursus/getDetail", {
@@ -230,6 +231,13 @@ const Silabus = (props) => {
         return "bg-blue-100 p-4 border-2 border-t-0 border-blue-900";
     };
 
+    const hide = () => {
+        if (isMuncul) {
+            window.snap.hide();
+            console.log("paowjiefoaewjif");
+        }
+    };
+
     const cetakSilabus = listSubbab.map((subbab, index) => (
         <Accordion
             open={open === index + 1}
@@ -243,12 +251,18 @@ const Silabus = (props) => {
             </AccordionHeader>
             <AccordionBody className="bg-white p-4 text-base border-2 border-t-0 border-blue-900">
                 <div>
-                    <div className="w-full bg-white flex mb-3">
-                        <span>Materi</span>
-                        <span className="ml-auto">{subbab.durasi} menit</span>
-                    </div>
+                    {subbab.materi.map((materi, indexMateri) => (
+                        <Link to={`/siswa/kursus/${kursus_id}/materi/${materi.materi_id}`}>
+                            <div className="w-full bg-white flex mb-1">
+                                <span>Materi</span>
+                                <span className="ml-auto">
+                                    {subbab.durasi} menit
+                                </span>
+                            </div>
+                        </Link>
+                    ))}
                     {subbab.kuis.map((kuis, indexKuis) => (
-                        <div className="w-full bg-white flex">
+                        <div className="w-full bg-white flex mb-1">
                             <span>Kuis</span>
                             <span className="ml-auto">
                                 {kuis.jumlah_soal} soal
@@ -352,6 +366,7 @@ const Silabus = (props) => {
                             <button
                                 id="pay-button"
                                 onClick={() => {
+                                    setIsMuncul(false);
                                     snapToken != null &&
                                         window.snap.pay(snapToken, {
                                             onSuccess: function (result) {

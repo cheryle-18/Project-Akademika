@@ -11,7 +11,8 @@ import Nav from "./Navbar";
 import { Link, useParams } from "react-router-dom";
 import AuthUser from "../../components/AuthUser";
 
-const Materi = () => {
+const
+Materi = () => {
     const [src, setSrc] = useState("");
     const { id } = useParams();
     const { http, user } = AuthUser();

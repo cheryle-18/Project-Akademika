@@ -15,14 +15,12 @@ class Subbab extends Model
     public $incrementing  = true;
     public $timestamps    = true;
 
-
     protected $fillable = [
         'kursus_id',
         'judul',
         'deskripsi',
         'durasi'
     ];
-
 
     function kursus()
     {
@@ -38,6 +36,7 @@ class Subbab extends Model
     {
         return $this->hasMany(Kuis::class,'subbab_id','subbab_id');
     }
+
     function siswa()
     {
         return $this->belongsToMany(Siswa::class,"siswa_subbab", "subbab_id","siswa_id")->withPivot("siswa_subbab_id","kursus_id","status");
