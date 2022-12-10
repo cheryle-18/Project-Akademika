@@ -1,13 +1,14 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Select, Option, Button } from "@material-tailwind/react";
 import { BrowserRouter as Router, Route } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCoffee } from "@fortawesome/free-solid-svg-icons";
 import Sidebar from "./Sidebar";
 import AuthUser from "../../components/AuthUser";
-import { useEffect } from "react";
+import { toRupiah } from "../../components/CurrencyUtils";
 import { Bar, Chart } from 'react-chartjs-2';
 import { Chart as ChartJS, registerables } from 'chart.js';
+import { data } from "autoprefixer";
 ChartJS.register(...registerables);
 
 const LaporanAdmin = () => {
@@ -21,8 +22,10 @@ const LaporanAdmin = () => {
     const [dataChart, setDataChart] = useState([])
     const [dataTable, setDataTable] = useState([])
     const [type, setType] = useState("Penghasilan")
+    const [chartLabel, setChartLabel] = useState("Penghasilan Kursus")
+    const [chartLabels, setChartLabels] = useState(['Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni', 'Juli', 'Agustus', 'September', 'Oktober', 'November', 'Desember'])
     const [filterChart, setFilterChart] = useState("Bulanan")
-    const [filterMonth, setFilterMonth] = useState("Januari")
+    const [filterMonth, setFilterMonth] = useState("1")
     const [filterYear, setFilterYear] = useState("2022")
 
     const [months, setMonths] = useState([
@@ -43,16 +46,19 @@ const LaporanAdmin = () => {
     const onClickKursus = () => {
         setTitle("kursus");
         setType("Kursus")
+        setChartLabel("Pendaftaran Kursus")
     };
 
     const onClickPenghasilan = () => {
         setTitle("penghasilan");
         setType("Penghasilan")
+        setChartLabel("Penghasilan Kursus")
     };
 
     const onClickUser = () => {
         setTitle("user");
         setType("User")
+        setChartLabel("Pendaftaran User")
     };
 
     const fetchData = () => {
@@ -76,9 +82,83 @@ const LaporanAdmin = () => {
         });
     }
 
+    const setFilter = (selected) => {
+        setFilterChart(selected)
+        if(selected=="Bulanan"){
+            setChartLabels(['Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni', 'Juli', 'Agustus', 'September', 'Oktober', 'November', 'Desember'])
+        }
+        else{
+            setChartLabels(['2021', '2022'])
+        }
+    }
+
+    const printTable = (
+        <table className="table table-compact w-full text-black">
+            <thead>
+                { type=="Penghasilan" &&
+                    <tr>
+                        <th className="bg-white text-center text-base">NO</th>
+                        <th className="bg-white text-center text-base">TANGGAL</th>
+                        <th className="bg-white text-center text-base">KURSUS</th>
+                        <th className="bg-white text-center text-base">SISWA</th>
+                        <th className="bg-white text-center text-base">TOTAL</th>
+                    </tr>
+                }
+                { type=="Kursus" &&
+                    <tr>
+                        <th className="bg-white text-center text-base">NO</th>
+                        <th className="bg-white text-center text-base">KURSUS</th>
+                        <th className="bg-white text-center text-base">TOTAL</th>
+                    </tr>
+                }
+                { type=="User" &&
+                    <tr>
+                        <th className="bg-white text-center text-base">NO</th>
+                        <th className="bg-white text-center text-base">TANGGAL</th>
+                        <th className="bg-white text-center text-base">NAMA</th>
+                        <th className="bg-white text-center text-base">TYPE</th>
+                    </tr>
+                }
+            </thead>
+            <tbody>
+                { type=="Penghasilan" &&
+                    dataTable.map((data, index) => (
+                        <tr>
+                            <td className="text-center">{ index+1 }</td>
+                            <td className="text-center">{ data.tanggal }</td>
+                            <td>{ data.kursus }</td>
+                            <td>{ data.siswa }</td>
+                            <td className="text-center">Rp { toRupiah(data.total) }</td>
+                        </tr>
+                    ))
+                }
+                { type=="Kursus" &&
+                    dataTable.map((data, index) => (
+                        <tr>
+                            <td className="text-center">{ index+1 }</td>
+                            <td>{ data.kursus }</td>
+                            <td className="text-center">{ data.total }</td>
+                        </tr>
+                    ))
+                }
+                { type=="User" &&
+                    dataTable.map((data, index) => (
+                        <tr>
+                            <td className="text-center">{ index+1 }</td>
+                            <td className="text-center">{ data.tanggal }</td>
+                            <td>{ data.nama }</td>
+                            <td className="text-center">{ data.type }</td>
+                        </tr>
+                    ))
+                }
+            </tbody>
+        </table>
+    )
+
     useEffect(() => {
         fetchData()
         fetchChart()
+        printTable
     }, [type, filterChart, filterMonth, filterYear])
 
     return (
@@ -118,23 +198,24 @@ const LaporanAdmin = () => {
                     <div className="inline-block w-full">
                         <div className="w-30 float-right">
                             <Select label="Jenis" className="pt-4 bg-white"
-                            onChange={(e) => setType(e)}>
+                            onChange={(e) => setFilter(e)}>
                                 <Option value="Bulanan">Bulanan</Option>
                                 <Option value="Tahunan">Tahunan</Option>
                             </Select>
                         </div>
                     </div>
                     <div className="clear-both"></div>
-                    <div className="bg-white overflow-y-auto h-65vh p-6 my-4 rounded-md drop-shadow-lg">
+                    <div className="bg-white overflow-y-auto h-auto p-6 my-4 rounded-md drop-shadow-lg">
                         {
                             dataChart &&
                             <Bar
                                 datasetIdKey='id'
                                 className="w-full"
                                 data={{
-                                    labels: ['Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni', 'Juli', 'Agustus', 'September', 'Oktober', 'November', 'Desember'],
+                                    labels: chartLabels,
                                     datasets: [{
-                                        data: [dataChart]
+                                        label: chartLabel,
+                                        data: dataChart
                                     }]
                                 }}
                             />
@@ -143,7 +224,7 @@ const LaporanAdmin = () => {
                     </div>
                     <div className="flex">
                         <span className="text-black font-semibold text-xl py-6">
-                            Laporan { type } { filterMonth } { filterYear }
+                            Laporan { type } { months[filterMonth-1].month } { filterYear }
                         </span>
                         <div className="w-30 ml-auto my-auto">
                             <Select label="Bulan" className="pt-4 bg-white"
@@ -164,17 +245,7 @@ const LaporanAdmin = () => {
                         </div>
                     </div>
                     <div className="bg-white overflow-y-auto p-4 mb-6 rounded-md drop-shadow-lg">
-                        <table className="table table-compact w-full text-black">
-                            <thead>
-                                <tr>
-                                    <th className="bg-white text-center text-base">NO</th>
-                                    <th className="bg-white text-center text-base">TANGGAL</th>
-                                    <th className="bg-white text-center text-base">KETERANGAN</th>
-                                    <th className="bg-white text-center text-base">JUMLAH</th>
-                                </tr>
-                            </thead>
-                            {/* {cetakSiswa} */}
-                        </table>
+                        { printTable }
                     </div>
                 </div>
             </Sidebar>
