@@ -12,6 +12,7 @@ import {
     AccordionHeader,
     AccordionBody,
 } from "@material-tailwind/react";
+import { keyBy } from "lodash";
 
 function Icon({ id, open }) {
     return (
@@ -35,11 +36,13 @@ function Icon({ id, open }) {
 }
 
 const Silabus = (props) => {
+    var payButton = "";
     const { http, user } = AuthUser();
     const { kursus_id } = useParams();
     const [course, setCourse] = useState([]);
 
     const [listSubbab, setListSubbab] = useState([]);
+    const [snapToken, setSnapToken] = useState(null);
 
     const fetchKursus = () => {
         http.post("/siswa/kursus/getDetail", {
@@ -142,6 +145,13 @@ const Silabus = (props) => {
         });
     };
 
+    const getSnapToken = () => {
+        http.post("/siswa/kursus/daftar", {}).then((res) => {
+            setSnapToken(res.data.snapToken);
+            console.log(res.data.snapToken);
+        });
+    };
+
     const sendMessage = () => {
         http.post("/siswa/kursus/kirimPesan", {
             siswa_id: user.siswa_id,
@@ -159,10 +169,27 @@ const Silabus = (props) => {
 
     useEffect(() => {
         fetchDataChat(true);
-        setInterval(() => {
-            fetchDataChat(false);
-        }, 2000);
+        getSnapToken();
+        // setInterval(() => {
+        //     fetchDataChat(false);
+        // }, 2000);
     }, []);
+
+    useEffect(() => {
+        const snapSrcUrl = "https://app.sandbox.midtrans.com/snap/snap.js";
+        const myMidtransClientKey = "SB-Mid-client-sNFHj-ePZOzmxetY"; //change this according to your client-key
+
+        const script = document.createElement("script");
+        script.src = snapSrcUrl;
+        script.setAttribute("data-client-key", myMidtransClientKey);
+        script.async = true;
+
+        document.body.appendChild(script);
+
+        return () => {
+            document.body.removeChild(script);
+        };
+    }, [snapToken]);
 
     const handleOpen = (value) => {
         setOpen(open === value ? 0 : value);
@@ -313,7 +340,37 @@ const Silabus = (props) => {
                             src="/card_pic.png"
                             alt=""
                         />
-                        <button className="btn w-48 mx-auto rounded bg-white text-blue-900 border-0 hover:bg-gray-100 capitalize font-medium text-base">
+                        <button
+                            id="pay-button"
+                            onClick={() => {
+                                snapToken != null &&
+                                    window.snap.pay(snapToken, {
+                                        onSuccess: function (result) {
+                                            /* You may add your own implementation here */
+                                            console.log(result);
+                                            setTimeout(() => {
+                                                history.push("/siswa/kursus");
+                                            }, 2000);
+                                        },
+                                        onPending: function (result) {
+                                            /* You may add your own implementation here */
+                                            alert("waiting your payment!");
+                                            console.log(result);
+                                        },
+                                        onError: function (result) {
+                                            /* You may add your own implementation here */
+                                            alert("payment failed!");
+                                            console.log(result);
+                                        },
+                                        onClose: function () {
+                                            /* You may add your own implementation here */
+                                            console.log(result);
+                                            history.push("/siswa/kursus");
+                                        },
+                                    });
+                            }}
+                            className="btn w-48 mx-auto rounded bg-white text-blue-900 border-0 hover:bg-gray-100 capitalize font-medium text-base"
+                        >
                             Daftar Sekarang
                         </button>
                     </div>
@@ -431,6 +488,10 @@ const Silabus = (props) => {
                     </Accordion> */}
                 </Fragment>
             </div>
+            <script type="text/javascript">
+                {/* // For example trigger on button clicked, or any time you need */}
+                {/* {isClicked && window.snap.pay({ snapToken })} */}
+            </script>
         </div>
     );
 };
