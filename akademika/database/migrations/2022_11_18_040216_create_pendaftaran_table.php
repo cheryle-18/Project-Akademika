@@ -26,6 +26,7 @@ return new class extends Migration
             $table->integer('grand_total');
             $table->tinyInteger('cara_bayar');
             $table->tinyInteger('status');
+            $table->dateTime('tanggal');
             $table->timestamps();
         });
     }
