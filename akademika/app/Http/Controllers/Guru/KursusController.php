@@ -32,8 +32,13 @@ class KursusController extends Controller
         {
             $kursus_type = "diterbitkan";
         }
-        else if($kursus->status == 0 && $kursus->histori()->orderBy('tanggal','desc')->first()->status == 3){
-            $kursus_type = "diajukan";
+        else if($kursus->status == 0){
+            if(count($kursus->histori)!=0){
+                if($kursus->histori()->orderBy('tanggal','desc')->first()->status == 3){
+                    $kursus_type = "diajukan";
+                }
+            }
+
         }
         else if($kursus->status == 0 && count($kursus->histori)==0){
             $kursus_type = "draft";
@@ -54,6 +59,12 @@ class KursusController extends Controller
             return 1;
         }
         return 0;
+    }
+
+    function doDeleteSubbab(Request $request)
+    {
+        Subbab::find($request->subbab_id)->delete();
+        return 'success delete subbab';
     }
 
     function getAllMateri(Request $request)

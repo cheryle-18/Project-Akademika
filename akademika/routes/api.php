@@ -112,6 +112,7 @@ Route::group(['middleware'=>'api'],function ()
 
             Route::post('doEdit',[KursusController::class,'doEdit']);
             Route::post('doDelete',[KursusController::class,'doDelete']);
+            Route::post('doDeleteSubbab',[KursusController::class,'doDeleteSubbab']);
 
             Route::post('reportSiswa',[KursusController::class,'reportSiswa']);
 
