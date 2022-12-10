@@ -135,19 +135,19 @@ const LaporanAdmin = () => {
                 { type=="Kursus" &&
                     dataTable.map((data, index) => (
                         <tr>
-                            <td>{ index+1 }</td>
+                            <td className="text-center">{ index+1 }</td>
                             <td>{ data.kursus }</td>
-                            <td>{ data.total }</td>
+                            <td className="text-center">{ data.total }</td>
                         </tr>
                     ))
                 }
                 { type=="User" &&
                     dataTable.map((data, index) => (
                         <tr>
-                            <td>{ index+1 }</td>
-                            <td>{ data.tanggal }</td>
+                            <td className="text-center">{ index+1 }</td>
+                            <td className="text-center">{ data.tanggal }</td>
                             <td>{ data.nama }</td>
-                            <td>{ data.type }</td>
+                            <td className="text-center">{ data.type }</td>
                         </tr>
                     ))
                 }
