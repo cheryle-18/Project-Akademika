@@ -60,6 +60,30 @@ class KursusController extends Controller
             "materi" => $materi
         ]);
    }
+   function getRegisterData(Request $request)
+   {
+       $kursus_id = $request->kursus_id;
+       $siswa_id = $request->siswa_id;
+
+       if($siswa_id != null && $kursus_id!=null){
+            $data = Siswa::find($siswa_id)->kursus()->where('kursus.kursus_id',$kursus_id)->first();
+            $found = false;
+            if($data != null){
+                $found = true;
+            }
+
+            return response()->json([
+                "data" => $data,
+                "found" => $found
+            ]);
+       }
+       else{
+        return response()->json([
+            "found" => false
+        ]);
+       }
+
+   }
    function getPengumuman(Request $request)
    {
         $pengumuman = Kursus::find($request->kursus_id)->pengumuman;

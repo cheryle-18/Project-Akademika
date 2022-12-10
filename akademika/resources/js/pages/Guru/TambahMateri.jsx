@@ -3,7 +3,7 @@ import React, { useState, useEffect } from "react";
 import GuruNav from "./Navbar"
 import Tabs from "./Tabs";
 import AuthUser from "../../components/AuthUser";
-import { Link } from "react-router-dom";
+import { Link,useParams } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
     faArrowAltCircleLeft,
@@ -17,16 +17,17 @@ const TambahMateri = () => {
     const [course, setCourse] = useState("Pengembangan Website Front-End Dasar")
     const [penjelasan, setPenjelasan] = useState()
     const [video, setVideo] = useState()
-    const {http,user} = AuthUser();
+    const {http,user} = AuthUser()
+    const {kursus_id,subbab_id} = useParams()
 
     const onChangeVideoHandler = (e) => {
         setVideo(e.target.files[0])
     }
 
     const submitForm = () => {
-        const formData = new FormData();
-        formData.append('video', video);
-        formData.append('subbab_id',22)
+        const formData = new FormData()
+        formData.append('video', video)
+        formData.append('subbab_id',subbab_id)
         formData.append('penjelasan',penjelasan)
 
 
@@ -47,7 +48,7 @@ const TambahMateri = () => {
                 </div> */}
                   <div className="tabs text-xl text-custom-blue">
                     <Link
-                        to="/guru/kursus/subbab/detail"
+                        to={"/guru/kursus/"+kursus_id+"/subbab/"+subbab_id+"/detail"}
                         className="rounded-xl py-2"
                     >
                         <div className="float-left">

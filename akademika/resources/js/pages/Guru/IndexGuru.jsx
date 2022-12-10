@@ -40,7 +40,8 @@ const IndexGuru = () => {
                 <Route exact path="/guru/kursus/:kursus_id/subbab/:subbab_id/detail">
                     <DetailSubbab></DetailSubbab>
                 </Route>
-                <Route exact path="/guru/kursus/materi/tambah">
+           
+                <Route exact path="/guru/kursus/:kursus_id/subbab/:subbab_id/materi/tambah">
                     <TambahMateri></TambahMateri>
                 </Route>
                 <Route exact path="/guru/kursus/:kursus_id/subbab/:subbab_id/materi/:materi_id">

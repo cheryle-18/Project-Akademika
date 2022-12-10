@@ -5,6 +5,7 @@ import Home from "./pages/Home";
 import ForgotPassword from "./pages/ForgotPassword";
 import ResetPassword from "./pages/ResetPassword";
 import SearchKursus from "./pages/Kursus/SearchKursus"
+import Silabus from "./pages/Kursus/Silabus";
 
 const Index = () => {
     return (
@@ -13,8 +14,11 @@ const Index = () => {
                 <Route exact path="/">
                     <Home></Home>
                 </Route>
-                <Route exact path="/kursus/search">
+                <Route exact path="/guest/kursus/search">
                     <SearchKursus></SearchKursus>
+                </Route>
+                <Route exact path="/guest/kursus/:kursus_id/detail">
+                    <Silabus></Silabus>
                 </Route>
                 <Route exact path="/forgot-password">
                     <ForgotPassword />
@@ -22,9 +26,7 @@ const Index = () => {
                 <Route exact path="/reset-password/:token">
                     <ResetPassword />
                 </Route>
-                <Route exact path="/kursus/search">
-                  <SearchKursus></SearchKursus>
-                </Route>
+
             </Switch>
         </Router>
     );

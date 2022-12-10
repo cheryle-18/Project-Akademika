@@ -81,6 +81,16 @@ const DetailKursus = () => {
             history.push("/guru/kursus/diterbitkan");
         });
     };
+
+    const submitDeleteSubbab = (subbab_id) => {
+        http.post("/guru/kursus/doDeleteSubbab", {
+            subbab_id: subbab_id,
+        }).then((res) => {
+            console.log(res.data);
+            fetchSubbab();
+        });
+    };
+
     const submitAjukan = () => {
         http.post("/guru/kursus/doAjukan", {
             kursus_id: kursus_id,
@@ -358,7 +368,7 @@ const DetailKursus = () => {
                                                         Detail
                                                     </button>
                                                 </Link>
-                                                <button className="btn btn-sm capitalize bg-blue-900 text-white rounded font-normal">
+                                                <button className="btn btn-sm capitalize bg-blue-900 text-white rounded font-normal" onClick={()=>submitDeleteSubbab(n.subbab_id)}>
                                                     Hapus
                                                 </button>
                                             </td>
