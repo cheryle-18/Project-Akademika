@@ -11,7 +11,7 @@ const Nav = (props) => {
     const [registerFailed, setRegisterFailed] = useState("awal");
     const [openNow, setOpenNow] = useState("masuk");
     //login attribs
-    const { http, setToken } = AuthUser();
+    const { http, setToken} = AuthUser();
     const [loginEmail, setLoginEmail] = useState();
     const [loginPassword, setLoginPassword] = useState();
 

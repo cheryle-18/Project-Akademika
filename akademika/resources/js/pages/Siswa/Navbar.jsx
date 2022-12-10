@@ -6,6 +6,14 @@ import { Link } from "react-router-dom";
 import AuthUser from "../../components/AuthUser";
 const Nav = () => {
 
+    const {user,token,logout} = AuthUser()
+
+    const logoutSiswa = () => {
+        if(token != undefined){
+            logout();
+        }
+    }
+
     return (
         <div className="bg-custom-blue flex w-full px-4 sm:px-16 md:px-24 z-0">
             <div className="my-5 w-full">
@@ -31,11 +39,11 @@ const Nav = () => {
                                         Akun Saya
                                     </div>
                                 </Link>
-                                <Link to="/">
-                                    <div className="w-full h-10 flex justify-start items-center hover:bg-gray-200 rounded-lg pl-4">
+                                {/* <Link to="/"> */}
+                                    <div className="w-full h-10 flex justify-start items-center hover:bg-gray-200 rounded-lg pl-4" onClick={logoutSiswa}>
                                         Logout
                                     </div>
-                                </Link>
+                                {/* </Link> */}
                             </ul>
                         </div>
                     </div>
