@@ -62,6 +62,16 @@ const DetailSubbab = () => {
         });
     };
 
+    const submitDeleteMateri = (materi_id) => {
+        http.post("/guru/kursus/doDeleteMateri", {
+            materi_id: materi_id,
+        }).then((res) => {
+            console.log(res.data);
+            fetchMateri();
+        });
+
+    };
+
     useEffect(() => {
         fetchKursus();
         fetchSubbab();
@@ -193,7 +203,7 @@ const DetailSubbab = () => {
                                                     Detail
                                                 </button>
                                             </Link>
-                                            <button className="btn btn-sm capitalize bg-blue-900 text-white rounded font-normal">
+                                            <button className="btn btn-sm capitalize bg-blue-900 text-white rounded font-normal" onClick={()=>{submitDeleteMateri(n.materi_id)}}>
                                                 Hapus
                                             </button>
                                         </td>

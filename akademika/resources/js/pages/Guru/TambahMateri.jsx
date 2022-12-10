@@ -30,7 +30,6 @@ const TambahMateri = () => {
         formData.append('subbab_id',subbab_id)
         formData.append('penjelasan',penjelasan)
 
-
         http.post("/guru/kursus/materi/tambah",formData).then((res) => {
             let data = res.data;
             console.log(data);

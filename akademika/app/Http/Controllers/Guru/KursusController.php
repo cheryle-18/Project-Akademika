@@ -66,6 +66,11 @@ class KursusController extends Controller
         Subbab::find($request->subbab_id)->delete();
         return 'success delete subbab';
     }
+    function doDeleteMateri(Request $request)
+    {
+        Materi::find($request->materi_id)->delete();
+        return 'success delete materi';
+    }
 
     function getAllMateri(Request $request)
     {
