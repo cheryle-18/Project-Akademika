@@ -170,10 +170,10 @@ class AdminController extends Controller
 
         if($type=="Penghasilan"){
             if($filter=="Bulanan"){
-                $data = Pendaftaran::selectRaw("sum(grand_total) AS total, month(tanggal) AS bulan")->whereYear('tanggal', 2022)->groupBy('bulan')->get();
+                $data = Pendaftaran::selectRaw("sum(grand_total) AS total, monthname(tanggal) AS bulan, month(tanggal) as num")->whereYear('tanggal', 2022)->groupBy('bulan')->orderBy('num')->get();
             }
             else{
-                $data = Pendaftaran::selectRaw('sum(grand_total) AS total, year(tanggal) AS year')->whereYear('tanggal', 2022)->groupBy('year')->get();
+                $data = Pendaftaran::selectRaw('sum(grand_total) AS total, year(tanggal) AS year')->groupBy('year')->get();
             }
 
             foreach($data as $d){
@@ -185,7 +185,7 @@ class AdminController extends Controller
                 $data = Pendaftaran::selectRaw("count(*) AS total, month(tanggal) AS bulan")->whereYear('tanggal', 2022)->groupBy('bulan')->get();
             }
             else{
-                $data = Pendaftaran::selectRaw('count(*) AS total, year(tanggal) AS year')->whereYear('tanggal', 2022)->groupBy('year')->get();
+                $data = Pendaftaran::selectRaw('count(*) AS total, year(tanggal) AS year')->groupBy('year')->get();
             }
 
             foreach($data as $d){
@@ -198,19 +198,19 @@ class AdminController extends Controller
                 $dataSiswa = Siswa::selectRaw('count(*) total, month(email_verified_at) as bulan')->whereYear('email_verified_at', 2022)->groupBy('bulan')->get();
 
                 $totalDaftar = 0;
-                for($i=0; $i<12; $i++){
+                for($i=0; $i<sizeof($dataGuru); $i++){
                     $totalDaftar = $dataGuru[$i]->total + $dataSiswa[$i]->total;
-                    $laporan[] = $totalDaftar;
+                    $laporan[] = (int)$totalDaftar;
                 }
             }
             else{
-                $dataGuru = Guru::selectRaw('count(*) total, year(email_verified_at) as year')->whereYear('email_verified_at', 2022)->groupBy('year')->get();
-                $dataSiswa = Siswa::selectRaw('count(*) total, year(email_verified_at) as year')->whereYear('email_verified_at', 2022)->groupBy('year')->get();
+                $dataGuru = Guru::selectRaw('count(*) total, year(email_verified_at) as year')->groupBy('year')->get();
+                $dataSiswa = Siswa::selectRaw('count(*) total, year(email_verified_at) as year')->groupBy('year')->get();
 
                 $totalDaftar = 0;
                 for($i=0; $i<2; $i++){
                     $totalDaftar = $dataGuru[$i]->total + $dataSiswa[$i]->total;
-                    $laporan[] = $totalDaftar;
+                    $laporan[] = (int)$totalDaftar;
                 }
             }
         }

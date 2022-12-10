@@ -8,6 +8,7 @@ import AuthUser from "../../components/AuthUser";
 import { useEffect } from "react";
 import { Bar, Chart } from 'react-chartjs-2';
 import { Chart as ChartJS, registerables } from 'chart.js';
+import { data } from "autoprefixer";
 ChartJS.register(...registerables);
 
 const LaporanAdmin = () => {
@@ -21,8 +22,10 @@ const LaporanAdmin = () => {
     const [dataChart, setDataChart] = useState([])
     const [dataTable, setDataTable] = useState([])
     const [type, setType] = useState("Penghasilan")
+    const [chartLabel, setChartLabel] = useState("Penghasilan Kursus")
+    const [chartLabels, setChartLabels] = useState(['Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni', 'Juli', 'Agustus', 'September', 'Oktober', 'November', 'Desember'])
     const [filterChart, setFilterChart] = useState("Bulanan")
-    const [filterMonth, setFilterMonth] = useState("Januari")
+    const [filterMonth, setFilterMonth] = useState("1")
     const [filterYear, setFilterYear] = useState("2022")
 
     const [months, setMonths] = useState([
@@ -43,16 +46,19 @@ const LaporanAdmin = () => {
     const onClickKursus = () => {
         setTitle("kursus");
         setType("Kursus")
+        setChartLabel("Pendaftaran Kursus")
     };
 
     const onClickPenghasilan = () => {
         setTitle("penghasilan");
         setType("Penghasilan")
+        setChartLabel("Penghasilan Kursus")
     };
 
     const onClickUser = () => {
         setTitle("user");
         setType("User")
+        setChartLabel("Pendaftaran User")
     };
 
     const fetchData = () => {
@@ -74,6 +80,16 @@ const LaporanAdmin = () => {
             setDataChart(res.data.laporan);
             console.log(res.data.laporan);
         });
+    }
+
+    const setFilter = (selected) => {
+        setFilterChart(selected)
+        if(selected=="Bulanan"){
+            setChartLabels(['Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni', 'Juli', 'Agustus', 'September', 'Oktober', 'November', 'Desember'])
+        }
+        else{
+            setChartLabels(['2021', '2022'])
+        }
     }
 
     useEffect(() => {
@@ -118,23 +134,24 @@ const LaporanAdmin = () => {
                     <div className="inline-block w-full">
                         <div className="w-30 float-right">
                             <Select label="Jenis" className="pt-4 bg-white"
-                            onChange={(e) => setType(e)}>
+                            onChange={(e) => setFilter(e)}>
                                 <Option value="Bulanan">Bulanan</Option>
                                 <Option value="Tahunan">Tahunan</Option>
                             </Select>
                         </div>
                     </div>
                     <div className="clear-both"></div>
-                    <div className="bg-white overflow-y-auto h-65vh p-6 my-4 rounded-md drop-shadow-lg">
+                    <div className="bg-white overflow-y-auto h-auto p-6 my-4 rounded-md drop-shadow-lg">
                         {
                             dataChart &&
                             <Bar
                                 datasetIdKey='id'
                                 className="w-full"
                                 data={{
-                                    labels: ['Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni', 'Juli', 'Agustus', 'September', 'Oktober', 'November', 'Desember'],
+                                    labels: chartLabels,
                                     datasets: [{
-                                        data: [dataChart]
+                                        label: chartLabel,
+                                        data: dataChart
                                     }]
                                 }}
                             />
@@ -143,7 +160,7 @@ const LaporanAdmin = () => {
                     </div>
                     <div className="flex">
                         <span className="text-black font-semibold text-xl py-6">
-                            Laporan { type } { filterMonth } { filterYear }
+                            Laporan { type } { months[filterMonth-1].month } { filterYear }
                         </span>
                         <div className="w-30 ml-auto my-auto">
                             <Select label="Bulan" className="pt-4 bg-white"
