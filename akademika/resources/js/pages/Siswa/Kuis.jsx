@@ -8,7 +8,7 @@ import { Radio } from "@material-tailwind/react";
 import { useHistory } from "react-router-dom";
 
 const Kuis = () => {
-    const {http,user,token} = AuthUser()
+    const {http,user} = AuthUser()
     const id = useId()
     const [course, setCourse] = useState("Pengembangan Website Front-End Dasar")
     const [subbab, setSubbab] = useState({
@@ -18,16 +18,11 @@ const Kuis = () => {
     });
     const [listSoal, setListSoal] = useState([]);
     const [listJawaban, setListJawaban] = useState([])
-    const history = useHistory()
     const [siswa, setSiswa] = useState({
         id: 2,
         nama: "Cloyd Shanahan"
     })
     const [submitData, setSubmitData] = useState("")
-
-    if(token == null){
-        return history.push('/')
-    }
 
     const fetchDataKuis = () => {
         let url = `/siswa/kursus/kuis/get/${subbab.id}`
@@ -71,7 +66,7 @@ const Kuis = () => {
     }
 
     const redirect = () => {
-
+        const history = useHistory()
         history.push("/siswa/kursus/kuis/nilai")
     }
 

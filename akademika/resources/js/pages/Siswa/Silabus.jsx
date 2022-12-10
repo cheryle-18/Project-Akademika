@@ -38,7 +38,7 @@ function Icon({ id, open }) {
 
 const Silabus = (props) => {
     var payButton = "";
-    const { http, user,token } = AuthUser();
+    const { http, user, token } = AuthUser();
     const { kursus_id } = useParams();
     const [course, setCourse] = useState([]);
 
@@ -49,9 +49,8 @@ const Silabus = (props) => {
     const [isMuncul, setIsMuncul] = useState(false);
     let history = useHistory();
 
-
-    if(token == null){
-        return history.push('/')
+    if (token == null) {
+        return history.push("/");
     }
 
     const fetchKursus = () => {
@@ -127,8 +126,8 @@ const Silabus = (props) => {
     const [chatContent, setChatContent] = useState("");
     const [isFetched, setIsFetched] = useState(false);
 
-    if(token == null){
-        return history.push('/')
+    if (token == null) {
+        return history.push("/");
     }
 
     const last = () => {
@@ -263,23 +262,27 @@ const Silabus = (props) => {
                 <div>
                     {subbab.materi.map((materi, indexMateri) => {
                         if (isRegistered) {
-                            <Link
-                                to={`/siswa/kursus/${kursus_id}/materi/${materi.materi_id}`}
-                            >
+                            return (
+                                <Link
+                                    to={`/siswa/kursus/${kursus_id}/materi/${materi.materi_id}`}
+                                >
+                                    <div className="w-full bg-white flex mb-1">
+                                        <span>Materi</span>
+                                        <span className="ml-auto">
+                                            {subbab.durasi} menit
+                                        </span>
+                                    </div>
+                                </Link>
+                            );
+                        } else {
+                            return (
                                 <div className="w-full bg-white flex mb-1">
                                     <span>Materi</span>
                                     <span className="ml-auto">
                                         {subbab.durasi} menit
                                     </span>
                                 </div>
-                            </Link>;
-                        } else {
-                            <div className="w-full bg-white flex mb-1">
-                                <span>Materi</span>
-                                <span className="ml-auto">
-                                    {subbab.durasi} menit
-                                </span>
-                            </div>;
+                            );
                         }
                     })}
                     {subbab.kuis.map((kuis, indexKuis) => (

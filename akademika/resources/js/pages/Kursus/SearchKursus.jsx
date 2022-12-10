@@ -6,13 +6,12 @@ import { Input } from "@material-tailwind/react";
 import { Select, Option } from "@material-tailwind/react";
 import CourseCard from "./CourseCard";
 import AuthUser from "../../components/AuthUser";
-import {useHistory} from "react-router-dom";
-
+import { useHistory } from "react-router-dom";
 
 const SearchKursus = (props) => {
     const [listCourse, setListCourse] = useState([]);
     const [currentItems, setCurrentItems] = useState([]);
-    const { http,token} = AuthUser();
+    const { http, token } = AuthUser();
     const [filterName, setFilterName] = useState("");
     const [filterKategori, setFilterKategori] = useState("");
     const [filterModeHarga, setFilterModeHarga] = useState("");
@@ -20,11 +19,12 @@ const SearchKursus = (props) => {
 
     const [pageCount, setPageCount] = useState(0);
     const [currentPage, setCurrentPage] = useState(0);
+    const [selectedPage, setSelectedPage] = useState(0);
 
     const history = useHistory();
 
-    if(props.isSiswa && token == null){
-        return history.push('/')
+    if (props.isSiswa && token == null) {
+        return history.push("/");
     }
 
     const paginationUnclick =
@@ -36,7 +36,8 @@ const SearchKursus = (props) => {
         const newOffset = index * 10;
         const endOffset = newOffset + 10; //10 items per page
         setCurrentItems(listCourse.slice(newOffset, endOffset));
-        setCurrentPage(index);
+        // setCurrentPage(index);
+        setSelectedPage(index);
     };
 
     //to fetch all available courses
@@ -66,6 +67,10 @@ const SearchKursus = (props) => {
     useEffect(() => {
         fetchDataKursus();
     }, []);
+
+    // useEffect(() => {
+    //     console.log(pageCount);
+    // }, [pageCount]);
 
     useEffect(() => {
         repaginate(0);
@@ -168,7 +173,14 @@ const SearchKursus = (props) => {
                     <div class="flex justify-center mt-24 mb-10">
                         <nav aria-label="Page navigation example">
                             <ul class="flex list-style-none">
-                                <li class="page-item">
+                                <li
+                                    onClick={() => {
+                                        if (currentPage > 0) {
+                                            setCurrentPage(currentPage - 1);
+                                        }
+                                    }}
+                                    class="page-item"
+                                >
                                     <a
                                         class="page-link relative block py-1.5 px-3 border-0 outline-none transition-all duration-300 rounded bg-white text-gray-800 hover:text-white hover:bg-blue-900 focus:shadow-none"
                                         href="#"
@@ -178,25 +190,39 @@ const SearchKursus = (props) => {
                                     </a>
                                 </li>
                                 {Array.from({ length: pageCount }).map(
-                                    (it, index) => (
-                                        <li class="page-item">
-                                            <a
-                                                class={
-                                                    index == currentPage
-                                                        ? paginationClick
-                                                        : paginationUnclick
-                                                }
-                                                href="#"
-                                                onClick={() =>
-                                                    repaginate(index)
-                                                }
-                                            >
-                                                {index + 1}
-                                            </a>
-                                        </li>
-                                    )
+                                    (it, index) => {
+                                        if (
+                                            index >= currentPage &&
+                                            index <= currentPage + 2
+                                        ) {
+                                            return (
+                                                <li class="page-item">
+                                                    <a
+                                                        class={
+                                                            index == selectedPage
+                                                                ? paginationClick
+                                                                : paginationUnclick
+                                                        }
+                                                        href="#"
+                                                        onClick={() =>
+                                                            repaginate(index)
+                                                        }
+                                                    >
+                                                        {index + 1}
+                                                    </a>
+                                                </li>
+                                            );
+                                        }
+                                    }
                                 )}
-                                <li class="page-item">
+                                <li
+                                    onClick={() => {
+                                        if (currentPage + 1 < pageCount - 2) {
+                                            setCurrentPage(currentPage+1);
+                                        }
+                                    }}
+                                    class="page-item"
+                                >
                                     <a
                                         class="page-link relative block py-1.5 px-3 border-0 outline-none transition-all duration-300 rounded bg-white text-gray-800 hover:text-white hover:bg-blue-900 focus:shadow-none"
                                         href="#"
