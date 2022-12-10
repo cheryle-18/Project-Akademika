@@ -123,6 +123,7 @@ Route::group(['middleware'=>'api'],function ()
 
             Route::prefix('materi')->group(function () {
                 Route::post('tambah',[KursusController::class,'tambahMateri']);
+                Route::post('edit',[KursusController::class,'editMateri']);
                 Route::post('get',[KursusController::class,'getMateri']);
             });
 

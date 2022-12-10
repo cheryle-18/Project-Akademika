@@ -184,6 +184,21 @@ class KursusController extends Controller
         ]);
     }
 
+    public function validateDataEditMateri($data){
+        //Cek semua data
+        $validate = [];
+        $validate["penjelasan"] = 'required|string';
+
+        $validator = Validator::make($data,$validate,[
+            'penjelasan.required'=> "Bacaan harus diisi",
+        ]);
+
+        return response()->json([
+            'success' => !$validator->fails(),
+            'messages'=>$validator->errors(),
+        ]);
+    }
+
     function tambahKursus(Request $request)
     {
         $validate = json_decode($this->validateDataTambahKursus($request->all())->content(),false);
@@ -306,6 +321,28 @@ class KursusController extends Controller
 
         return 'ok';
     }
+
+    function editMateri(Request $request)
+    {
+        $validate = json_decode($this->validateDataEditMateri($request->all())->content(),false);
+        if($validate->success){
+            //edit
+            $materi = Materi::find($request->materi_id);
+
+            Storage::disk("google")->delete("videos/".$materi->link_video);
+         
+
+            return $materi->link_video;
+        }
+        else{
+            $messages = get_object_vars($validate->messages);
+            $message = array_values($messages)[0][0];
+            return $message;
+        }
+
+        return 'ok';
+    }
+
 
     function getVideoId($url){
         $link = $url;

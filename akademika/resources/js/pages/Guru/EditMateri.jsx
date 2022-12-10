@@ -16,7 +16,7 @@ import AuthUser from "../../components/AuthUser";
 const EditMateri = () => {
     const [title, setTitle] = useState("proses")
     const [course, setCourse] = useState([])
-    const [bacaan, setBacaan] = useState("Lorem ipsum dolor, sit amet consectetur adipisicing elit. Temporibus enim ipsa pariatur, accusantium eaque obcaecati consequuntur dignissimos minima dolor quos itaque dolores qui. Maxime assumenda, possimus ratione ad commodi mollitia libero eaque quod itaque accusamus sit in doloribus molestias beatae hic. Officia, quia. Aliquid minus aliquam quae earum illo vero!")
+    const [bacaan, setBacaan] = useState("")
     const [video, setVideo] = useState()
     const {http,user} = AuthUser();
     const {kursus_id,subbab_id,materi_id} = useParams()
@@ -26,13 +26,16 @@ const EditMateri = () => {
     }
 
     const submitForm = () => {
+        //edit
         const formData = new FormData();
         formData.append('video', video);
-        formData.append('subbab_id',22)
-        formData.append('penjelasan',penjelasan)
+        formData.append('subbab_id',subbab_id)
+        formData.append('materi_id',materi_id)
+        formData.append('penjelasan',bacaan)
 
-        http.post("/guru/kursus/materi/tambah",formData).then((res) => {
+        http.post("/guru/kursus/materi/edit",formData).then((res) => {
             let data = res.data;
+            console.log(res);
         });
     }
 
@@ -54,6 +57,7 @@ const EditMateri = () => {
             setMateri(res.data.materi);
         });
     };
+
 
     useEffect(() => {
         fetchKursus();
