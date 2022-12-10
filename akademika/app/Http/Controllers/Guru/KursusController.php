@@ -302,14 +302,16 @@ class KursusController extends Controller
         if($validate->success){
             //add a new course
             $ctr = Materi::where('subbab_id',$request->subbab_id)->withTrashed()->count();
+            $origin_name = 'video_'.$request->subbab_id.'_'.$ctr;
             $file_name = 'video_'.$request->subbab_id.'_'.$ctr.'.'.$request->video->getClientOriginalExtension();
-            $video_name = Storage::disk('google')->putFileAs('',$request->video,$file_name);
+            Storage::disk('google')->putFileAs('',$request->video,$file_name);
             $url = Storage::disk('google')->url($file_name);
             $id = $this->getVideoId($url);
             $newMateri = new Materi();
             $newMateri->subbab_id = $request->subbab_id;
             $newMateri->link_video = $id;
             $newMateri->penjelasan = $request->penjelasan;
+            $newMateri->video_name = $origin_name;
             $newMateri->save();
             return "berhasil tambah materi";
         }
@@ -329,10 +331,18 @@ class KursusController extends Controller
             //edit
             $materi = Materi::find($request->materi_id);
 
-            Storage::disk("google")->delete("videos/".$materi->link_video);
-         
+            if($request->has('video') && $request->video != ""){
+                $file_name = $materi->video_name.'.'.$request->video->getClientOriginalExtension();
+                Storage::disk('google')->delete($file_name);
+                Storage::disk('google')->putFileAs('',$request->video,$file_name);
+                $url = Storage::disk('google')->url($file_name);
+                $id = $this->getVideoId($url);
+                $materi->link_video = $id;
+            }
 
-            return $materi->link_video;
+            $materi->penjelasan = $request->penjelasan;
+            $materi->save();
+            return 'success edit materi';
         }
         else{
             $messages = get_object_vars($validate->messages);

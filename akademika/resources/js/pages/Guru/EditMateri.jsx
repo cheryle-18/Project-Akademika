@@ -17,7 +17,7 @@ const EditMateri = () => {
     const [title, setTitle] = useState("proses")
     const [course, setCourse] = useState([])
     const [bacaan, setBacaan] = useState("")
-    const [video, setVideo] = useState()
+    const [video, setVideo] = useState("")
     const {http,user} = AuthUser();
     const {kursus_id,subbab_id,materi_id} = useParams()
     const [materi,setMateri] = useState([])
@@ -154,7 +154,7 @@ const EditMateri = () => {
                                 <Textarea
                                     className="w-full h-48"
                                     name="bacaan"
-                                    value={materi.penjelasan}
+                                    defaultValue={materi.penjelasan}
                                     onChange={(e) =>setBacaan(e.target.value)}
                                 />
                             </td>

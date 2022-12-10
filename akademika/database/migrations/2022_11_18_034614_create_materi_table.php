@@ -19,6 +19,7 @@ return new class extends Migration
             $table->foreign('subbab_id')->references
             ('subbab_id')->on('subbab')->onDelete('cascade');
             $table->text('link_video')->nullable();
+            $table->text('video_name')->nullable();
             $table->text('penjelasan')->nullable();
             $table->timestamps();
             $table->softDeletes();

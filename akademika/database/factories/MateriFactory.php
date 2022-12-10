@@ -19,7 +19,8 @@ class MateriFactory extends Factory
     {
         return [
             'subbab_id' => $this->faker->randomElement(Subbab::all()->pluck('subbab_id')),
-            'link_video' => "1XMjIxq7QnjFn2HeZv7wq7zNyUphHCYJw",
+            'link_video' => "12LL_K_AifGQ3tcQooXIWV753IoFs7Ut-",
+            'video_name' =>'template',
             'penjelasan' => $this->faker->sentences(20,true),
         ];
     }
