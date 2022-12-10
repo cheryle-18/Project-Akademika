@@ -183,7 +183,7 @@ const DetailDiterbitkan = () => {
         http.post("/guru/kursus/getPesan", {
             guru_id: user.guru_id,
             siswa_id: siswa_id_now,
-            kursus_id: 33,
+            kursus_id: kursus_id,
         }).then((res) => {
             setChat(res.data.pesan);
             if (isLast) {
@@ -196,7 +196,7 @@ const DetailDiterbitkan = () => {
         http.post("/guru/kursus/kirimPesan", {
             guru_id: user.guru_id,
             siswa_id: siswa_id_now,
-            kursus_id: 33,
+            kursus_id: kursus_id,
             isi: chatContent,
         }).then((res) => {
             //refresh

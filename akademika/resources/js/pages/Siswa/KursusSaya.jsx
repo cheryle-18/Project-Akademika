@@ -27,7 +27,9 @@ const KursusSaya = () => {
     };
 
     useEffect(() => {
-        fetchKursus();
+        if(token!=null){
+            fetchKursus();
+        }
     }, []);
 
     return (
