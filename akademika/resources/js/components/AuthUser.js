@@ -18,19 +18,27 @@ export default function AuthUser(){
     const [user,setUser] = useState(getUser());
 
     const saveToken = (user,token) =>{
-        sessionStorage.setItem('token',JSON.stringify(token));
-        sessionStorage.setItem('user',JSON.stringify(user));
-
-        setUser(user);
-
-        if(user.role_text == 'guru'){
-            history.push('/guru/kursus/diterbitkan');
+        if(user == "admin"){
+            sessionStorage.setItem('user',JSON.stringify(user));
+            history.push('/admin/home');
             history.go();
         }
         else{
-            history.push(`/siswa/kursus`);
-            history.go();
+            sessionStorage.setItem('token',JSON.stringify(token));
+            sessionStorage.setItem('user',JSON.stringify(user));
+
+            setUser(user);
+
+            if(user.role_text == 'guru'){
+                history.push('/guru/kursus/diterbitkan');
+                history.go();
+            }
+            else{
+                history.push(`/siswa/kursus`);
+                history.go();
+            }
         }
+
     }
 
     const logout = () => {
