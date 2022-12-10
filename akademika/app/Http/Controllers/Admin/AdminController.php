@@ -258,7 +258,7 @@ class AdminController extends Controller
                 $laporan[] = [
                     "nama" => $guru->nama,
                     "type" => "Guru",
-                    "tanggal" => $guru->email_verified_at
+                    "tanggal" => date_format(date_create($guru->email_verified_at), "d M Y")
                 ];
             }
 
@@ -266,7 +266,7 @@ class AdminController extends Controller
                 $laporan[] = [
                     "nama" => $siswa->nama,
                     "type" => "Siswa",
-                    "tanggal" => $siswa->email_verified_at
+                    "tanggal" => date_format(date_create($siswa->email_verified_at), "d M Y")
                 ];
             }
         }
