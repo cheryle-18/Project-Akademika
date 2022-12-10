@@ -44,8 +44,8 @@ const Silabus = (props) => {
 
     const [listSubbab, setListSubbab] = useState([]);
     const [snapToken, setSnapToken] = useState(null);
-    const [isRegistered,setIsRegistered] = useState(false)
-    const [regisData,setRegisData] = useState([])
+    const [isRegistered, setIsRegistered] = useState(false);
+    const [regisData, setRegisData] = useState([]);
 
     const fetchKursus = () => {
         http.post("/siswa/kursus/getDetail", {
@@ -58,16 +58,15 @@ const Silabus = (props) => {
     const fetchRegisterData = () => {
         http.post("/siswa/kursus/getRegisterData", {
             kursus_id: kursus_id,
-            siswa_id:user.siswa_id
+            siswa_id: user.siswa_id,
         }).then((res) => {
-            if(res.data.found == true){
-                setIsRegistered(true)
-                setRegisData(res.data.data)
+            if (res.data.found == true) {
+                setIsRegistered(true);
+                setRegisData(res.data.data);
             }
-            setIsFetched(true)
-
+            setIsFetched(true);
         });
-    }
+    };
 
     useEffect(() => {
         fetchKursus();
@@ -76,7 +75,7 @@ const Silabus = (props) => {
         fetchDataChat(true);
 
         setInterval(() => {
-            if(isOpened){
+            if (isOpened) {
                 fetchDataChat(false);
             }
         }, 2000);
@@ -119,7 +118,7 @@ const Silabus = (props) => {
     const [isOpened, setIsOpened] = useState(false);
     const [chats, setChat] = useState([]);
     const [chatContent, setChatContent] = useState("");
-    const [isFetched,setIsFetched] = useState(false)
+    const [isFetched, setIsFetched] = useState(false);
 
     const last = () => {
         document.getElementById("last").click();
@@ -263,7 +262,7 @@ const Silabus = (props) => {
 
     return (
         <div className="min-h-screen w-full overflow-x-hidden flex flex-col bg-gray-100">
-            {(isOpened && isRegistered) && (
+            {isOpened && isRegistered && (
                 <div className="fixed bottom-14 lg:bottom-10 right-0 lg:right-32 bg-transparent duration-500 z-10">
                     <div className="w-400px bg-custom-blue px-4 rounded-t-lg">
                         <div className="w-full py-4 font-semibold text-white">
@@ -322,7 +321,7 @@ const Silabus = (props) => {
                     </div>
                 </div>
             )}
-            {(props.isGuest == null && isRegistered) && (
+            {props.isGuest == null && isRegistered && (
                 <div
                     onClick={changeToggle}
                     className="fixed bottom-0 lg:bottom-10 right-0 lg:right-10 p-2 bg-custom-light-blue text-custom-blue rounded-lg text-4xl cursor-pointer duration-500 hover:text-custom-light-blue hover:bg-custom-blue z-10"
@@ -348,41 +347,38 @@ const Silabus = (props) => {
                             src="/card_pic.png"
                             alt=""
                         />
-                        <button
-                            id="pay-button"
-                            onClick={() => {
-                                snapToken != null &&
-                                    window.snap.pay(snapToken, {
-                                        onSuccess: function (result) {
-                                            /* You may add your own implementation here */
-                                            console.log(result);
-                                            setTimeout(() => {
-                                                history.push("/siswa/kursus");
-                                            }, 2000);
-                                        },
-                                        onPending: function (result) {
-                                            /* You may add your own implementation here */
-                                            alert("waiting your payment!");
-                                            console.log(result);
-                                        },
-                                        onError: function (result) {
-                                            /* You may add your own implementation here */
-                                            alert("payment failed!");
-                                            console.log(result);
-                                        },
-                                        onClose: function () {
-                                            /* You may add your own implementation here */
-                                            console.log(result);
-                                            history.push("/siswa/kursus");
-                                        },
-                                    });
-                            }}
-                            className="btn w-48 mx-auto rounded bg-white text-blue-900 border-0 hover:bg-gray-100 capitalize font-medium text-base"
-                        />
 
-                        {(!isRegistered && isFetched) && <button className="btn w-48 mx-auto rounded bg-white text-blue-900 border-0 hover:bg-gray-100 capitalize font-medium text-base">
-                            Daftar Sekarang
-                        </button>}
+                        {!isRegistered && isFetched && (
+                            <button
+                                id="pay-button"
+                                onClick={() => {
+                                    snapToken != null &&
+                                        window.snap.pay(snapToken, {
+                                            onSuccess: function (result) {
+                                                /* You may add your own implementation here */
+                                                console.log(result);
+                                            },
+                                            onPending: function (result) {
+                                                /* You may add your own implementation here */
+                                                alert("waiting your payment!");
+                                                console.log(result);
+                                            },
+                                            onError: function (result) {
+                                                /* You may add your own implementation here */
+                                                alert("payment failed!");
+                                                console.log(result);
+                                            },
+                                            onClose: function () {
+                                                /* You may add your own implementation here */
+                                                console.log(result);
+                                            },
+                                        });
+                                }}
+                                className="btn w-48 mx-auto rounded bg-white text-blue-900 border-0 hover:bg-gray-100 capitalize font-medium text-base"
+                            >
+                                Daftar Sekarang
+                            </button>
+                        )}
                     </div>
                     <div className="w-3/4 flex flex-col text-white">
                         <div className="font-bold text-4xl mb-3">
@@ -406,35 +402,34 @@ const Silabus = (props) => {
                 </div>
             </div>
             <div className="silabus px-4 sm:px-16 md:px-24 py-6 w-full overflow-x-none bg-gray-100">
-                {isRegistered && <div className="tabs w-auto">
-                    <div className="bg-custom-blue text-white inline-block text-base tracking-wide p-1 py-2 rounded-md mb-10 mt-4">
-                        <div
-                            className={
-                                (title == "materi" && classSelected) ||
-                                (title != "materi" && classOther)
-                            }
-                            onClick={onClickMateri}
-                        >
-                            Materi
-                        </div>
-                        <div
-                            className={
-                                (title == "pengumuman" && classSelected) ||
-                                (title != "pengumuman" && classOther)
-                            }
-                            onClick={onClickPengumuman}
-                        >
-                            Pengumuman
+                {isRegistered && (
+                    <div className="tabs w-auto">
+                        <div className="bg-custom-blue text-white inline-block text-base tracking-wide p-1 py-2 rounded-md mb-10 mt-4">
+                            <div
+                                className={
+                                    (title == "materi" && classSelected) ||
+                                    (title != "materi" && classOther)
+                                }
+                                onClick={onClickMateri}
+                            >
+                                Materi
+                            </div>
+                            <div
+                                className={
+                                    (title == "pengumuman" && classSelected) ||
+                                    (title != "pengumuman" && classOther)
+                                }
+                                onClick={onClickPengumuman}
+                            >
+                                Pengumuman
+                            </div>
                         </div>
                     </div>
-                </div>}
+                )}
                 <div className="font-bold text-3xl text-blue-900 mb-6">
                     Silabus Kursus
                 </div>
-                <Fragment>
-                    {cetakSilabus}
-
-                </Fragment>
+                <Fragment>{cetakSilabus}</Fragment>
             </div>
             <script type="text/javascript">
                 {/* // For example trigger on button clicked, or any time you need */}

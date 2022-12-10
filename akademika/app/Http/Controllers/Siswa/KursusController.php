@@ -240,6 +240,7 @@ class KursusController extends Controller
                 'email' => 'budi.pra@example.com',
                 'phone' => '08111222333',
             ),
+        );
 
         $snapToken = \Midtrans\Snap::getSnapToken($params);
 
