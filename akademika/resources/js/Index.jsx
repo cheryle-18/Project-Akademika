@@ -4,7 +4,7 @@ import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import Home from "./pages/Home";
 import ForgotPassword from "./pages/ForgotPassword";
 import ResetPassword from "./pages/ResetPassword";
-import SearchKursus from "./pages/Kursus/SearchKursus"
+import SearchKursus from "./pages/Kursus/SearchKursus";
 import Silabus from "./pages/Kursus/Silabus";
 
 const Index = () => {
@@ -26,7 +26,6 @@ const Index = () => {
                 <Route exact path="/reset-password/:token">
                     <ResetPassword />
                 </Route>
-
             </Switch>
         </Router>
     );

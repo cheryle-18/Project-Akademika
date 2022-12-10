@@ -251,16 +251,27 @@ const Silabus = (props) => {
             </AccordionHeader>
             <AccordionBody className="bg-white p-4 text-base border-2 border-t-0 border-blue-900">
                 <div>
-                    {subbab.materi.map((materi, indexMateri) => (
-                        <Link to={`/siswa/kursus/${kursus_id}/materi/${materi.materi_id}`}>
+                    {subbab.materi.map((materi, indexMateri) => {
+                        if (isRegistered) {
+                            <Link
+                                to={`/siswa/kursus/${kursus_id}/materi/${materi.materi_id}`}
+                            >
+                                <div className="w-full bg-white flex mb-1">
+                                    <span>Materi</span>
+                                    <span className="ml-auto">
+                                        {subbab.durasi} menit
+                                    </span>
+                                </div>
+                            </Link>;
+                        } else {
                             <div className="w-full bg-white flex mb-1">
                                 <span>Materi</span>
                                 <span className="ml-auto">
                                     {subbab.durasi} menit
                                 </span>
-                            </div>
-                        </Link>
-                    ))}
+                            </div>;
+                        }
+                    })}
                     {subbab.kuis.map((kuis, indexKuis) => (
                         <div className="w-full bg-white flex mb-1">
                             <span>Kuis</span>
