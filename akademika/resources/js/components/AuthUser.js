@@ -3,8 +3,6 @@ import { useState } from 'react';
 import {useHistory} from 'react-router-dom';
 export default function AuthUser(){
     const history = useHistory();
-
-
     const getToken = () => {
         const tokenString = sessionStorage.getItem('token');
         const userToken = JSON.parse(tokenString);

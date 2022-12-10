@@ -2,9 +2,19 @@ import React, { useState, useEffect, Fragment } from "react";
 import CourseCard from "../Kursus/CourseCard";
 import SiswaNav from "./Navbar";
 import AuthUser from "../../components/AuthUser";
+import {useHistory} from "react-router-dom";
+
 
 const KursusSaya = () => {
-    const { http, user } = AuthUser();
+    const history = useHistory()
+    const { http, user,token } = AuthUser();
+    if(token == null){
+        return history.push('/')
+    }
+    else if(token != null && user.role_text == "guru"){
+        
+    }
+
     const [listCourse, setListCourse] = useState([]);
     const fetchKursus = () => {
         http.post("/siswa/kursus/get", {
@@ -15,8 +25,11 @@ const KursusSaya = () => {
     };
 
     useEffect(() => {
-        fetchKursus();
+
+            fetchKursus();
     }, []);
+
+
 
     return (
         <div className="min-h-screen w-full overflow-x-hidden flex flex-col bg-gray-100">

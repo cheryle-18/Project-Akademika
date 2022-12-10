@@ -79,6 +79,11 @@ Route::group(['middleware'=>'api'],function ()
                 Route::post('update',[AdminController::class,'updateKursus']);
                 Route::post('getAllSubbab',[AdminController::class,'getAllSubbab']);
             });
+
+            Route::prefix('laporan')->group(function() {
+                Route::post('chart', [AdminController::class, 'getLaporanChart']);
+                Route::post('data', [AdminController::class, 'getLaporanData']);
+            });
         });
     });
 

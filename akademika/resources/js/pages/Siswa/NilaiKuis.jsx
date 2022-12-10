@@ -2,11 +2,11 @@ import React, { useState, useEffect } from "react";
 import Banner from "./Banner";
 import PembahasanCard from "./PembahasanCard";
 import Nav from "./Navbar";
-import { Link } from "react-router-dom";
+import { Link,useHistory } from "react-router-dom";
 import AuthUser from "../../components/AuthUser";
 
 const NilaiKuis = () => {
-    const {http,user} = AuthUser()
+    const {http,user,token} = AuthUser()
     const [course, setCourse] = useState("Pengembangan Website Front-End Dasar")
     const [subbab, setSubbab] = useState({
         id: 2,
@@ -15,6 +15,10 @@ const NilaiKuis = () => {
     })
     const [listSoal, setListSoal] = useState([])
     const [hasilKuis, setHasilKuis] = useState([])
+    const history = useHistory()
+    if(token == null){
+        return history.push('/')
+    }
 
     const fetchDataKuis = () => {
         let url = `/siswa/kursus/kuis/get/${subbab.id}`

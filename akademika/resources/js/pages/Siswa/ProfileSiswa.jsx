@@ -12,7 +12,7 @@ import { Alert, Input, Radio } from "@material-tailwind/react";
 
 const ProfileSiswa = () => {
     let history = useHistory();
-    const { user, http } = AuthUser();
+    const { user,http,token } = AuthUser();
     const [siswa, setSiswa] = useState([]);
     const [updateFailed, setUpdateFailed] = useState("awal");
     const [nama, setNama] = useState();
@@ -23,6 +23,10 @@ const ProfileSiswa = () => {
     const [totalPoin, setTotalPoin] = useState(0);
     const [status, setStatus] = useState();
     const [isAktif, setAktif] = useState(true);
+
+    if(token == null){
+        return history.push('/')
+    }
 
     const fetchDataSiswa = () => {
         http.post("/admin/master/siswa/detail", {
