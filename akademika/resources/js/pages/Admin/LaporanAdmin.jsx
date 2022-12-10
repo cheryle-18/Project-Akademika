@@ -4,6 +4,11 @@ import { BrowserRouter as Router, Route } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCoffee } from "@fortawesome/free-solid-svg-icons";
 import Sidebar from "./Sidebar";
+import AuthUser from "../../components/AuthUser";
+import { useEffect } from "react";
+import { Bar, Chart } from 'react-chartjs-2';
+import { Chart as ChartJS, registerables } from 'chart.js';
+ChartJS.register(...registerables);
 
 const LaporanAdmin = () => {
     const classSelected =
@@ -11,119 +16,76 @@ const LaporanAdmin = () => {
     const classOther =
         "float-left hover:bg-gray-200 hover:text-custom-blue py-1 px-4 rounded-sm mx-1 cursor-pointer";
 
-    const [title, setTitle] = useState("kursus");
+        const { http } = AuthUser();
+    const [title, setTitle] = useState("penghasilan");
+    const [dataChart, setDataChart] = useState([])
+    const [dataTable, setDataTable] = useState([])
+    const [type, setType] = useState("Penghasilan")
+    const [filterChart, setFilterChart] = useState("Bulanan")
+    const [filterMonth, setFilterMonth] = useState("Januari")
+    const [filterYear, setFilterYear] = useState("2022")
+
+    const [months, setMonths] = useState([
+        { month: "Januari", num: 1 },
+        { month: "Februari", num: 2 },
+        { month: "Maret", num: 3 },
+        { month: "April", num: 4 },
+        { month: "Mei", num: 5 },
+        { month: "Juni", num: 6 },
+        { month: "Juli", num: 7 },
+        { month: "Agustus", num: 8 },
+        { month: "September", num: 9 },
+        { month: "Oktober", num: 10 },
+        { month: "November", num: 11 },
+        { month: "Desember", num: 12 },
+    ])
 
     const onClickKursus = () => {
         setTitle("kursus");
+        setType("Kursus")
     };
 
     const onClickPenghasilan = () => {
         setTitle("penghasilan");
+        setType("Penghasilan")
     };
 
     const onClickUser = () => {
         setTitle("user");
+        setType("User")
     };
 
-    const [masters, setMaster] = useState([
-        {
-            id: "K001",
-            nama: "Pengembangan Web Front-End Dasar",
-            kategori: "Teknologi Informasi",
-            guru: "John Doe",
-            status: "Live",
-        },
-        {
-            id: "K001",
-            nama: "Pengembangan Web Front-End Dasar",
-            kategori: "Teknologi Informasi",
-            guru: "John Doe",
-            status: "Live",
-        },
-        {
-            id: "K001",
-            nama: "Pengembangan Web Front-End Dasar",
-            kategori: "Teknologi Informasi",
-            guru: "John Doe",
-            status: "Live",
-        },
-        {
-            id: "K001",
-            nama: "Pengembangan Web Front-End Dasar",
-            kategori: "Teknologi Informasi",
-            guru: "John Doe",
-            status: "Live",
-        },
-    ]);
+    const fetchData = () => {
+        http.post("/admin/master/laporan/data", {
+            type: type,
+            month: filterMonth,
+            year: filterYear
+        }).then((res) => {
+            setDataTable(res.data.laporan);
+            console.log(res.data.laporan);
+        });
+    }
 
-    const [pengajuans, setPengajuan] = useState([
-        {
-            id: "K010",
-            nama: "Digital Marketing",
-            kategori: "Bisnis dan Ekonomi",
-            guru: "John Doe",
-            status: "Pending",
-        },
-    ]);
+    const fetchChart = () => {
+        http.post("/admin/master/laporan/chart", {
+            type: type,
+            filter: filterChart
+        }).then((res) => {
+            setDataChart(res.data.laporan);
+            console.log(res.data.laporan);
+        });
+    }
 
-    const classBorder = "text-center border border-b-gray-600 border-x-0";
-
-    const cetakMaster = masters.map((master, index) => (
-        <tbody>
-            <tr className={classBorder}>
-                <td className="text-base">{index + 1}</td>
-                <td className="text-base">{master.id}</td>
-                <td className="text-base">{master.nama}</td>
-                <td className="text-base">{master.kategori}</td>
-                <td className="text-base">{master.guru}</td>
-                <td className="text-green-700 text-base">{master.status}</td>
-                <td className="text-base">
-                    <button
-                        type="button"
-                        className="py-2 px-4  bg-custom-blue hover:bg-blue-900 text-white transition ease-in duration-200 text-center text-base font-normal shadow-md rounded-lg w-20"
-                    >
-                        Detail
-                    </button>
-                </td>
-            </tr>
-        </tbody>
-    ));
-
-    const cetakPengajuan = pengajuans.map((pengajuan, index) => (
-        <tbody>
-            <tr className={classBorder}>
-                <td className="text-base">{index + 1}</td>
-                <td className="text-base">{pengajuan.id}</td>
-                <td className="text-base">{pengajuan.nama}</td>
-                <td className="text-base">{pengajuan.kategori}</td>
-                <td className="text-base">{pengajuan.guru}</td>
-                <td className="text-green-700 text-base">{pengajuan.status}</td>
-                <td className="text-base">
-                    <button
-                        type="button"
-                        className="py-2 px-4  bg-custom-blue hover:bg-blue-900 text-white transition ease-in duration-200 text-center text-base font-normal shadow-md rounded-lg w-20"
-                    >
-                        Detail
-                    </button>
-                </td>
-            </tr>
-        </tbody>
-    ));
+    useEffect(() => {
+        fetchData()
+        fetchChart()
+    }, [type, filterChart, filterMonth, filterYear])
 
     return (
         <div className="bg-gray-200 flex">
             <Sidebar now="laporan">
-                <div className="text-2xl p-10 pt-6 pb-2">
+                <div className="text-2xl p-10 pb-2">
                     <div className="bg-custom-blue text-white inline-block text-base tracking-wide p-1 py-2 rounded-md">
-                        <div
-                            className={
-                                (title == "kursus" && classSelected) ||
-                                (title != "kursus" && classOther)
-                            }
-                            onClick={onClickKursus}
-                        >
-                            Kursus
-                        </div>
                         <div
                             className={
                                 (title == "penghasilan" && classSelected) ||
@@ -132,6 +94,15 @@ const LaporanAdmin = () => {
                             onClick={onClickPenghasilan}
                         >
                             Penghasilan
+                        </div>
+                        <div
+                            className={
+                                (title == "kursus" && classSelected) ||
+                                (title != "kursus" && classOther)
+                            }
+                            onClick={onClickKursus}
+                        >
+                            Kursus
                         </div>
                         <div
                             className={
@@ -146,17 +117,51 @@ const LaporanAdmin = () => {
                     <div className="clear-both"></div>
                     <div className="inline-block w-full">
                         <div className="w-30 float-right">
-                            <Select label="Jenis" className="pt-4 bg-white">
-                                <Option>Material Tailwind HTML</Option>
-                                <Option>Material Tailwind React</Option>
-                                <Option>Material Tailwind Vue</Option>
+                            <Select label="Jenis" className="pt-4 bg-white"
+                            onChange={(e) => setType(e)}>
+                                <Option value="Bulanan">Bulanan</Option>
+                                <Option value="Tahunan">Tahunan</Option>
                             </Select>
                         </div>
                     </div>
                     <div className="clear-both"></div>
-                    <div className="bg-white overflow-y-auto h-65vh p-6 mb-6 rounded-md drop-shadow-lg"></div>
-                    <div className="text-black font-semibold text-xl p-6">
-                        Laporan Penghasilan Tahunan
+                    <div className="bg-white overflow-y-auto h-65vh p-6 my-4 rounded-md drop-shadow-lg">
+                        {
+                            dataChart &&
+                            <Bar
+                                datasetIdKey='id'
+                                className="w-full"
+                                data={{
+                                    labels: ['Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni', 'Juli', 'Agustus', 'September', 'Oktober', 'November', 'Desember'],
+                                    datasets: [{
+                                        data: [dataChart]
+                                    }]
+                                }}
+                            />
+                        }
+
+                    </div>
+                    <div className="flex">
+                        <span className="text-black font-semibold text-xl py-6">
+                            Laporan { type } { filterMonth } { filterYear }
+                        </span>
+                        <div className="w-30 ml-auto my-auto">
+                            <Select label="Bulan" className="pt-4 bg-white"
+                            onChange={(e) => setFilterMonth(e)}>
+                                {
+                                    months.map((m, index) => (
+                                        <Option value={ m.num }>{m.month}</Option>
+                                    ))
+                                }
+                            </Select>
+                        </div>
+                        <div className="w-30 ml-3 my-auto">
+                            <Select label="Tahun" className="pt-4 bg-white"
+                            onChange={(e) => setFilterYear(e)}>
+                                <Option value="2021">2021</Option>
+                                <Option value="2022">2022</Option>
+                            </Select>
+                        </div>
                     </div>
                     <div className="bg-white overflow-y-auto p-4 mb-6 rounded-md drop-shadow-lg">
                         <table className="table table-compact w-full text-black">

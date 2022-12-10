@@ -6,9 +6,11 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Guru;
 use App\Models\Kursus;
+use App\Models\Pendaftaran;
 use App\Models\Siswa;
 use App\Models\Subbab;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
 
@@ -157,6 +159,120 @@ class AdminController extends Controller
         $subbab = Subbab::where('kursus_id',$request->kursus_id)->get();
         return response()->json([
             "subbab" => $subbab
+        ]);
+    }
+
+    function getLaporanChart(Request $req){
+        $type = $req->type;
+        $filter = $req->filter;
+
+        $laporan = [];
+
+        if($type=="Penghasilan"){
+            if($filter=="Bulanan"){
+                $data = Pendaftaran::selectRaw("sum(grand_total) AS total, month(tanggal) AS bulan")->whereYear('tanggal', 2022)->groupBy('bulan')->get();
+            }
+            else{
+                $data = Pendaftaran::selectRaw('sum(grand_total) AS total, year(tanggal) AS year')->whereYear('tanggal', 2022)->groupBy('year')->get();
+            }
+
+            foreach($data as $d){
+                $laporan[] = (int)$d->total;
+            }
+        }
+        else if($type=="Kursus"){
+            if($filter=="Bulanan"){
+                $data = Pendaftaran::selectRaw("count(*) AS total, month(tanggal) AS bulan")->whereYear('tanggal', 2022)->groupBy('bulan')->get();
+            }
+            else{
+                $data = Pendaftaran::selectRaw('count(*) AS total, year(tanggal) AS year')->whereYear('tanggal', 2022)->groupBy('year')->get();
+            }
+
+            foreach($data as $d){
+                $laporan[] = $d->total;
+            }
+        }
+        else if($type=="User"){
+            if($filter=="Bulanan"){
+                $dataGuru = Guru::selectRaw('monthname(email_verified_at), count(*) total, month(email_verified_at) as bulan')->whereYear('email_verified_at', 2022)->groupBy('bulan')->get();
+                $dataSiswa = Siswa::selectRaw('count(*) total, month(email_verified_at) as bulan')->whereYear('email_verified_at', 2022)->groupBy('bulan')->get();
+
+                $totalDaftar = 0;
+                for($i=0; $i<12; $i++){
+                    $totalDaftar = $dataGuru[$i]->total + $dataSiswa[$i]->total;
+                    $laporan[] = $totalDaftar;
+                }
+            }
+            else{
+                $dataGuru = Guru::selectRaw('count(*) total, year(email_verified_at) as year')->whereYear('email_verified_at', 2022)->groupBy('year')->get();
+                $dataSiswa = Siswa::selectRaw('count(*) total, year(email_verified_at) as year')->whereYear('email_verified_at', 2022)->groupBy('year')->get();
+
+                $totalDaftar = 0;
+                for($i=0; $i<2; $i++){
+                    $totalDaftar = $dataGuru[$i]->total + $dataSiswa[$i]->total;
+                    $laporan[] = $totalDaftar;
+                }
+            }
+        }
+
+        return response()->json([
+            "laporan" => $laporan
+        ]);
+    }
+
+    function getLaporanData(Request $req){
+        $type = $req->type;
+        $month = $req->month;
+        $year = $req->year;
+
+        $laporan = [];
+
+        if($type=="Penghasilan"){
+            $data = Pendaftaran::whereMonth('tanggal', $month)->whereYear('tanggal', $year)->get();
+
+            foreach($data as $d){
+                $laporan[] = [
+                    "kursus" => $d->kursus->nama,
+                    "siswa" => $d->siswa->nama,
+                    "total" => $d->grand_total,
+                    "tanggal" => date_format(date_create($d->tanggal), "d M Y")
+                ];
+            }
+        }
+        else if($type=="Kursus"){
+            $data = Pendaftaran::whereMonth('tanggal', $month)->whereYear('tanggal', $year)->groupBy('kursus_id')->get();
+
+            foreach($data as $d){
+                $count = Pendaftaran::where('kursus_id', $d->kursus_id)->whereMonth('tanggal', $month)->whereYear('tanggal', $year)->count();
+                $laporan[] = [
+                    "kursus" => $d->kursus->nama,
+                    "total" =>  $count
+                ];
+            }
+        }
+        else if($type=="User"){
+            $dataGuru = Guru::whereMonth('email_verified_at', $month)->whereYear('email_verified_at', $year)->get();
+            $dataSiswa = Siswa::whereMonth('email_verified_at', $month)->whereYear('email_verified_at', $year)->get();
+
+            foreach($dataGuru as $guru){
+                $laporan[] = [
+                    "nama" => $guru->nama,
+                    "type" => "Guru",
+                    "tanggal" => $guru->email_verified_at
+                ];
+            }
+
+            foreach($dataSiswa as $siswa){
+                $laporan[] = [
+                    "nama" => $siswa->nama,
+                    "type" => "Siswa",
+                    "tanggal" => $siswa->email_verified_at
+                ];
+            }
+        }
+
+        return response()->json([
+            "laporan" => $laporan
         ]);
     }
 }
