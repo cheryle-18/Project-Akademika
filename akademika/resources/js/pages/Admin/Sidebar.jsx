@@ -11,12 +11,21 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import { Link } from "react-router-dom";
 import "../../../css/app.css";
+import AuthUser from "../../components/AuthUser";
 
 const Sidebar = (props) => {
     const classNow = "px-4 py-3 mt-3 rounded-lg text-blue-800 bg-white";
     const classMenu =
         "px-4 py-3 mt-3 rounded-lg text-white hover:text-blue-800 bg-custom-blue hover:bg-gray-100";
     const [open, setOpen] = useState(true);
+    const { http, token, user, logout } = AuthUser();
+
+    const logoutAdmin = () => {
+        if (token != undefined) {
+            logout();
+        }
+    };
+
     const Menus = [
         {
             title: "Home",
@@ -53,20 +62,31 @@ const Sidebar = (props) => {
             icon: faSignOut,
             link: "/",
             now: props.now == "logout",
+            isLogout: true,
         },
     ];
 
     const cetakMenu = Menus.map((menu, index) => (
-        <Link to={menu.link} key={index}>
-            <div className={(!menu.now && classMenu) || (menu.now && classNow)}>
-                <div className="relative">
-                    <FontAwesomeIcon icon={menu.icon} />
-                    <div className="inline ml-6 absolute left-5">
-                        {menu.title}
+        <div
+            onClick={() => {
+                menu.isLogout != null && logoutAdmin();
+            }}
+        >
+            <Link to={menu.link} key={index}>
+                <div
+                    className={
+                        (!menu.now && classMenu) || (menu.now && classNow)
+                    }
+                >
+                    <div className="relative">
+                        <FontAwesomeIcon icon={menu.icon} />
+                        <div className="inline ml-6 absolute left-5">
+                            {menu.title}
+                        </div>
                     </div>
                 </div>
-            </div>
-        </Link>
+            </Link>
+        </div>
     ));
 
     return (

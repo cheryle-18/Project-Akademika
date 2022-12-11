@@ -19,6 +19,7 @@ export default function AuthUser(){
 
     const saveToken = (user,token) =>{
         if(user == "admin"){
+            sessionStorage.setItem('token',JSON.stringify(token));
             sessionStorage.setItem('user',JSON.stringify(user));
             history.push('/admin/home');
             history.go();

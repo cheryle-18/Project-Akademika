@@ -10,8 +10,10 @@ const KursusSaya = () => {
     const [isLoading, setIsLoading] = useState(true);
 
     setTimeout(() => {
-        if (token == null || user == "admin") {
-            console.log(token);
+        if(user == "admin"){
+            return history.push("/admin/home");
+        }
+        else if (token == null) {
             return history.push("/");
         } else if (user.role_text == "guru") {
             return history.push("/guru/kursus/diterbitkan");

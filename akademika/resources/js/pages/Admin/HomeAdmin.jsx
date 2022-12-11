@@ -26,6 +26,10 @@ const HomeAdmin = () => {
             }
         }
     }, 1000);
+
+    // useEffect(() => {
+    //     alert(token);
+    // },[token]);
     return (
         <div>
             {isLoading || token == null || user.role_text != null ? (

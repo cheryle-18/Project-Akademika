@@ -43,7 +43,7 @@ const LaporanAdmin = () => {
     const [filterYear, setFilterYear] = useState("2022");
 
     const history = useHistory();
-    const [isLoading, setIsLoading] = useState(true);
+    const [isLoading, setIsLoading] = useState(false);
 
     setTimeout(() => {
         if (token == null) {
@@ -100,7 +100,6 @@ const LaporanAdmin = () => {
             year: filterYear,
         }).then((res) => {
             setDataTable(res.data.laporan);
-            setIsLoading(false);
             console.log(res.data.laporan);
         });
     };
