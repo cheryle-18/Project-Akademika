@@ -13,43 +13,49 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
-Route::get('/forgot-password', function () {
-    return view('welcome');
-});
-Route::get('/reset-password/{token}', function () {
+
+Route::get('/{path}/{path2?}/{path3?}/{path4?}/{path5?}/{path6?}/{path7?}/{path8?}', function () {
     return view('welcome');
 });
 
-Route::prefix('admin')->group(function () {
-    Route::get('/{path}/{path2?}/{path3?}/{path4?}/{path5?}', function () {
-        return view('admin');
-    });
-});
+// Route::get('/', function () {
+//     return view('welcome');
+// });
 
-Route::prefix('guru')->group(function () {
-    Route::get('/{path}/{path2?}/{path3?}/{path4?}/{path5?}/{path6?}', function () {
-        return view('guru');
-    });
-});
+// Route::get('/forgot-password', function () {
+//     return view('welcome');
+// });
+// Route::get('/reset-password/{token}', function () {
+//     return view('welcome');
+// });
 
-Route::prefix('kursus')->group(function () {
-    Route::get('/{path}/{path2?}/{path3?}/{path4?}', function () {
-        return view('kursus');
-    });
-});
-Route::prefix('guest')->group(function () {
-    Route::get('/{path}/{path2?}/{path3?}/{path4?}', function () {
-        return view('kursus');
-    });
-});
+// Route::prefix('admin')->group(function () {
+//     Route::get('/{path}/{path2?}/{path3?}/{path4?}/{path5?}', function () {
+//         return view('admin');
+//     });
+// });
 
-Route::prefix('siswa')->group(function () {
-    Route::get('/{path}/{path2?}/{path3?}/{path4?}', function () {
-        return view('siswa');
-    });
-});
+// Route::prefix('guru')->group(function () {
+//     Route::get('/{path}/{path2?}/{path3?}/{path4?}/{path5?}/{path6?}', function () {
+//         return view('guru');
+//     });
+// });
 
-// Route::view('{path}', 'welcome')->where('path', '([A-z\d\-\/_.]+)?');
+// Route::prefix('kursus')->group(function () {
+//     Route::get('/{path}/{path2?}/{path3?}/{path4?}', function () {
+//         return view('kursus');
+//     });
+// });
+// Route::prefix('guest')->group(function () {
+//     Route::get('/{path}/{path2?}/{path3?}/{path4?}', function () {
+//         return view('kursus');
+//     });
+// });
+
+// Route::prefix('siswa')->group(function () {
+//     Route::get('/{path}/{path2?}/{path3?}/{path4?}', function () {
+//         return view('siswa');
+//     });
+// });
+
+Route::view('{path}', 'welcome')->where('path', '([A-z\d\-\/_.]+)?');
