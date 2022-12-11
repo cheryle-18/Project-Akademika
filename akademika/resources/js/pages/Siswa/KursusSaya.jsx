@@ -10,9 +10,11 @@ const KursusSaya = () => {
     const [isLoading, setIsLoading] = useState(true);
 
     setTimeout(() => {
-        if (token == null) {
+        if (token == null || user == "admin") {
+            console.log(token);
             return history.push("/");
-        } else if (token != null && user.role_text == "guru") {
+        } else if (user.role_text == "guru") {
+            return history.push("/guru/kursus/diterbitkan");
         }
     }, 1000);
 
@@ -27,14 +29,17 @@ const KursusSaya = () => {
     };
 
     useEffect(() => {
-        if(token!=null){
+        if (token != null) {
             fetchKursus();
         }
     }, []);
 
     return (
         <div>
-            {isLoading || token == null ? (
+            {isLoading ||
+            token == null ||
+            user == "admin" ||
+            user.role_text == "guru" ? (
                 <div className="h-screen w-screen flex justify-center items-center">
                     <img src="/loading1.gif" className="w-400px" alt="" />
                 </div>

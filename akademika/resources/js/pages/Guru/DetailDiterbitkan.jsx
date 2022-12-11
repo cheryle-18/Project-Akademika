@@ -43,7 +43,7 @@ function Icon({ id, open }) {
 
 const DetailDiterbitkan = () => {
     const [isOpened, setIsOpened] = useState(false);
-    const { http, user } = AuthUser();
+    const { http, user, token } = AuthUser();
     const [siswa_id_now, setSiswaIdNow] = useState(null);
     const [chats, setChat] = useState([]);
 
@@ -57,6 +57,12 @@ const DetailDiterbitkan = () => {
     const [listSubbab, setListSubbab] = useState([]);
 
     const [course, setCourse] = useState([]);
+
+    // setTimeout(() => {
+    //     if(token){
+
+    //     }
+    // }, 1000);
 
     //to fetch all available chats
     const fetchDataSiswa = () => {

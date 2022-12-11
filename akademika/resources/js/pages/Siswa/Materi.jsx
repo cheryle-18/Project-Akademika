@@ -21,9 +21,11 @@ const Materi = () => {
     const [isLoading, setIsLoading] = useState(true);
     const history = useHistory();
     setTimeout(() => {
-        if (token == null) {
+        if (token == null || user == "admin") {
             console.log(token);
             return history.push("/");
+        } else if (user.role_text == "guru") {
+            return history.push("/guru/kursus/diterbitkan");
         }
     }, 1000);
     const [kuiss, setKuis] = useState([
@@ -88,7 +90,10 @@ const Materi = () => {
 
     return (
         <div>
-            {isLoading || token == null ? (
+            {isLoading ||
+            token == null ||
+            user == "admin" ||
+            user.role_text == "guru" ? (
                 <div className="h-screen w-screen flex justify-center items-center">
                     <img src="/loading1.gif" className="w-400px" alt="" />
                 </div>
