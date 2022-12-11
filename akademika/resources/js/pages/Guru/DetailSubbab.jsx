@@ -3,7 +3,7 @@ import React, { useState, useEffect } from "react";
 import GuruNav from "./Navbar";
 import Tabs from "./Tabs";
 import AuthUser from "../../components/AuthUser";
-import { Link, useParams } from "react-router-dom";
+import { Link, useParams, useHistory } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
     faArrowAltCircleLeft,
@@ -23,8 +23,20 @@ const DetailSubbab = () => {
     const [listMateri, setListMateri] = useState([]);
     const [kuis, setKuis] = useState(null);
 
-    const { http, user } = AuthUser();
+    const { http, user, token } = AuthUser();
     const { kursus_id, subbab_id } = useParams();
+    const history = useHistory();
+    const [isLoading, setIsLoading] = useState(true);
+
+    setTimeout(() => {
+        if (user == "admin") {
+            return history.push("/admin/home");
+        } else if (token == null) {
+            return history.push("/");
+        } else if (user.role_text == "siswa") {
+            return history.push("/siswa/kursus");
+        }
+    }, 1000);
 
     //fetch
     const fetchKursus = () => {
@@ -42,6 +54,7 @@ const DetailSubbab = () => {
         }).then((res) => {
             // console.log(res.data.subbab);
             setSubbab(res.data.subbab);
+            setIsLoading(false);
         });
     };
 
@@ -69,7 +82,6 @@ const DetailSubbab = () => {
             console.log(res.data);
             fetchMateri();
         });
-
     };
 
     useEffect(() => {
@@ -82,182 +94,220 @@ const DetailSubbab = () => {
     const submitForm = () => {};
 
     return (
-        <div className="min-h-screen h-full w-full overflow-x-hidden flex flex-col bg-gray-100">
-            {/* <div className="px-4 sm:px-16 md:px-24 drawer-side bg-custom-blue overflow-y-auto flex-none"> */}
-            <GuruNav />
-            {/* </div> */}
-            <div className="px-4 sm:px-16 md:px-24 py-6 w-full overflow-x-none bg-gray-100">
-                <div className="tabs text-xl text-custom-blue">
-                    <Link
-                        to={"/guru/kursus/" + kursus_id + "/detail"}
-                        className="rounded-xl py-2"
-                    >
-                        <div className="float-left">
-                            <FontAwesomeIcon
-                                icon={faArrowCircleLeft}
-                            ></FontAwesomeIcon>
+        <div>
+            {isLoading ||
+            token == null ||
+            user == "admin" ||
+            user.role_text == "siswa" ? (
+                <div className="h-screen w-screen flex justify-center items-center">
+                    <img src="/loading1.gif" className="w-400px" alt="" />
+                </div>
+            ) : (
+                <div className="min-h-screen h-full w-full overflow-x-hidden flex flex-col bg-gray-100">
+                    {/* <div className="px-4 sm:px-16 md:px-24 drawer-side bg-custom-blue overflow-y-auto flex-none"> */}
+                    <GuruNav />
+                    {/* </div> */}
+                    <div className="px-4 sm:px-16 md:px-24 py-6 w-full overflow-x-none bg-gray-100">
+                        <div className="tabs text-xl text-custom-blue">
+                            <Link
+                                to={"/guru/kursus/" + kursus_id + "/detail"}
+                                className="rounded-xl py-2"
+                            >
+                                <div className="float-left">
+                                    <FontAwesomeIcon
+                                        icon={faArrowCircleLeft}
+                                    ></FontAwesomeIcon>
+                                </div>
+                                <div className="float-left ml-4 text-custom-blue inline underline">
+                                    Kembali ke detail kursus
+                                </div>
+                                <div className="clear-both"></div>
+                            </Link>
                         </div>
-                        <div className="float-left ml-4 text-custom-blue inline underline">
-                            Kembali ke detail kursus
+                    </div>
+                    <div className="content flex flex-col flex-wrap w-full px-24 pb-16">
+                        <div className="text-3xl text-blue-900 font-semibold mb-4">
+                            {course.nama}
                         </div>
-                        <div className="clear-both"></div>
-                    </Link>
-                </div>
-            </div>
-            <div className="content flex flex-col flex-wrap w-full px-24 pb-16">
-                <div className="text-3xl text-blue-900 font-semibold mb-4">
-                    {course.nama}
-                </div>
-                <div className="text-2xl text-blue-900 font-semibold mb-6">
-                    Detail Subbab {subbab.judul}
-                </div>
-                <div className="w-full h-auto bg-white rounded-lg p-4 flex flex-col">
-                    <table>
-                        <tr className="p-2">
-                            <td className="py-4 w-1/6">Judul</td>
-                            <td>
-                                <Input
-                                    type="text"
-                                    className="w-full"
-                                    name="judul"
-                                    value={subbab.judul}
-                                    onChange={(e) => setJudul(e.target.value)}
-                                />
-                            </td>
-                        </tr>
-                        <tr className="p-2">
-                            <td className="py-4 align-top">Deskripsi</td>
-                            <td className="py-2">
-                                <Textarea
-                                    className="w-full"
-                                    name="desc"
-                                    value={subbab.deskripsi}
-                                    onChange={(e) =>
-                                        setDeskripsi(e.target.value)
-                                    }
-                                />
-                            </td>
-                        </tr>
-                        <tr className="p-2">
-                            <td className="py-4">Durasi</td>
-                            <td className="flex w-1/4 py-2">
-                                <Input
-                                    type="text"
-                                    className=""
-                                    name="durasi"
-                                    value={subbab.durasi}
-                                    onChange={(e) => setDurasi(e.target.value)}
-                                />
-                                <span className="ml-3 my-auto">menit</span>
-                            </td>
-                        </tr>
-                    </table>
-                    <button
-                        className="btn w-full mt-3 text-base capitalize bg-blue-900 text-white hover:bg-blue-700 font-normal"
-                        name="btnTambah"
-                        onClick={submitForm}
-                    >
-                        Edit
-                    </button>
-                </div>
-                <div className="text-2xl text-blue-900 font-semibold mt-10 mb-4">
-                    Materi
-                </div>
-                <div className="materi bg-white rounded-lg p-3">
-                    <table className="table table-compact w-full text-black">
-                        <thead>
-                            <tr>
-                                <th className=" bg-white text-center text-base">
-                                    NO
-                                </th>
-                                <th className=" bg-white text-center text-base">
-                                    BACAAN
-                                </th>
-                                <th className=" bg-white text-center text-base">
-                                    ACTION
-                                </th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {listMateri.map((n, index) => {
-                                return (
+                        <div className="text-2xl text-blue-900 font-semibold mb-6">
+                            Detail Subbab {subbab.judul}
+                        </div>
+                        <div className="w-full h-auto bg-white rounded-lg p-4 flex flex-col">
+                            <table>
+                                <tr className="p-2">
+                                    <td className="py-4 w-1/6">Judul</td>
+                                    <td>
+                                        <Input
+                                            type="text"
+                                            className="w-full"
+                                            name="judul"
+                                            value={subbab.judul}
+                                            onChange={(e) =>
+                                                setJudul(e.target.value)
+                                            }
+                                        />
+                                    </td>
+                                </tr>
+                                <tr className="p-2">
+                                    <td className="py-4 align-top">
+                                        Deskripsi
+                                    </td>
+                                    <td className="py-2">
+                                        <Textarea
+                                            className="w-full"
+                                            name="desc"
+                                            value={subbab.deskripsi}
+                                            onChange={(e) =>
+                                                setDeskripsi(e.target.value)
+                                            }
+                                        />
+                                    </td>
+                                </tr>
+                                <tr className="p-2">
+                                    <td className="py-4">Durasi</td>
+                                    <td className="flex w-1/4 py-2">
+                                        <Input
+                                            type="text"
+                                            className=""
+                                            name="durasi"
+                                            value={subbab.durasi}
+                                            onChange={(e) =>
+                                                setDurasi(e.target.value)
+                                            }
+                                        />
+                                        <span className="ml-3 my-auto">
+                                            menit
+                                        </span>
+                                    </td>
+                                </tr>
+                            </table>
+                            <button
+                                className="btn w-full mt-3 text-base capitalize bg-blue-900 text-white hover:bg-blue-700 font-normal"
+                                name="btnTambah"
+                                onClick={submitForm}
+                            >
+                                Edit
+                            </button>
+                        </div>
+                        <div className="text-2xl text-blue-900 font-semibold mt-10 mb-4">
+                            Materi
+                        </div>
+                        <div className="materi bg-white rounded-lg p-3">
+                            <table className="table table-compact w-full text-black">
+                                <thead>
                                     <tr>
-                                        <td className="text-center text-base">
-                                            {index + 1}
-                                        </td>
-                                        <td className="text-base truncate">
-                                            {n.penjelasan.substring(0, 100)}...
-                                        </td>
-                                        <td className="text-center">
-                                            <Link
-                                                to={
-                                                    "/guru/kursus/" +
-                                                    kursus_id +
-                                                    "/subbab/" +
-                                                    subbab_id +
-                                                    "/materi/" +
-                                                    n.materi_id
-                                                }
-                                            >
-                                                <button className="btn btn-sm capitalize bg-blue-900 text-white rounded mr-3 font-normal">
-                                                    Detail
-                                                </button>
-                                            </Link>
-                                            <button className="btn btn-sm capitalize bg-blue-900 text-white rounded font-normal" onClick={()=>{submitDeleteMateri(n.materi_id)}}>
-                                                Hapus
-                                            </button>
-                                        </td>
+                                        <th className=" bg-white text-center text-base">
+                                            NO
+                                        </th>
+                                        <th className=" bg-white text-center text-base">
+                                            BACAAN
+                                        </th>
+                                        <th className=" bg-white text-center text-base">
+                                            ACTION
+                                        </th>
                                     </tr>
-                                );
-                            })}
-                        </tbody>
-                    </table>
-                </div>
-                <Link to={"/guru/kursus/"+kursus_id+"/subbab/"+subbab_id+"/materi/tambah"}>
-                    <button className="btn btn-sm h-10 px-4 mt-4 bg-blue-900 hover:bg-blue-700 text-white rounded capitalize font-normal">
-                        Tambah Materi
-                    </button>
-                </Link>
-                <div className="text-2xl text-blue-900 font-semibold mt-10 mb-4">
-                    Kuis
-                </div>
-                <div className="w-full my-3">
-                    {kuis != null ? (
+                                </thead>
+                                <tbody>
+                                    {listMateri.map((n, index) => {
+                                        return (
+                                            <tr>
+                                                <td className="text-center text-base">
+                                                    {index + 1}
+                                                </td>
+                                                <td className="text-base truncate">
+                                                    {n.penjelasan.substring(
+                                                        0,
+                                                        100
+                                                    )}
+                                                    ...
+                                                </td>
+                                                <td className="text-center">
+                                                    <Link
+                                                        to={
+                                                            "/guru/kursus/" +
+                                                            kursus_id +
+                                                            "/subbab/" +
+                                                            subbab_id +
+                                                            "/materi/" +
+                                                            n.materi_id
+                                                        }
+                                                    >
+                                                        <button className="btn btn-sm capitalize bg-blue-900 text-white rounded mr-3 font-normal">
+                                                            Detail
+                                                        </button>
+                                                    </Link>
+                                                    <button
+                                                        className="btn btn-sm capitalize bg-blue-900 text-white rounded font-normal"
+                                                        onClick={() => {
+                                                            submitDeleteMateri(
+                                                                n.materi_id
+                                                            );
+                                                        }}
+                                                    >
+                                                        Hapus
+                                                    </button>
+                                                </td>
+                                            </tr>
+                                        );
+                                    })}
+                                </tbody>
+                            </table>
+                        </div>
                         <Link
                             to={
                                 "/guru/kursus/" +
                                 kursus_id +
                                 "/subbab/" +
                                 subbab_id +
-                                "/kuis"
+                                "/materi/tambah"
                             }
                         >
-                            <button className="btn btn-sm h-10 px-4 bg-blue-900 hover:bg-blue-700 text-white rounded capitalize font-normal">
-                                Lihat Kuis
+                            <button className="btn btn-sm h-10 px-4 mt-4 bg-blue-900 hover:bg-blue-700 text-white rounded capitalize font-normal">
+                                Tambah Materi
                             </button>
                         </Link>
-                    ) : (
-                        <div>
-                            <div className="mb-3">
-                                Tidak ada kuis untuk materi ini
-                            </div>
-                            <Link
-                                to={
-                                    "/guru/kursus/" +
-                                    kursus_id +
-                                    "/subbab/" +
-                                    subbab_id +
-                                    "/kuis"
-                                }
-                            >
-                                <button className="btn btn-sm h-10 px-4 bg-blue-900 hover:bg-blue-700 text-white rounded capitalize font-normal">
-                                    Tambah Kuis
-                                </button>
-                            </Link>
+                        <div className="text-2xl text-blue-900 font-semibold mt-10 mb-4">
+                            Kuis
                         </div>
-                    )}
+                        <div className="w-full my-3">
+                            {kuis != null ? (
+                                <Link
+                                    to={
+                                        "/guru/kursus/" +
+                                        kursus_id +
+                                        "/subbab/" +
+                                        subbab_id +
+                                        "/kuis"
+                                    }
+                                >
+                                    <button className="btn btn-sm h-10 px-4 bg-blue-900 hover:bg-blue-700 text-white rounded capitalize font-normal">
+                                        Lihat Kuis
+                                    </button>
+                                </Link>
+                            ) : (
+                                <div>
+                                    <div className="mb-3">
+                                        Tidak ada kuis untuk materi ini
+                                    </div>
+                                    <Link
+                                        to={
+                                            "/guru/kursus/" +
+                                            kursus_id +
+                                            "/subbab/" +
+                                            subbab_id +
+                                            "/kuis"
+                                        }
+                                    >
+                                        <button className="btn btn-sm h-10 px-4 bg-blue-900 hover:bg-blue-700 text-white rounded capitalize font-normal">
+                                            Tambah Kuis
+                                        </button>
+                                    </Link>
+                                </div>
+                            )}
+                        </div>
+                    </div>
                 </div>
-            </div>
+            )}
         </div>
     );
 };
