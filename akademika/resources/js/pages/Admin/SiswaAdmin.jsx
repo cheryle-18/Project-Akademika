@@ -6,11 +6,31 @@ import { faCoffee } from "@fortawesome/free-solid-svg-icons";
 import Sidebar from "./Sidebar";
 import AuthUser from "../../components/AuthUser";
 import { Link } from "react-router-dom";
+import { useHistory } from "react-router-dom";
+
 const SiswaAdmin = () => {
-    const { http } = AuthUser();
+    const { http, token, user } = AuthUser();
+    const history = useHistory();
+    const [isLoading, setIsLoading] = useState(true);
+
+    setTimeout(() => {
+        if (token == null) {
+            console.log(token);
+            return history.push("/");
+        } else {
+            if (user.role_text != null) {
+                if (user.role_text == "guru") {
+                    return history.push("/guru/kursus/diterbitkan");
+                } else if (user.role_text == "siswa") {
+                    return history.push("/siswa/kursus");
+                }
+            }
+        }
+    }, 1000);
     const fetchDataSiswa = () => {
         http.post("/admin/master/siswa").then((res) => {
             setSiswa(res.data.siswa);
+            setIsLoading(false);
             // console.log(res);
         });
     };
@@ -62,38 +82,46 @@ const SiswaAdmin = () => {
     ));
 
     return (
-        <div className="bg-gray-200 flex">
-            <Sidebar now="siswa">
-                <div className="text-2xl p-14 pb-2">
-                    <div className="bg-white overflow-y-auto h-77vh p-4 mb-6 rounded-md drop-shadow-lg">
-                        <table className="table table-compact w-full text-black overflow-y-auto table-auto">
-                            <thead>
-                                <tr>
-                                    <th className="bg-white text-center text-base">
-                                        NO
-                                    </th>
-                                    <th className="bg-white text-center text-base">
-                                        ID
-                                    </th>
-                                    <th className="bg-white text-center text-base">
-                                        NAMA
-                                    </th>
-                                    <th className="bg-white text-center text-base">
-                                        EMAIL
-                                    </th>
-                                    <th className="bg-white text-center text-base">
-                                        STATUS
-                                    </th>
-                                    <th className="bg-white text-center text-base">
-                                        ACTION
-                                    </th>
-                                </tr>
-                            </thead>
-                            <tbody>{cetakSiswa}</tbody>
-                        </table>
-                    </div>
+        <div>
+            {isLoading || token == null || user.role_text != null ? (
+                <div className="h-screen w-screen flex justify-center items-center">
+                    <img src="/loading1.gif" className="w-400px" alt="" />
                 </div>
-            </Sidebar>
+            ) : (
+                <div className="bg-gray-200 flex">
+                    <Sidebar now="siswa">
+                        <div className="text-2xl p-14 pb-2">
+                            <div className="bg-white overflow-y-auto h-77vh p-4 mb-6 rounded-md drop-shadow-lg">
+                                <table className="table table-compact w-full text-black overflow-y-auto table-auto">
+                                    <thead>
+                                        <tr>
+                                            <th className="bg-white text-center text-base">
+                                                NO
+                                            </th>
+                                            <th className="bg-white text-center text-base">
+                                                ID
+                                            </th>
+                                            <th className="bg-white text-center text-base">
+                                                NAMA
+                                            </th>
+                                            <th className="bg-white text-center text-base">
+                                                EMAIL
+                                            </th>
+                                            <th className="bg-white text-center text-base">
+                                                STATUS
+                                            </th>
+                                            <th className="bg-white text-center text-base">
+                                                ACTION
+                                            </th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>{cetakSiswa}</tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </Sidebar>
+                </div>
+            )}
         </div>
     );
 };

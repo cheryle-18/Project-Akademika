@@ -6,14 +6,34 @@ import { faCoffee } from "@fortawesome/free-solid-svg-icons";
 import Sidebar from "./Sidebar";
 import AuthUser from "../../components/AuthUser";
 import { Link } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 
 const KursusAdmin = () => {
+    const { http, token, user } = AuthUser();
     const classSelected =
         "float-left bg-white text-custom-blue py-1 px-4 rounded-sm mx-1 cursor-pointer";
     const classOther =
         "float-left hover:bg-gray-200 hover:text-custom-blue py-1 px-4 rounded-sm mx-1 cursor-pointer";
 
     const [title, setTitle] = useState("master");
+
+    const history = useHistory();
+    const [isLoading, setIsLoading] = useState(true);
+
+    setTimeout(() => {
+        if (token == null) {
+            console.log(token);
+            return history.push("/");
+        } else {
+            if (user.role_text != null) {
+                if (user.role_text == "guru") {
+                    return history.push("/guru/kursus/diterbitkan");
+                } else if (user.role_text == "siswa") {
+                    return history.push("/siswa/kursus");
+                }
+            }
+        }
+    }, 1000);
 
     const onClickMaster = () => {
         setTitle("master");
@@ -22,17 +42,13 @@ const KursusAdmin = () => {
     const onClickPengajuan = () => {
         setTitle("pengajuan");
     };
-
-    const { http } = AuthUser();
+    
     const fetchDatakursus = () => {
         http.post("/admin/master/kursus").then((res) => {
             setMaster(res.data.kursusaktif);
-            console.log(res);
-        });
-
-        http.post("/admin/master/kursus").then((res) => {
             setPengajuan(res.data.kursuspending);
-            // console.log(res);
+            console.log(res);
+            setIsLoading(false);
         });
     };
 
@@ -137,68 +153,77 @@ const KursusAdmin = () => {
     ));
 
     return (
-        <div className="bg-gray-200 flex">
-            <Sidebar now="kursus">
-                <div className="text-2xl p-10 pt-6 pb-2">
-                    <div className="bg-custom-blue text-white inline-block text-base tracking-wide p-1 py-2 rounded-md">
-                        <div
-                            className={
-                                (title == "master" && classSelected) ||
-                                (title != "master" && classOther)
-                            }
-                            onClick={onClickMaster}
-                        >
-                            Master
-                        </div>
-                        <div
-                            className={
-                                (title == "pengajuan" && classSelected) ||
-                                (title != "pengajuan" && classOther)
-                            }
-                            onClick={onClickPengajuan}
-                        >
-                            Pengajuan
-                        </div>
-                        <div className="clear-both"></div>
-                    </div>
-                    <div className="bg-white overflow-y-auto h-77vh p-4 mb-6 rounded-md drop-shadow-lg">
-                        <table className="table table-compact w-full text-black overflow-y-auto whitespace-nowrap">
-                            <thead>
-                                <tr>
-                                    <th className="bg-white text-center text-base">
-                                        NO
-                                    </th>
-                                    <th className="bg-white text-center text-base">
-                                        ID
-                                    </th>
-                                    <th className="bg-white text-center text-base">
-                                        NAMA KURSUS
-                                    </th>
-                                    <th className="bg-white text-center text-base">
-                                        KATEGORI
-                                    </th>
-                                    <th className="bg-white text-center text-base">
-                                        GURU
-                                    </th>
-                                    <th className="bg-white text-center text-base">
-                                        STATUS
-                                    </th>
-                                    <th className="bg-white text-center text-base">
-                                        DETAIL
-                                    </th>
-                                    <th className="bg-white text-center text-base">
-                                        ACTION
-                                    </th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                {title == "master" && cetakMaster}
-                                {title == "pengajuan" && cetakPengajuan}
-                            </tbody>
-                        </table>
-                    </div>
+        <div>
+            {isLoading || token == null || user.role_text != null ? (
+                <div className="h-screen w-screen flex justify-center items-center">
+                    <img src="/loading1.gif" className="w-400px" alt="" />
                 </div>
-            </Sidebar>
+            ) : (
+                <div className="bg-gray-200 flex">
+                    <Sidebar now="kursus">
+                        <div className="text-2xl p-10 pt-6 pb-2">
+                            <div className="bg-custom-blue text-white inline-block text-base tracking-wide p-1 py-2 rounded-md">
+                                <div
+                                    className={
+                                        (title == "master" && classSelected) ||
+                                        (title != "master" && classOther)
+                                    }
+                                    onClick={onClickMaster}
+                                >
+                                    Master
+                                </div>
+                                <div
+                                    className={
+                                        (title == "pengajuan" &&
+                                            classSelected) ||
+                                        (title != "pengajuan" && classOther)
+                                    }
+                                    onClick={onClickPengajuan}
+                                >
+                                    Pengajuan
+                                </div>
+                                <div className="clear-both"></div>
+                            </div>
+                            <div className="bg-white overflow-y-auto h-77vh p-4 mb-6 rounded-md drop-shadow-lg">
+                                <table className="table table-compact w-full text-black overflow-y-auto whitespace-nowrap">
+                                    <thead>
+                                        <tr>
+                                            <th className="bg-white text-center text-base">
+                                                NO
+                                            </th>
+                                            <th className="bg-white text-center text-base">
+                                                ID
+                                            </th>
+                                            <th className="bg-white text-center text-base">
+                                                NAMA KURSUS
+                                            </th>
+                                            <th className="bg-white text-center text-base">
+                                                KATEGORI
+                                            </th>
+                                            <th className="bg-white text-center text-base">
+                                                GURU
+                                            </th>
+                                            <th className="bg-white text-center text-base">
+                                                STATUS
+                                            </th>
+                                            <th className="bg-white text-center text-base">
+                                                DETAIL
+                                            </th>
+                                            <th className="bg-white text-center text-base">
+                                                ACTION
+                                            </th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {title == "master" && cetakMaster}
+                                        {title == "pengajuan" && cetakPengajuan}
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </Sidebar>
+                </div>
+            )}
         </div>
     );
 };
