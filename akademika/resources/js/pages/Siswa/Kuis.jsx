@@ -7,7 +7,7 @@ import { Link, useParams } from "react-router-dom";
 import { Radio } from "@material-tailwind/react";
 import { useHistory } from "react-router-dom";
 
-const Kuis = (props) => {
+const Kuis = () => {
     const {http, user} = AuthUser()
     const id = useId()
     const { kursus_id, subbab_id } = useParams();
@@ -15,7 +15,6 @@ const Kuis = (props) => {
     const [subbab, setSubbab] = useState([]);
     const [listSoal, setListSoal] = useState([]);
     const [listJawaban, setListJawaban] = useState([])
-    const [submitData, setSubmitData] = useState("")
     const history = useHistory()
 
     const fetchDataKuis = () => {
@@ -54,17 +53,9 @@ const Kuis = (props) => {
         formData.append('listJawaban', JSON.stringify(listJawaban))
 
         http.post("/siswa/kursus/kuis/submit",formData).then((res) => {
-            // let data = res.data
-            // console.log(data)
-            // setSubmitData(data)
-            redirect()
-            // window.location.replace(`localhost:8000/siswa/kursus/${kursus_id}/subbab/${subbab_id}/kuis/nilai`)
+            let url = `/siswa/kursus/${kursus_id}/subbab/${subbab_id}/kuis/nilai`
+            history.push(url)
         })
-    }
-
-    const redirect = () => {
-
-        // history.replace(`./siswa/kursus/${kursus_id}/subbab/${subbab_id}/kuis/nilai`)
     }
 
     const fetchSubbab = () => {
@@ -75,10 +66,6 @@ const Kuis = (props) => {
             console.log(subbab)
         });
     };
-
-    // useEffect(() => {
-    //     redirect()
-    // }, [submitData])
 
     const cetakKuis = listSoal.map((soal, index) => (
         // <KuisCard kuis={soal} idx={index+1} key={soal.kuis_soal_id}></KuisCard>
