@@ -27,12 +27,12 @@ const Sidebar = (props) => {
     };
 
     const Menus = [
-        {
-            title: "Home",
-            icon: faHouseChimney,
-            link: "/admin/home",
-            now: props.now == "home",
-        },
+        // {
+        //     title: "Home",
+        //     icon: faHouseChimney,
+        //     link: "/admin/home",
+        //     now: props.now == "home",
+        // },
         {
             title: "Guru",
             icon: faUser,

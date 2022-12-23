@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Kursus;
+use App\Models\Pendaftaran;
 use App\Models\Subbab;
 use Illuminate\Http\Request;
 
@@ -48,6 +49,17 @@ class UtilityController extends Controller
         $subbab = Subbab::with("kuis")->where("kursus_id",$request->kursus_id)->get();
         return response()->json([
             "subbab" => $subbab,
+        ]);
+    }
+
+    function getKursusPopuler(){
+        $populer = Pendaftaran::selectRaw('kursus_id, count(*) total')->groupBy('kursus_id')->orderBy('total', 'desc')->get();
+
+        $kursus = [];
+        $kursus[] = Kursus::find($populer[0]->kursus_id);
+        $kursus[] = Kursus::find($populer[1]->kursus_id);
+        return response()->json([
+            "kursus" => $kursus,
         ]);
     }
 }

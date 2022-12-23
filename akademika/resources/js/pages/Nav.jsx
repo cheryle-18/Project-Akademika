@@ -119,54 +119,54 @@ const Nav = (props) => {
             <h3 className="text-3xl font-bold text-custom-blue">
                 Daftar Akademika
             </h3>
-            <p className="py-2">
+            <span className="py-2">
                 <Input
                     type="text"
                     label="Nama Lengkap"
                     className="input input-bordered w-full border-2 border-gray-500 rounded-md placeholder-gray-700"
                     onChange={(e) => setRegisterNama(e.target.value)}
                 />
-            </p>
-            <p className="py-2">
+            </span>
+            <span className="py-2">
                 <Input
                     type="text"
                     label="Username"
                     className="input input-bordered w-full border-2 border-gray-500 rounded-md placeholder-gray-700"
                     onChange={(e) => setRegisterUsername(e.target.value)}
                 />
-            </p>
-            <p className="py-2">
+            </span>
+            <span className="py-2">
                 <Input
                     type="text"
                     label="Email"
                     className="input input-bordered w-full border-2 border-gray-500 rounded-md placeholder-gray-700"
                     onChange={(e) => setRegisterEmail(e.target.value)}
                 />
-            </p>
-            <p className="py-2">
+            </span>
+            <span className="py-2">
                 <Input
                     type="text"
                     label="Telp"
                     className="input input-bordered w-full border-2 border-gray-500 rounded-md placeholder-gray-700"
                     onChange={(e) => setRegisterTelp(e.target.value)}
                 />
-            </p>
-            <p className="py-2">
+            </span>
+            <span className="py-2">
                 <Input
                     type="password"
                     label="Password"
                     className="input input-bordered w-full border-2 border-gray-500 rounded-md placeholder-gray-700"
                     onChange={(e) => setRegisterPassword(e.target.value)}
                 />
-            </p>
-            <p className="py-2">
+            </span>
+            <span className="py-2">
                 <Input
                     type="password"
                     label="Konfirmasi Password"
                     className="input input-bordered w-full border-2 border-gray-500 rounded-md placeholder-gray-700"
                     onChange={(e) => setRegisterConfirmPassword(e.target.value)}
                 />
-            </p>
+            </span>
             <div className="pt-2 flex">
                 <span className="mr-2 my-auto">Daftar Sebagai:</span>
                 <Radio
@@ -210,7 +210,7 @@ const Nav = (props) => {
                 </Alert>
             )}
             <h3 className="text-3xl font-bold text-custom-blue">Masuk</h3>
-            <p className="py-4">
+            <span className="py-4">
                 <Input
                     type="text"
                     label="Email"
@@ -218,8 +218,8 @@ const Nav = (props) => {
                     onChange={(e) => setLoginEmail(e.target.value)}
                     required
                 />
-            </p>
-            <p className="py-2">
+            </span>
+            <span className="py-2">
                 <Input
                     type="password"
                     label="Password"
@@ -227,7 +227,7 @@ const Nav = (props) => {
                     onChange={(e) => setLoginPassword(e.target.value)}
                     required
                 />
-            </p>
+            </span>
             <div className="w-full">
                 <div
                     className="text-right text-custom-blue cursor-pointer"
@@ -258,7 +258,7 @@ const Nav = (props) => {
             <h3 className="text-3xl font-bold text-custom-blue">
                 Lupa Password?
             </h3>
-            <p className="py-4">
+            <span className="py-4">
                 <Input
                     type="text"
                     label="Email"
@@ -266,7 +266,7 @@ const Nav = (props) => {
                     onChange={(e) => setForgotEmail(e.target.value)}
                     required
                 />
-            </p>
+            </span>
             <div
                 className="w-full py-2 mt-4 bg-custom-blue text-white text-center rounded-md cursor-pointer"
                 onClick={onForgotPassword}

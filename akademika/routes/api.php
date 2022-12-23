@@ -51,6 +51,7 @@ Route::group(['middleware'=>'api'],function ()
 
     Route::prefix('get')->group(function () {
         Route::post('kursus',[UtilityController::class,'getAllKursus']);
+        Route::get('kursusPopuler',[UtilityController::class,'getKursusPopuler']);
         Route::post('guest/kursus',[UtilityController::class,'getKursus']);
         Route::post('guest/getAllSubbabKuis',[UtilityController::class,'getAllSubbabKuis']);
     });
