@@ -3,30 +3,25 @@ import Banner from "./Banner";
 import KuisCard from "./KuisCard";
 import Nav from "./Navbar";
 import AuthUser from "../../components/AuthUser";
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import { Radio } from "@material-tailwind/react";
 import { useHistory } from "react-router-dom";
 
-const Kuis = () => {
-    const {http,user} = AuthUser()
+const Kuis = (props) => {
+    const {http, user} = AuthUser()
     const id = useId()
-    const [course, setCourse] = useState("Pengembangan Website Front-End Dasar")
-    const [subbab, setSubbab] = useState({
-        id: 2,
-        judul: "HTML",
-        deskripsi: "Lorem ipsum dolor sit, amet consectetur adipisicing elit. Quibusdam, laboriosam!",
-    });
+    const { kursus_id, subbab_id } = useParams();
+    const [course, setCourse] = useState([])
+    const [subbab, setSubbab] = useState([]);
     const [listSoal, setListSoal] = useState([]);
     const [listJawaban, setListJawaban] = useState([])
-    const [siswa, setSiswa] = useState({
-        id: 2,
-        nama: "Cloyd Shanahan"
-    })
     const [submitData, setSubmitData] = useState("")
+    const history = useHistory()
 
     const fetchDataKuis = () => {
-        let url = `/siswa/kursus/kuis/get/${subbab.id}`
+        let url = `/siswa/kursus/kuis/get/${subbab.subbab_id}`
         http.get(url).then((res) => {
+            console.log(res.data.listSoal)
             setListSoal(res.data.listSoal)
         })
     }
@@ -52,23 +47,34 @@ const Kuis = () => {
     }
 
     const submitForm = () => {
-        console.log(listJawaban)
+        // console.log(listJawaban)
         const formData = new FormData()
-        formData.append('subbabId', subbab.id)
-        formData.append('siswaId', siswa.id)
+        formData.append('subbabId', subbab.subbab_id)
+        formData.append('siswaId', user.siswa_id)
         formData.append('listJawaban', JSON.stringify(listJawaban))
 
         http.post("/siswa/kursus/kuis/submit",formData).then((res) => {
-            let data = res.data
-            console.log(data)
-            setSubmitData(data)
+            // let data = res.data
+            // console.log(data)
+            // setSubmitData(data)
+            redirect()
+            // window.location.replace(`localhost:8000/siswa/kursus/${kursus_id}/subbab/${subbab_id}/kuis/nilai`)
         })
     }
 
     const redirect = () => {
-        const history = useHistory()
-        history.push("/siswa/kursus/kuis/nilai")
+
+        // history.replace(`./siswa/kursus/${kursus_id}/subbab/${subbab_id}/kuis/nilai`)
     }
+
+    const fetchSubbab = () => {
+        http.post("/siswa/kursus/getSubbab", {
+            subbab_id: subbab_id
+        }).then((res) => {
+            setSubbab(res.data.subbab);
+            console.log(subbab)
+        });
+    };
 
     // useEffect(() => {
     //     redirect()
@@ -106,8 +112,12 @@ const Kuis = () => {
     ));
 
     useEffect(() => {
-        fetchDataKuis()
+        fetchSubbab()
     }, [])
+
+    useEffect(() => {
+        fetchDataKuis()
+    }, [subbab])
 
     useEffect(() => {
         cetakKuis
@@ -132,7 +142,7 @@ const Kuis = () => {
                     {cetakKuis}
                     <div className="mt-10">
                         <div className="float-right">
-                            {/* <Link to="/siswa/kursus/nilai"> */}
+                            {/* <Link to={`/siswa/kursus/${kursus_id}/subbab/${subbab.subbab_id}/kuis/nilai`}> */}
                                 <button
                                     className="btn w-full mt-3 text-base capitalize bg-custom-blue text-white hover:bg-blue-700 font-normal rounded-md py-2"
                                     name="" onClick={ submitForm }

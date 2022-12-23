@@ -2,22 +2,17 @@ import React, { useState, useEffect } from "react";
 import Banner from "./Banner";
 import PembahasanCard from "./PembahasanCard";
 import Nav from "./Navbar";
-import { Link, useHistory } from "react-router-dom";
+import { Link, useHistory, useParams } from "react-router-dom";
 import AuthUser from "../../components/AuthUser";
 
 const NilaiKuis = () => {
     const { http, user, token } = AuthUser();
-    const [course, setCourse] = useState(
-        "Pengembangan Website Front-End Dasar"
-    );
-    const [subbab, setSubbab] = useState({
-        id: 2,
-        judul: "HTML",
-        deskripsi:
-            "Lorem ipsum dolor sit, amet consectetur adipisicing elit. Quibusdam, laboriosam!",
-    });
+    const { kursus_id, subbab_id } = useParams();
+    const [course, setCourse] = useState([]);
+    const [subbab, setSubbab] = useState([]);
     const [listSoal, setListSoal] = useState([]);
     const [hasilKuis, setHasilKuis] = useState([]);
+    const [isLoading, setIsLoading] = useState(true);
     const history = useHistory();
     setTimeout(() => {
         if (token == null || user == "admin") {
@@ -29,7 +24,7 @@ const NilaiKuis = () => {
     }, 1000);
 
     const fetchDataKuis = () => {
-        let url = `/siswa/kursus/kuis/get/${subbab.id}`;
+        let url = `/siswa/kursus/kuis/get/${subbab_id}`;
         http.get(url).then((res) => {
             if (res.data.listSoal) {
                 setListSoal(res.data.listSoal);
@@ -38,15 +33,26 @@ const NilaiKuis = () => {
     };
 
     const fetchDataJawaban = () => {
-        let url = `/siswa/kursus/kuis/getResult/${subbab.id}`;
+        let url = `/siswa/kursus/kuis/getResult/${subbab_id}/${user.siswa_id}`;
         http.get(url).then((res) => {
             if (res.data.hasilKuis) {
                 setHasilKuis(res.data.hasilKuis);
+                setIsLoading(false);
             }
         });
     };
 
+    const fetchSubbab = () => {
+        http.post("/siswa/kursus/getSubbab", {
+            subbab_id: subbab_id
+        }).then((res) => {
+            setSubbab(res.data.subbab);
+            console.log(subbab)
+        });
+    };
+
     useEffect(() => {
+        fetchSubbab();
         fetchDataKuis();
         fetchDataJawaban();
     }, []);

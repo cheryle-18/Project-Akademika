@@ -290,7 +290,9 @@ const Silabus = (props) => {
                     })}
                     {subbab.kuis.map((kuis, indexKuis) => (
                         <div className="w-full bg-white flex mb-1">
-                            <span>Kuis</span>
+                            <Link to={`/siswa/kursus/${kursus_id}/subbab/${subbab.subbab_id}/kuis`}>
+                                <span>Kuis</span>
+                            </Link>
                             <span className="ml-auto">
                                 {kuis.jumlah_soal} soal
                             </span>

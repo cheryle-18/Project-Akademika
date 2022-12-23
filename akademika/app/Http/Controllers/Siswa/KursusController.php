@@ -179,8 +179,7 @@ class KursusController extends Controller
 
     function getResultKuis(Request $req){
         $subbabId = $req->subbab_id;
-        // $siswaId = $req->siswaId;
-        $siswaId = 1; //dapet id siswa darimana?
+        $siswaId = $req->siswa_id;
 
         $kuis = Kuis::where('subbab_id', $subbabId)->first();
         $soal = KuisSoal::where('kuis_id', $kuis->kuis_id)->get();
