@@ -113,7 +113,6 @@ const SearchKursus = (props) => {
                                         <Input
                                             label="Cari Kursus"
                                             type="text"
-                                            className="form-select appearance-none px-4 py-2 text-base font-normal text-gray-700 bg-white bg-clip-padding bg-no-repeat focus:outline-none"
                                             onChange={(e) =>
                                                 setFilterName(e.target.value)
                                             }
@@ -122,7 +121,6 @@ const SearchKursus = (props) => {
                                     <div className="w-1/6">
                                         <Select
                                             label="Kategori"
-                                            className="form-select appearance-none px-4 py-2 text-base font-normal text-gray-700 bg-white bg-clip-padding bg-no-repeat rounded-md focus:outline-none"
                                             value=""
                                             onChange={(e) =>
                                                 setFilterKategori(e)
@@ -158,13 +156,12 @@ const SearchKursus = (props) => {
                                     <div className="w-1/6">
                                         <Select
                                             label="Harga"
-                                            className="form-select appearance-none px-4 py-2 text-base font-normal text-gray-700 bg-white bg-clip-padding bg-no-repeat rounded-md focus:outline-none"
                                             value=""
                                             onChange={(e) =>
                                                 setFilterModeHarga(e)
                                             }
                                         >
-                                            <Option value="">Semua</Option>
+                                            <Option value="">Paling Relevan</Option>
                                             <Option value="desc">
                                                 Tertinggi
                                             </Option>
@@ -176,15 +173,14 @@ const SearchKursus = (props) => {
                                     <div className="w-1/6">
                                         <Select
                                             label="Urutkan"
-                                            className="form-select appearance-none px-4 py-2 text-base font-normal text-gray-700 bg-white bg-clip-padding bg-no-repeat rounded-md focus:outline-none"
                                             value=""
                                             onChange={(e) =>
                                                 setFilterModeName(e)
                                             }
                                         >
-                                            <Option value="">Semua</Option>
-                                            <Option value="asc">Asc</Option>
-                                            <Option value="desc">Desc</Option>
+                                            <Option value="">Paling Relevan</Option>
+                                            <Option value="asc">Ascending</Option>
+                                            <Option value="desc">Descending</Option>
                                         </Select>
                                     </div>
                                 </div>
