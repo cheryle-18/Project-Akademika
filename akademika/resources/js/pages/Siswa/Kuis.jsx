@@ -116,8 +116,8 @@ const Kuis = () => {
     return (
         <div className="bg-gray-100">
             <div className="min-h-screen w-full overflow-x-hidden flex flex-col">
-                <div className="drawer-side bg-custom-blue overflow-y-auto flex-none">
-                    {/* <Nav></Nav> */}
+                <div className="drawer-side bg-custom-blue flex-none">
+                    <Nav></Nav>
                 </div>
                 <div className="banner">
                     <Banner subbab={subbab}></Banner>
