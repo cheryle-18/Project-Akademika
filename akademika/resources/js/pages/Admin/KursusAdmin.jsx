@@ -42,7 +42,7 @@ const KursusAdmin = () => {
     const onClickPengajuan = () => {
         setTitle("pengajuan");
     };
-    
+
     const fetchDatakursus = () => {
         http.post("/admin/master/kursus").then((res) => {
             setMaster(res.data.kursusaktif);
@@ -184,7 +184,7 @@ const KursusAdmin = () => {
                                 </div>
                                 <div className="clear-both"></div>
                             </div>
-                            <div className="bg-white overflow-y-auto h-77vh p-4 mb-6 rounded-md drop-shadow-lg">
+                            <div className="bg-white overflow-y-auto h-77vh p-6 mb-6 rounded-md drop-shadow-lg">
                                 <table className="table table-compact w-full text-black overflow-y-auto whitespace-nowrap">
                                     <thead>
                                         <tr>

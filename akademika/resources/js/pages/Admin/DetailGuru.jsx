@@ -90,8 +90,8 @@ const DetailGuru = () => {
             ) : (
                 <div className="bg-gray-200 flex">
                     <Sidebar now="guru detail">
-                        <div className="text-2xl p-14 pb-2">
-                            <div className="bg-white overflow-y-auto h-77vh px-10 p-4 mb-6 rounded-md drop-shadow-lg overflow-x-auto text-black">
+                        <div className="text-base p-14 pb-2">
+                            <div className="bg-white overflow-y-auto h-auto p-10 mb-6 rounded-md drop-shadow-lg overflow-x-auto text-black">
                                 {updateFailed != "success" &&
                                     updateFailed != "awal" && (
                                         <Alert
@@ -115,7 +115,6 @@ const DetailGuru = () => {
                                         <Input
                                             type="text"
                                             label="Username"
-                                            className="input input-bordered w-full border-2 border-gray-500 rounded-md placeholder-gray-700 text-black"
                                             value={registerUsername}
                                             onChange={(e) =>
                                                 setRegisterUsername(
@@ -125,13 +124,12 @@ const DetailGuru = () => {
                                         />
                                     </div>
                                 </div>
-                                <div className="flex justify-start items-center mt-4">
+                                {/* <div className="flex justify-start items-center mt-4">
                                     <div className="w-40">Password</div>
                                     <div className="w-full">
                                         <Input
                                             type="text"
                                             label="Password"
-                                            className="input input-bordered w-full border-2 border-gray-500 rounded-md placeholder-gray-700 text-black"
                                             value={registerPassword}
                                             onChange={(e) =>
                                                 setRegisterPassword(
@@ -140,14 +138,13 @@ const DetailGuru = () => {
                                             }
                                         />
                                     </div>
-                                </div>
+                                </div> */}
                                 <div className="flex justify-start items-center mt-4">
                                     <div className="w-40">Nama</div>
                                     <div className="w-full">
                                         <Input
                                             type="text"
                                             label="Nama"
-                                            className="input input-bordered w-full border-2 border-gray-500 rounded-md placeholder-gray-700 text-black"
                                             value={registerNama}
                                             onChange={(e) =>
                                                 setRegisterNama(e.target.value)
@@ -161,7 +158,6 @@ const DetailGuru = () => {
                                         <Input
                                             type="text"
                                             label="Telp"
-                                            className="input input-bordered w-full border-2 border-gray-500 rounded-md placeholder-gray-700 text-black"
                                             value={registerTelp}
                                             onChange={(e) =>
                                                 setRegisterTelp(e.target.value)
@@ -175,7 +171,6 @@ const DetailGuru = () => {
                                         <Input
                                             type="text"
                                             label="Total Wallet"
-                                            className="input input-bordered w-full border-2 border-gray-500 rounded-md placeholder-gray-700 text-black"
                                             value={registerTotalWallet}
                                             onChange={(e) =>
                                                 setRegisterTotalWallet(
@@ -186,7 +181,7 @@ const DetailGuru = () => {
                                     </div>
                                 </div>
                                 <div className="flex justify-start items-center mt-4">
-                                    <div className="w-40">Status</div>
+                                    <div className="w-32">Status</div>
                                     <div className="w-full text-lg">
                                         <div>
                                             <div>
@@ -216,16 +211,14 @@ const DetailGuru = () => {
                                         </div>
                                     </div>
                                 </div>
-                                <div>
-                                    <div className="float-right">
-                                        <button
-                                            type="button"
-                                            onClick={submitUpdateForm}
-                                            className="py-2 px-4  bg-custom-blue hover:bg-blue-900 text-white transition ease-in duration-200 text-center text-base font-normal shadow-md rounded-lg min-w-20"
-                                        >
-                                            Simpan Perubahan
-                                        </button>
-                                    </div>
+                                <div className="mt-10">
+                                    <button
+                                        type="button"
+                                        onClick={submitUpdateForm}
+                                        className="btn btn-block py-3 px-6 bg-custom-blue hover:bg-blue-900 text-white transition ease-in duration-200 text-center text-base font-normal shadow-md rounded-lg capitalize"
+                                    >
+                                        Simpan Perubahan
+                                    </button>
                                 </div>
                             </div>
                         </div>

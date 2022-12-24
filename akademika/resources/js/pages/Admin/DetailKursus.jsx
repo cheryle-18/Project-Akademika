@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from "react";
-import { Button } from "@material-tailwind/react";
+import { Button, Textarea } from "@material-tailwind/react";
 import { useHistory, useParams } from "react-router-dom";
 import { BrowserRouter as Router, Route } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCoffee } from "@fortawesome/free-solid-svg-icons";
 import Sidebar from "./Sidebar";
 import AuthUser from "../../components/AuthUser";
+import { toRupiah } from "../../components/CurrencyUtils";
 import {
     Alert,
     Input,
@@ -134,7 +135,7 @@ const DetailKursus = (props) => {
             ) : (
                 <div className="bg-gray-200 flex">
                     <Sidebar now="kursus detail">
-                        <div className="text-2xl p-14 pb-2">
+                        <div className="text-base p-14 pb-2">
                             <div className="bg-white overflow-y-auto h-77vh px-10 p-4 mb-6 rounded-md drop-shadow-lg overflow-x-auto text-black pb-20">
                                 {updateFailed != "success" &&
                                     updateFailed != "awal" && (
@@ -159,7 +160,13 @@ const DetailKursus = (props) => {
                                         className="w-full"
                                         style={{ height: "36px" }}
                                     >
-                                        <select
+                                        <Input
+                                            type="text"
+                                            label="Guru"
+                                            value={guru.nama}
+                                            disabled
+                                        />
+                                        {/* <select
                                             placeholder="Guru"
                                             style={{
                                                 padding: "10px 12px",
@@ -179,51 +186,7 @@ const DetailKursus = (props) => {
                                                     {g.nama}
                                                 </option>
                                             ))}
-                                        </select>
-                                        {/* <Select
-                                    labelid="select-label"
-                                    label="Guru"
-                                    id="event-select"
-                                    className="bg-white w-full text-black"
-                                    onChange={handleChange}
-                                    value={guru.guru_id}
-                                    // value={"123"}
-                                    align="left"
-                                    required
-                                >
-                                    {listGuru.map((g, index) => (
-                                        <Option
-                                            // onClick={() => {
-                                            //     handleChange(g)
-                                            // }}
-                                            value={g.guru_id}
-                                            key={g.guru_id}
-                                        >
-                                            {g.nama}
-                                        </Option>
-                                    ))}
-                                    <Option value={35}>fho23wfh</Option>
-                                    <Option value="123">234</Option>
-                                </Select> */}
-                                        {/* <Input
-                                    type="text"
-                                    label="Nama"
-                                    className="input input-bordered w-full border-2 border-gray-500 rounded-md placeholder-gray-700 text-black"
-                                    value={guru.nama}
-                                    onChange={(e) => setGuru(e.target.value)}
-                                /> */}
-
-                                        {/* <Select
-                                    labelid="select-label"
-                                    label="Guru"
-                                    id="event-select"
-                                    className="bg-white w-full"
-                                    value={123}
-                                    align="left"
-                                    required
-                                >
-                                    <MenuItem value="123">123</MenuItem>
-                                </Select> */}
+                                        </select> */}
                                     </div>
                                 </div>
                                 <div className="flex justify-start items-center mt-4">
@@ -232,11 +195,11 @@ const DetailKursus = (props) => {
                                         <Input
                                             type="text"
                                             label="Nama"
-                                            className="input input-bordered w-full border-2 border-gray-500 rounded-md placeholder-gray-700 text-black"
                                             value={nama}
                                             onChange={(e) =>
                                                 setNama(e.target.value)
                                             }
+                                            disabled
                                         />
                                     </div>
                                 </div>
@@ -246,25 +209,25 @@ const DetailKursus = (props) => {
                                         <Input
                                             type="text"
                                             label="Kategori"
-                                            className="input input-bordered w-full border-2 border-gray-500 rounded-md placeholder-gray-700 text-black"
                                             value={kategori}
                                             onChange={(e) =>
                                                 setKategori(e.target.value)
                                             }
+                                            disabled
                                         />
                                     </div>
                                 </div>
                                 <div className="flex justify-start items-center mt-4">
                                     <div className="w-40">Deskripsi</div>
                                     <div className="w-full">
-                                        <Input
+                                        <Textarea
                                             type="text"
                                             label="Deskripsi"
-                                            className="input input-bordered w-full border-2 border-gray-500 rounded-md placeholder-gray-700 text-black"
                                             value={deskripsi}
                                             onChange={(e) =>
                                                 setDeskripsi(e.target.value)
                                             }
+                                            disabled
                                         />
                                     </div>
                                 </div>
@@ -274,11 +237,11 @@ const DetailKursus = (props) => {
                                         <Input
                                             type="text"
                                             label="Durasi"
-                                            className="input input-bordered w-full border-2 border-gray-500 rounded-md placeholder-gray-700 text-black"
-                                            value={durasi}
+                                            value={`${durasi} menit`}
                                             onChange={(e) =>
                                                 setDurasi(e.target.value)
                                             }
+                                            disabled
                                         />
                                     </div>
                                 </div>
@@ -288,17 +251,17 @@ const DetailKursus = (props) => {
                                         <Input
                                             type="text"
                                             label="Harga"
-                                            className="input input-bordered w-full border-2 border-gray-500 rounded-md placeholder-gray-700 text-black"
-                                            value={harga}
+                                            value= {`Rp ${harga}`}
                                             onChange={(e) =>
                                                 setHarga(e.target.value)
                                             }
+                                            disabled
                                         />
                                     </div>
                                 </div>
-                                <div className="flex justify-start items-center mt-4">
-                                    <div className="w-52">Status</div>
-                                    <div className="w-96 text-lg">
+                                <div className="flex mt-4">
+                                    <div className="w-32">Status</div>
+                                    <div className="w-96 text-base">
                                         <div>
                                             <Radio
                                                 id="aktif"
@@ -320,7 +283,7 @@ const DetailKursus = (props) => {
                                             />
                                         </div>
                                     </div>
-                                    <div className="w-full">
+                                    {/* <div className="w-full">
                                         <div className="float-right">
                                             <button
                                                 type="button"
@@ -330,16 +293,16 @@ const DetailKursus = (props) => {
                                                 Simpan Perubahan
                                             </button>
                                         </div>
-                                    </div>
+                                    </div> */}
                                 </div>
                                 <div className="clear-both"></div>
-                                <div className="flex justify-start items-center mt-4">
-                                    <div className="w-40">Subbab</div>
+                                <div className="flex my-10">
+                                    <div className="text-lg font-semibold">Subbab</div>
                                 </div>
                                 <table className="table table-compact w-full text-black">
                                     <thead>
                                         <tr>
-                                            <th className=" bg-white text-center text-base">
+                                            <th className=" bg-white text-center text-base p-2">
                                                 NO
                                             </th>
                                             <th className=" bg-white text-center text-base">
@@ -357,7 +320,7 @@ const DetailKursus = (props) => {
                                         {listSubbab.map((n, index) => {
                                             return (
                                                 <tr className="border border-b-gray-600 border-x-0">
-                                                    <td className="text-center text-base">
+                                                    <td className="text-center text-base p-2">
                                                         {index + 1}
                                                     </td>
                                                     <td className="text-base">
@@ -380,9 +343,9 @@ const DetailKursus = (props) => {
                                                                 Detail
                                                             </button>
                                                         </Link>
-                                                        <button className="btn btn-sm capitalize bg-blue-900 text-white rounded font-normal">
+                                                        {/* <button className="btn btn-sm capitalize bg-blue-900 text-white rounded font-normal">
                                                             Hapus
-                                                        </button>
+                                                        </button> */}
                                                     </td>
                                                 </tr>
                                             );

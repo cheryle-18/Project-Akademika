@@ -93,7 +93,7 @@ const HomeAdmin = () => {
                                 <div className="w-full h-full bg-white text-custom-blue rounded-lg shadow-lg flex">
                                     <div className="my-auto px-10 flex">
                                         <div className="rounded-full bg-blue-100 w-16 h-16 flex">
-                                            <FontAwesomeIcon icon={faUser} className="m-auto" />
+                                            <FontAwesomeIcon icon={faGraduationCap} className="m-auto" />
                                         </div>
                                         <div className="text-xl font-bold my-auto ml-5">
                                             { dataDashboard.kursus } Kursus

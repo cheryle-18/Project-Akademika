@@ -48,7 +48,7 @@ const GuruAdmin = () => {
             <td
                 className={guru.status == 1 ? "text-green-700" : "text-red-700"}
             >
-                {guru.status == 1 ? "Aktif" : "Banned"}
+                {guru.status == 1 ? "Aktif" : "Tidak Aktif"}
             </td>
             <td className="text-base">
                 <Link to={`/admin/master/guru/detail/${guru.guru_id}`}>
@@ -73,7 +73,7 @@ const GuruAdmin = () => {
                 <div className="bg-gray-200 flex">
                     <Sidebar now="guru">
                         <div className="text-2xl p-14 pb-2">
-                            <div className="bg-white overflow-y-auto h-77vh p-4 mb-6 rounded-md drop-shadow-lg overflow-x-auto">
+                            <div className="bg-white overflow-y-auto h-77vh p-6 mb-6 rounded-md drop-shadow-lg overflow-x-auto">
                                 <table className="table table-compact w-full text-black">
                                     <thead>
                                         <tr>
