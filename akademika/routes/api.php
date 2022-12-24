@@ -57,6 +57,10 @@ Route::group(['middleware'=>'api'],function ()
     });
 
     Route::prefix('admin')->group(function () {
+        Route::get('dashboard',[AdminController::class,'getDashboard']);
+        Route::get('dashboard/chart',[AdminController::class,'getDashboardChart']);
+        Route::get('dashboard/chartSec',[AdminController::class,'getDashboardChartSec']);
+
         Route::prefix('master')->group(function () {
             Route::prefix('siswa')->group(function () {
                 Route::post('/',[AdminController::class,'getSiswa']);

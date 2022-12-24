@@ -17,6 +17,44 @@ use Illuminate\Support\Facades\Validator;
 
 class AdminController extends Controller
 {
+    function getDashboard(){
+        $siswa = Siswa::all();
+        $guru = Guru::all();
+        $kursus = Kursus::all();
+
+        return response()->json([
+            "siswa" => count($siswa),
+            "guru" => count($guru),
+            "kursus" => count($kursus)
+        ]);
+    }
+
+    function getDashboardChart(){
+        $data = Pendaftaran::selectRaw("sum(grand_total) AS total, monthname(tanggal) AS bulan, month(tanggal) as num")->whereYear('tanggal', 2022)->groupBy('bulan')->orderBy('num')->get();
+        $laporan = [];
+
+        foreach($data as $d){
+            $laporan[] = (int)$d->total;
+        }
+
+        return response()->json([
+            "laporan" => $laporan
+        ]);
+    }
+
+    function getDashboardChartSec(){
+        $data = Pendaftaran::selectRaw('sum(grand_total) AS total, year(tanggal) AS year')->groupBy('year')->get();
+        $laporan = [];
+
+        foreach($data as $d){
+            $laporan[] = (int)$d->total;
+        }
+
+        return response()->json([
+            "laporan" => $laporan
+        ]);
+    }
+
     function getSiswa(Request $request)
     {
         $siswa = Siswa::all();
