@@ -7,7 +7,7 @@ import AuthUser from "../../components/AuthUser";
 const Nav = () => {
 
     const {user,token,logout} = AuthUser()
-    
+
 
     const logoutSiswa = () => {
         if(token != undefined){
@@ -23,14 +23,12 @@ const Nav = () => {
                     <div className="text-3xl font-semibold text-white float-left">
                         <Link to="/">Akademika</Link>
                     </div>
-                    <div className="text-white float-right cursor-pointer text-3xl">
-                        <FontAwesomeIcon
-                            icon={faIcon.faUserCircle}
-                        ></FontAwesomeIcon>
-                    </div>
-                    <div className="pt-1.5 text-white float-right cursor-pointer mr-2 relative">
-                        <div class="dropdown dropdown-hover">
-                            Halo, Siswa
+                    <div className="text-white float-right cursor-pointer">
+                        <div class="dropdown dropdown-hover dropdown-end">
+                            <FontAwesomeIcon
+                                icon={faIcon.faUserCircle}
+                                className="text-3xl my-auto"
+                            ></FontAwesomeIcon>
                             <ul
                                 tabindex="0"
                                 class="dropdown-content menu p-2 shadow bg-base-100 w-32 text-black rounded-lg"
@@ -47,6 +45,9 @@ const Nav = () => {
                                 {/* </Link> */}
                             </ul>
                         </div>
+                    </div>
+                    <div className="pt-1.5 text-white float-right cursor-pointer mr-2 relative">
+                        Halo, {user.nama}
                     </div>
                     <div className="pt-1.5 text-white float-right mr-5 cursor-pointer">
                         <Link to="/siswa/kursus">Kursus Saya</Link>

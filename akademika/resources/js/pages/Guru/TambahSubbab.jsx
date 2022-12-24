@@ -24,6 +24,7 @@ const TambahSubbab = () => {
     const { kursus_id, subbab_id } = useParams();
     const history = useHistory();
     const [isLoading, setIsLoading] = useState(false);
+    const [response, setResponse] = useState("")
 
     setTimeout(() => {
         if (user == "admin") {
@@ -44,11 +45,17 @@ const TambahSubbab = () => {
         }).then((res) => {
             let data = res.data;
             console.log(data);
-
-            let url = `/guru/kursus/${kursus_id}/detail`
-            history.push(url)
+            setResponse(data)
         });
     };
+
+    useEffect(() => {
+        if(response=="Berhasil tambah subbab baru"){
+            console.log(true)
+            let url = `/guru/kursus/${kursus_id}/detail`
+            history.push(url)
+        }
+    }, [response])
 
     return (
         <div>
