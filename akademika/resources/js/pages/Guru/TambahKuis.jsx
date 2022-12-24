@@ -22,6 +22,7 @@ const TambahKuis = () => {
     const id = useId();
     const history = useHistory();
     const [isLoading, setIsLoading] = useState(true);
+    const [bisaDelete, setBisaDelete] = useState(false);
 
     setTimeout(() => {
         if (user == "admin") {
@@ -64,8 +65,30 @@ const TambahKuis = () => {
         http.post("/guru/kursus/kuis/simpan", formData).then((res) => {
             let data = res.data;
             console.log(data);
+
+            let url = `/guru/kursus/${kursus_id}/subbab/${subbab_id}/detail`
+            history.push(url)
         });
     };
+
+    const deleteKuis = () => {
+        http.post("/guru/kursus/kuis/delete", {
+            subbab_id : subbab_id
+        }).then((res) => {
+            let url = `/guru/kursus/${kursus_id}/subbab/${subbab_id}/detail`
+            history.push(url)
+        });
+    }
+
+    const cekBisaDelete = () => {
+        http.post("/guru/kursus/kuis/checkDelete", {
+            kursus_id: kursus_id,
+            subbab_id : subbab_id
+        }).then((res) => {
+            setBisaDelete(res.data.bisaDelete)
+            console.log(res.data)
+        });
+    }
 
     const addCount = () => {
         setCtrSoal(ctrSoal + 1);
@@ -144,6 +167,7 @@ const TambahKuis = () => {
     };
 
     useEffect(() => {
+        cekBisaDelete();
         fetchKursus();
         fetchDataKuis();
     }, []);
@@ -325,11 +349,15 @@ const TambahKuis = () => {
                                 Tambah Kuis
                             </span>
                             <div className="ml-auto">
-                                {/* <Link to="/guru/kursus/subbab/detail">
-                            <button className="btn btn-sm h-10 bg-blue-900 hover:bg-blue-700 text-white rounded mr-3 capitalize font-normal">
-                                Back
-                            </button>
-                        </Link> */}
+                                {
+                                    bisaDelete &&
+                                    <button
+                                        className="btn btn-sm h-10 bg-blue-900 hover:bg-blue-700 text-white rounded mr-3 capitalize font-normal"
+                                        onClick={deleteKuis}
+                                    >
+                                        Hapus Kuis
+                                    </button>
+                                }
                                 <button
                                     className="btn btn-sm h-10 bg-blue-900 hover:bg-blue-700 text-white rounded mr-3 capitalize font-normal"
                                     onClick={submitForm}

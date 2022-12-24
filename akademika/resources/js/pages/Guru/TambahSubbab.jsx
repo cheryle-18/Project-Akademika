@@ -37,13 +37,16 @@ const TambahSubbab = () => {
 
     const submitForm = () => {
         http.post("/guru/kursus/subbab/tambah", {
-            kursus_id: 51,
+            kursus_id: kursus_id,
             judul: judul,
             deskripsi: penjelasan,
             durasi: durasi,
         }).then((res) => {
             let data = res.data;
             console.log(data);
+
+            let url = `/guru/kursus/${kursus_id}/detail`
+            history.push(url)
         });
     };
 

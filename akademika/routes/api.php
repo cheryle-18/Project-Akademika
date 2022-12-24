@@ -135,6 +135,8 @@ Route::group(['middleware'=>'api'],function ()
 
             Route::prefix('kuis')->group(function () {
                 Route::post('simpan',[KursusController::class,'simpanKuis']);
+                Route::post('delete',[KursusController::class,'deleteKuis']);
+                Route::post('checkDelete',[KursusController::class,'checkDeleteKuis']);
                 Route::get('getKuis/{subbab_id}',[KursusController::class,'getKuis']);
             });
         });
