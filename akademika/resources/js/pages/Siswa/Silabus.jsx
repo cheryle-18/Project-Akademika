@@ -6,13 +6,14 @@ import GuestNav from "../Nav";
 import AuthUser from "../../components/AuthUser";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import * as faIcon from "@fortawesome/free-solid-svg-icons";
+import { Alert, Input, Radio } from "@material-tailwind/react";
 
 import {
     Accordion,
     AccordionHeader,
     AccordionBody,
 } from "@material-tailwind/react";
-import { keyBy } from "lodash";
+import { ceil, floor, keyBy } from "lodash";
 import { countBy } from "lodash";
 
 function Icon({ id, open }) {
@@ -42,6 +43,7 @@ const Silabus = (props) => {
     const { kursus_id } = useParams();
     const [course, setCourse] = useState([]);
 
+    const [poin, setPoin] = useState(0);
     const [listSubbab, setListSubbab] = useState([]);
     const [snapToken, setSnapToken] = useState(null);
     const [isRegistered, setIsRegistered] = useState(false);
@@ -250,6 +252,76 @@ const Silabus = (props) => {
         }
     };
 
+    const cetakDaftarSekarang = (
+        <div>
+            <h3 className="text-3xl font-bold text-custom-blue">
+                {course.nama}
+            </h3>
+            <div className="text-xl pt-4">
+                Biaya: IDR{" "}
+                {course.harga != null &&
+                    course.harga.toLocaleString(["ban", "id"])}
+            </div>
+            <div className="text-xl pt-4">Poin Anda: {user.poin}</div>
+
+            <div className="flex mt-4">
+                <div className="text-xl float-left w-fit flex justify-center items-center">
+                    Tukarkan Poin :{" "}
+                </div>
+                <input
+                    type="text"
+                    style={{
+                        padding: "2px 12px",
+                        paddingLeft: "8px",
+                        borderWidth: "1px",
+                    }}
+                    value={poin}
+                    onChange={(e) => {
+                        if(e.target.value <= user.poin){
+                            setPoin(e.target.value);
+                        }
+                    }}
+                    className="w-40 text-lg bordered border-2 font-normal border-gray-400 rounded-lg focus:border-blue-600 float-left ml-2"
+                />
+                <div className="clear-both"></div>
+            </div>
+
+            {!isRegistered && isFetched && (
+                <button
+                    id="pay-button"
+                    onClick={() => {
+                        setIsMuncul(false);
+                        snapToken != null &&
+                            window.snap.pay(snapToken, {
+                                onSuccess: function (result) {
+                                    /* You may add your own implementation here */
+                                    console.log(result);
+                                },
+                                onPending: function (result) {
+                                    /* You may add your own implementation here */
+                                    alert("waiting your payment!");
+                                    console.log(result);
+                                },
+                                onError: function (result) {
+                                    /* You may add your own implementation here */
+                                    alert("payment failed!");
+                                    console.log(result);
+                                },
+                                onClose: function () {
+                                    /* You may add your own implementation here */
+                                    console.log(result);
+                                },
+                            });
+                    }}
+                    className="btn mx-auto rounded bg-custom-blue text-gray-100 border-0 hover:bg-custom-blue capitalize font-medium text-base float-right mt-4"
+                >
+                    Bayar Sekarang
+                    <div className="clear-both"></div>
+                </button>
+            )}
+        </div>
+    );
+
     const cetakSilabus = listSubbab.map((subbab, index) => (
         <Accordion
             open={open === index + 1}
@@ -290,7 +362,9 @@ const Silabus = (props) => {
                     })}
                     {subbab.kuis.map((kuis, indexKuis) => (
                         <div className="w-full bg-white flex mb-1">
-                            <Link to={`/siswa/kursus/${kursus_id}/subbab/${subbab.subbab_id}/kuis`}>
+                            <Link
+                                to={`/siswa/kursus/${kursus_id}/subbab/${subbab.subbab_id}/kuis`}
+                            >
                                 <span>Kuis</span>
                             </Link>
                             <span className="ml-auto">
@@ -402,46 +476,12 @@ const Silabus = (props) => {
                                     alt=""
                                 />
 
-                                {!isRegistered && isFetched && (
-                                    <button
-                                        id="pay-button"
-                                        onClick={() => {
-                                            setIsMuncul(false);
-                                            snapToken != null &&
-                                                window.snap.pay(snapToken, {
-                                                    onSuccess: function (
-                                                        result
-                                                    ) {
-                                                        /* You may add your own implementation here */
-                                                        console.log(result);
-                                                    },
-                                                    onPending: function (
-                                                        result
-                                                    ) {
-                                                        /* You may add your own implementation here */
-                                                        alert(
-                                                            "waiting your payment!"
-                                                        );
-                                                        console.log(result);
-                                                    },
-                                                    onError: function (result) {
-                                                        /* You may add your own implementation here */
-                                                        alert(
-                                                            "payment failed!"
-                                                        );
-                                                        console.log(result);
-                                                    },
-                                                    onClose: function () {
-                                                        /* You may add your own implementation here */
-                                                        console.log(result);
-                                                    },
-                                                });
-                                        }}
-                                        className="btn w-48 mx-auto rounded bg-white text-blue-900 border-0 hover:bg-gray-100 capitalize font-medium text-base"
-                                    >
-                                        Daftar Sekarang
-                                    </button>
-                                )}
+                                <label
+                                    className="btn w-48 mx-auto rounded bg-white text-blue-900 border-0 hover:bg-gray-100 capitalize font-medium text-base"
+                                    htmlFor="daftarSekarang"
+                                >
+                                    Daftar Sekarang
+                                </label>
                             </div>
                             <div className="w-3/4 flex flex-col text-white">
                                 <div className="font-bold text-4xl mb-3">
@@ -454,13 +494,19 @@ const Silabus = (props) => {
                                     {course.deskripsi}
                                 </div>
                                 <div className="mt-auto flex text-xl font-semibold">
-                                    <span>IDR {course.harga}</span>
+                                    <span>
+                                        IDR{" "}
+                                        {course.harga.toLocaleString([
+                                            "ban",
+                                            "id",
+                                        ])}
+                                    </span>
                                     <span className="ml-8">
                                         <FontAwesomeIcon
                                             icon={faClock}
                                             className="text-white mr-2"
                                         />
-                                        {course.durasi} jam
+                                        {ceil(course.durasi / 3600)} jam
                                     </span>
                                 </div>
                             </div>
@@ -498,6 +544,25 @@ const Silabus = (props) => {
                             Silabus Kursus
                         </div>
                         <Fragment>{cetakSilabus}</Fragment>
+                    </div>
+
+                    <div className="z-10">
+                        <input
+                            type="checkbox"
+                            id="daftarSekarang"
+                            className="modal-toggle"
+                        />
+                        <div className="modal">
+                            <div className="modal-box relative py-10 px-8">
+                                <label
+                                    htmlFor="daftarSekarang"
+                                    className="btn btn-sm absolute bg-transparent text-gray-500 border border-none hover:bg-transparent hover:border-none right-2 top-2 font-bold text-xl"
+                                >
+                                    ✕
+                                </label>
+                                {cetakDaftarSekarang}
+                            </div>
+                        </div>
                     </div>
                 </div>
             )}
