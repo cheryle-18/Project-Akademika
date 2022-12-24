@@ -13,7 +13,7 @@ import AuthUser from "../../components/AuthUser";
 
 const Materi = () => {
     const [src, setSrc] = useState("");
-    const { id } = useParams();
+    const { id, kursus_id, subbab_id } = useParams();
     const { http, user, token } = AuthUser();
     const [bacaan, setBacaan] = useState("");
     const [materi, setMateri] = useState([]);
@@ -153,7 +153,7 @@ const Materi = () => {
                                     </button>
                                 </div>
                                 <div className="float-right">
-                                    <Link to="/siswa/kursus/kuis">
+                                    <Link to={`siswa/kursus/kuis/${kuis_id}/subbab/${subbab_id}/kuis`}>
                                         <button
                                             className="btn w-full mt-3 text-base capitalize bg-custom-blue text-white hover:bg-blue-700 font-normal rounded-md py-2"
                                             name=""
