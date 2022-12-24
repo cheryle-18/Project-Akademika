@@ -153,7 +153,7 @@ const Materi = () => {
                                     </button>
                                 </div>
                                 <div className="float-right">
-                                    <Link to={`siswa/kursus/kuis/${kuis_id}/subbab/${subbab_id}/kuis`}>
+                                    <Link to={`/siswa/kursus/${kursus_id}/subbab/${subbab_id}/kuis`}>
                                         <button
                                             className="btn w-full mt-3 text-base capitalize bg-custom-blue text-white hover:bg-blue-700 font-normal rounded-md py-2"
                                             name=""

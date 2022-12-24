@@ -75,7 +75,7 @@ const Index = () => {
                 <Route exact path="/siswa/kursus/">
                     <KursusSaya></KursusSaya>
                 </Route>
-                <Route exact path="/siswa/kursus/:kursus_id/materi/:id">
+                <Route exact path="/siswa/kursus/:kursus_id/subbab/:subbab_id/materi/:id">
                     <Materi></Materi>
                 </Route>
                 <Route exact path="/siswa/kursus/:kursus_id/subbab/:subbab_id/kuis">

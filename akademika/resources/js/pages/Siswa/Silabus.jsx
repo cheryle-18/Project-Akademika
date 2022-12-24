@@ -267,7 +267,7 @@ const Silabus = (props) => {
                         if (isRegistered) {
                             return (
                                 <Link
-                                    to={`/siswa/kursus/${kursus_id}/materi/${materi.materi_id}`}
+                                    to={`/siswa/kursus/${kursus_id}/subbab/${subbab.subbab_id}/materi/${materi.materi_id}`}
                                 >
                                     <div className="w-full bg-white flex mb-1">
                                         <span>Materi</span>
