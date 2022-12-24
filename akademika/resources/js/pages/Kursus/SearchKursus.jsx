@@ -186,7 +186,7 @@ const SearchKursus = (props) => {
                                 </div>
                             </form>
 
-                            <div class="mt-10 flex flex-wrap gap-10 w-full">
+                            <div class="mt-10 w-full grid grid-cols-2 gap-6">
                                 {currentItems.map((n, index) => {
                                     return (
                                         <CourseCard course={n} key={index} />

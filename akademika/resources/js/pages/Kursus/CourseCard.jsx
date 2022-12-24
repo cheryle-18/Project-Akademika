@@ -10,7 +10,7 @@ const CourseCard = (props) => {
     console.log(props);
     const { http, user } = AuthUser();
     return (
-        <div className="flex flex-col md:flex-row md:max-w-xl rounded-lg bg-white shadow-lg w-1/2 h-auto">
+        <div className="flex flex-col md:flex-row rounded-lg bg-white shadow-lg w-full h-auto">
             <img
                 className=" w-full h-full md:h-auto object-cover md:w-48 rounded-t-lg md:rounded-none md:rounded-l-lg"
                 src={CardPic}
