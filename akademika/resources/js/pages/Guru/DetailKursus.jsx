@@ -51,9 +51,10 @@ const DetailKursus = () => {
 
     const sweetAlert = withReactContent(Swal)
 
-    const fireAlert = (title,icon,status) => {
+    const fireAlert = (title,icon,status,text) => {
         sweetAlert.fire({
             title: <strong>{title}</strong>,
+            text:text,
             icon: icon,
             confirmButtonColor:"#0D47A1",
             didClose: () => {
@@ -104,8 +105,13 @@ const DetailKursus = () => {
             durasi: edtDurasi,
         }).then((res) => {
             console.log(res.data);
-            fireAlert("Sukses edit data kursus!","success","edit")
-            fetchKursus();
+            if(res.data == 1){
+                fireAlert("Sukses!","success","edit","Berhasil edit data kursus!")
+                fetchKursus();
+            }
+            else{
+                fireAlert("Error","error","edit",res.data+'!')
+            }
         });
     };
 
@@ -115,7 +121,7 @@ const DetailKursus = () => {
         }).then((res) => {
             console.log(res.data);
             document.getElementById("konfirmasiHapus").click()
-            fireAlert("Kursus berhasil dihapus!","success","delete")
+            fireAlert("Sukses","success","delete","Berhasil delete kursus!")
         });
     };
 
@@ -135,7 +141,7 @@ const DetailKursus = () => {
             console.log(res.data);
             history.push("/guru/kursus/" + kursus_id + "/detail");
             document.getElementById("konfirmasiAjukan").click()
-            fireAlert("Kursus berhasil diajukan!","success","ajukan")
+            fireAlert("Sukses!","success","ajukan","Berhasil mengajukan kursus!")
         });
     };
 

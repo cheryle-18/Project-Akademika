@@ -11,6 +11,8 @@ import {
     faArrowLeft,
 } from "@fortawesome/free-solid-svg-icons";
 import { useHistory } from "react-router-dom";
+import Swal from 'sweetalert2'
+import withReactContent from 'sweetalert2-react-content'
 
 const TambahSubbab = () => {
     const [title, setTitle] = useState("proses");
@@ -36,6 +38,16 @@ const TambahSubbab = () => {
         }
     }, 1000);
 
+    const sweetAlert = withReactContent(Swal)
+    const fireAlert = (title,icon,status,text) => {
+        sweetAlert.fire({
+            title: <strong>{title}</strong>,
+            text:text,
+            icon: icon,
+            confirmButtonColor:"#0D47A1",
+        })
+    }
+
     const submitForm = () => {
         http.post("/guru/kursus/subbab/tambah", {
             kursus_id: kursus_id,
@@ -46,6 +58,7 @@ const TambahSubbab = () => {
             let data = res.data;
             console.log(data);
             setResponse(data)
+            fireAlert("Sukses!","success","tambahSubbab","Berhasil tambah subbab!")
         });
     };
 
