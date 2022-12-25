@@ -33,19 +33,23 @@ const ReportSiswa = () => {
             guru_id: user.guru_id,
             type: "semua",
         }).then((res) => {
-            setListCourse(res.data.kursus);
-            setSelectedCourse(res.data.kursus[0].kursus_id);
+            if(res.data.kursus.length > 0){
+                setListCourse(res.data.kursus);
+                setSelectedCourse(res.data.kursus[0].kursus_id);
+            }
             setIsLoading(false);
         });
     };
 
     const fetchSiswa = () => {
-        http.post("/guru/kursus/getSiswa", {
-            kursus_id: selectedCourse,
-        }).then((res) => {
-            setListSiswa(res.data.siswa);
-            setSelectedSiswa(res.data.siswa[0].siswa_id);
-        });
+        if(selectedCourse!=null){
+            http.post("/guru/kursus/getSiswa", {
+                kursus_id: selectedCourse,
+            }).then((res) => {
+                setListSiswa(res.data.siswa);
+                setSelectedSiswa(res.data.siswa[0].siswa_id);
+            });
+        }
     };
 
     const fetchLaporan = () => {
