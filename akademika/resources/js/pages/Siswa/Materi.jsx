@@ -99,6 +99,7 @@ const Materi = () => {
                             </div>
                             <div>
                                 <div className="float-right">
+                                <Link to={`/siswa/kursus/download`}>
                                     <button
                                         className="btn w-full mt-3 text-base capitalize bg-custom-blue text-white hover:bg-blue-700 font-normal rounded-md py-2"
                                         name=""
@@ -107,8 +108,10 @@ const Materi = () => {
                                             icon={faCloudArrowDown}
                                             className="mr-2"
                                         ></FontAwesomeIcon>
+
                                         Unduh
                                     </button>
+                                </Link>
                                 </div>
                                 <div className="clear-both"></div>
                             </div>
