@@ -270,7 +270,7 @@ const DetailSubbab = () => {
                             Kuis
                         </div>
                         <div className="w-full my-3">
-                            {kuis != null ? (
+                            {kuis!=null && kuis.length>0 ? (
                                 <Link
                                     to={
                                         "/guru/kursus/" +

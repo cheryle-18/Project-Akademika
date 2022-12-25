@@ -91,7 +91,7 @@ const SiswaAdmin = () => {
                 <div className="bg-gray-200 flex">
                     <Sidebar now="siswa">
                         <div className="text-2xl p-14 pb-2">
-                            <div className="bg-white overflow-y-auto h-77vh p-6 mb-6 rounded-md drop-shadow-lg">
+                            <div className="bg-white overflow-y-auto min-h-77vh h-auto p-6 mb-6 rounded-md drop-shadow-lg">
                                 <table className="table table-compact w-full text-black overflow-y-auto table-auto">
                                     <thead>
                                         <tr>

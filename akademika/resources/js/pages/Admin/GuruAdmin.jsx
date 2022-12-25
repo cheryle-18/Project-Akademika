@@ -73,7 +73,7 @@ const GuruAdmin = () => {
                 <div className="bg-gray-200 flex">
                     <Sidebar now="guru">
                         <div className="text-2xl p-14 pb-2">
-                            <div className="bg-white overflow-y-auto h-77vh p-6 mb-6 rounded-md drop-shadow-lg overflow-x-auto">
+                            <div className="bg-white overflow-y-auto min-h-77vh h-auto p-6 mb-6 rounded-md drop-shadow-lg overflow-x-auto">
                                 <table className="table table-compact w-full text-black">
                                     <thead>
                                         <tr>

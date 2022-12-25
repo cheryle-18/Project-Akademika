@@ -95,7 +95,7 @@ class KursusController extends Controller
         $kuis = Kuis::where('subbab_id',$request->subbab_id)->first();
 
         return response()->json([
-            "kuis" => $kuis
+            "kuis" => $kuis->soal
         ]);
     }
 
@@ -560,7 +560,7 @@ class KursusController extends Controller
                   }
              }
         }
-        
+
         else if($type == "semua"){
             $kursus = $guru->kursus()->where('kursus.status',1)->get();
         }
