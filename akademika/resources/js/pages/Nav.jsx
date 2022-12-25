@@ -8,6 +8,7 @@ import { Alert, Input, Radio } from "@material-tailwind/react";
 
 const Nav = (props) => {
     const [isLoginFailed, setLoginFailed] = useState(false);
+    const [message, setMessage] = useState("Gagal Masuk!");
     const [registerFailed, setRegisterFailed] = useState("awal");
     const [openNow, setOpenNow] = useState("masuk");
     //login attribs
@@ -28,6 +29,7 @@ const Nav = (props) => {
     //   const { http } = AuthUser();
     const [clicked, setClicked] = useState(false);
     const [forgotEmail, setForgotEmail] = useState("");
+
 
     function onForgotPassword(e) {
         setClicked(true);
@@ -73,7 +75,6 @@ const Nav = (props) => {
                 password: loginPassword,
             }).then((res) => {
                 let data = res.data;
-
                 if (data.access_token != null && data.user != null) {
                     //login success
                     setToken(res.data.user, res.data.access_token);
@@ -81,6 +82,7 @@ const Nav = (props) => {
                     console.log(data.user);
                 } else {
                     setLoginFailed(true);
+                    setMessage(res.data);
                 }
             });
         }
@@ -116,58 +118,52 @@ const Nav = (props) => {
                     Berhasil Daftar!
                 </Alert>
             )}
-            <h3 className="text-3xl font-bold text-custom-blue">
-                Daftar Akademika
+            <h3 className="text-3xl font-bold text-custom-blue mb-4">
+                Buat Akun Baru
             </h3>
-            <span className="py-2">
+            <div className="py-1">
                 <Input
                     type="text"
                     label="Nama Lengkap"
-                    className="input input-bordered w-full border-2 border-gray-500 rounded-md placeholder-gray-700"
                     onChange={(e) => setRegisterNama(e.target.value)}
                 />
-            </span>
-            <span className="py-2">
+            </div>
+            <div className="py-1">
                 <Input
                     type="text"
                     label="Username"
-                    className="input input-bordered w-full border-2 border-gray-500 rounded-md placeholder-gray-700"
                     onChange={(e) => setRegisterUsername(e.target.value)}
                 />
-            </span>
-            <span className="py-2">
+            </div>
+            <div className="py-1">
                 <Input
                     type="text"
                     label="Email"
-                    className="input input-bordered w-full border-2 border-gray-500 rounded-md placeholder-gray-700"
                     onChange={(e) => setRegisterEmail(e.target.value)}
                 />
-            </span>
-            <span className="py-2">
+            </div>
+            <div className="py-1">
                 <Input
                     type="text"
                     label="Telp"
-                    className="input input-bordered w-full border-2 border-gray-500 rounded-md placeholder-gray-700"
                     onChange={(e) => setRegisterTelp(e.target.value)}
                 />
-            </span>
-            <span className="py-2">
+            </div>
+            <div className="py-1">
                 <Input
                     type="password"
                     label="Password"
-                    className="input input-bordered w-full border-2 border-gray-500 rounded-md placeholder-gray-700"
                     onChange={(e) => setRegisterPassword(e.target.value)}
                 />
-            </span>
-            <span className="py-2">
+            </div>
+            <div className="py-1">
                 <Input
                     type="password"
                     label="Konfirmasi Password"
-                    className="input input-bordered w-full border-2 border-gray-500 rounded-md placeholder-gray-700"
                     onChange={(e) => setRegisterConfirmPassword(e.target.value)}
                 />
-            </span>
-            <div className="pt-2 flex">
+            </div>
+            <div className="pt-1 flex">
                 <span className="mr-2 my-auto">Daftar Sebagai:</span>
                 <Radio
                     id="guru"
@@ -206,28 +202,27 @@ const Nav = (props) => {
         <div>
             {isLoginFailed && (
                 <Alert severity="error" className="bg-red-400 mb-6">
-                    Gagal Masuk!
+                    {message}
+                    {/* Gagal Masuk! */}
                 </Alert>
             )}
-            <h3 className="text-3xl font-bold text-custom-blue">Masuk</h3>
-            <span className="py-4">
+            <h3 className="text-3xl font-bold text-custom-blue mb-4">Masuk</h3>
+            <div className="py-2">
                 <Input
                     type="text"
                     label="Email"
-                    className="input input-bordered w-full border-2 border-gray-500 rounded-md placeholder-gray-700"
                     onChange={(e) => setLoginEmail(e.target.value)}
                     required
                 />
-            </span>
-            <span className="py-2">
+            </div>
+            <div className="py-2">
                 <Input
                     type="password"
                     label="Password"
-                    className="input input-bordered w-full border-2 border-gray-500 rounded-md placeholder-gray-700"
                     onChange={(e) => setLoginPassword(e.target.value)}
                     required
                 />
-            </span>
+            </div>
             <div className="w-full">
                 <div
                     className="text-right text-custom-blue cursor-pointer"
@@ -290,7 +285,9 @@ const Nav = (props) => {
             <div className="my-5 w-full">
                 <div className="hidden md:block">
                     <div className="text-3xl font-semibold text-white float-left">
-                        Akademika
+                        <Link to={"/"}>
+                            Akademika
+                        </Link>
                     </div>
                     <label
                         htmlFor="masukDaftar"
@@ -324,7 +321,7 @@ const Nav = (props) => {
                         onClick={changeOpenNowMasuk}
                         className="flex justify-center align-center"
                     >
-                        <div className="cursor-pointer border-2 border-white bg-transparent text-white py-1 px-8 rounded-md hover:bg-custom-blue hover:text-white bg-white w-full sm:w-96 text-center mt-2">
+                        <div className="cursor-pointer border border-white bg-transparent text-white py-1 px-8 rounded-md hover:bg-custom-blue hover:text-white bg-white w-full sm:w-96 text-center mt-2">
                             Masuk
                         </div>
                     </label>

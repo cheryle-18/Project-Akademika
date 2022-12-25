@@ -1,55 +1,31 @@
 import React, { useState, useEffect } from "react";
-import { BrowserRouter as Router, Route } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import * as faIcon from "@fortawesome/free-solid-svg-icons";
+import { faClock } from "@fortawesome/free-solid-svg-icons"
 import Nav from "./Nav";
 import { Link } from "react-router-dom";
 import Logo from "../../images/logo_akademika.png";
 import Logo2 from "../../images/logo_akademika2.png";
 import Logo3 from "../../images/logo_akademika3.png";
+import AuthUser from "../components/AuthUser";
+import SiswaNav from "./Siswa/Navbar";
+import GuruNav from "./Guru/Navbar";
+import cardPic from "../../images/card_pic.png"
 
 const Home = () => {
     const classItem = "";
+    const { http, user, token } = AuthUser();
+    const [kursusPopuler, setKursusPopuler] = useState([])
 
-    const [kursusPopuler, setKursusPopuler] = useState([
-        {
-            "kursus_id": 48,
-            "guru_id": 7,
-            "nama": "numquam eligendi reiciendis",
-            "kategori": "Logika dan Matematika",
-            "deskripsi": "Dolores molestias sunt sint accusantium natus laudantium. Inventore suscipit sed quae autem quis qui. Vero a magni animi repellendus sed. Est hic quia aut dolore hic rerum est.",
-            "durasi": 8560,
-            "harga": 68278,
-            "status": 0,
-            "created_at": "2022-12-10T06:50:33.000000Z",
-            "updated_at": "2022-12-10T06:50:33.000000Z",
-            "deleted_at": null
-        },
-        {
-            "kursus_id": 28,
-            "guru_id": 10,
-            "nama": "quisquam aliquam veniam",
-            "kategori": "Kesehatan",
-            "deskripsi": "Molestias ipsum beatae provident sapiente tempora. Nihil modi maxime molestiae non. Laboriosam voluptas sint quis molestias atque aut. Modi aut fugiat odio.",
-            "durasi": 4783,
-            "harga": 76464,
-            "status": 1,
-            "created_at": "2022-12-10T06:50:33.000000Z",
-            "updated_at": "2022-12-10T06:50:33.000000Z",
-            "deleted_at": null
-        }
-    ])
     const fetchKursusPopuler = () => {
         http.get("get/kursusPopuler").then((res) => {
-            console.log(res.data.kursus)
-            setKursusPopuler(res.data.kursus)
-
-            console.log(kursusPopuler)
+            // console.log(res.data.kursus)
+            // setKursusPopuler(res.data.kursus)
         });
     };
 
     useEffect(() => {
-        fetchKursusPopuler
+        fetchKursusPopuler()
     }, [])
 
     const [links, setLink] = useState([
@@ -138,21 +114,21 @@ const Home = () => {
             lulusan: "Lulusan Kursus Data Science & Statistika",
         },
         {
-            msg: "Lorem ipsum dolor sit, amet consectetur adipisicing elit. Omnis fugiat incidunt cumque reprehenderit accusantium dolorum voluptatibus aut mollitia quos, accusamus vel. Iusto ullam assumenda officia non amet, quam molestiae culpa?",
+            msg: "Lorem ipsum dolor, sit amet consectetur adipisicing elit. Odit recusandae nobis modi! Odio dolorem quas fuga fugiat, aliquam cum pariatur ducimus quia eligendi, quam magni? Nemo labore nesciunt minima expedita facilis numquam tempora perspiciatis maiores iste, quam sit ut voluptas laudantium.",
             img: "https://s3-alpha-sig.figma.com/img/83b1/31fd/9e1ac65719d0990ca684d4cac776f5a4?Expires=1669593600&Signature=FKaqB0T66mN3OCggvalALSRAiT8~~8Z581XjDc6Kd4nahQyg5AorWoQRy1JOXtG3MvWju3WEMzRAnRESsXI9KSRhsPmIXByLynSS9NQqxHBWTAJnWYfdaJgGe4WSitRr1dMRle0VzDZ4MZDHvNe4EgTkGka9A8n0YsLfMnJ2WWX-kwi1htzXQDRrEUf8-PqnnbxieSphRRwNoBYnEr6U04WFy5ydD3sF32UFPtF7P8DVoBfI-hPO7~9D4I1Tk28NjmhHpGfwk-98nmiPPSFB0U1ZBsaWVFMByVbFT5m9EFdm0EBprvuz0UJ~BxABYD-Fz3LAJxl~JoQFH2iXY6x0Hw__&Key-Pair-Id=APKAINTVSUGEWH5XD5UA",
-            nama: "Jane Doe",
-            lulusan: "Lulusan Kursus Data Science & Statistika",
+            nama: "Emily Doe",
+            lulusan: "Lulusan Kursus Analisa Bisnis",
         },
         {
-            msg: "Lorem ipsum dolor sit, amet consectetur adipisicing elit. Omnis fugiat incidunt cumque reprehenderit accusantium dolorum voluptatibus aut mollitia quos, accusamus vel. Iusto ullam assumenda officia non amet, quam molestiae culpa?",
+            msg: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Architecto dicta eum accusantium consequatur, non id dolores pariatur nihil similique optio et cum consequuntur minima laudantium aliquam? Voluptas rerum commodi adipisci amet quaerat quo laudantium eius vero neque, quibusdam tenetur necessitatibus.",
             img: "https://s3-alpha-sig.figma.com/img/83b1/31fd/9e1ac65719d0990ca684d4cac776f5a4?Expires=1669593600&Signature=FKaqB0T66mN3OCggvalALSRAiT8~~8Z581XjDc6Kd4nahQyg5AorWoQRy1JOXtG3MvWju3WEMzRAnRESsXI9KSRhsPmIXByLynSS9NQqxHBWTAJnWYfdaJgGe4WSitRr1dMRle0VzDZ4MZDHvNe4EgTkGka9A8n0YsLfMnJ2WWX-kwi1htzXQDRrEUf8-PqnnbxieSphRRwNoBYnEr6U04WFy5ydD3sF32UFPtF7P8DVoBfI-hPO7~9D4I1Tk28NjmhHpGfwk-98nmiPPSFB0U1ZBsaWVFMByVbFT5m9EFdm0EBprvuz0UJ~BxABYD-Fz3LAJxl~JoQFH2iXY6x0Hw__&Key-Pair-Id=APKAINTVSUGEWH5XD5UA",
             nama: "Jane Doe",
-            lulusan: "Lulusan Kursus Data Science & Statistika",
+            lulusan: "Lulusan Kursus Pengembangan Website Front-End",
         },
     ]);
 
     const cetakJelajah = jelajahs.map((jelajah, index) => (
-        <div className="col-span-12 md:col-span-6 flex justify-center items-center h-10 md:h-24 rounded-lg border-1 bg-custom-light-blue2 border-2 border-solid border-custom-blue hover:bg-custom-blue hover:text-white cursor-pointer text-xl">
+        <div className="col-span-12 md:col-span-6 flex justify-center items-center h-20 rounded-lg border-1 bg-custom-light-blue2 border-2 border-solid border-custom-blue hover:bg-custom-blue hover:text-white cursor-pointer text-xl">
             <FontAwesomeIcon icon={jelajah.icon} className="mr-4" />
             <b>{jelajah.title}</b>
         </div>
@@ -160,7 +136,7 @@ const Home = () => {
 
     const cetakTestimoni = testimonis.map((testimoni, index) => (
         <div className="col-span-12 md:col-span-6 xl:col-span-4">
-            <div className="bg-white rounded-lg minh-400px font-semibold p-10">
+            <div className="bg-white rounded-lg minh-400px font-medium p-10">
                 <div className="text-left text-xl text-custom-blue h-280px overflow-hidden">
                     "{testimoni.msg}"
                 </div>
@@ -170,8 +146,8 @@ const Home = () => {
                         style={{ backgroundImage: `url(${testimoni.img})` }}
                     />
                     <div className="h-full flex flex-col justify-center items-start ml-5">
-                        <div className="text-gray-400">{testimoni.nama}</div>
-                        <div className="text-gray-400 text-sm">
+                        <div className="text-blue-900 font-semibold">{testimoni.nama}</div>
+                        <div className="text-black text-sm">
                             {testimoni.lulusan}
                         </div>
                     </div>
@@ -192,7 +168,15 @@ const Home = () => {
                 <div className="fixed left-0 top-0 z-50 font-extrabold bg-white">
                     {/* {cetakLink} */}
                 </div>
-                <Nav></Nav>
+                {/* <Nav></Nav> */}
+
+                {(user != null && user.role_text == "guru")&&<GuruNav stat="landing"></GuruNav>}
+                {user != null && user == "admin" && (
+                    <Nav></Nav>
+                )}
+                {user == null && (
+                    <Nav></Nav>
+                )}
                 <div></div>
 
                 <div className="grid grid-cols-12 mt-0 md:mt-10 lg:mt-20">
@@ -207,12 +191,14 @@ const Home = () => {
                             >
                                 Belajar tanpa batas
                             </div>
+                            {user == null &&
                             <button
                                 type="button"
                                 className="my-10 lg:my-0 py-3 px-6  bg-white hover:bg-blue-900 hover:text-white text-custom-blue transition ease-in duration-200 text-center text-base font-normal shadow-md rounded-lg w-full sm:w-96 lg:w-52"
                             >
                                 Daftar Sekarang
                             </button>
+                            }
                         </div>
                     </div>
                     <div className="col-span-12 px-10 lg:px-0 lg:col-span-5 flex items-center justify-center">
@@ -287,10 +273,10 @@ const Home = () => {
                     </div>
                 </div>
             </div>
-            <div className="flex justify-center items-center w-full xl:min-h-80vh z-0 px-4 sm:px-16 md:px-24 bg-white">
-                <div className="w-full min-h-screen xl:h-90vh bg-custom-light-blue rounded-xl p-3 md:p-6 pr-0 lg:pl-20">
+            <div className="flex justify-center items-center w-full z-0 px-16 mt-10 bg-white">
+                <div className="w-full bg-custom-light-blue rounded-xl p-20">
                     <div className="grid grid-cols-12">
-                        <div className="col-span-12 xl:col-span-5 xl:pt-16">
+                        <div className="col-span-12 xl:col-span-5">
                             <div
                                 className="text-custom-blue text-4xl lg:text-5xl font-semibold"
                                 style={{
@@ -308,14 +294,16 @@ const Home = () => {
                                 quaerat reiciendis praesentium? Asperiores,
                                 aspernatur porro.
                             </div>
-                            <button
-                                type="button"
-                                className="mt-6 py-3 px-4 bg-custom-blue hover:bg-white hover:text-custom-blue text-white transition ease-in duration-200 text-center text-base font-normal shadow-md rounded-lg w-full xl:w-52"
-                            >
-                                Lihat Semua Kursus
-                            </button>
+                            <Link to={"/guest/kursus/search"}>
+                                <button
+                                    type="button"
+                                    className="mt-6 py-3 px-4 bg-custom-blue hover:bg-white hover:text-custom-blue text-white transition ease-in duration-200 text-center text-base font-normal shadow-md rounded-lg w-full xl:w-52"
+                                >
+                                    Lihat Semua Kursus
+                                </button>
+                            </Link>
                         </div>
-                        <div className="col-span-12 xl:col-span-7 relative lg:mt-10">
+                        <div className="col-span-12 xl:col-span-7 relative">
                             {/* <div className="pr-6 absolute right-0">
                                 <div className="float-right text-4xl hover:text-custom-blue text-gray-500 cursor-pointer">
                                     <FontAwesomeIcon
@@ -328,7 +316,7 @@ const Home = () => {
                                     ></FontAwesomeIcon>
                                 </div>
                             </div> */}
-                            <div className="mt-10 xl:mt-20">
+                            <div className="">
                                 <div className="flex justify-center items-center">
                                     {
                                         kursusPopuler && kursusPopuler.length>0 &&
@@ -337,8 +325,7 @@ const Home = () => {
                                                 <div
                                                     className="h-200px md:h-300px bg-cover bg-no-repeat bg-center rounded-t-lg"
                                                     style={{
-                                                        backgroundImage:
-                                                            "url('https://s3-alpha-sig.figma.com/img/83b1/31fd/9e1ac65719d0990ca684d4cac776f5a4?Expires=1669593600&Signature=FKaqB0T66mN3OCggvalALSRAiT8~~8Z581XjDc6Kd4nahQyg5AorWoQRy1JOXtG3MvWju3WEMzRAnRESsXI9KSRhsPmIXByLynSS9NQqxHBWTAJnWYfdaJgGe4WSitRr1dMRle0VzDZ4MZDHvNe4EgTkGka9A8n0YsLfMnJ2WWX-kwi1htzXQDRrEUf8-PqnnbxieSphRRwNoBYnEr6U04WFy5ydD3sF32UFPtF7P8DVoBfI-hPO7~9D4I1Tk28NjmhHpGfwk-98nmiPPSFB0U1ZBsaWVFMByVbFT5m9EFdm0EBprvuz0UJ~BxABYD-Fz3LAJxl~JoQFH2iXY6x0Hw__&Key-Pair-Id=APKAINTVSUGEWH5XD5UA')",
+                                                        backgroundImage: `url(${cardPic})`,
                                                     }}
                                                     alt=""
                                                 />
@@ -346,8 +333,21 @@ const Home = () => {
                                                     <div className="font-semibold text-black ">
                                                         {k.nama}
                                                     </div>
-                                                    <div className="text-gray-500 pt-6">
-                                                        {Math.round(k.durasi/60)} jam
+                                                    <div className="flex mt-6">
+                                                        <span className="my-auto mr-2 text-gray-500">
+                                                            <FontAwesomeIcon icon={faClock} />
+                                                        </span>
+                                                        <div className="text-gray-500 my-auto">
+                                                            {Math.round(k.durasi/60)} jam
+                                                        </div>
+                                                        <Link to={`/guest/kursus/${k.kursus_id}/detail`} className="ml-auto my-auto">
+                                                            <button
+                                                                type="button"
+                                                                class="inline-block ml-auto px-6 py-2.5 bg-custom-blue text-white font-medium text-sm leading-tight capitalize rounded shadow-md hover:bg-blue-800 hover:shadow-lg focus:bg-blue-800 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-800 active:shadow-lg transition duration-150 ease-in-out"
+                                                            >
+                                                                Detail
+                                                            </button>
+                                                        </Link>
                                                     </div>
                                                 </div>
                                             </div>
@@ -360,7 +360,7 @@ const Home = () => {
                 </div>
             </div>
             <div
-                className="text-custom-blue text-5xl px-4 sm:px-16 md:px-24 mt-14 font-semibold"
+                className="text-custom-blue text-5xl px-4 sm:px-16 md:px-24 mt-28 font-semibold"
                 style={{
                     letterSpacing: "-1px",
                     fontFamily: "initial",
@@ -368,16 +368,16 @@ const Home = () => {
             >
                 Jelajahi Akademika
             </div>
-            <div className="px-4 sm:px-16 md:px-24 bg-white w-full min-h-screen mt-10">
+            <div className="px-4 sm:px-16 md:px-24 bg-white w-full pt-10 mb-28">
                 <div className="grid grid-cols-12 gap-2 md:gap-4 w-full h-full text-custom-blue">
                     {cetakJelajah}
                 </div>
-                <div className="text-right pt-1">
+                <div className="text-right pt-1 mt-3">
                     <Link
-                        to={"/"}
-                        className="text-custom-blue text-xl hover:text-blue-700"
+                        to={"/guest/kursus/search"}
+                        className="text-custom-blue text-lg font-semibold hover:text-blue-700"
                     >
-                        <b>Lihat Semua Kursus</b>
+                        Lihat Semua Kursus
                     </Link>
                 </div>
             </div>
@@ -413,12 +413,14 @@ const Home = () => {
                         <div className="pt-6 text-xl">
                             Belajar tanpa batas dengan Akademika
                         </div>
+                        { user == null &&
                         <button
                             type="button"
                             className="mt-6 py-3 px-6 bg-custom-blue hover:bg-custom-light-blue hover:text-custom-blue text-white transition ease-in duration-200 text-center text-base font-normal shadow-md rounded-lg"
                         >
                             Daftar Sekarang
                         </button>
+                        }
                     </div>
                 </div>
             </div>

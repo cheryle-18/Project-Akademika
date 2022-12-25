@@ -16,13 +16,15 @@ import {
     faArrowCircleLeft,
     faArrowLeft,
 } from "@fortawesome/free-solid-svg-icons";
-
+import Swal from 'sweetalert2'
+import withReactContent from 'sweetalert2-react-content'
 import AuthUser from "../../components/AuthUser";
 
 const DetailKursus = () => {
     const { http, user, token } = AuthUser();
     const [title, setTitle] = useState("edit");
     const { kursus_id } = useParams();
+
 
     const [course, setCourse] = useState([]);
     const [selectedKategori, setSelectedKategori] = useState(null);
@@ -35,6 +37,7 @@ const DetailKursus = () => {
     const [listSubbab, setListSubbab] = useState([]);
     const history = useHistory();
     const [isLoading, setIsLoading] = useState(true);
+    const [isClose,setIsClose] = useState(true)
 
     setTimeout(() => {
         if (user == "admin") {
@@ -45,6 +48,28 @@ const DetailKursus = () => {
             return history.push("/siswa/kursus");
         }
     }, 1000);
+
+    const sweetAlert = withReactContent(Swal)
+
+    const fireAlert = (title,icon,status,text) => {
+        sweetAlert.fire({
+            title: <strong>{title}</strong>,
+            text:text,
+            icon: icon,
+            confirmButtonColor:"#0D47A1",
+            didClose: () => {
+                // `MySwal` is a subclass of `Swal` with all the same instance & static methods
+                if(status == "ajukan"){
+                    window.location.reload()
+                }
+                else if(status=="delete"){
+                    history.push("/guru/kursus/diterbitkan");
+                }
+             },
+
+        })
+
+    }
 
     const fetchKursus = () => {
         http.post("/guru/kursus/get", {
@@ -80,7 +105,13 @@ const DetailKursus = () => {
             durasi: edtDurasi,
         }).then((res) => {
             console.log(res.data);
-            fetchKursus();
+            if(res.data == 1){
+                fireAlert("Sukses!","success","edit","Berhasil edit data kursus!")
+                fetchKursus();
+            }
+            else{
+                fireAlert("Error","error","edit",res.data+'!')
+            }
         });
     };
 
@@ -89,7 +120,8 @@ const DetailKursus = () => {
             kursus_id: kursus_id,
         }).then((res) => {
             console.log(res.data);
-            history.push("/guru/kursus/diterbitkan");
+            document.getElementById("konfirmasiHapus").click()
+            fireAlert("Sukses","success","delete","Berhasil delete kursus!")
         });
     };
 
@@ -108,6 +140,8 @@ const DetailKursus = () => {
         }).then((res) => {
             console.log(res.data);
             history.push("/guru/kursus/" + kursus_id + "/detail");
+            document.getElementById("konfirmasiAjukan").click()
+            fireAlert("Sukses!","success","ajukan","Berhasil mengajukan kursus!")
         });
     };
 
@@ -146,7 +180,7 @@ const DetailKursus = () => {
             <div className="clear-both"></div>
         </div>
     );
-    const cetakAjukanKursus = tipeKursus == "draft" && (
+    const cetakAjukanKursus = ((tipeKursus == "draft"||tipeKursus == "ditolak") ) && (
         <div>
             <h3 className="text-3xl font-bold text-custom-blue">
                 Ajukan Kursus
@@ -208,7 +242,7 @@ const DetailKursus = () => {
                     </div>
                     <div className="content w-full px-24">
                         <div className="">
-                            {tipeKursus == "draft" && (
+                            {(tipeKursus == "draft") && (
                                 <label
                                     htmlFor="konfirmasiAjukan"
                                     className="btn btn-sm h-10 bg-blue-900 hover:bg-blue-700 text-white rounded mr-3 capitalize font-normal float-right"
@@ -216,6 +250,16 @@ const DetailKursus = () => {
                                     Ajukan Kursus
                                 </label>
                             )}
+
+                            {(tipeKursus == "ditolak") && (
+                                <label
+                                    htmlFor="konfirmasiAjukan"
+                                    className="btn btn-sm h-10 bg-blue-900 hover:bg-blue-700 text-white rounded mr-3 capitalize font-normal float-right"
+                                >
+                                    Ajukan Kembali Kursus
+                                </label>
+                            )}
+
                             <label
                                 htmlFor="konfirmasiHapus"
                                 className="btn btn-sm h-10 bg-blue-900 hover:bg-blue-700 text-white rounded mr-3 capitalize font-normal float-right"
@@ -451,6 +495,7 @@ const DetailKursus = () => {
                             </div>
                         </div>
                     </div>
+
                     <div className="z-10">
                         <input
                             type="checkbox"
@@ -469,6 +514,7 @@ const DetailKursus = () => {
                             </div>
                         </div>
                     </div>
+
                 </div>
             )}
         </div>

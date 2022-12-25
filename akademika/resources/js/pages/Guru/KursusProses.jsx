@@ -10,6 +10,7 @@ const KursusProses = () => {
     const [listDiajukan, setListDiajukan] = useState([]);
 
     const [listDraft, setListDraft] = useState([]);
+    const [listDitolak, setListDitolak] = useState([]);
 
     //tabs
     const [title, setTitle] = useState("proses");
@@ -45,9 +46,20 @@ const KursusProses = () => {
         });
     };
 
+    const fetchKursusDitolak = () => {
+        http.post("/guru/kursus/getAllKursus", {
+            guru_id: user.guru_id,
+            type: "ditolak",
+        }).then((res) => {
+            setListDitolak(res.data.kursus);
+        });
+    };
+
+
     useEffect(() => {
         fetchKursusProses();
         fetchKursusDraft();
+        fetchKursusDitolak();
     }, []);
 
     return (
@@ -70,10 +82,10 @@ const KursusProses = () => {
                         </div>
                     </div>
                     <div className="content w-full px-24">
-                        <div className="text-2xl text-blue-900 font-semibold">
+                        <div className="text-3xl text-blue-900 font-semibold">
                             Sedang Diajukan
                         </div>
-                        <div className="diajukan my-6 content flex flex-wrap gap-10">
+                        <div className="w-full mt-10 content flex flex-wrap gap-10">
                             {listDiajukan.length != 0 ? (
                                 listDiajukan.map((n, index) => {
                                     return (
@@ -90,10 +102,10 @@ const KursusProses = () => {
                                 </div>
                             )}
                         </div>
-                        <div className="text-2xl text-blue-900 font-semibold mt-12">
+                        <div className="text-3xl text-blue-900 font-semibold mt-12">
                             Draft
                         </div>
-                        <div className="diajukan my-6 content flex flex-wrap gap-10">
+                        <div className="w-full mt-10 content flex flex-wrap gap-10">
                             {listDraft.length != 0 ? (
                                 listDraft.map((n, index) => {
                                     return (
@@ -101,6 +113,26 @@ const KursusProses = () => {
                                             course={n}
                                             key={index}
                                             status="draft"
+                                        />
+                                    );
+                                })
+                            ) : (
+                                <div className="text-xl text-blue-900">
+                                    Tidak ada kursus
+                                </div>
+                            )}
+                        </div>
+                        <div className="text-3xl text-blue-900 font-semibold mt-12">
+                            Ditolak
+                        </div>
+                        <div className="w-full mt-10 content flex flex-wrap gap-10 mb-12">
+                            {listDitolak.length != 0 ? (
+                                listDitolak.map((n, index) => {
+                                    return (
+                                        <CourseCard
+                                            course={n}
+                                            key={index}
+                                            status="ditolak"
                                         />
                                     );
                                 })

@@ -40,6 +40,9 @@ import HomeAdmin from "./pages/Admin/HomeAdmin";
 import KursusAdmin from "./pages/Admin/KursusAdmin";
 import LaporanAdmin from "./pages/Admin/LaporanAdmin";
 import SiswaAdmin from "./pages/Admin/SiswaAdmin";
+import DetailSubbabAdmin from "./pages/Admin/DetailSubbab";
+import DetailMateriAdmin from "./pages/Admin/DetailMateri";
+import DetailKuisAdmin from "./pages/Admin/DetailKuis";
 
 const Index = () => {
     return (
@@ -75,7 +78,7 @@ const Index = () => {
                 <Route exact path="/siswa/kursus/">
                     <KursusSaya></KursusSaya>
                 </Route>
-                <Route exact path="/siswa/kursus/:kursus_id/materi/:id">
+                <Route exact path="/siswa/kursus/:kursus_id/subbab/:subbab_id/materi/:id">
                     <Materi></Materi>
                 </Route>
                 <Route exact path="/siswa/kursus/:kursus_id/subbab/:subbab_id/kuis">
@@ -164,6 +167,15 @@ const Index = () => {
                 </Route>
                 <Route exact path="/admin/master/kursus/detail/:kursus_id">
                     <DetailKursusAdmin></DetailKursusAdmin>
+                </Route>
+                <Route exact path="/admin/master/kursus/:kursus_id/:subbab_id">
+                    <DetailSubbabAdmin></DetailSubbabAdmin>
+                </Route>
+                <Route exact path="/admin/master/kursus/:kursus_id/:subbab_id/materi/:materi_id">
+                    <DetailMateriAdmin></DetailMateriAdmin>
+                </Route>
+                <Route exact path="/admin/master/kursus/:kursus_id/:subbab_id/kuis">
+                    <DetailKuisAdmin></DetailKuisAdmin>
                 </Route>
                 <Route exact path="/admin/master/laporan">
                     <LaporanAdmin></LaporanAdmin>

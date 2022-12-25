@@ -8,14 +8,23 @@ import { Radio } from "@material-tailwind/react";
 import { useHistory } from "react-router-dom";
 
 const Kuis = () => {
-    const {http, user} = AuthUser()
+    const {http, user, token} = AuthUser()
     const id = useId()
     const { kursus_id, subbab_id } = useParams();
-    const [course, setCourse] = useState([])
     const [subbab, setSubbab] = useState([]);
     const [listSoal, setListSoal] = useState([]);
-    const [listJawaban, setListJawaban] = useState([])
+    const [listJawaban, setListJawaban] = useState([]);
+    const [isLoading, setIsLoading] = useState(true);
     const history = useHistory()
+
+    setTimeout(() => {
+        if (token == null || user == "admin") {
+            console.log(token);
+            return history.push("/");
+        } else if (user.role_text == "guru") {
+            return history.push("/guru/kursus/diterbitkan");
+        }
+    }, 1000);
 
     const fetchDataKuis = () => {
         let url = `/siswa/kursus/kuis/get/${subbab.subbab_id}`
@@ -111,37 +120,49 @@ const Kuis = () => {
         generateListJwbn()
         console.log(listSoal)
         console.log(listJawaban)
+        setIsLoading(false)
     }, [listSoal])
 
     return (
-        <div className="bg-gray-100">
-            <div className="min-h-screen w-full overflow-x-hidden flex flex-col">
-                <div className="drawer-side bg-custom-blue overflow-y-auto flex-none">
-                    {/* <Nav></Nav> */}
+        <div>
+            {isLoading ||
+            token == null ||
+            user == "admin" ||
+            user.role_text == "guru" ? (
+                <div className="h-screen w-screen flex justify-center items-center">
+                    <img src="/loading1.gif" className="w-400px" alt="" />
                 </div>
-                <div className="banner">
-                    <Banner subbab={subbab}></Banner>
-                </div>
-                <div className="px-4 sm:px-16 md:px-24 mb-20">
-                    <div className="mt-10 text-custom-blue font-semibold text-xl">
-                        Kuis
-                    </div>
-                    {cetakKuis}
-                    <div className="mt-10">
-                        <div className="float-right">
-                            {/* <Link to={`/siswa/kursus/${kursus_id}/subbab/${subbab.subbab_id}/kuis/nilai`}> */}
-                                <button
-                                    className="btn w-full mt-3 text-base capitalize bg-custom-blue text-white hover:bg-blue-700 font-normal rounded-md py-2"
-                                    name="" onClick={ submitForm }
-                                >
-                                    Selesai &nbsp;&nbsp; &gt;
-                                </button>
-                            {/* </Link> */}
+            ) : (
+                <div className="bg-gray-100">
+                    <div className="min-h-screen w-full overflow-x-hidden flex flex-col">
+                        <div className="drawer-side bg-custom-blue flex-none">
+                            <Nav></Nav>
                         </div>
-                        <div className="clear-both"></div>
+                        <div className="banner">
+                            <Banner subbab={subbab}></Banner>
+                        </div>
+                        <div className="px-4 sm:px-16 md:px-24 mb-20">
+                            <div className="mt-10 text-custom-blue font-semibold text-xl">
+                                Kuis
+                            </div>
+                            {cetakKuis}
+                            <div className="mt-10">
+                                <div className="float-right">
+                                    {/* <Link to={`/siswa/kursus/${kursus_id}/subbab/${subbab.subbab_id}/kuis/nilai`}> */}
+                                        <button
+                                            className="btn w-full mt-3 text-base capitalize bg-custom-blue text-white hover:bg-blue-700 font-normal rounded-md py-2"
+                                            name="" onClick={ submitForm }
+                                        >
+                                            Selesai &nbsp;&nbsp; &gt;
+                                        </button>
+                                    {/* </Link> */}
+                                </div>
+                                <div className="clear-both"></div>
+                            </div>
+                        </div>
                     </div>
                 </div>
-            </div>
+            )}
         </div>
     );
 };

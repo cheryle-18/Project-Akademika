@@ -42,7 +42,7 @@ const KursusAdmin = () => {
     const onClickPengajuan = () => {
         setTitle("pengajuan");
     };
-    
+
     const fetchDatakursus = () => {
         http.post("/admin/master/kursus").then((res) => {
             setMaster(res.data.kursusaktif);
@@ -105,7 +105,8 @@ const KursusAdmin = () => {
                 </Link>
             </td>
             <td className="text-base">
-                <button
+                -
+                {/* <button
                     onClick={(e) => {
                         onClickBatal(master.kursus_id);
                     }}
@@ -113,7 +114,7 @@ const KursusAdmin = () => {
                     className="py-2 px-4  bg-red-800 hover:bg-red-500 text-white transition ease-in duration-200 text-center text-base font-normal shadow-md rounded-lg w-20"
                 >
                     Batal
-                </button>
+                </button> */}
             </td>
         </tr>
     ));
@@ -162,7 +163,7 @@ const KursusAdmin = () => {
                 <div className="bg-gray-200 flex">
                     <Sidebar now="kursus">
                         <div className="text-2xl p-10 pt-6 pb-2">
-                            <div className="bg-custom-blue text-white inline-block text-base tracking-wide p-1 py-2 rounded-md">
+                            <div className="bg-custom-blue text-white inline-block text-base tracking-wide p-1 py-2 rounded-md my-3">
                                 <div
                                     className={
                                         (title == "master" && classSelected) ||
@@ -184,7 +185,7 @@ const KursusAdmin = () => {
                                 </div>
                                 <div className="clear-both"></div>
                             </div>
-                            <div className="bg-white overflow-y-auto h-77vh p-4 mb-6 rounded-md drop-shadow-lg">
+                            <div className="bg-white overflow-y-auto min-h-77vh h-auto p-6 mb-6 rounded-md drop-shadow-lg">
                                 <table className="table table-compact w-full text-black overflow-y-auto whitespace-nowrap">
                                     <thead>
                                         <tr>

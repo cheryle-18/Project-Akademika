@@ -11,6 +11,8 @@ import {
     faArrowLeft,
 } from "@fortawesome/free-solid-svg-icons";
 import { useHistory } from "react-router-dom";
+import Swal from 'sweetalert2'
+import withReactContent from 'sweetalert2-react-content'
 
 const TambahSubbab = () => {
     const [title, setTitle] = useState("proses");
@@ -24,6 +26,7 @@ const TambahSubbab = () => {
     const { kursus_id, subbab_id } = useParams();
     const history = useHistory();
     const [isLoading, setIsLoading] = useState(false);
+    const [response, setResponse] = useState("")
 
     setTimeout(() => {
         if (user == "admin") {
@@ -35,17 +38,37 @@ const TambahSubbab = () => {
         }
     }, 1000);
 
+    const sweetAlert = withReactContent(Swal)
+    const fireAlert = (title,icon,status,text) => {
+        sweetAlert.fire({
+            title: <strong>{title}</strong>,
+            text:text,
+            icon: icon,
+            confirmButtonColor:"#0D47A1",
+        })
+    }
+
     const submitForm = () => {
         http.post("/guru/kursus/subbab/tambah", {
-            kursus_id: 51,
+            kursus_id: kursus_id,
             judul: judul,
             deskripsi: penjelasan,
             durasi: durasi,
         }).then((res) => {
             let data = res.data;
             console.log(data);
+            setResponse(data)
+            fireAlert("Sukses!","success","tambahSubbab","Berhasil tambah subbab!")
         });
     };
+
+    useEffect(() => {
+        if(response=="Berhasil tambah subbab baru"){
+            console.log(true)
+            let url = `/guru/kursus/${kursus_id}/detail`
+            history.push(url)
+        }
+    }, [response])
 
     return (
         <div>

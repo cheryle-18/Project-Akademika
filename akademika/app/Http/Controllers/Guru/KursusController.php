@@ -32,13 +32,13 @@ class KursusController extends Controller
         {
             $kursus_type = "diterbitkan";
         }
-        else if($kursus->status == 0){
-            if(count($kursus->histori)!=0){
-                if($kursus->histori()->orderBy('tanggal','desc')->first()->status == 3){
-                    $kursus_type = "diajukan";
-                }
+        else if($kursus->status == 0 && count($kursus->histori)!=0){
+            if($kursus->histori()->orderBy('tanggal','desc')->first()->status == 3){
+                $kursus_type = "diajukan";
             }
-
+            else if($kursus->histori()->orderBy('tanggal','desc')->first()->status == 2){
+                $kursus_type = "ditolak";
+            }
         }
         else if($kursus->status == 0 && count($kursus->histori)==0){
             $kursus_type = "draft";
@@ -95,7 +95,7 @@ class KursusController extends Controller
         $kuis = Kuis::where('subbab_id',$request->subbab_id)->first();
 
         return response()->json([
-            "kuis" => $kuis
+            "kuis" => $kuis->soal
         ]);
     }
 
@@ -205,7 +205,7 @@ class KursusController extends Controller
         if($validate->success){
             //add a new course
             Kursus::create($request->all());
-            return 'Berhasil tambah kursus baru';
+            return 1;
         }
         else{
             $messages = get_object_vars($validate->messages);
@@ -243,8 +243,16 @@ class KursusController extends Controller
     function doEdit(Request $request)
     {
         # code...
-        Kursus::where('kursus_id',$request->kursus_id)->update($request->all());
-        return 'success edit';
+        $validate = json_decode($this->validateDataTambahKursus($request->all())->content(),false);
+        if($validate->success){
+            Kursus::where('kursus_id',$request->kursus_id)->update($request->all());
+            return 1;
+        }
+        else{
+            $messages = get_object_vars($validate->messages);
+            $message = array_values($messages)[0][0];
+            return $message;
+        }
     }
 
     function doDelete(Request $request)
@@ -363,12 +371,6 @@ class KursusController extends Controller
     }
 
     function validateDataSoal($data){
-        // $validate = [
-        //     "soal" => 'required|string',
-        //     "kunci_jawaban" => 'required|string',
-        //     "pembahasan" => 'required',
-        //     "nilai" => 'required|gt:0'
-        // ];
         $validate["soal"] = 'required|string';
         $validate["kunci_jawaban"] = 'required|string';
         $validate["pembahasan"] = 'required';
@@ -411,16 +413,12 @@ class KursusController extends Controller
             $kuis->subbab_id = $subbabId;
             $kuis->jumlah_soal = sizeof($listSoal);
             $kuis->save();
-            $kuisId = $kuis->id;
+            $kuisId = $kuis->kuis_id;
         }
         // return $listSoal;
 
         //insert new soal
         foreach($listSoal as $soal){
-            // return $soal;
-            // $soalArr = (array) $soal;
-            // $valresponse = $this->validateDataSoal($soalArr);
-            // return json_encode($valresponse->fails());
             // $validate = json_decode($this->validateDataSoal($soal),false);
             // if($validate->success){
                 //add soal
@@ -448,6 +446,63 @@ class KursusController extends Controller
             // }
         }
         return 'Berhasil tambah kuis';
+    }
+
+    function deleteKuis(Request $req){
+        $subbabId = $req->subbab_id;
+        $subbab = Subbab::find($subbabId);
+        $kursus = Kursus::find($subbab->kursus_id);
+
+        if($kursus->status == 0 && count($kursus->histori)==0){
+            $kuis = Kuis::where('subbab_id', $subbabId)->first();
+
+            //delete soal
+            $soalKuis = KuisSoal::where('kuis_id', $kuis->kuis_id)->get();
+            if(sizeof($soalKuis)>0){
+                foreach($soalKuis as $soal){
+                    //delete pilihan jwbn
+                    $pilJwbn = KuisPilihanJawaban::where('kuis_soal_id', $soal->soal_id)->get();
+                    if(sizeof($pilJwbn)>0){
+                        foreach($pilJwbn as $pilihan){
+                            $pilihan->delete();
+                        }
+                    }
+
+                    $soal->delete();
+                }
+            }
+
+            $kuis->delete();
+
+            return 'Berhasil menghapus kuis.';
+        }
+        else{
+            return 'Kuis tidak bisa dihapus.';
+        }
+    }
+
+    function checkDeleteKuis(Request $req){
+        $kursusId = $req->kursus_id;
+        $subbabId = $req->subbab_id;
+        $bisaDelete = false;
+
+        //cek ada kuis blm
+        $kursus = Kursus::find($kursusId);
+        $kuis = Kuis::where('subbab_id', $subbabId)->first();
+        if($kuis){
+            //cek kursus masih draft / bkn
+            if($kursus->status == 0 && count($kursus->histori)==0){
+                $bisaDelete = true;
+            }
+        }
+
+        return response()->json([
+            "bisaDelete" => $bisaDelete,
+            "kursus_id" => $kursusId,
+            "subbab_id" => $subbabId,
+            "kuis" => $kuis,
+            "kursus" => $kursus,
+        ]);
     }
 
     function getAllKursus(Request $request)
@@ -498,6 +553,20 @@ class KursusController extends Controller
                      }
                  }
             }
+        }
+        else if($type == "ditolak"){
+             //status == 0 && kursus_histori status == 2
+             $allKursus = $guru->kursus()->where('kursus.status',0)->get();
+             if(count($allKursus)!=0){
+                  foreach ($allKursus as $kurs) {
+                     if(count($kurs->histori)!=0){
+                         if($kurs->histori()->orderBy('tanggal','desc')->first()->status == 2){
+                             $kursus[] = $kurs;
+                         }
+                     }
+
+                  }
+             }
         }
 
         else if($type == "semua"){

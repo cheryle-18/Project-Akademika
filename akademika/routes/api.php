@@ -57,6 +57,10 @@ Route::group(['middleware'=>'api'],function ()
     });
 
     Route::prefix('admin')->group(function () {
+        Route::get('dashboard',[AdminController::class,'getDashboard']);
+        Route::get('dashboard/chart',[AdminController::class,'getDashboardChart']);
+        Route::get('dashboard/chartSec',[AdminController::class,'getDashboardChartSec']);
+
         Route::prefix('master')->group(function () {
             Route::prefix('siswa')->group(function () {
                 Route::post('/',[AdminController::class,'getSiswa']);
@@ -79,6 +83,11 @@ Route::group(['middleware'=>'api'],function ()
                 Route::post('detail',[AdminController::class,'getDetailKursus']);
                 Route::post('update',[AdminController::class,'updateKursus']);
                 Route::post('getAllSubbab',[AdminController::class,'getAllSubbab']);
+                Route::post('getSubbab',[AdminController::class,'getSubbab']);
+                Route::post('getAllMateri',[AdminController::class,'getAllMateri']);
+                Route::post('getMateri',[AdminController::class,'getMateri']);
+                Route::post('getKuisSubbab',[AdminController::class,'getKuisSubbab']);
+                Route::post('getKuis',[AdminController::class,'getKuis']);
             });
 
             Route::prefix('laporan')->group(function() {
@@ -135,6 +144,8 @@ Route::group(['middleware'=>'api'],function ()
 
             Route::prefix('kuis')->group(function () {
                 Route::post('simpan',[KursusController::class,'simpanKuis']);
+                Route::post('delete',[KursusController::class,'deleteKuis']);
+                Route::post('checkDelete',[KursusController::class,'checkDeleteKuis']);
                 Route::get('getKuis/{subbab_id}',[KursusController::class,'getKuis']);
             });
         });

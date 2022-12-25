@@ -63,7 +63,7 @@ const SiswaAdmin = () => {
                 <button
                     type="button"
                     onClick={() => banSiswa(siswa.siswa_id)}
-                    className="py-2 px-4  bg-blue-600 hover:bg-blue-600 text-white w-20 transition ease-in duration-200 text-center text-base font-normal shadow-md rounded-lg h-10"
+                    className="px-6 py-2 bg-blue-600 hover:bg-blue-600 text-white transition ease-in duration-200 text-center text-base font-normal shadow-md rounded-lg h-10"
                 >
                     {siswa.status == 1 ? "Aktif" : "Banned"}
                 </button>
@@ -72,7 +72,7 @@ const SiswaAdmin = () => {
                 <Link to={`/admin/master/siswa/detail/${siswa.siswa_id}`}>
                     <button
                         type="button"
-                        className="py-2 px-4  bg-custom-blue hover:bg-blue-900 text-white w-20 transition ease-in duration-200 text-center text-base font-normal shadow-md rounded-lg h-10"
+                        className="py-2 px-6 bg-custom-blue hover:bg-blue-900 text-white transition ease-in duration-200 text-center text-base font-normal shadow-md rounded-lg h-10"
                     >
                         Detail
                     </button>
@@ -91,7 +91,7 @@ const SiswaAdmin = () => {
                 <div className="bg-gray-200 flex">
                     <Sidebar now="siswa">
                         <div className="text-2xl p-14 pb-2">
-                            <div className="bg-white overflow-y-auto h-77vh p-4 mb-6 rounded-md drop-shadow-lg">
+                            <div className="bg-white overflow-y-auto min-h-77vh h-auto p-6 mb-6 rounded-md drop-shadow-lg">
                                 <table className="table table-compact w-full text-black overflow-y-auto table-auto">
                                     <thead>
                                         <tr>

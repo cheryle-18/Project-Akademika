@@ -11,7 +11,7 @@ import { useHistory } from "react-router-dom";
 const SearchKursus = (props) => {
     const [listCourse, setListCourse] = useState([]);
     const [currentItems, setCurrentItems] = useState([]);
-    const { http, token } = AuthUser();
+    const {http,user,token } = AuthUser();
     const [filterName, setFilterName] = useState("");
     const [filterKategori, setFilterKategori] = useState("");
     const [filterModeHarga, setFilterModeHarga] = useState("");
@@ -22,13 +22,23 @@ const SearchKursus = (props) => {
     const [currentPage, setCurrentPage] = useState(0);
     const [selectedPage, setSelectedPage] = useState(0);
 
-    const history = useHistory();
 
+    const history = useHistory();
+    // setTimeout(() => {
+    //     if (props.isSiswa && token == null) {
+    //         return history.push("/");
+    //     }
+    // }, 1000);
     setTimeout(() => {
-        if (props.isSiswa && token == null) {
-            return history.push("/");
+        if(user == "admin"){
+            return history.push("/admin/home");
         }
-    }, 1000);
+        else if (props.isSiswa!=null && token == null) {
+            return history.push("/");
+        } else if (user.role_text == "guru") {
+            return history.push("/guru/kursus/diterbitkan");
+        }
+    }, 100);
 
     const paginationUnclick =
         "page-link relative block py-1.5 px-3 border-0 outline-none transition-all duration-300 rounded bg-white text-gray-800 hover:text-white hover:bg-blue-900 focus:shadow-none";
@@ -113,7 +123,6 @@ const SearchKursus = (props) => {
                                         <Input
                                             label="Cari Kursus"
                                             type="text"
-                                            className="form-select appearance-none px-4 py-2 text-base font-normal text-gray-700 bg-white bg-clip-padding bg-no-repeat focus:outline-none"
                                             onChange={(e) =>
                                                 setFilterName(e.target.value)
                                             }
@@ -122,7 +131,6 @@ const SearchKursus = (props) => {
                                     <div className="w-1/6">
                                         <Select
                                             label="Kategori"
-                                            className="form-select appearance-none px-4 py-2 text-base font-normal text-gray-700 bg-white bg-clip-padding bg-no-repeat rounded-md focus:outline-none"
                                             value=""
                                             onChange={(e) =>
                                                 setFilterKategori(e)
@@ -158,13 +166,12 @@ const SearchKursus = (props) => {
                                     <div className="w-1/6">
                                         <Select
                                             label="Harga"
-                                            className="form-select appearance-none px-4 py-2 text-base font-normal text-gray-700 bg-white bg-clip-padding bg-no-repeat rounded-md focus:outline-none"
                                             value=""
                                             onChange={(e) =>
                                                 setFilterModeHarga(e)
                                             }
                                         >
-                                            <Option value="">Semua</Option>
+                                            <Option value="">Paling Relevan</Option>
                                             <Option value="desc">
                                                 Tertinggi
                                             </Option>
@@ -176,21 +183,20 @@ const SearchKursus = (props) => {
                                     <div className="w-1/6">
                                         <Select
                                             label="Urutkan"
-                                            className="form-select appearance-none px-4 py-2 text-base font-normal text-gray-700 bg-white bg-clip-padding bg-no-repeat rounded-md focus:outline-none"
                                             value=""
                                             onChange={(e) =>
                                                 setFilterModeName(e)
                                             }
                                         >
-                                            <Option value="">Semua</Option>
-                                            <Option value="asc">Asc</Option>
-                                            <Option value="desc">Desc</Option>
+                                            <Option value="">Paling Relevan</Option>
+                                            <Option value="asc">Ascending</Option>
+                                            <Option value="desc">Descending</Option>
                                         </Select>
                                     </div>
                                 </div>
                             </form>
 
-                            <div class="mt-10 flex flex-wrap gap-10 w-full">
+                            <div class="mt-10 w-full grid grid-cols-2 gap-6">
                                 {currentItems.map((n, index) => {
                                     return (
                                         <CourseCard course={n} key={index} />
