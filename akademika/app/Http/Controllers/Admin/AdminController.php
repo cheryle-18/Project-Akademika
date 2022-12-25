@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Guru;
 use App\Models\Kursus;
+use App\Models\KursusHistori;
 use App\Models\Pendaftaran;
 use App\Models\Siswa;
 use App\Models\Subbab;
@@ -107,6 +108,15 @@ class AdminController extends Controller
         $kursus = Kursus::find($request->kursus_id);
         $kursus->status = 1;
         $kursus->save();
+
+        //kursus_histori
+        KursusHistori::create([
+            'kursus_id'=>$kursus->kursus_id,
+            'status'=>1,
+            'deskripsi'=>'disetujui',
+            'tanggal'=>Carbon::now("Asia/Jakarta")
+        ]);
+
         return $request->kursus_id;
     }
 
@@ -115,6 +125,13 @@ class AdminController extends Controller
         $kursus = Kursus::find($request->kursus_id);
         $kursus->status = 0;
         $kursus->save();
+
+        KursusHistori::create([
+            'kursus_id'=>$kursus->kursus_id,
+            'status'=>2,
+            'deskripsi'=>'ditolak',
+            'tanggal'=>Carbon::now("Asia/Jakarta")
+        ]);
         return $request->kursus_id;
     }
 

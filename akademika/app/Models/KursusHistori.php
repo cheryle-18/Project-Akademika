@@ -21,7 +21,6 @@ class KursusHistori extends Model
        'tanggal'
     ];
 
-
     function kursus()
     {
         return $this->belongsTo(Kursus::class,'kursus_id','kursus_id');
