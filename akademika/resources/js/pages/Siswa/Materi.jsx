@@ -28,11 +28,7 @@ const Materi = () => {
             return history.push("/guru/kursus/diterbitkan");
         }
     }, 1000);
-    const [kuiss, setKuis] = useState([]);
-
-    const cetakKuis = kuiss.map((kuis, index) => (
-        <KuisCard kuis={kuis} idx={index + 1}></KuisCard>
-    ));
+    const [kuis, setKuis] = useState([]);
 
     const fetchMateri = () => {
         http.post("/siswa/kursus/getMateri", {
@@ -124,14 +120,16 @@ const Materi = () => {
                             <p className="indent-14 mt-6"></p>
                             <div className="mt-10 mb-20">
                                 <div className="float-left">
-                                    <button
-                                        className="btn w-full mt-3 text-base capitalize bg-custom-blue text-white hover:bg-blue-700 font-normal rounded-md py-2"
-                                        name=""
-                                    >
-                                        &lt; &nbsp;&nbsp; Kembali
-                                    </button>
+                                    <Link to={`/siswa/kursus/${kursus_id}/detail`}>
+                                        <button
+                                            className="btn w-full mt-3 text-base capitalize bg-custom-blue text-white hover:bg-blue-700 font-normal rounded-md py-2"
+                                            name=""
+                                        >
+                                            &lt; &nbsp;&nbsp; Kembali
+                                        </button>
+                                    </Link>
                                 </div>
-                                <div className="float-right">
+                                {/* <div className="float-right">
                                     <Link to={`/siswa/kursus/${kursus_id}/subbab/${subbab_id}/kuis`}>
                                         <button
                                             className="btn w-full mt-3 text-base capitalize bg-custom-blue text-white hover:bg-blue-700 font-normal rounded-md py-2"
@@ -140,7 +138,7 @@ const Materi = () => {
                                             Kerjakan Kuis &nbsp;&nbsp; &gt;
                                         </button>
                                     </Link>
-                                </div>
+                                </div> */}
                                 <div className="clear-both"></div>
                             </div>
                         </div>

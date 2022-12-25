@@ -94,6 +94,10 @@ class AuthController extends Controller
                 }
             }
 
+            if(getLoginedUser()==null){
+                return "Gagal Masuk!";
+            }
+
             if(getLoginedUser()->status == 0){
                 $isFound = false;
                 return "Kamu sedang di ban!";

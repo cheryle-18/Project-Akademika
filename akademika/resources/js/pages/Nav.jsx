@@ -8,6 +8,7 @@ import { Alert, Input, Radio } from "@material-tailwind/react";
 
 const Nav = (props) => {
     const [isLoginFailed, setLoginFailed] = useState(false);
+    const [message, setMessage] = useState("Gagal Masuk!");
     const [registerFailed, setRegisterFailed] = useState("awal");
     const [openNow, setOpenNow] = useState("masuk");
     //login attribs
@@ -81,6 +82,7 @@ const Nav = (props) => {
                     console.log(data.user);
                 } else {
                     setLoginFailed(true);
+                    setMessage(res.data);
                 }
             });
         }
@@ -200,7 +202,8 @@ const Nav = (props) => {
         <div>
             {isLoginFailed && (
                 <Alert severity="error" className="bg-red-400 mb-6">
-                    Gagal masuk!
+                    {message}
+                    {/* Gagal Masuk! */}
                 </Alert>
             )}
             <h3 className="text-3xl font-bold text-custom-blue mb-4">Masuk</h3>
