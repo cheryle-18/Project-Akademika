@@ -220,6 +220,8 @@ class KursusController extends Controller
 
     function daftarKursus(Request $request)
     {
+        $siswa = Siswa::find($request->siswa_id);
+        $kursus = Kursus::find($request->kursus_id);
         // Set your Merchant Server Key
         \Midtrans\Config::$serverKey = 'SB-Mid-server-vMhuJY92Ihr9yLQcbX0Nnn9u';
         // Set to Development/Sandbox Environment (default). Set to true for Production Environment (accept real transaction).
@@ -229,16 +231,26 @@ class KursusController extends Controller
         // Set 3DS transaction for credit card to true
         \Midtrans\Config::$is3ds = true;
 
+        $harga = $kursus->harga;
+
+        // $nama_siswa = $siswa->nama;
+        // $email = $siswa->email;
+        // $telp = $siswa->telp;
+
         $params = array(
             'transaction_details' => array(
                 'order_id' => rand(),
-                'gross_amount' => 10000,
+                'gross_amount' => $harga,
             ),
             'customer_details' => array(
-                'first_name' => 'budi',
-                'last_name' => 'pratama',
-                'email' => 'budi.pra@example.com',
-                'phone' => '08111222333',
+                // 'first_name' => $nama_siswa,
+                // 'last_name' => '',
+                // 'email' =>  $email,
+                // 'phone' => $telp,
+                'first_name' => $siswa->nama,
+                'last_name' => '',
+                'email' =>  (explode(" ",$siswa->nama))[0]."@gmail.com",
+                'phone' => $siswa->telp,
             ),
         );
 

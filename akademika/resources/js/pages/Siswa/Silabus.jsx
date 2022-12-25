@@ -15,6 +15,7 @@ import {
 } from "@material-tailwind/react";
 import { ceil, floor, keyBy } from "lodash";
 import { countBy } from "lodash";
+import Success from "./Success";
 
 function Icon({ id, open }) {
     return (
@@ -45,7 +46,7 @@ const Silabus = (props) => {
 
     const [poin, setPoin] = useState(0);
     const [listSubbab, setListSubbab] = useState([]);
-    const [snapToken, setSnapToken] = useState(null);
+    const [snapToken, setSnapToken] = useState("");
     const [isRegistered, setIsRegistered] = useState(false);
     const [regisData, setRegisData] = useState([]);
     const [isMuncul, setIsMuncul] = useState(false);
@@ -187,9 +188,12 @@ const Silabus = (props) => {
     };
 
     const getSnapToken = () => {
-        http.post("/siswa/kursus/daftar", {}).then((res) => {
+        http.post("/siswa/kursus/daftar", {
+            siswa_id: user.siswa_id,
+            kursus_id: kursus_id,
+        }).then((res) => {
             setSnapToken(res.data.snapToken);
-            console.log(res.data.snapToken);
+            // console.log(res.data.snapToken);
         });
     };
 
@@ -245,13 +249,6 @@ const Silabus = (props) => {
         return "bg-blue-100 p-4 border-2 border-t-0 border-blue-900";
     };
 
-    const hide = () => {
-        if (isMuncul) {
-            window.snap.hide();
-            console.log("paowjiefoaewjif");
-        }
-    };
-
     const cetakDaftarSekarang = (
         <div>
             <h3 className="text-3xl font-bold text-custom-blue">
@@ -263,32 +260,43 @@ const Silabus = (props) => {
                     course.harga.toLocaleString(["ban", "id"])}
             </div>
 
+            <input type="text" className="hidden" id="snapToken" value={snapToken} />
+            <input type="text" className="hidden" id="result"/>
+
+            <button className="hidden" onClick={() => {
+                return (<Success props></Success>)
+            }}></button>
+
             {!isRegistered && isFetched && (
                 <button
                     id="pay-button"
-                    onClick={() => {
-                        snapToken != null &&
-                            window.snap.pay(snapToken, {
-                                onSuccess: function (result) {
-                                    /* You may add your own implementation here */
-                                    alert(result);
-                                },
-                                onPending: function (result) {
-                                    /* You may add your own implementation here */
-                                    alert("waiting your payment!");
-                                    console.log(result);
-                                },
-                                onError: function (result) {
-                                    /* You may add your own implementation here */
-                                    alert("payment failed!");
-                                    console.log(result);
-                                },
-                                onClose: function () {
-                                    /* You may add your own implementation here */
-                                    console.log(result);
-                                },
-                            });
-                    }}
+                    // onClick={() => {
+                    //     snapToken != null &&
+                    //         window.snap.pay(snapToken, {
+                    //             onSuccess: function (result) {
+                    //                 /* You may add your own implementation here */
+                    //                 setTimeout(() => {
+                    //                     alert(result);
+                    //                 }, 1000);
+                    //             },
+                    //             onPending: function (result) {
+                    //                 /* You may add your own implementation here */
+                    //                 setTimeout(() => {
+                    //                     alert("waiting your payment!");
+                    //                 }, 2000);
+                    //                 console.log(result);
+                    //             },
+                    //             onError: function (result) {
+                    //                 /* You may add your own implementation here */
+                    //                 alert("payment failed!");
+                    //                 console.log(result);
+                    //             },
+                    //             onClose: function () {
+                    //                 /* You may add your own implementation here */
+                    //                 console.log(result);
+                    //             },
+                    //         });
+                    // }}
                     className="btn mx-auto rounded bg-custom-blue text-gray-100 border-0 hover:bg-custom-blue capitalize font-medium text-base float-right mt-4"
                 >
                     Bayar Sekarang
@@ -355,7 +363,8 @@ const Silabus = (props) => {
 
     return (
         <div>
-            {isLoading ||
+            {snapToken=="" ||
+            isLoading ||
             token == null ||
             user == "admin" ||
             user.role_text == "guru" ? (

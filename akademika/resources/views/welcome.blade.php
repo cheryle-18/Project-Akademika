@@ -11,8 +11,55 @@
     @vite('resources/js/app.jsx')
 </head>
 
-<body class="bg-white">
+<body class="bg-white" onmouseover="refreshMidtrans();">
     <div id="app"></div>
 </body>
+
+{{-- <input type="text" id="refresh" value="" onchange="refreshMidtrans();"> --}}
+<script type="text/javascript">
+    function refreshMidtrans() {
+        var getToken = setInterval(() => {
+            if (document.getElementById('snapToken') != null && document.getElementById('snapToken').value !=
+                null && document.getElementById('pay-button') != null) {
+                var snapToken = document.getElementById('snapToken').value;
+                var payButton = document.getElementById('pay-button');
+                if (snapToken != null && snapToken != "" && snapToken != "[object HTMLInputElement]" &&
+                    payButton != null) {
+                    // alert(snapToken);
+                    var payButton = document.getElementById('pay-button');
+                    payButton.addEventListener('click', function() {
+                        // Trigger snap popup. @TODO: Replace TRANSACTION_TOKEN_HERE with your transaction token
+                        window.snap.pay(snapToken, {
+                            onSuccess: function(result) {
+                                /* You may add your own implementation here */
+                                // alert("payment success!");
+                                // window.location.reload();
+                                setTimeout(() => {
+                                    console.log(result);
+                                }, 5000);
+                                alert(result);
+                            },
+                            onPending: function(result) {
+                                /* You may add your own implementation here */
+                                // alert("wating your payment!");
+                                // console.log(result);
+                            },
+                            onError: function(result) {
+                                /* You may add your own implementation here */
+                                // alert("payment failed!");
+                                // console.log(result);
+                            },
+                            onClose: function() {
+                                /* You may add your own implementation here */
+                                // alert('you closed the popup without finishing the payment');
+                            }
+                        })
+                    });
+                    clearInterval(getToken);
+                }
+            }
+        }, 1000);
+    }
+</script>
 
 </html>
