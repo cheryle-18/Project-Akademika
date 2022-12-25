@@ -172,6 +172,7 @@ const Home = () => {
 
                 {(user != null && user.role_text == "siswa")&&<SiswaNav stat="landing"></SiswaNav>}
                 {(user != null && user.role_text == "guru")&&<GuruNav stat="landing"></GuruNav>}
+                {(user != null && user.role_text == "siswa")&&<SiswaNav stat="landing"></SiswaNav>}
                 {user != null && user == "admin" && (
                     <Nav></Nav>
                 )}=
