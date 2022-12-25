@@ -187,9 +187,7 @@ const Silabus = (props) => {
     };
 
     const getSnapToken = () => {
-        http.post("/siswa/kursus/daftar", {
-
-        }).then((res) => {
+        http.post("/siswa/kursus/daftar", {}).then((res) => {
             setSnapToken(res.data.snapToken);
             console.log(res.data.snapToken);
         });
@@ -273,7 +271,7 @@ const Silabus = (props) => {
                             window.snap.pay(snapToken, {
                                 onSuccess: function (result) {
                                     /* You may add your own implementation here */
-                                    console.log(result);
+                                    alert(result);
                                 },
                                 onPending: function (result) {
                                     /* You may add your own implementation here */
@@ -454,12 +452,14 @@ const Silabus = (props) => {
                                     alt=""
                                 />
 
-                                <label
-                                    className="btn w-48 mx-auto rounded bg-white text-blue-900 border-0 hover:bg-gray-100 capitalize font-medium text-base"
-                                    htmlFor="daftarSekarang"
-                                >
-                                    Daftar Sekarang
-                                </label>
+                                {!isRegistered && (
+                                    <label
+                                        className="btn w-48 mx-auto rounded bg-white text-blue-900 border-0 hover:bg-gray-100 capitalize font-medium text-base"
+                                        htmlFor="daftarSekarang"
+                                    >
+                                        Daftar Sekarang
+                                    </label>
+                                )}
                             </div>
                             <div className="w-3/4 flex flex-col text-white">
                                 <div className="font-bold text-4xl mb-3">
