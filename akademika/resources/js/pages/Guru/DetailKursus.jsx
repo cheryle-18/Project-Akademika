@@ -51,13 +51,19 @@ const DetailKursus = () => {
 
     const sweetAlert = withReactContent(Swal)
 
-    const fireAlert = (title,icon) => {
+    const fireAlert = (title,icon,status) => {
         sweetAlert.fire({
             title: <strong>{title}</strong>,
             icon: icon,
+            confirmButtonColor:"#0D47A1",
             didClose: () => {
                 // `MySwal` is a subclass of `Swal` with all the same instance & static methods
-                window.location.reload()
+                if(status == "ajukan"){
+                    window.location.reload()
+                }
+                else if(status=="delete"){
+                    history.push("/guru/kursus/diterbitkan");
+                }
              },
 
         })
@@ -107,7 +113,8 @@ const DetailKursus = () => {
             kursus_id: kursus_id,
         }).then((res) => {
             console.log(res.data);
-            history.push("/guru/kursus/diterbitkan");
+            document.getElementById("konfirmasiHapus").click()
+            fireAlert("Kursus berhasil dihapus!","success","delete")
         });
     };
 
@@ -127,7 +134,7 @@ const DetailKursus = () => {
             console.log(res.data);
             history.push("/guru/kursus/" + kursus_id + "/detail");
             document.getElementById("konfirmasiAjukan").click()
-            fireAlert("Kursus berhasil diajukan!","success")
+            fireAlert("Kursus berhasil diajukan!","success","ajukan")
         });
     };
 
