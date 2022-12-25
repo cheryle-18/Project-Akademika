@@ -19,7 +19,8 @@ const Home = () => {
 
     const fetchKursusPopuler = () => {
         http.get("get/kursusPopuler").then((res) => {
-            setKursusPopuler(res.data.kursus)
+            // console.log(res.data.kursus)
+            // setKursusPopuler(res.data.kursus)
         });
     };
 
