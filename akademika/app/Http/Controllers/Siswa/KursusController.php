@@ -14,6 +14,7 @@ use App\Models\SiswaKuis;
 use App\Models\Subbab;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Response;
 use Illuminate\Support\Facades\Storage;
 
 class KursusController extends Controller
@@ -246,5 +247,18 @@ class KursusController extends Controller
         return response()->json([
             "snapToken" => $snapToken
         ]);
+    }
+
+    public function downloadVideo(Request $request)
+    {
+    $url = $request->src ?? '';
+    $filename = $request->filename ?? 'download.mp4';
+    $filetype = $request->filetype ?? 'video/mp4';
+
+    $file = $url;
+    $headers = array('Content-Type: '.$filetype);
+    return Response::download($file, $filename, $headers);
+
+
     }
 }
