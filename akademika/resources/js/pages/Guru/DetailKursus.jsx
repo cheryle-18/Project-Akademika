@@ -16,13 +16,15 @@ import {
     faArrowCircleLeft,
     faArrowLeft,
 } from "@fortawesome/free-solid-svg-icons";
-
+import Swal from 'sweetalert2'
+import withReactContent from 'sweetalert2-react-content'
 import AuthUser from "../../components/AuthUser";
 
 const DetailKursus = () => {
     const { http, user, token } = AuthUser();
     const [title, setTitle] = useState("edit");
     const { kursus_id } = useParams();
+
 
     const [course, setCourse] = useState([]);
     const [selectedKategori, setSelectedKategori] = useState(null);
@@ -35,6 +37,7 @@ const DetailKursus = () => {
     const [listSubbab, setListSubbab] = useState([]);
     const history = useHistory();
     const [isLoading, setIsLoading] = useState(true);
+    const [isClose,setIsClose] = useState(true)
 
     setTimeout(() => {
         if (user == "admin") {
@@ -45,6 +48,21 @@ const DetailKursus = () => {
             return history.push("/siswa/kursus");
         }
     }, 1000);
+
+    const sweetAlert = withReactContent(Swal)
+
+    const fireAlert = (title,icon) => {
+        sweetAlert.fire({
+            title: <strong>{title}</strong>,
+            icon: icon,
+            didClose: () => {
+                // `MySwal` is a subclass of `Swal` with all the same instance & static methods
+                window.location.reload()
+             },
+
+        })
+
+    }
 
     const fetchKursus = () => {
         http.post("/guru/kursus/get", {
@@ -108,6 +126,8 @@ const DetailKursus = () => {
         }).then((res) => {
             console.log(res.data);
             history.push("/guru/kursus/" + kursus_id + "/detail");
+            document.getElementById("konfirmasiAjukan").click()
+            fireAlert("Kursus berhasil diajukan!","success")
         });
     };
 
@@ -146,7 +166,7 @@ const DetailKursus = () => {
             <div className="clear-both"></div>
         </div>
     );
-    const cetakAjukanKursus = (tipeKursus == "draft"||tipeKursus == "ditolak") && (
+    const cetakAjukanKursus = ((tipeKursus == "draft"||tipeKursus == "ditolak") ) && (
         <div>
             <h3 className="text-3xl font-bold text-custom-blue">
                 Ajukan Kursus
@@ -461,6 +481,7 @@ const DetailKursus = () => {
                             </div>
                         </div>
                     </div>
+
                     <div className="z-10">
                         <input
                             type="checkbox"
@@ -479,6 +500,7 @@ const DetailKursus = () => {
                             </div>
                         </div>
                     </div>
+
                 </div>
             )}
         </div>
