@@ -10,7 +10,8 @@ import {
     faArrowLeft,
     faCloudArrowDown,
 } from "@fortawesome/free-solid-svg-icons";
-
+import Swal from 'sweetalert2'
+import withReactContent from 'sweetalert2-react-content'
 import AuthUser from "../../components/AuthUser";
 
 const EditMateri = () => {
@@ -37,6 +38,19 @@ const EditMateri = () => {
         setVideo(e.target.files[0]);
     };
 
+    const sweetAlert = withReactContent(Swal)
+
+    const fireAlert = (title,icon,status,text) => {
+        sweetAlert.fire({
+            title: <strong>{title}</strong>,
+            text:text,
+            icon: icon,
+            confirmButtonColor:"#0D47A1",
+        })
+
+    }
+
+
     const submitForm = () => {
         //edit
         const formData = new FormData();
@@ -47,7 +61,7 @@ const EditMateri = () => {
 
         http.post("/guru/kursus/materi/edit", formData).then((res) => {
             let data = res.data;
-            console.log(res);
+            
         });
     };
 

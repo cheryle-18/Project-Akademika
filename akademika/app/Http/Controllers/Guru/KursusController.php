@@ -306,6 +306,20 @@ class KursusController extends Controller
             return $message;
         }
     }
+    function editSubbab(Request $request)
+    {
+        $validate = json_decode($this->validateDataTambahSubbab($request->all())->content(),false);
+        if($validate->success){
+            //add a new course
+            Subbab::find($request->subbab_id)->update($request->all());
+            return 1;
+        }
+        else{
+            $messages = get_object_vars($validate->messages);
+            $message = array_values($messages)[0][0];
+            return $message;
+        }
+    }
 
     function tambahMateri(Request $request)
     {
