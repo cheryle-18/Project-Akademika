@@ -104,6 +104,7 @@ const DetailKursus = () => {
             durasi: edtDurasi,
         }).then((res) => {
             console.log(res.data);
+            fireAlert("Sukses edit data kursus!","success","edit")
             fetchKursus();
         });
     };
