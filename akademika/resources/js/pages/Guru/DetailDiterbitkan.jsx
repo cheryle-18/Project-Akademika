@@ -52,7 +52,7 @@ const DetailDiterbitkan = () => {
     const [title, setTitle] = useState("home");
     const { kursus_id } = useParams();
 
-    const [subbab, setKuis] = useState([]);
+    // const [subbab, setKuis] = useState([]);
 
     const [listSubbab, setListSubbab] = useState([]);
 
@@ -114,8 +114,8 @@ const DetailDiterbitkan = () => {
     }, [siswa_id_now]);
 
     useEffect(() => {
-        console.log(subbab);
-    }, [subbab]);
+        console.log(listSubbab);
+    }, [listSubbab]);
 
     const last = () => {
         document.getElementById("last").click();
@@ -254,13 +254,25 @@ const DetailDiterbitkan = () => {
             </AccordionHeader>
             <AccordionBody className="bg-white p-4 text-base border-2 border-t-0 border-blue-900">
                 <div>
-                    <div className="w-full bg-white flex mb-3">
-                        <span>Materi</span>
-                        <span className="ml-auto">{subbab.durasi} menit</span>
-                    </div>
+                    {subbab.materi.map((materi, indexMateri) => (
+                        <Link
+                            to={`/guru/kursus/${kursus_id}/subbab/${subbab.subbab_id}/materi/${materi.materi_id}`}
+                        >
+                            <div className="w-full bg-white flex mb-1">
+                                <span>Materi</span>
+                                <span className="ml-auto">
+                                    {subbab.durasi} menit
+                                </span>
+                            </div>
+                        </Link>
+                    ))}
                     {subbab.kuis.map((kuis, indexKuis) => (
-                        <div className="w-full bg-white flex">
-                            <span>Kuis</span>
+                        <div className="w-full bg-white flex mb-1">
+                            <Link
+                                to={`/guru/kursus/${kursus_id}/subbab/${subbab.subbab_id}/kuis`}
+                            >
+                                <span>Kuis</span>
+                            </Link>
                             <span className="ml-auto">
                                 {kuis.jumlah_soal} soal
                             </span>
@@ -449,70 +461,7 @@ const DetailDiterbitkan = () => {
                             Silabus Kursus
                         </div>
                         <Fragment>
-                            {cetakSilabus}
-                            {/* <Accordion
-                        open={open === 1}
-                        icon={<Icon id={1} open={open} />}
-                    >
-                        <AccordionHeader
-                            onClick={() => handleOpen(1)}
-                            className="bg-blue-100 p-4 border-2 border-b-0 border-blue-900"
-                        >
-                            HTML
-                        </AccordionHeader>
-                        <AccordionBody className="bg-white p-4 text-base border-2 border-blue-900">
-                            <div className="w-full bg-white flex mb-3">
-                                <span>Materi</span>
-                                <span className="ml-auto">120 Menit</span>
-                            </div>
-                            <div className="w-full bg-white flex">
-                                <span>Kuis</span>
-                                <span className="ml-auto">20 Menit</span>
-                            </div>
-                        </AccordionBody>
-                    </Accordion> */}
-                            {/* <Accordion
-                        open={open === 2}
-                        icon={<Icon id={2} open={open} />}
-                    >
-                        <AccordionHeader
-                            onClick={() => handleOpen(2)}
-                            className="bg-blue-100 p-4 border-2 border-b-0 border-blue-900"
-                        >
-                            CSS
-                        </AccordionHeader>
-                        <AccordionBody className="bg-white p-4 text-base border-2 border-blue-900">
-                            <div className="w-full bg-white flex mb-3">
-                                <span>Materi</span>
-                                <span className="ml-auto">120 Menit</span>
-                            </div>
-                            <div className="w-full bg-white flex">
-                                <span>Kuis</span>
-                                <span className="ml-auto">20 Menit</span>
-                            </div>
-                        </AccordionBody>
-                    </Accordion>
-                    <Accordion
-                        open={open === 3}
-                        icon={<Icon id={3} open={open} />}
-                    >
-                        <AccordionHeader
-                            onClick={() => handleOpen(3)}
-                            className="bg-blue-100 p-4 border-2 border-blue-900"
-                        >
-                            JavaScript
-                        </AccordionHeader>
-                        <AccordionBody className="bg-white p-4 text-base border-2 border-blue-900">
-                            <div className="w-full bg-white flex mb-3">
-                                <span>Materi</span>
-                                <span className="ml-auto">120 Menit</span>
-                            </div>
-                            <div className="w-full bg-white flex">
-                                <span>Kuis</span>
-                                <span className="ml-auto">20 Menit</span>
-                            </div>
-                        </AccordionBody>
-                            </Accordion> */}
+                            { listSubbab && listSubbab.length>0 && cetakSilabus}
                         </Fragment>
                     </div>
                 </div>

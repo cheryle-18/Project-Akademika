@@ -8,7 +8,7 @@ import {
     faArrowAltCircleLeft,
     faArrowCircleLeft,
     faArrowLeft,
-    faCloudUploadAlt,
+    faCloudArrowDown,
 } from "@fortawesome/free-solid-svg-icons";
 
 import AuthUser from "../../components/AuthUser";
@@ -146,27 +146,23 @@ const EditMateri = () => {
                                 height="100%"
                                 allow="autoplay"
                             ></iframe>
-                            {/* <video controls width="100%">
-                        <source src={src} type="video/mp4" />
-                        Sorry, your browser doesn't support embedded videos.
-                        </video> */}
                         </div>
 
-                        <div>
+                        {/* <div>
                             <div className="float-right">
                                 <button
                                     className="btn w-full mt-3 text-base capitalize bg-custom-blue text-white hover:bg-blue-700 font-normal rounded-md py-2"
                                     name=""
                                 >
                                     <FontAwesomeIcon
-                                        icon={faCloudUploadAlt}
+                                        icon={faCloudArrowDown}
                                         className="mr-2"
                                     ></FontAwesomeIcon>
                                     Unduh
                                 </button>
                             </div>
                             <div className="clear-both"></div>
-                        </div>
+                        </div> */}
 
                         <div className="mt-6 text-custom-blue font-semibold text-xl">
                             Preview Bacaan
