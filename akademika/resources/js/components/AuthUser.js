@@ -4,12 +4,12 @@ import {useHistory} from 'react-router-dom';
 export default function AuthUser(){
     const history = useHistory();
     const getToken = () => {
-        const tokenString = sessionStorage.getItem('token');
+        const tokenString = localStorage.getItem('token');
         const userToken = JSON.parse(tokenString);
         return userToken;
     }
     const getUser = () => {
-        const userString = sessionStorage.getItem('user');
+        const userString = localStorage.getItem('user');
         const user_detail = JSON.parse(userString);
         return user_detail;
     }
@@ -19,14 +19,14 @@ export default function AuthUser(){
 
     const saveToken = (user,token) =>{
         if(user == "admin"){
-            sessionStorage.setItem('token',JSON.stringify(token));
-            sessionStorage.setItem('user',JSON.stringify(user));
+            localStorage.setItem('token',JSON.stringify(token));
+            localStorage.setItem('user',JSON.stringify(user));
             history.push('/admin/home');
             history.go();
         }
         else{
-            sessionStorage.setItem('token',JSON.stringify(token));
-            sessionStorage.setItem('user',JSON.stringify(user));
+            localStorage.setItem('token',JSON.stringify(token));
+            localStorage.setItem('user',JSON.stringify(user));
 
             setUser(user);
 
@@ -43,7 +43,7 @@ export default function AuthUser(){
     }
 
     const logout = () => {
-        sessionStorage.clear();
+        localStorage.clear();
         history.push('/');
         history.go();
     }

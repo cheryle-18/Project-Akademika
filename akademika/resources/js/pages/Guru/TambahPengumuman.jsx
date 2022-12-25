@@ -7,6 +7,8 @@ import { Input, Textarea } from "@material-tailwind/react";
 import TabsKursus from "./TabsKursus";
 import BannerKursus from "./BannerKursus";
 import AuthUser from "../../components/AuthUser";
+import Swal from 'sweetalert2'
+import withReactContent from 'sweetalert2-react-content'
 
 import {
     faArrowAltCircleLeft,
@@ -40,6 +42,16 @@ const TambahPengumuman = () => {
         }
     }, 1000);
 
+    const sweetAlert = withReactContent(Swal)
+    const fireAlert = (title,icon,status,text) => {
+        sweetAlert.fire({
+            title: <strong>{title}</strong>,
+            text:text,
+            icon: icon,
+            confirmButtonColor:"#0D47A1",
+        })
+    }
+
     const fetchKursus = () => {
         http.post("/guru/kursus/get", {
             guru_id: user.guru_id,
@@ -67,6 +79,7 @@ const TambahPengumuman = () => {
             kursus_id: kursus_id,
             deskripsi: deskripsi,
         }).then((res) => {
+            fireAlert("Sukses!","success","tambah","Berhasil tambah pengumuman!")
             fetchPengumuman();
         });
     };

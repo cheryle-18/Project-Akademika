@@ -59,7 +59,7 @@ const KursusDiterbitkan = () => {
                         </div>
                     </div>
                     <div className="content w-full px-24">
-                        <div className="diajukan my-6 content flex flex-wrap gap-10">
+                        <div className="w-full mt-10 content flex flex-wrap gap-10">
                             {listCourse.length != 0 ? (
                                 listCourse.map((n, index) => {
                                     return (

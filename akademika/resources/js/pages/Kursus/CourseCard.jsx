@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import CardPic from "../../../images/card_pic.png";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faClock } from "@fortawesome/free-solid-svg-icons"
-import { round } from "lodash";
+import { ceil, round } from "lodash";
 import { toRupiah } from "../../components/CurrencyUtils";
 import { Link } from "react-router-dom";
 import AuthUser from "../../components/AuthUser";
@@ -17,7 +17,7 @@ const CourseCard = (props) => {
                 src={CardPic}
                 alt=""
             />
-            <div className="p-6 flex flex-col justify-start">
+            <div className="p-6 flex flex-col justify-start w-full">
                 <h5 className="text-gray-900 text-xl font-semibold mb-2">
                     {props.course.nama}
                 </h5>
@@ -28,14 +28,14 @@ const CourseCard = (props) => {
                     {props.course.deskripsi}
                 </p>
 
-                <div className="text-gray-600 text-base flex">
+                <div className="text-gray-600 text-base flex w-full">
                     <span className="my-auto mr-auto">
                         <span className="my-auto mr-2 text-gray-500">
                             <FontAwesomeIcon icon={faClock} />
                         </span>
-                        {round(props.course.durasi / 60)} jam
+                        {ceil(props.course.durasi / 60)} jam
                     </span>
-                    <span>
+                    <span className="float-right">
                         <Link
                             to={
                                 (user != null &&

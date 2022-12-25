@@ -4,12 +4,14 @@ import GuruNav from "./Navbar";
 import Tabs from "./Tabs";
 import AuthUser from "../../components/AuthUser";
 import { useHistory } from "react-router-dom";
+import Swal from 'sweetalert2'
+import withReactContent from 'sweetalert2-react-content'
 
 const TambahKursus = () => {
     //tabs
     const [title, setTitle] = useState("new");
     const [nama, setNama] = useState();
-    const [kategori, setKategori] = useState();
+    const [kategori, setKategori] = useState("Teknologi informasi");
     const [harga, setHarga] = useState();
     const [deskripsi, setDeskripsi] = useState();
     const { http, user, token } = AuthUser();
@@ -26,6 +28,21 @@ const TambahKursus = () => {
         }
     }, 1000);
 
+
+    const sweetAlert = withReactContent(Swal)
+
+    const fireAlert = (title,icon,status,text) => {
+        sweetAlert.fire({
+            title: <strong>{title}</strong>,
+            text:text,
+            icon: icon,
+            confirmButtonColor:"#0D47A1",
+
+        })
+
+    }
+
+
     const submitForm = () => {
         http.post("/guru/kursus/tambah", {
             guru_id: user.guru_id,
@@ -37,6 +54,13 @@ const TambahKursus = () => {
         }).then((res) => {
             let data = res.data;
             console.log(data);
+            if(res.data==1){
+                fireAlert("Sukses!","success","tambahKursus","Berhasil tambah kursus baru!")
+            }
+            else{
+                fireAlert("Error!","error","tambahKursus",res.data+"!")
+            }
+
         });
     };
 

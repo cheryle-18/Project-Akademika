@@ -205,7 +205,7 @@ class KursusController extends Controller
         if($validate->success){
             //add a new course
             Kursus::create($request->all());
-            return 'Berhasil tambah kursus baru';
+            return 1;
         }
         else{
             $messages = get_object_vars($validate->messages);
@@ -243,8 +243,16 @@ class KursusController extends Controller
     function doEdit(Request $request)
     {
         # code...
-        Kursus::where('kursus_id',$request->kursus_id)->update($request->all());
-        return 'success edit';
+        $validate = json_decode($this->validateDataTambahKursus($request->all())->content(),false);
+        if($validate->success){
+            Kursus::where('kursus_id',$request->kursus_id)->update($request->all());
+            return 1;
+        }
+        else{
+            $messages = get_object_vars($validate->messages);
+            $message = array_values($messages)[0][0];
+            return $message;
+        }
     }
 
     function doDelete(Request $request)
