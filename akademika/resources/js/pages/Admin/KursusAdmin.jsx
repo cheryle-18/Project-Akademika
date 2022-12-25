@@ -7,6 +7,7 @@ import Sidebar from "./Sidebar";
 import AuthUser from "../../components/AuthUser";
 import { Link } from "react-router-dom";
 import { useHistory } from "react-router-dom";
+import { Input, Textarea } from "@material-tailwind/react";
 
 const KursusAdmin = () => {
     const { http, token, user } = AuthUser();
@@ -19,6 +20,8 @@ const KursusAdmin = () => {
 
     const history = useHistory();
     const [isLoading, setIsLoading] = useState(true);
+    const [tolak, setTolak] = useState([]);
+    const [alasanTolak, setAlasanTolak] = useState("");
 
     setTimeout(() => {
         if (token == null) {
@@ -66,6 +69,7 @@ const KursusAdmin = () => {
     const onClickBatal = (id) => {
         http.post("/admin/master/kursus/batal", {
             kursus_id: id,
+            deskripsi: alasanTolak
         }).then((res) => {
             setTimeout(() => {
                 fetchDatakursus();
@@ -106,15 +110,6 @@ const KursusAdmin = () => {
             </td>
             <td className="text-base">
                 -
-                {/* <button
-                    onClick={(e) => {
-                        onClickBatal(master.kursus_id);
-                    }}
-                    type="button"
-                    className="py-2 px-4  bg-red-800 hover:bg-red-500 text-white transition ease-in duration-200 text-center text-base font-normal shadow-md rounded-lg w-20"
-                >
-                    Batal
-                </button> */}
             </td>
         </tr>
     ));
@@ -144,11 +139,20 @@ const KursusAdmin = () => {
                     onClick={(e) => {
                         onClickSetuju(pengajuan.kursus_id);
                     }}
-                    type="button"
-                    className="py-2 px-4  bg-green-800 hover:bg-green-500 text-white transition ease-in duration-200 text-center text-base font-normal shadow-md rounded-lg w-20"
+                    className="py-2 px-4 bg-green-800 hover:bg-green-500 text-white transition ease-in duration-200 text-center text-base font-normal shadow-md rounded-lg mr-2"
                 >
                     Setujui
                 </button>
+                <label
+                    htmlFor="tolakKursus"
+                    onClick={(e) => {
+                        setTolak(pengajuan);
+                    }}
+                    className="py-3 px-4 bg-red-800 hover:bg-red-500 text-white transition ease-in duration-200 text-center text-base font-normal shadow-md rounded-lg"
+                >
+                    Tolak
+                </label>
+
             </td>
         </tr>
     ));
@@ -223,6 +227,46 @@ const KursusAdmin = () => {
                             </div>
                         </div>
                     </Sidebar>
+                    <div className="z-10">
+                        <input
+                            type="checkbox"
+                            id="tolakKursus"
+                            className="modal-toggle"
+                        />
+                        <div className="modal">
+                            <div className="modal-box relative py-10 px-8">
+                                <label
+                                    htmlFor="tolakKursus"
+                                    className="btn btn-sm absolute bg-transparent text-gray-500 border border-none hover:bg-transparent hover:border-none right-2 top-2 font-bold text-xl"
+                                >
+                                    ✕
+                                </label>
+                                <div>
+                                    <h3 className="text-xl font-bold text-custom-blue">
+                                        Tolak Kursus {tolak.nama}
+                                    </h3>
+                                    <div className="text-xl pt-4">
+                                        <Textarea
+                                            label="Alasan Penolakan"
+                                            onChange={(e) =>
+                                                setAlasanTolak(e.target.value)
+                                            }
+                                        />
+                                    </div>
+                                    <label
+                                        htmlFor="tolakKursus"
+                                        className="btn btn-block mx-auto rounded bg-red-800 text-gray-100 border-0 hover:bg-red-500 capitalize font-medium text-base mt-4"
+                                        onClick={(e) => {
+                                            onClickBatal(tolak.kursus_id);
+                                        }}
+                                    >
+                                        Tolak Kursus
+                                    </label>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             )}
         </div>

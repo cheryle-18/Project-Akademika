@@ -92,10 +92,6 @@ const Materi = () => {
                                     height="100%"
                                     allow="autoplay"
                                 ></iframe>
-                                {/* <video controls width="100%">
-                        <source src={src} type="video/mp4" />
-                        Sorry, your browser doesn't support embedded videos.
-                        </video> */}
                             </div>
                             <div>
                                 <div className="float-right">
@@ -132,16 +128,6 @@ const Materi = () => {
                                         </button>
                                     </Link>
                                 </div>
-                                {/* <div className="float-right">
-                                    <Link to={`/siswa/kursus/${kursus_id}/subbab/${subbab_id}/kuis`}>
-                                        <button
-                                            className="btn w-full mt-3 text-base capitalize bg-custom-blue text-white hover:bg-blue-700 font-normal rounded-md py-2"
-                                            name=""
-                                        >
-                                            Kerjakan Kuis &nbsp;&nbsp; &gt;
-                                        </button>
-                                    </Link>
-                                </div> */}
                                 <div className="clear-both"></div>
                             </div>
                         </div>

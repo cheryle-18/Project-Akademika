@@ -83,11 +83,19 @@ class AdminController extends Controller
     {
         $kursus = Kursus::all();
         $kursusaktif = Kursus::with('guru')->where('status','=','1')->get();
-        $kursuspending = Kursus::with('guru')->where('status','=','0')->get();
+        $kursuspending = Kursus::with('guru')->with('histori')->where('status','=','0')->get();
+
+        $kursusDiajukan = [];
+        foreach($kursuspending as $pending){
+            if($pending->histori && sizeof($pending->histori)>0 && $pending->histori[sizeof($pending->histori)-1]->status==3){
+                $kursusDiajukan[] = $pending;
+            }
+        }
+
         return response()->json([
             "kursus" => $kursus,
             "kursusaktif" => $kursusaktif,
-            "kursuspending" => $kursuspending
+            "kursuspending" => $kursusDiajukan
         ]);
     }
 
@@ -133,7 +141,7 @@ class AdminController extends Controller
         KursusHistori::create([
             'kursus_id'=>$kursus->kursus_id,
             'status'=>2,
-            'deskripsi'=>'ditolak',
+            'deskripsi'=>$request->deskripsi,
             'tanggal'=>Carbon::now("Asia/Jakarta")
         ]);
         return $request->kursus_id;
