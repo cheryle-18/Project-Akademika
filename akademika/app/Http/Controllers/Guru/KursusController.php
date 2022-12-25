@@ -26,6 +26,7 @@ class KursusController extends Controller
     {
         $guru = Guru::find($request->guru_id);
         $kursus = $guru->kursus()->where('kursus.kursus_id',$request->kursus_id)->first();
+        $message = "";
 
         $kursus_type = "";
         if($kursus->status == 1 && $kursus->histori()->where('kursus_histori.status',1)->exists())
@@ -38,6 +39,7 @@ class KursusController extends Controller
             }
             else if($kursus->histori()->orderBy('tanggal','desc')->first()->status == 2){
                 $kursus_type = "ditolak";
+                $message = $kursus->histori()->orderBy('tanggal','desc')->first()->deskripsi;
             }
         }
         else if($kursus->status == 0 && count($kursus->histori)==0){
@@ -46,7 +48,8 @@ class KursusController extends Controller
 
         return response()->json([
             "kursus" => $kursus,
-            "kursus_type" => $kursus_type
+            "kursus_type" => $kursus_type,
+            "deskripsi" => $message
         ]);
     }
 
