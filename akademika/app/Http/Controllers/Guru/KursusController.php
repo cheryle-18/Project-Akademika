@@ -634,7 +634,8 @@ class KursusController extends Controller
 
     function getAllSubbabKuis(Request $request)
     {
-        $subbab = Subbab::with("kuis")->where("kursus_id",$request->kursus_id)->get();
+        // $subbab = Subbab::with("kuis")->where("kursus_id",$request->kursus_id)->get();
+        $subbab = Subbab::with("materi")->with("kuis")->where("kursus_id",$request->kursus_id)->get();
         return response()->json([
             "subbab" => $subbab,
         ]);

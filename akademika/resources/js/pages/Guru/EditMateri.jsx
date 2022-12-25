@@ -8,7 +8,7 @@ import {
     faArrowAltCircleLeft,
     faArrowCircleLeft,
     faArrowLeft,
-    faCloudUploadAlt,
+    faCloudArrowDown,
 } from "@fortawesome/free-solid-svg-icons";
 
 import AuthUser from "../../components/AuthUser";
@@ -159,7 +159,7 @@ const EditMateri = () => {
                                     name=""
                                 >
                                     <FontAwesomeIcon
-                                        icon={faCloudUploadAlt}
+                                        icon={faCloudArrowDown}
                                         className="mr-2"
                                     ></FontAwesomeIcon>
                                     Unduh
