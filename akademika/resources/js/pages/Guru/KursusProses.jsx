@@ -81,8 +81,6 @@ const KursusProses = () => {
                             <Tabs titleParam={title}></Tabs>
                         </div>
                     </div>
-
-
                     <div className="content w-full px-24">
                         <div className="text-3xl text-blue-900 font-semibold">
                             Sedang Diajukan

@@ -187,7 +187,9 @@ const Silabus = (props) => {
     };
 
     const getSnapToken = () => {
-        http.post("/siswa/kursus/daftar", {}).then((res) => {
+        http.post("/siswa/kursus/daftar", {
+
+        }).then((res) => {
             setSnapToken(res.data.snapToken);
             console.log(res.data.snapToken);
         });
@@ -262,35 +264,11 @@ const Silabus = (props) => {
                 {course.harga != null &&
                     course.harga.toLocaleString(["ban", "id"])}
             </div>
-            <div className="text-xl pt-4">Poin Anda: {user.poin}</div>
-
-            <div className="flex mt-4">
-                <div className="text-xl float-left w-fit flex justify-center items-center">
-                    Tukarkan Poin :{" "}
-                </div>
-                <input
-                    type="text"
-                    style={{
-                        padding: "2px 12px",
-                        paddingLeft: "8px",
-                        borderWidth: "1px",
-                    }}
-                    value={poin}
-                    onChange={(e) => {
-                        if(e.target.value <= user.poin){
-                            setPoin(e.target.value);
-                        }
-                    }}
-                    className="w-40 text-lg bordered border-2 font-normal border-gray-400 rounded-lg focus:border-blue-600 float-left ml-2"
-                />
-                <div className="clear-both"></div>
-            </div>
 
             {!isRegistered && isFetched && (
                 <button
                     id="pay-button"
                     onClick={() => {
-                        setIsMuncul(false);
                         snapToken != null &&
                             window.snap.pay(snapToken, {
                                 onSuccess: function (result) {
