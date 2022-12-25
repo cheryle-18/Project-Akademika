@@ -16,15 +16,14 @@ import {
     faArrowCircleLeft,
     faArrowLeft,
 } from "@fortawesome/free-solid-svg-icons";
-import Swal from 'sweetalert2'
-import withReactContent from 'sweetalert2-react-content'
+import Swal from "sweetalert2";
+import withReactContent from "sweetalert2-react-content";
 import AuthUser from "../../components/AuthUser";
 
 const DetailKursus = () => {
     const { http, user, token } = AuthUser();
     const [title, setTitle] = useState("edit");
     const { kursus_id } = useParams();
-
 
     const [course, setCourse] = useState([]);
     const [selectedKategori, setSelectedKategori] = useState(null);
@@ -35,10 +34,11 @@ const DetailKursus = () => {
     const [tipeKursus, setTipeKursus] = useState("");
     const [deskripsiTolak, setDeskripsiTolak] = useState("");
 
+    const [subbab, setSubbab] = useState();
     const [listSubbab, setListSubbab] = useState([]);
     const history = useHistory();
     const [isLoading, setIsLoading] = useState(true);
-    const [isClose,setIsClose] = useState(true)
+    const [isClose, setIsClose] = useState(true);
 
     setTimeout(() => {
         if (user == "admin") {
@@ -50,27 +50,24 @@ const DetailKursus = () => {
         }
     }, 1000);
 
-    const sweetAlert = withReactContent(Swal)
+    const sweetAlert = withReactContent(Swal);
 
-    const fireAlert = (title,icon,status,text) => {
+    const fireAlert = (title, icon, status, text) => {
         sweetAlert.fire({
             title: <strong>{title}</strong>,
-            text:text,
+            text: text,
             icon: icon,
-            confirmButtonColor:"#0D47A1",
+            confirmButtonColor: "#0D47A1",
             didClose: () => {
                 // `MySwal` is a subclass of `Swal` with all the same instance & static methods
-                if(status == "ajukan"){
-                    window.location.reload()
-                }
-                else if(status=="delete"){
+                if (status == "ajukan") {
+                    window.location.reload();
+                } else if (status == "delete") {
                     history.push("/guru/kursus/diterbitkan");
                 }
-             },
-
-        })
-
-    }
+            },
+        });
+    };
 
     const fetchKursus = () => {
         http.post("/guru/kursus/get", {
@@ -107,12 +104,16 @@ const DetailKursus = () => {
             durasi: edtDurasi,
         }).then((res) => {
             console.log(res.data);
-            if(res.data == 1){
-                fireAlert("Sukses!","success","edit","Berhasil edit data kursus!")
+            if (res.data == 1) {
+                fireAlert(
+                    "Sukses!",
+                    "success",
+                    "edit",
+                    "Berhasil edit data kursus!"
+                );
                 fetchKursus();
-            }
-            else{
-                fireAlert("Error","error","edit",res.data+'!')
+            } else {
+                fireAlert("Error", "error", "edit", res.data + "!");
             }
         });
     };
@@ -122,8 +123,8 @@ const DetailKursus = () => {
             kursus_id: kursus_id,
         }).then((res) => {
             console.log(res.data);
-            document.getElementById("konfirmasiHapus").click()
-            fireAlert("Sukses","success","delete","Berhasil delete kursus!")
+            document.getElementById("konfirmasiHapus").click();
+            fireAlert("Sukses", "success", "delete", "Berhasil delete kursus!");
         });
     };
 
@@ -142,8 +143,13 @@ const DetailKursus = () => {
         }).then((res) => {
             console.log(res.data);
             history.push("/guru/kursus/" + kursus_id + "/detail");
-            document.getElementById("konfirmasiAjukan").click()
-            fireAlert("Sukses!","success","ajukan","Berhasil mengajukan kursus!")
+            document.getElementById("konfirmasiAjukan").click();
+            fireAlert(
+                "Sukses!",
+                "success",
+                "ajukan",
+                "Berhasil mengajukan kursus!"
+            );
         });
     };
 
@@ -182,7 +188,39 @@ const DetailKursus = () => {
             <div className="clear-both"></div>
         </div>
     );
-    const cetakAjukanKursus = ((tipeKursus == "draft"||tipeKursus == "ditolak") ) && (
+
+    const cetakKonfirmasiHapusSubbab = (
+        <div>
+            {subbab != null && (
+                <div>
+                    <h3 className="text-3xl font-bold text-custom-blue">
+                        Konfirmasi Hapus Subbab
+                    </h3>
+                    <h3 className="text-3xl font-bold">{subbab.judul}</h3>
+
+                    <hr className="w-full" />
+                    <label htmlFor="konfirmasiHapusSubbab">
+                        <div className="py-2 px-4 m-2 mt-4 mb-0 bg-red-600 text-white text-center rounded-md cursor-pointer float-right">
+                            Batal
+                        </div>
+                    </label>
+                    <label
+                        htmlFor="konfirmasiHapusSubbab"
+                        onClick={() => {
+                            submitDeleteSubbab(subbab.subbab_id);
+                        }}
+                        className="py-2 px-4 m-2 mt-4 mb-0 bg-custom-blue text-white text-center rounded-md cursor-pointer float-right"
+                    >
+                        Hapus
+                    </label>
+                    <div className="clear-both"></div>
+                </div>
+            )}
+        </div>
+    );
+
+    const cetakAjukanKursus = (tipeKursus == "draft" ||
+        tipeKursus == "ditolak") && (
         <div>
             <h3 className="text-3xl font-bold text-custom-blue">
                 Ajukan Kursus
@@ -244,7 +282,7 @@ const DetailKursus = () => {
                     </div>
                     <div className="content w-full px-24">
                         <div className="">
-                            {(tipeKursus == "draft") && (
+                            {tipeKursus == "draft" && (
                                 <label
                                     htmlFor="konfirmasiAjukan"
                                     className="btn btn-sm h-10 bg-blue-900 hover:bg-blue-700 text-white rounded mr-3 capitalize font-normal float-right"
@@ -253,14 +291,13 @@ const DetailKursus = () => {
                                 </label>
                             )}
 
-                            {(tipeKursus == "ditolak") && (
+                            {tipeKursus == "ditolak" && (
                                 <label
                                     htmlFor="konfirmasiAjukan"
                                     className="btn btn-sm h-10 bg-blue-900 hover:bg-blue-700 text-white rounded mr-3 capitalize font-normal float-right"
                                 >
                                     Ajukan Kembali Kursus
                                 </label>
-
                             )}
 
                             <label
@@ -282,7 +319,7 @@ const DetailKursus = () => {
                             <div className="clear-both"></div>
                         </div>
                         <div className="my-2 text-lg font-semibold text-red-800">
-                            Alasan Ditolak: { deskripsiTolak }
+                            Alasan Ditolak: {deskripsiTolak}
                         </div>
                         <div className="content my-6 content flex flex-col mt-6">
                             <div className="subtitle text-xl font-semibold mb-3">
@@ -450,16 +487,15 @@ const DetailKursus = () => {
                                                                 Detail
                                                             </button>
                                                         </Link>
-                                                        <button
+                                                        <label
                                                             className="btn btn-sm capitalize bg-blue-900 text-white rounded font-normal"
-                                                            onClick={() =>
-                                                                submitDeleteSubbab(
-                                                                    n.subbab_id
-                                                                )
-                                                            }
+                                                            htmlFor="konfirmasiHapusSubbab"
+                                                            onClick={() => {
+                                                                setSubbab(n);
+                                                            }}
                                                         >
                                                             Hapus
-                                                        </button>
+                                                        </label>
                                                     </td>
                                                 </tr>
                                             );
@@ -521,6 +557,24 @@ const DetailKursus = () => {
                         </div>
                     </div>
 
+                    <div className="z-10">
+                        <input
+                            type="checkbox"
+                            id="konfirmasiHapusSubbab"
+                            className="modal-toggle"
+                        />
+                        <div className="modal">
+                            <div className="modal-box relative py-10 px-8">
+                                <label
+                                    htmlFor="konfirmasiHapusSubbab"
+                                    className="btn btn-sm absolute bg-transparent text-gray-500 border border-none hover:bg-transparent hover:border-none right-2 top-2 font-bold text-xl"
+                                >
+                                    ✕
+                                </label>
+                                {cetakKonfirmasiHapusSubbab}
+                            </div>
+                        </div>
+                    </div>
                 </div>
             )}
         </div>
