@@ -32,13 +32,10 @@ class KursusController extends Controller
         {
             $kursus_type = "diterbitkan";
         }
-        else if($kursus->status == 0){
-            if(count($kursus->histori)!=0){
-                if($kursus->histori()->orderBy('tanggal','desc')->first()->status == 3){
-                    $kursus_type = "diajukan";
-                }
+        else if($kursus->status == 0 && count($kursus->histori)!=0){
+            if($kursus->histori()->orderBy('tanggal','desc')->first()->status == 3){
+                $kursus_type = "diajukan";
             }
-
         }
         else if($kursus->status == 0 && count($kursus->histori)==0){
             $kursus_type = "draft";
