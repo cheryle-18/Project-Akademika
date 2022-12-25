@@ -19,7 +19,7 @@ class KursusHistoriFactory extends Factory
     {
         return [
             'kursus_id' => $this->faker->randomElement(Kursus::all()->pluck('kursus_id')),
-            'status' =>  $this->faker->numberBetween(0,1),
+            'status' =>  $this->faker->numberBetween(1,3),
             'deskripsi' => $this->faker->sentences(20,true),
             'tanggal' => $this->faker->dateTimeBetween("-1 years","now")
         ];
