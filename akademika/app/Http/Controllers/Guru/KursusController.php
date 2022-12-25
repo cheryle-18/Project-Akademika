@@ -36,6 +36,9 @@ class KursusController extends Controller
             if($kursus->histori()->orderBy('tanggal','desc')->first()->status == 3){
                 $kursus_type = "diajukan";
             }
+            else if($kursus->histori()->orderBy('tanggal','desc')->first()->status == 2){
+                $kursus_type = "ditolak";
+            }
         }
         else if($kursus->status == 0 && count($kursus->histori)==0){
             $kursus_type = "draft";
@@ -543,7 +546,21 @@ class KursusController extends Controller
                  }
             }
         }
+        else if($type == "ditolak"){
+             //status == 0 && kursus_histori status == 2
+             $allKursus = $guru->kursus()->where('kursus.status',0)->get();
+             if(count($allKursus)!=0){
+                  foreach ($allKursus as $kurs) {
+                     if(count($kurs->histori)!=0){
+                         if($kurs->histori()->orderBy('tanggal','desc')->first()->status == 2){
+                             $kursus[] = $kurs;
+                         }
+                     }
 
+                  }
+             }
+        }
+        
         else if($type == "semua"){
             $kursus = $guru->kursus()->where('kursus.status',1)->get();
         }

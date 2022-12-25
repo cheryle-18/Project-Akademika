@@ -146,7 +146,7 @@ const DetailKursus = () => {
             <div className="clear-both"></div>
         </div>
     );
-    const cetakAjukanKursus = tipeKursus == "draft" && (
+    const cetakAjukanKursus = (tipeKursus == "draft"||tipeKursus == "ditolak") && (
         <div>
             <h3 className="text-3xl font-bold text-custom-blue">
                 Ajukan Kursus
@@ -208,7 +208,7 @@ const DetailKursus = () => {
                     </div>
                     <div className="content w-full px-24">
                         <div className="">
-                            {tipeKursus == "draft" && (
+                            {(tipeKursus == "draft") && (
                                 <label
                                     htmlFor="konfirmasiAjukan"
                                     className="btn btn-sm h-10 bg-blue-900 hover:bg-blue-700 text-white rounded mr-3 capitalize font-normal float-right"
@@ -216,6 +216,16 @@ const DetailKursus = () => {
                                     Ajukan Kursus
                                 </label>
                             )}
+
+                            {(tipeKursus == "ditolak") && (
+                                <label
+                                    htmlFor="konfirmasiAjukan"
+                                    className="btn btn-sm h-10 bg-blue-900 hover:bg-blue-700 text-white rounded mr-3 capitalize font-normal float-right"
+                                >
+                                    Ajukan Kembali Kursus
+                                </label>
+                            )}
+
                             <label
                                 htmlFor="konfirmasiHapus"
                                 className="btn btn-sm h-10 bg-blue-900 hover:bg-blue-700 text-white rounded mr-3 capitalize font-normal float-right"
