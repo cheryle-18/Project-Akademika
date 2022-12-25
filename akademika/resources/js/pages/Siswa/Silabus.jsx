@@ -344,18 +344,31 @@ const Silabus = (props) => {
                             );
                         }
                     })}
-                    {subbab.kuis.map((kuis, indexKuis) => (
-                        <div className="w-full bg-white flex mb-1">
-                            <Link
-                                to={`/siswa/kursus/${kursus_id}/subbab/${subbab.subbab_id}/kuis`}
-                            >
+                    {subbab.kuis.map((kuis, indexKuis) => {
+                        if(isRegistered){
+                            return(
+                                <div className="w-full bg-white flex mb-1">
+                                    <Link
+                                        to={`/siswa/kursus/${kursus_id}/subbab/${subbab.subbab_id}/kuis`}
+                                    >
+                                        <span>Kuis</span>
+                                    </Link>
+                                    <span className="ml-auto">
+                                        {kuis.jumlah_soal} soal
+                                    </span>
+                                </div>
+                            )
+                        }
+                        else{
+                            <div className="w-full bg-white flex mb-1">
                                 <span>Kuis</span>
-                            </Link>
-                            <span className="ml-auto">
-                                {kuis.jumlah_soal} soal
-                            </span>
-                        </div>
-                    ))}
+                                <span className="ml-auto">
+                                    {kuis.jumlah_soal} soal
+                                </span>
+                            </div>
+                        }
+
+                    })}
                 </div>
             </AccordionBody>
         </Accordion>

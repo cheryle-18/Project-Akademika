@@ -52,6 +52,12 @@ const Sidebar = (props) => {
             now: props.now == "kursus" || props.now == "kursus detail",
         },
         {
+            title: "Pendaftaran",
+            icon: faGraduationCap,
+            link: "/admin/master/pendaftaran",
+            now: props.now == "pendaftaran",
+        },
+        {
             title: "Laporan",
             icon: faFileContract,
             link: "/admin/master/laporan",
@@ -127,6 +133,7 @@ const Sidebar = (props) => {
                         {props.now == "siswa" && "Master Siswa"}
                         {props.now == "kursus" && "Master Kursus"}
                         {props.now == "kursus detail" && "Master Kursus Detail"}
+                        {props.now == "pendaftaran" && "Master Pendaftaran"}
                         {props.now == "laporan" && "Master Laporan"}
                     </div>
 
@@ -165,6 +172,7 @@ const Sidebar = (props) => {
                         {props.now == "siswa" && "Master Siswa"}
                         {props.now == "kursus" && "Master Kursus"}
                         {props.now == "kursus detail" && "Master Kursus Detail"}
+                        {props.now == "pendaftaran" && "Master Pendaftaran"}
                         {props.now == "laporan" && "Master Laporan"}
                     </div>
                     <div className="z-1 drawer-side bg-custom-blue rounded-r-3xl min-h-screen overflow-y-auto flex-none">
