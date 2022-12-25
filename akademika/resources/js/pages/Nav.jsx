@@ -282,7 +282,9 @@ const Nav = (props) => {
             <div className="my-5 w-full">
                 <div className="hidden md:block">
                     <div className="text-3xl font-semibold text-white float-left">
-                        Akademika
+                        <Link to={"/"}>
+                            Akademika
+                        </Link>
                     </div>
                     <label
                         htmlFor="masukDaftar"

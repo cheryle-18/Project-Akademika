@@ -299,7 +299,7 @@ const DetailKursus = (props) => {
                                 </div>
                                 <div className="clear-both"></div>
                                 <div className="flex my-10">
-                                    <div className="text-lg font-semibold">Subbab</div>
+                                    <div className="text-lg font-semibold">Silabus Kursus</div>
                                 </div>
                                 <table className="table table-compact w-full text-black">
                                     <thead>

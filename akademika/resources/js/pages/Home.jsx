@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import * as faIcon from "@fortawesome/free-solid-svg-icons";
+import { faClock } from "@fortawesome/free-solid-svg-icons"
 import Nav from "./Nav";
 import { Link } from "react-router-dom";
 import Logo from "../../images/logo_akademika.png";
@@ -333,6 +334,9 @@ const Home = () => {
                                                         {k.nama}
                                                     </div>
                                                     <div className="flex mt-6">
+                                                        <span className="my-auto mr-2 text-gray-500">
+                                                            <FontAwesomeIcon icon={faClock} />
+                                                        </span>
                                                         <div className="text-gray-500 my-auto">
                                                             {Math.round(k.durasi/60)} jam
                                                         </div>

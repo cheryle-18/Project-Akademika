@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
-import clockLogo from "../../../images/Clock.png";
 import CardPic from "../../../images/card_pic.png";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faClock } from "@fortawesome/free-solid-svg-icons"
 import { round } from "lodash";
 import { toRupiah } from "../../components/CurrencyUtils";
 import { Link } from "react-router-dom";
@@ -29,12 +30,9 @@ const CourseCard = (props) => {
 
                 <div className="text-gray-600 text-base flex">
                     <span className="my-auto mr-auto">
-                        <img
-                            class=" inline-block mr-2"
-                            style={{ width: "25px" }}
-                            src={clockLogo}
-                            alt=""
-                        />
+                        <span className="my-auto mr-2 text-gray-500">
+                            <FontAwesomeIcon icon={faClock} />
+                        </span>
                         {round(props.course.durasi / 60)} jam
                     </span>
                     <span>
