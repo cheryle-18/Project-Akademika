@@ -271,6 +271,7 @@ const DetailKursus = (props) => {
                                                 onChange={(e) => {
                                                     setStatus(1);
                                                 }}
+                                                disabled
                                             />
                                             <Radio
                                                 id="tidakaktif"
@@ -280,6 +281,7 @@ const DetailKursus = (props) => {
                                                 onChange={(e) => {
                                                     setStatus(0);
                                                 }}
+                                                disabled
                                             />
                                         </div>
                                     </div>

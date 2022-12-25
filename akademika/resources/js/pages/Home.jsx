@@ -9,6 +9,7 @@ import Logo3 from "../../images/logo_akademika3.png";
 import AuthUser from "../components/AuthUser";
 import SiswaNav from "./Siswa/Navbar";
 import GuruNav from "./Guru/Navbar";
+import cardPic from "../../images/card_pic.png"
 
 const Home = () => {
     const classItem = "";
@@ -323,8 +324,7 @@ const Home = () => {
                                                 <div
                                                     className="h-200px md:h-300px bg-cover bg-no-repeat bg-center rounded-t-lg"
                                                     style={{
-                                                        backgroundImage:
-                                                            "url('https://s3-alpha-sig.figma.com/img/83b1/31fd/9e1ac65719d0990ca684d4cac776f5a4?Expires=1669593600&Signature=FKaqB0T66mN3OCggvalALSRAiT8~~8Z581XjDc6Kd4nahQyg5AorWoQRy1JOXtG3MvWju3WEMzRAnRESsXI9KSRhsPmIXByLynSS9NQqxHBWTAJnWYfdaJgGe4WSitRr1dMRle0VzDZ4MZDHvNe4EgTkGka9A8n0YsLfMnJ2WWX-kwi1htzXQDRrEUf8-PqnnbxieSphRRwNoBYnEr6U04WFy5ydD3sF32UFPtF7P8DVoBfI-hPO7~9D4I1Tk28NjmhHpGfwk-98nmiPPSFB0U1ZBsaWVFMByVbFT5m9EFdm0EBprvuz0UJ~BxABYD-Fz3LAJxl~JoQFH2iXY6x0Hw__&Key-Pair-Id=APKAINTVSUGEWH5XD5UA')",
+                                                        backgroundImage: `url(${cardPic})`,
                                                     }}
                                                     alt=""
                                                 />
