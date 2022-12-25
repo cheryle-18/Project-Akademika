@@ -163,7 +163,7 @@ const KursusAdmin = () => {
                 <div className="bg-gray-200 flex">
                     <Sidebar now="kursus">
                         <div className="text-2xl p-10 pt-6 pb-2">
-                            <div className="bg-custom-blue text-white inline-block text-base tracking-wide p-1 py-2 rounded-md">
+                            <div className="bg-custom-blue text-white inline-block text-base tracking-wide p-1 py-2 rounded-md my-3">
                                 <div
                                     className={
                                         (title == "master" && classSelected) ||
@@ -185,7 +185,7 @@ const KursusAdmin = () => {
                                 </div>
                                 <div className="clear-both"></div>
                             </div>
-                            <div className="bg-white overflow-y-auto h-77vh p-6 mb-6 rounded-md drop-shadow-lg">
+                            <div className="bg-white overflow-y-auto min-h-77vh h-auto p-6 mb-6 rounded-md drop-shadow-lg">
                                 <table className="table table-compact w-full text-black overflow-y-auto whitespace-nowrap">
                                     <thead>
                                         <tr>

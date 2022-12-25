@@ -1,5 +1,5 @@
 import {
-    faCloudUpload,
+    faCloudArrowDown,
     faCloudUploadAlt,
     faUpload,
 } from "@fortawesome/free-solid-svg-icons";
@@ -28,28 +28,7 @@ const Materi = () => {
             return history.push("/guru/kursus/diterbitkan");
         }
     }, 1000);
-    const [kuiss, setKuis] = useState([
-        {
-            soal: "Apa kepanjangan dari HTML",
-            pilihan: [
-                "HyperText Markup Language",
-                "HyperText Markup Language",
-                "HyperText Markup Language",
-                "HyperText Markup Language",
-            ],
-            jawaban: "HyperText Markup Language",
-        },
-        {
-            soal: "Apa kepanjangan dari HTML",
-            pilihan: [
-                "HyperText Markup Language",
-                "HyperText Markup Language",
-                "HyperText Markup Language",
-                "HyperText Markup Language",
-            ],
-            jawaban: "HyperText Markup Language",
-        },
-    ]);
+    const [kuiss, setKuis] = useState([]);
 
     const cetakKuis = kuiss.map((kuis, index) => (
         <KuisCard kuis={kuis} idx={index + 1}></KuisCard>
@@ -129,7 +108,7 @@ const Materi = () => {
                                         name=""
                                     >
                                         <FontAwesomeIcon
-                                            icon={faCloudUploadAlt}
+                                            icon={faCloudArrowDown}
                                             className="mr-2"
                                         ></FontAwesomeIcon>
                                         Unduh

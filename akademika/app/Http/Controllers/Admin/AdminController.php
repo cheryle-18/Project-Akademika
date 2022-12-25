@@ -5,8 +5,12 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Guru;
+use App\Models\Kuis;
+use App\Models\KuisPilihanJawaban;
+use App\Models\KuisSoal;
 use App\Models\Kursus;
 use App\Models\KursusHistori;
+use App\Models\Materi;
 use App\Models\Pendaftaran;
 use App\Models\Siswa;
 use App\Models\Subbab;
@@ -214,6 +218,76 @@ class AdminController extends Controller
         $subbab = Subbab::where('kursus_id',$request->kursus_id)->get();
         return response()->json([
             "subbab" => $subbab
+        ]);
+    }
+
+    function getSubbab(Request $request)
+    {
+        $subbab = Subbab::find($request->subbab_id);
+        return response()->json([
+            "subbab" => $subbab
+        ]);
+    }
+
+    function getAllMateri(Request $request)
+    {
+        $materi = Materi::where('subbab_id',$request->subbab_id)->get();
+
+        return response()->json([
+            "materi" => $materi
+        ]);
+    }
+
+    function getMateri(Request $request)
+   {
+        $materi = Materi::find($request->materi_id);
+        return response()->json([
+            "materi" => $materi
+        ]);
+   }
+
+    function getKuisSubbab(Request $request)
+    {
+        $kuis = Kuis::where('subbab_id',$request->subbab_id)->first();
+
+        return response()->json([
+            "kuis" => $kuis->soal
+        ]);
+    }
+
+    function getKuis(Request $req){
+        $kuis = Kuis::where('subbab_id', $req->subbab_id)->first();
+        $listSoal = [];
+        if($kuis){
+            $kuisSoal = KuisSoal::where('kuis_id', $kuis->kuis_id)->get();
+            if(sizeof($kuisSoal) > 0){
+                $ctr = 0;
+                foreach($kuisSoal as $soal){
+                    $pilihan = KuisPilihanJawaban::where('kuis_soal_id', $soal->kuis_soal_id)->get();
+                    $listPilihan = [];
+                    foreach($pilihan as $pil){
+                        $listPilihan[] = [
+                            "id" => $pil->kuis_pilihan_jawaban_id,
+                            "jawaban" => $pil->jawaban
+                        ];
+                    }
+
+                    $soalArr = [
+                        "id" => $soal->kuis_soal_id,
+                        "pertanyaan" => $soal->soal,
+                        "nilai" => $soal->nilai,
+                        "kunci_jawaban" => $soal->kunci_jawaban,
+                        "pilihan" => $listPilihan,
+                        "pembahasan" => $soal->pembahasan,
+                    ];
+                    $listSoal[] = $soalArr;
+                    $ctr++;
+                }
+            }
+        }
+
+        return response()->json([
+            "listSoal" => $listSoal
         ]);
     }
 

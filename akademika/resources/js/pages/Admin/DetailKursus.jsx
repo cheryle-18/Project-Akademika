@@ -3,7 +3,7 @@ import { Button, Textarea } from "@material-tailwind/react";
 import { useHistory, useParams } from "react-router-dom";
 import { BrowserRouter as Router, Route } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faCoffee } from "@fortawesome/free-solid-svg-icons";
+import { faArrowLeft } from "@fortawesome/free-solid-svg-icons";
 import Sidebar from "./Sidebar";
 import AuthUser from "../../components/AuthUser";
 import { toRupiah } from "../../components/CurrencyUtils";
@@ -86,45 +86,10 @@ const DetailKursus = (props) => {
         fetchSubbab();
     }, []);
 
-    const handleChange = (e) => {
-        var tempGuru = guru;
-        // console.log(e.target);
-        // tempGuru.nama = e.target.value;
-        tempGuru.guru_id = e.target.value;
-        setGuru(tempGuru);
-        console.log(tempGuru.guru_id);
-        // console.log(guru);
-    };
-
     useEffect(() => {
         fetchDataGuru();
         console.log(listGuru);
     }, [listGuru]);
-
-    const submitUpdateForm = () => {
-        //api call
-        http.post("/admin/master/kursus/update", {
-            kursus_id: kursus_id,
-            guru_id: guru.guru_id,
-            nama: nama,
-            kategori: kategori,
-            deskripsi: deskripsi,
-            durasi: durasi,
-            harga: harga,
-            status: status,
-        }).then((res) => {
-            let data = res.data;
-            console.log(data);
-            setUpdateFailed("success");
-            // if (data.access_token != null && data.user != null) {
-            //     //login success
-            //     setToken(res.data.user, res.data.access_token);
-            //     document.body.style.overflow = "auto";
-            // } else {
-            //     setLoginFailed(true);
-            // }
-        });
-    };
 
     return (
         <div>
@@ -136,24 +101,16 @@ const DetailKursus = (props) => {
                 <div className="bg-gray-200 flex">
                     <Sidebar now="kursus detail">
                         <div className="text-base p-14 pb-2">
-                            <div className="bg-white overflow-y-auto h-77vh px-10 p-4 mb-6 rounded-md drop-shadow-lg overflow-x-auto text-black pb-20">
-                                {updateFailed != "success" &&
-                                    updateFailed != "awal" && (
-                                        <Alert
-                                            severity="error"
-                                            className="bg-red-400 mb-6"
-                                        >
-                                            Gagal Update!
-                                        </Alert>
-                                    )}
-                                {updateFailed == "success" && (
-                                    <Alert
-                                        severity="error"
-                                        className="bg-green-400 mb-6"
-                                    >
-                                        Berhasil Update!
-                                    </Alert>
-                                )}
+                            <div className="back mb-4">
+                                <Link to={"/admin/master/kursus"} className="flex">
+                                    <FontAwesomeIcon icon={faArrowLeft} className="text-blue-900 my-auto text-lg" />
+                                    <span className="ml-3 font-semibold text-blue-900 text-lg">Kembali</span>
+                                </Link>
+                            </div>
+                            <div className="bg-white overflow-y-auto min-h-77vh h-auto px-10 p-4 mb-6 rounded-md drop-shadow-lg overflow-x-auto text-black pb-20">
+                                <div className="text-2xl text-blue-900 font-semibold mb-6 mt-4">
+                                    Detail Kursus {nama}
+                                </div>
                                 <div className="flex justify-start items-center mt-4">
                                     <div className="w-40">Guru</div>
                                     <div
@@ -166,27 +123,6 @@ const DetailKursus = (props) => {
                                             value={guru.nama}
                                             disabled
                                         />
-                                        {/* <select
-                                            placeholder="Guru"
-                                            style={{
-                                                padding: "10px 12px",
-                                                paddingLeft: "8px",
-                                            }}
-                                            className="w-full bordered border-2 font-normal text-sm border-gray-400 rounded-lg focus:border-blue-600"
-                                            onChange={handleChange}
-                                        >
-                                            {listGuru.map((g, index) => (
-                                                <option
-                                                    value={g.guru_id}
-                                                    selected={
-                                                        g.guru_id ==
-                                                        guru.guru_id
-                                                    }
-                                                >
-                                                    {g.nama}
-                                                </option>
-                                            ))}
-                                        </select> */}
                                     </div>
                                 </div>
                                 <div className="flex justify-start items-center mt-4">
@@ -196,9 +132,6 @@ const DetailKursus = (props) => {
                                             type="text"
                                             label="Nama"
                                             value={nama}
-                                            onChange={(e) =>
-                                                setNama(e.target.value)
-                                            }
                                             disabled
                                         />
                                     </div>
@@ -210,9 +143,6 @@ const DetailKursus = (props) => {
                                             type="text"
                                             label="Kategori"
                                             value={kategori}
-                                            onChange={(e) =>
-                                                setKategori(e.target.value)
-                                            }
                                             disabled
                                         />
                                     </div>
@@ -224,9 +154,6 @@ const DetailKursus = (props) => {
                                             type="text"
                                             label="Deskripsi"
                                             value={deskripsi}
-                                            onChange={(e) =>
-                                                setDeskripsi(e.target.value)
-                                            }
                                             disabled
                                         />
                                     </div>
@@ -238,9 +165,6 @@ const DetailKursus = (props) => {
                                             type="text"
                                             label="Durasi"
                                             value={`${durasi} menit`}
-                                            onChange={(e) =>
-                                                setDurasi(e.target.value)
-                                            }
                                             disabled
                                         />
                                     </div>
@@ -252,9 +176,6 @@ const DetailKursus = (props) => {
                                             type="text"
                                             label="Harga"
                                             value= {`Rp ${harga}`}
-                                            onChange={(e) =>
-                                                setHarga(e.target.value)
-                                            }
                                             disabled
                                         />
                                     </div>
@@ -268,9 +189,6 @@ const DetailKursus = (props) => {
                                                 name="status"
                                                 label="Aktif"
                                                 checked={status == 1}
-                                                onChange={(e) => {
-                                                    setStatus(1);
-                                                }}
                                                 disabled
                                             />
                                             <Radio
@@ -278,30 +196,16 @@ const DetailKursus = (props) => {
                                                 name="status"
                                                 label="Tidak Aktif"
                                                 checked={status == 0}
-                                                onChange={(e) => {
-                                                    setStatus(0);
-                                                }}
                                                 disabled
                                             />
                                         </div>
                                     </div>
-                                    {/* <div className="w-full">
-                                        <div className="float-right">
-                                            <button
-                                                type="button"
-                                                onClick={submitUpdateForm}
-                                                className="py-2 px-4  bg-custom-blue hover:bg-blue-900 text-white transition ease-in duration-200 text-center text-base font-normal shadow-md rounded-lg min-w-20"
-                                            >
-                                                Simpan Perubahan
-                                            </button>
-                                        </div>
-                                    </div> */}
                                 </div>
                                 <div className="clear-both"></div>
                                 <div className="flex my-10">
                                     <div className="text-lg font-semibold">Silabus Kursus</div>
                                 </div>
-                                <table className="table table-compact w-full text-black">
+                                <table className="table table-compact w-full text-black text-base">
                                     <thead>
                                         <tr>
                                             <th className=" bg-white text-center text-base p-2">
@@ -334,11 +238,7 @@ const DetailKursus = (props) => {
                                                     <td className="text-center">
                                                         <Link
                                                             to={
-                                                                "/guru/kursus/" +
-                                                                kursus_id +
-                                                                "/subbab/" +
-                                                                n.subbab_id +
-                                                                "/detail"
+                                                                `/admin/master/kursus/${kursus_id}/${n.subbab_id}`
                                                             }
                                                         >
                                                             <button className="btn btn-sm capitalize bg-blue-900 text-white rounded mr-3 font-normal">

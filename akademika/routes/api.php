@@ -83,6 +83,11 @@ Route::group(['middleware'=>'api'],function ()
                 Route::post('detail',[AdminController::class,'getDetailKursus']);
                 Route::post('update',[AdminController::class,'updateKursus']);
                 Route::post('getAllSubbab',[AdminController::class,'getAllSubbab']);
+                Route::post('getSubbab',[AdminController::class,'getSubbab']);
+                Route::post('getAllMateri',[AdminController::class,'getAllMateri']);
+                Route::post('getMateri',[AdminController::class,'getMateri']);
+                Route::post('getKuisSubbab',[AdminController::class,'getKuisSubbab']);
+                Route::post('getKuis',[AdminController::class,'getKuis']);
             });
 
             Route::prefix('laporan')->group(function() {
