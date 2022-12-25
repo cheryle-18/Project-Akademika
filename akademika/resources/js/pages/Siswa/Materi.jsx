@@ -1,5 +1,5 @@
 import {
-    faCloudUpload,
+    faCloudArrowDown,
     faCloudUploadAlt,
     faUpload,
 } from "@fortawesome/free-solid-svg-icons";
@@ -108,7 +108,7 @@ const Materi = () => {
                                         name=""
                                     >
                                         <FontAwesomeIcon
-                                            icon={faCloudUploadAlt}
+                                            icon={faCloudArrowDown}
                                             className="mr-2"
                                         ></FontAwesomeIcon>
                                         Unduh
