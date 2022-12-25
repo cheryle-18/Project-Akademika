@@ -205,7 +205,7 @@ class KursusController extends Controller
         if($validate->success){
             //add a new course
             Kursus::create($request->all());
-            return 'Berhasil tambah kursus baru';
+            return 1;
         }
         else{
             $messages = get_object_vars($validate->messages);
