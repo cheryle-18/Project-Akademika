@@ -94,6 +94,11 @@ class AuthController extends Controller
                 }
             }
 
+            if(getLoginedUser()->status == 0){
+                $isFound = false;
+                return "Kamu sedang di ban!";
+            }
+
             if($isFound){
                 return $this->respondWithToken($token);
             }

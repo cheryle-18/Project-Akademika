@@ -29,6 +29,7 @@ const Nav = (props) => {
     const [clicked, setClicked] = useState(false);
     const [forgotEmail, setForgotEmail] = useState("");
 
+
     function onForgotPassword(e) {
         setClicked(true);
         http.post("forgot-password", { email: forgotEmail }).then((res) => {
@@ -73,7 +74,6 @@ const Nav = (props) => {
                 password: loginPassword,
             }).then((res) => {
                 let data = res.data;
-
                 if (data.access_token != null && data.user != null) {
                     //login success
                     setToken(res.data.user, res.data.access_token);
@@ -200,7 +200,7 @@ const Nav = (props) => {
         <div>
             {isLoginFailed && (
                 <Alert severity="error" className="bg-red-400 mb-6">
-                    Gagal Masuk!
+                    Gagal masuk!
                 </Alert>
             )}
             <h3 className="text-3xl font-bold text-custom-blue mb-4">Masuk</h3>
