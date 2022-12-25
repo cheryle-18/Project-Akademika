@@ -15,8 +15,15 @@
     <div id="app"></div>
 </body>
 
+<form hidden action="/api/siswa/kursus/berhasil" method="post" id="form">
+    @csrf
+    <input type="text" id="result" name="result" value="">
+    {{-- <button type="submit">Submit</button> --}}
+</form>
+
 {{-- <input type="text" id="refresh" value="" onchange="refreshMidtrans();"> --}}
 <script type="text/javascript">
+
     function refreshMidtrans() {
         var getToken = setInterval(() => {
             if (document.getElementById('snapToken') != null && document.getElementById('snapToken').value !=
@@ -34,15 +41,18 @@
                                 /* You may add your own implementation here */
                                 // alert("payment success!");
                                 // window.location.reload();
-                                setTimeout(() => {
-                                    console.log(result);
-                                }, 5000);
-                                alert(result);
+                                // document.getElementById("result").value = JSON.stringfy(result);
+                                // document.getElementById("form").submit();
+                                // sessionStorage.setItem("result", JSON.stringfy(result));
+                                // console.log(snapToken);
+                                console.log(result);
+                                window.location.replace("/siswa/kursus");
                             },
                             onPending: function(result) {
                                 /* You may add your own implementation here */
-                                // alert("wating your payment!");
+                                alert("wating your payment!");
                                 // console.log(result);
+                                // alert(JSON.stringfy(result));
                             },
                             onError: function(result) {
                                 /* You may add your own implementation here */
@@ -58,6 +68,7 @@
                     clearInterval(getToken);
                 }
             }
+                // alert(snapToken);
         }, 1000);
     }
 </script>
