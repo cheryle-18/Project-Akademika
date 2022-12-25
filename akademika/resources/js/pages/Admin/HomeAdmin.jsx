@@ -12,34 +12,50 @@ import { Chart as ChartJS, registerables } from "chart.js";
 const HomeAdmin = () => {
     const history = useHistory();
     const { http, token, user } = AuthUser();
-    const [isLoading, setIsLoading] = useState(false);
-    const [dataDashboard, setDataDashboard] = useState([])
-    const [dataChart, setDataChart] = useState([])
-    const [dataChartSec, setDataChartSec] = useState([])
+    const [isLoading, setIsLoading] = useState(true);
+    const [dataDashboard, setDataDashboard] = useState([]);
+    const [dataChart, setDataChart] = useState([]);
+    const [dataChartSec, setDataChartSec] = useState([]);
+
+    setTimeout(() => {
+        if (token == null) {
+            console.log(token);
+            return history.push("/");
+        } else {
+            if (user.role_text != null) {
+                if (user.role_text == "guru") {
+                    return history.push("/guru/kursus/diterbitkan");
+                } else if (user.role_text == "siswa") {
+                    return history.push("/siswa/kursus");
+                }
+            }
+        }
+    }, 1000);
 
     const fetchData = () => {
         http.get("/admin/dashboard").then((res) => {
-            setDataDashboard(res.data)
-        })
-    }
+            setDataDashboard(res.data);
+            setIsLoading(false);
+        });
+    };
 
     const fetchChart = () => {
         http.get("/admin/dashboard/chart").then((res) => {
-            setDataChart(res.data.laporan)
-        })
-    }
+            setDataChart(res.data.laporan);
+        });
+    };
 
     const fetchChartSec = () => {
         http.get("/admin/dashboard/chartSec").then((res) => {
-            setDataChartSec(res.data.laporan)
-        })
-    }
+            setDataChartSec(res.data.laporan);
+        });
+    };
 
     useEffect(() => {
-        fetchData()
-        fetchChart()
-        fetchChartSec()
-    }, [])
+        fetchData();
+        fetchChart();
+        fetchChartSec();
+    }, []);
 
     setTimeout(() => {
         if (token == null) {
@@ -73,30 +89,39 @@ const HomeAdmin = () => {
                                 <div className="w-full h-full bg-white text-custom-blue rounded-lg shadow-lg flex">
                                     <div className="my-auto px-10 flex">
                                         <div className="rounded-full bg-blue-100 w-16 h-16 flex">
-                                            <FontAwesomeIcon icon={faUser} className="m-auto" />
+                                            <FontAwesomeIcon
+                                                icon={faUser}
+                                                className="m-auto"
+                                            />
                                         </div>
                                         <div className="text-xl font-bold my-auto ml-5">
-                                            { dataDashboard.guru } Guru
+                                            {dataDashboard.guru} Guru
                                         </div>
                                     </div>
                                 </div>
                                 <div className="w-full h-full bg-white text-custom-blue rounded-lg shadow-lg flex">
                                     <div className="my-auto px-10 flex">
                                         <div className="rounded-full bg-blue-100 w-16 h-16 flex">
-                                            <FontAwesomeIcon icon={faUser} className="m-auto" />
+                                            <FontAwesomeIcon
+                                                icon={faUser}
+                                                className="m-auto"
+                                            />
                                         </div>
                                         <div className="text-xl font-bold my-auto ml-5">
-                                            { dataDashboard.siswa } Siswa
+                                            {dataDashboard.siswa} Siswa
                                         </div>
                                     </div>
                                 </div>
                                 <div className="w-full h-full bg-white text-custom-blue rounded-lg shadow-lg flex">
                                     <div className="my-auto px-10 flex">
                                         <div className="rounded-full bg-blue-100 w-16 h-16 flex">
-                                            <FontAwesomeIcon icon={faGraduationCap} className="m-auto" />
+                                            <FontAwesomeIcon
+                                                icon={faGraduationCap}
+                                                className="m-auto"
+                                            />
                                         </div>
                                         <div className="text-xl font-bold my-auto ml-5">
-                                            { dataDashboard.kursus } Kursus
+                                            {dataDashboard.kursus} Kursus
                                         </div>
                                     </div>
                                 </div>
@@ -107,7 +132,20 @@ const HomeAdmin = () => {
                                         <Line
                                             datasetIdKey="id"
                                             data={{
-                                                labels: ["Jan", "Feb", "Mar", "Apr", "Mei", "Jun", "Jul", "Aug", "Sep", "Okt", "Nov", "Des"],
+                                                labels: [
+                                                    "Jan",
+                                                    "Feb",
+                                                    "Mar",
+                                                    "Apr",
+                                                    "Mei",
+                                                    "Jun",
+                                                    "Jul",
+                                                    "Aug",
+                                                    "Sep",
+                                                    "Okt",
+                                                    "Nov",
+                                                    "Des",
+                                                ],
                                                 datasets: [
                                                     {
                                                         label: "Penghasilan Bulanan",
@@ -131,7 +169,7 @@ const HomeAdmin = () => {
                                                     },
                                                 ],
                                             }}
-                                            options= { {
+                                            options={{
                                                 responsive: true,
                                                 maintainAspectRatio: false,
                                             }}
