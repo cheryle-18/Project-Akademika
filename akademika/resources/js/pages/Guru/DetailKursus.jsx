@@ -33,6 +33,7 @@ const DetailKursus = () => {
     const [edtDeskripsi, setEdtDeskripsi] = useState(null);
     const [edtDurasi, setEdtDurasi] = useState(null);
     const [tipeKursus, setTipeKursus] = useState("");
+    const [deskripsiTolak, setDeskripsiTolak] = useState("");
 
     const [listSubbab, setListSubbab] = useState([]);
     const history = useHistory();
@@ -83,6 +84,7 @@ const DetailKursus = () => {
             setEdtDeskripsi(res.data.kursus.deskripsi);
             setEdtDurasi(res.data.kursus.durasi);
             setTipeKursus(res.data.kursus_type);
+            setDeskripsiTolak(res.data.deskripsi);
             setIsLoading(false);
         });
     };
@@ -258,6 +260,7 @@ const DetailKursus = () => {
                                 >
                                     Ajukan Kembali Kursus
                                 </label>
+
                             )}
 
                             <label
@@ -277,6 +280,9 @@ const DetailKursus = () => {
                                 {course.nama}
                             </span>
                             <div className="clear-both"></div>
+                        </div>
+                        <div className="my-2 text-lg font-semibold text-red-800">
+                            Alasan Ditolak: { deskripsiTolak }
                         </div>
                         <div className="content my-6 content flex flex-col mt-6">
                             <div className="subtitle text-xl font-semibold mb-3">

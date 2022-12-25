@@ -12,6 +12,8 @@ import {
     faCloudUploadAlt,
 } from "@fortawesome/free-solid-svg-icons";
 import { useHistory } from "react-router-dom";
+import Swal from 'sweetalert2'
+import withReactContent from 'sweetalert2-react-content'
 
 const TambahMateri = () => {
     const [title, setTitle] = useState("proses");
@@ -35,6 +37,19 @@ const TambahMateri = () => {
         }
     }, 1000);
 
+    const sweetAlert = withReactContent(Swal)
+
+    const fireAlert = (title,icon,status,text) => {
+        sweetAlert.fire({
+            title: <strong>{title}</strong>,
+            text:text,
+            icon: icon,
+            confirmButtonColor:"#0D47A1",
+        })
+
+    }
+
+
     const onChangeVideoHandler = (e) => {
         setVideo(e.target.files[0]);
     };
@@ -47,7 +62,7 @@ const TambahMateri = () => {
 
         http.post("/guru/kursus/materi/tambah", formData).then((res) => {
             let data = res.data;
-            console.log(data);
+            fireAlert("Sukses!","success","tambahMateri","Berhasil tambah materi!")
         });
     };
 

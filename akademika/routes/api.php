@@ -134,6 +134,7 @@ Route::group(['middleware'=>'api'],function ()
 
             Route::prefix('subbab')->group(function () {
                 Route::post('tambah',[KursusController::class,'tambahSubbab']);
+                Route::post('edit',[KursusController::class,'editSubbab']);
             });
 
             Route::prefix('materi')->group(function () {

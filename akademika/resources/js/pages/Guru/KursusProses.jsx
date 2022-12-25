@@ -97,7 +97,7 @@ const KursusProses = () => {
                                     );
                                 })
                             ) : (
-                                <div className="text-xl text-blue-900">
+                                <div className="text-xl">
                                     Tidak ada kursus
                                 </div>
                             )}
@@ -117,7 +117,7 @@ const KursusProses = () => {
                                     );
                                 })
                             ) : (
-                                <div className="text-xl text-blue-900">
+                                <div className="text-xl">
                                     Tidak ada kursus
                                 </div>
                             )}
@@ -137,7 +137,7 @@ const KursusProses = () => {
                                     );
                                 })
                             ) : (
-                                <div className="text-xl text-blue-900">
+                                <div className="text-xl">
                                     Tidak ada kursus
                                 </div>
                             )}

@@ -10,6 +10,8 @@ import {
     faArrowCircleLeft,
     faArrowLeft,
 } from "@fortawesome/free-solid-svg-icons";
+import Swal from 'sweetalert2'
+import withReactContent from 'sweetalert2-react-content'
 
 const DetailSubbab = () => {
     const [title, setTitle] = useState("proses");
@@ -48,11 +50,23 @@ const DetailSubbab = () => {
         });
     };
 
+    const sweetAlert = withReactContent(Swal)
+
+    const fireAlert = (title,icon,status,text) => {
+        sweetAlert.fire({
+            title: <strong>{title}</strong>,
+            text:text,
+            icon: icon,
+            confirmButtonColor:"#0D47A1",
+        })
+
+    }
+
     const fetchSubbab = () => {
         http.post("/guru/kursus/getSubbab", {
             subbab_id: subbab_id,
         }).then((res) => {
-            // console.log(res.data.subbab);
+            console.log(res.data.subbab);
             setSubbab(res.data.subbab);
             setIsLoading(false);
         });
@@ -91,7 +105,25 @@ const DetailSubbab = () => {
         fetchKuis();
     }, []);
 
-    const submitForm = () => {};
+    const submitForm = () => {
+
+        http.post("/guru/kursus/subbab/edit", {
+            kursus_id: kursus_id,
+            subbab_id:subbab_id,
+            judul: judul,
+            deskripsi: deskripsi,
+            durasi: durasi
+        }).then((res) => {
+            console.log(res.data);
+            if(res.data == 1){
+                fireAlert("Sukses!","success","edit","Berhasil edit data kursus!")
+                fetchKursus();
+            }
+            else{
+                fireAlert("Error","error","edit",res.data+'!')
+            }
+        });
+    };
 
     return (
         <div>
@@ -141,7 +173,7 @@ const DetailSubbab = () => {
                                             type="text"
                                             className="w-full"
                                             name="judul"
-                                            value={subbab.judul}
+                                            defaultValue={subbab.judul}
                                             onChange={(e) =>
                                                 setJudul(e.target.value)
                                             }
@@ -156,7 +188,7 @@ const DetailSubbab = () => {
                                         <Textarea
                                             className="w-full"
                                             name="desc"
-                                            value={subbab.deskripsi}
+                                            defaultValue={subbab.deskripsi}
                                             onChange={(e) =>
                                                 setDeskripsi(e.target.value)
                                             }
@@ -170,7 +202,7 @@ const DetailSubbab = () => {
                                             type="text"
                                             className=""
                                             name="durasi"
-                                            value={subbab.durasi}
+                                            defaultValue={subbab.durasi}
                                             onChange={(e) =>
                                                 setDurasi(e.target.value)
                                             }

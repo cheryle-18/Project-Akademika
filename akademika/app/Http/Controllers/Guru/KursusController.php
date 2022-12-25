@@ -26,6 +26,7 @@ class KursusController extends Controller
     {
         $guru = Guru::find($request->guru_id);
         $kursus = $guru->kursus()->where('kursus.kursus_id',$request->kursus_id)->first();
+        $message = "";
 
         $kursus_type = "";
         if($kursus->status == 1 && $kursus->histori()->where('kursus_histori.status',1)->exists())
@@ -38,6 +39,7 @@ class KursusController extends Controller
             }
             else if($kursus->histori()->orderBy('tanggal','desc')->first()->status == 2){
                 $kursus_type = "ditolak";
+                $message = $kursus->histori()->orderBy('tanggal','desc')->first()->deskripsi;
             }
         }
         else if($kursus->status == 0 && count($kursus->histori)==0){
@@ -46,7 +48,8 @@ class KursusController extends Controller
 
         return response()->json([
             "kursus" => $kursus,
-            "kursus_type" => $kursus_type
+            "kursus_type" => $kursus_type,
+            "deskripsi" => $message
         ]);
     }
 
@@ -296,6 +299,20 @@ class KursusController extends Controller
             //add a new course
             Subbab::create($request->all());
             return 'Berhasil tambah subbab baru';
+        }
+        else{
+            $messages = get_object_vars($validate->messages);
+            $message = array_values($messages)[0][0];
+            return $message;
+        }
+    }
+    function editSubbab(Request $request)
+    {
+        $validate = json_decode($this->validateDataTambahSubbab($request->all())->content(),false);
+        if($validate->success){
+            //add a new course
+            Subbab::find($request->subbab_id)->update($request->all());
+            return 1;
         }
         else{
             $messages = get_object_vars($validate->messages);
