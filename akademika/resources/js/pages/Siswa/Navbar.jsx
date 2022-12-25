@@ -4,11 +4,17 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import * as faIcon from "@fortawesome/free-solid-svg-icons";
 import { Link } from "react-router-dom";
 import AuthUser from "../../components/AuthUser";
-const Nav = () => {
+const Nav = (props) => {
 
     const {user,token,logout} = AuthUser()
 
-
+    let wrapperClass = ""
+    if(props.stat != "landing"){
+        wrapperClass = "bg-custom-blue flex w-full px-4 sm:px-16 md:px-24 z-0"
+    }
+    else{
+        wrapperClass = "flex w-full z-0"
+    }
     const logoutSiswa = () => {
         if(token != undefined){
             logout();
@@ -16,7 +22,7 @@ const Nav = () => {
     }
 
     return (
-        <div className="bg-custom-blue flex w-full px-4 sm:px-16 md:px-24 z-0">
+        <div className={wrapperClass}>
             <div className="my-5 w-full">
                 {/* layar besar */}
                 <div className="hidden md:block">

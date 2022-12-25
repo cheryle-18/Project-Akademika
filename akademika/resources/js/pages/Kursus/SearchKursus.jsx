@@ -11,7 +11,7 @@ import { useHistory } from "react-router-dom";
 const SearchKursus = (props) => {
     const [listCourse, setListCourse] = useState([]);
     const [currentItems, setCurrentItems] = useState([]);
-    const { http, token } = AuthUser();
+    const {http,user,token } = AuthUser();
     const [filterName, setFilterName] = useState("");
     const [filterKategori, setFilterKategori] = useState("");
     const [filterModeHarga, setFilterModeHarga] = useState("");
@@ -22,13 +22,23 @@ const SearchKursus = (props) => {
     const [currentPage, setCurrentPage] = useState(0);
     const [selectedPage, setSelectedPage] = useState(0);
 
-    const history = useHistory();
 
+    const history = useHistory();
+    // setTimeout(() => {
+    //     if (props.isSiswa && token == null) {
+    //         return history.push("/");
+    //     }
+    // }, 1000);
     setTimeout(() => {
-        if (props.isSiswa && token == null) {
-            return history.push("/");
+        if(user == "admin"){
+            return history.push("/admin/home");
         }
-    }, 1000);
+        else if (props.isSiswa!=null && token == null) {
+            return history.push("/");
+        } else if (user.role_text == "guru") {
+            return history.push("/guru/kursus/diterbitkan");
+        }
+    }, 100);
 
     const paginationUnclick =
         "page-link relative block py-1.5 px-3 border-0 outline-none transition-all duration-300 rounded bg-white text-gray-800 hover:text-white hover:bg-blue-900 focus:shadow-none";

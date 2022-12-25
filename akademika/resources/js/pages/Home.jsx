@@ -7,6 +7,8 @@ import Logo from "../../images/logo_akademika.png";
 import Logo2 from "../../images/logo_akademika2.png";
 import Logo3 from "../../images/logo_akademika3.png";
 import AuthUser from "../components/AuthUser";
+import SiswaNav from "./Siswa/Navbar";
+import GuruNav from "./Guru/Navbar";
 
 const Home = () => {
     const classItem = "";
@@ -166,7 +168,13 @@ const Home = () => {
                 <div className="fixed left-0 top-0 z-50 font-extrabold bg-white">
                     {/* {cetakLink} */}
                 </div>
-                <Nav></Nav>
+                {/* <Nav></Nav> */}
+
+                {(user != null && user.role_text == "siswa")&&<SiswaNav stat="landing"></SiswaNav>}
+                {(user != null && user.role_text == "guru")&&<GuruNav stat="landing"></GuruNav>}
+                {user == null && (
+                    <Nav></Nav>
+                )}
                 <div></div>
 
                 <div className="grid grid-cols-12 mt-0 md:mt-10 lg:mt-20">
@@ -181,12 +189,14 @@ const Home = () => {
                             >
                                 Belajar tanpa batas
                             </div>
+                            {user == null &&
                             <button
                                 type="button"
                                 className="my-10 lg:my-0 py-3 px-6  bg-white hover:bg-blue-900 hover:text-white text-custom-blue transition ease-in duration-200 text-center text-base font-normal shadow-md rounded-lg w-full sm:w-96 lg:w-52"
                             >
                                 Daftar Sekarang
                             </button>
+                            }
                         </div>
                     </div>
                     <div className="col-span-12 px-10 lg:px-0 lg:col-span-5 flex items-center justify-center">
@@ -399,12 +409,14 @@ const Home = () => {
                         <div className="pt-6 text-xl">
                             Belajar tanpa batas dengan Akademika
                         </div>
+                        { user == null &&
                         <button
                             type="button"
                             className="mt-6 py-3 px-6 bg-custom-blue hover:bg-custom-light-blue hover:text-custom-blue text-white transition ease-in duration-200 text-center text-base font-normal shadow-md rounded-lg"
                         >
                             Daftar Sekarang
                         </button>
+                        }
                     </div>
                 </div>
             </div>

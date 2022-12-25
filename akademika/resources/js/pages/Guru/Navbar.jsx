@@ -7,8 +7,17 @@ import { Link } from "react-router-dom";
 import AuthUser from "../../components/AuthUser";
 
 
-const GuruNav = () => {
+const GuruNav = (props) => {
     const { http, user,token,logout } = AuthUser();
+
+    let wrapperClass = ""
+
+    if(props.stat != "landing"){
+        wrapperClass = "bg-custom-blue flex w-full px-4 sm:px-16 md:px-20"
+    }
+    else{
+        wrapperClass = "flex w-full"
+    }
 
     const logoutGuru = () => {
         if(token != undefined){
@@ -16,9 +25,8 @@ const GuruNav = () => {
         }
     }
 
-
     return (
-        <div className="bg-custom-blue flex w-full px-4 sm:px-16 md:px-20">
+        <div className={wrapperClass}>
             <div className="my-5 w-full">
                 {/* layar besar */}
                 <div className="hidden md:block">
