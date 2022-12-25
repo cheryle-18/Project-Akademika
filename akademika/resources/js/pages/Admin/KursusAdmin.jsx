@@ -105,7 +105,8 @@ const KursusAdmin = () => {
                 </Link>
             </td>
             <td className="text-base">
-                <button
+                -
+                {/* <button
                     onClick={(e) => {
                         onClickBatal(master.kursus_id);
                     }}
@@ -113,7 +114,7 @@ const KursusAdmin = () => {
                     className="py-2 px-4  bg-red-800 hover:bg-red-500 text-white transition ease-in duration-200 text-center text-base font-normal shadow-md rounded-lg w-20"
                 >
                     Batal
-                </button>
+                </button> */}
             </td>
         </tr>
     ));
