@@ -134,7 +134,7 @@ const ProfileGuru = () => {
                                                 onChange={(e) =>
                                                     setUsername(e.target.value)
                                                 }
-                                                required
+                                                disabled
                                             />
                                         </div>
                                     </div>
@@ -176,7 +176,7 @@ const ProfileGuru = () => {
                                                 onChange={(e) =>
                                                     setEmail(e.target.value)
                                                 }
-                                                required
+                                                disabled
                                             />
                                         </div>
                                     </div>
