@@ -79,8 +79,14 @@ const TambahPengumuman = () => {
             kursus_id: kursus_id,
             deskripsi: deskripsi,
         }).then((res) => {
-            fireAlert("Sukses!","success","tambah","Berhasil tambah pengumuman!")
-            fetchPengumuman();
+            if(res.data == 1){
+                fireAlert("Sukses!","success","tambah","Berhasil tambah pengumuman!")
+                fetchPengumuman();
+            }
+            else{
+                fireAlert("Error!","error","tambah",res.data+"!")
+            }
+
         });
     };
 
