@@ -29,6 +29,7 @@
             if (document.getElementById('snapToken') != null && document.getElementById('snapToken').value !=
                 null && document.getElementById('pay-button') != null) {
                 var snapToken = document.getElementById('snapToken').value;
+                var kursus_id = document.getElementById('kursus_id').value;
                 var payButton = document.getElementById('pay-button');
                 if (snapToken != null && snapToken != "" && snapToken != "[object HTMLInputElement]" &&
                     payButton != null) {
@@ -45,8 +46,9 @@
                                 // document.getElementById("form").submit();
                                 // sessionStorage.setItem("result", JSON.stringfy(result));
                                 // console.log(snapToken);
-                                console.log(result);
-                                window.location.replace("/siswa/kursus");
+                                localStorage.setItem(result.transaction_id, result);
+                                console.log(result.transaction_id);
+                                window.location.replace(`/siswa/kursus/${kursus_id}/detail/${result.transaction_id}`);
                             },
                             onPending: function(result) {
                                 /* You may add your own implementation here */

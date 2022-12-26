@@ -8,6 +8,7 @@ use App\Models\KuisPilihanJawaban;
 use App\Models\KuisSoal;
 use App\Models\Kursus;
 use App\Models\Materi;
+use App\Models\Pendaftaran;
 use App\Models\Siswa;
 use App\Models\SiswaJawaban;
 use App\Models\SiswaKuis;
@@ -298,6 +299,24 @@ class KursusController extends Controller
 
     public function berhasilDaftarKursus(Request $request)
     {
+        $siswa = Siswa::find($request->siswa_id);
+        $kursus = Kursus::find($request->kursus_id);
+        $pendaftaran = Pendaftaran::find($request->kursus_id);
 
+        $kursus->pengambil()->attach($siswa, [
+            "nilai_akhir" => 0,
+            "grade" => "E",
+            "status" => 1,
+        ]);
+
+        $siswa->pendaftaran()->attach($pendaftaran, [
+                "total" => $kursus->harga,
+                "diskon" => 0,
+                "grand_total" => $kursus->harga,
+                // "cara_bayar" => 1,
+                "status" => 1,
+        ]);
+
+        return "success";
     }
 }
