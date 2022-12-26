@@ -66,8 +66,11 @@ Route::group(['middleware'=>'api'],function ()
                 Route::post('/',[AdminController::class,'getSiswa']);
                 Route::post('/detail',[AdminController::class,'getDetailSiswa']);
                 Route::post('/update',[AdminController::class,'updateSiswa']);
+                Route::post('/getLaporanSiswa',[AdminController::class,'getLaporanSiswa']);
+                Route::post('/detailLaporan',[AdminController::class,'getDetailLapSiswa']);
             });
             Route::post('bansiswa',[AdminController::class,'banSiswa']);
+            Route::post('bansiswaLaporan',[AdminController::class,'banSiswaLaporan']);
 
             Route::prefix('guru')->group(function () {
                 Route::post('/',[AdminController::class,'getGuru']);

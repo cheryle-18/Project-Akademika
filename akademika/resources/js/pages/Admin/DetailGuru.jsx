@@ -108,6 +108,9 @@ const DetailGuru = () => {
                                         Berhasil Update!
                                     </Alert>
                                 )}
+                                <div className="text-2xl text-blue-900 font-semibold mb-6">
+                                    Detail Guru
+                                </div>
                                 <div className="flex justify-start items-center mt-4">
                                     <div className="w-40">Username</div>
                                     <div className="w-full">

@@ -12,6 +12,12 @@ const SiswaAdmin = () => {
     const { http, token, user } = AuthUser();
     const history = useHistory();
     const [isLoading, setIsLoading] = useState(true);
+    const [title, setTitle] = useState("siswa");
+    const [siswa, setSiswa] = useState([]);
+    const [laporan, setLaporan] = useState([]);
+    const classBorder = "text-center border border-b-gray-600 border-x-0";
+    const classSelected = "float-left bg-white text-custom-blue py-1 px-4 rounded-sm mx-1 cursor-pointer";
+    const classOther = "float-left hover:bg-gray-200 hover:text-custom-blue py-1 px-4 rounded-sm mx-1 cursor-pointer";
 
     setTimeout(() => {
         if (token == null) {
@@ -27,13 +33,30 @@ const SiswaAdmin = () => {
             }
         }
     }, 1000);
+
+    const onClickSiswa = () => {
+        setTitle("siswa");
+    };
+
+    const onClickLaporan = () => {
+        setTitle("laporan");
+    };
+
     const fetchDataSiswa = () => {
         http.post("/admin/master/siswa").then((res) => {
             setSiswa(res.data.siswa);
             setIsLoading(false);
-            // console.log(res);
         });
     };
+
+    const fetchDataLaporan = () => {
+        http.post("/admin/master/siswa/getLaporanSiswa").then((res) => {
+            setLaporan(res.data.laporanSiswa);
+            setIsLoading(false);
+            console.log(res.data.laporanSiswa);
+        });
+    }
+
     const banSiswa = (siswa_id) => {
         console.log(siswa_id);
         http.post("/admin/master/bansiswa", {
@@ -47,11 +70,8 @@ const SiswaAdmin = () => {
 
     useEffect(() => {
         fetchDataSiswa();
+        fetchDataLaporan();
     }, []);
-
-    const [siswa, setSiswa] = useState([]);
-
-    const classBorder = "text-center border border-b-gray-600 border-x-0";
 
     const cetakSiswa = siswa.map((siswa, index) => (
         <tr className={classBorder}>
@@ -81,6 +101,31 @@ const SiswaAdmin = () => {
         </tr>
     ));
 
+    const cetakLaporan = laporan.map((lap, index) => (
+        <tr className={classBorder}>
+            <td className="whitespace-pre-wrap text-base">{index + 1}</td>
+            <td className="whitespace-pre-wrap text-base">{lap.siswa}</td>
+            <td className="whitespace-pre-wrap text-base">{lap.guru}</td>
+            <td className="whitespace-pre-wrap text-base">{lap.deskripsi.substring(0,100)}</td>
+            <td className="whitespace-pre-wrap text-base">{lap.bukti.substring(0,100)}</td>
+            {
+                lap.statusInt==1 ?
+                <td className="whitespace-pre-wrap text-base text-green-700">{lap.status}</td> :
+                <td className="whitespace-pre-wrap text-base text-red-700">{lap.status}</td>
+            }
+            <td>
+                <Link to={`/admin/master/siswa/laporan/${lap.id}`}>
+                    <button
+                        type="button"
+                        className="py-2 px-6 bg-custom-blue hover:bg-blue-900 text-white transition ease-in duration-200 text-center text-base font-normal shadow-md rounded-lg h-10"
+                    >
+                        Detail
+                    </button>
+                </Link>
+            </td>
+        </tr>
+    ));
+
     return (
         <div>
             {isLoading || token == null || user.role_text != null ? (
@@ -91,31 +136,84 @@ const SiswaAdmin = () => {
                 <div className="bg-gray-200 flex">
                     <Sidebar now="siswa">
                         <div className="text-2xl p-14 pb-2">
+                            <div className="bg-custom-blue text-white inline-block text-base tracking-wide p-1 py-2 rounded-md my-3">
+                                <div
+                                    className={
+                                        (title == "siswa" && classSelected) ||
+                                        (title != "siswa" && classOther)
+                                    }
+                                    onClick={onClickSiswa}
+                                >
+                                    Siswa
+                                </div>
+                                <div
+                                    className={
+                                        (title == "laporan" && classSelected) ||
+                                        (title != "laporan" && classOther)
+                                    }
+                                    onClick={onClickLaporan}
+                                >
+                                    Laporan Siswa
+                                </div>
+                                <div className="clear-both"></div>
+                            </div>
                             <div className="bg-white overflow-y-auto min-h-77vh h-auto p-6 mb-6 rounded-md drop-shadow-lg">
                                 <table className="table table-compact w-full text-black overflow-y-auto table-auto">
                                     <thead>
-                                        <tr>
-                                            <th className="bg-white text-center text-base">
-                                                NO
-                                            </th>
-                                            <th className="bg-white text-center text-base">
-                                                ID
-                                            </th>
-                                            <th className="bg-white text-center text-base">
-                                                NAMA
-                                            </th>
-                                            <th className="bg-white text-center text-base">
-                                                EMAIL
-                                            </th>
-                                            <th className="bg-white text-center text-base">
-                                                STATUS
-                                            </th>
-                                            <th className="bg-white text-center text-base">
-                                                ACTION
-                                            </th>
-                                        </tr>
+                                        {
+                                            title=="siswa" &&
+                                            <tr>
+                                                <th className="bg-white text-center text-base">
+                                                    NO
+                                                </th>
+                                                <th className="bg-white text-center text-base">
+                                                    ID
+                                                </th>
+                                                <th className="bg-white text-center text-base">
+                                                    NAMA
+                                                </th>
+                                                <th className="bg-white text-center text-base">
+                                                    EMAIL
+                                                </th>
+                                                <th className="bg-white text-center text-base">
+                                                    STATUS
+                                                </th>
+                                                <th className="bg-white text-center text-base">
+                                                    ACTION
+                                                </th>
+                                            </tr>
+                                        }
+                                        {
+                                            title=="laporan" &&
+                                            <tr>
+                                                <th className="bg-white text-center text-base">
+                                                    NO
+                                                </th>
+                                                <th className="bg-white text-center text-base">
+                                                    SISWA
+                                                </th>
+                                                <th className="bg-white text-center text-base">
+                                                    DILAPORKAN OLEH
+                                                </th>
+                                                <th className="bg-white text-center text-base">
+                                                    DESKRIPSI
+                                                </th>
+                                                <th className="bg-white text-center text-base">
+                                                    BUKTI
+                                                </th>
+                                                <th className="bg-white text-center text-base">
+                                                    STATUS
+                                                </th>
+                                                <th className="bg-white text-center text-base">
+                                                    ACTION
+                                                </th>
+                                            </tr>
+                                        }
                                     </thead>
-                                    <tbody>{cetakSiswa}</tbody>
+                                    <tbody>
+                                        {title == "siswa" && cetakSiswa}
+                                        {title == "laporan" && cetakLaporan}
+                                    </tbody>
                                 </table>
                             </div>
                         </div>

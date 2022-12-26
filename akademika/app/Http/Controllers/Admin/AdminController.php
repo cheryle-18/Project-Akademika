@@ -13,6 +13,7 @@ use App\Models\KursusHistori;
 use App\Models\Materi;
 use App\Models\Pendaftaran;
 use App\Models\Siswa;
+use App\Models\SiswaLaporan;
 use App\Models\Subbab;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
@@ -68,6 +69,74 @@ class AdminController extends Controller
             "siswa" => $siswa
 
         ]);
+    }
+
+    function getLaporanSiswa(){
+        $laporan = SiswaLaporan::all();
+
+        $ret = [];
+        foreach($laporan as $l){
+            $status = "Pending";
+            if($l->status=="1"){
+                $status = "Selesai";
+            }
+
+            $temp = [
+                "id" => $l->siswa_laporan_id,
+                "siswa" => $l->siswa->nama,
+                "guru" => $l->guru->nama,
+                "deskripsi" => $l->deskripsi,
+                "bukti" => $l->link_bukti_laporan,
+                "status" => $status,
+                "statusInt" => $l->status
+            ];
+            $ret[] = $temp;
+        }
+
+        return response()->json([
+            "laporanSiswa" => $ret
+        ]);
+    }
+
+    function getDetailLapSiswa(Request $req){
+        $laporanId = $req->laporan_id;
+        $laporan = SiswaLaporan::find($laporanId);
+
+        $status = "Pending";
+            if($laporan->status=="1"){
+                $status = "Selesai";
+            }
+
+        $laporanSiswa = [
+            "id" => $laporan->siswa_laporan_id,
+            "siswa_id" => $laporan->siswa_id,
+            "siswa" => $laporan->siswa->nama,
+            "guru" => $laporan->guru->nama,
+            "deskripsi" => $laporan->deskripsi,
+            "bukti" => $laporan->link_bukti_laporan,
+            "status" => $status
+        ];
+
+        return response()->json([
+            "laporanSiswa" => $laporanSiswa
+        ]);
+    }
+
+    function banSiswaLaporan(Request $request){
+        $siswa = Siswa::find($request->siswa_id);
+        if($siswa->status==0){
+            $siswa->status = 1;
+            $siswa->save();
+        }else{
+            $siswa->status = 0;
+            $siswa->save();
+        }
+
+        $laporan = SiswaLaporan::find($request->laporan_id);
+        $laporan->status = 1;
+        $laporan->save();
+
+        return "sukses";
     }
 
     function getGuru(Request $request)

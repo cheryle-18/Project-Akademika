@@ -44,6 +44,7 @@ import DetailSubbabAdmin from "./pages/Admin/DetailSubbab";
 import DetailMateriAdmin from "./pages/Admin/DetailMateri";
 import DetailKuisAdmin from "./pages/Admin/DetailKuis";
 import PendaftaranAdmin from "./pages/Admin/PendaftaranAdmin";
+import DetailLaporan from "./pages/Admin/DetailLaporan";
 
 const Index = () => {
     return (
@@ -162,6 +163,9 @@ const Index = () => {
                 </Route>
                 <Route exact path="/admin/master/siswa/detail/:id">
                     <DetailSiswa></DetailSiswa>
+                </Route>
+                <Route exact path="/admin/master/siswa/laporan/:laporan_id">
+                    <DetailLaporan></DetailLaporan>
                 </Route>
                 <Route exact path="/admin/master/kursus">
                     <KursusAdmin></KursusAdmin>
