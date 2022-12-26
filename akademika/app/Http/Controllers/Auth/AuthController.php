@@ -102,6 +102,10 @@ class AuthController extends Controller
                 $isFound = false;
                 return "Kamu sedang di ban!";
             }
+            if(getLoginedUser()->email_verified_at == null){
+                $isFound = false;
+                return "Kamu belum verifikasi email!";
+            }
 
             if($isFound){
                 return $this->respondWithToken($token);
