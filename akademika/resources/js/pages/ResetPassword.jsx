@@ -4,6 +4,8 @@ import React, { useState, useEffect } from "react";
 import AuthUser from "../components/AuthUser";
 import { useHistory, useParams } from "react-router-dom";
 import { Alert, Input, Radio } from "@material-tailwind/react";
+import Swal from "sweetalert2";
+import withReactContent from "sweetalert2-react-content";
 
 const ResetPassword = () => {
     const history = useHistory();
@@ -21,6 +23,25 @@ const ResetPassword = () => {
         //check validity
     }
 
+    const sweetAlert = withReactContent(Swal);
+
+    const fireAlert = (title, icon, status, text) => {
+        sweetAlert.fire({
+            title: <strong>{title}</strong>,
+            text: text,
+            icon: icon,
+            confirmButtonColor: "#0D47A1",
+            didClose: () => {
+                // `MySwal` is a subclass of `Swal` with all the same instance & static methods
+                if (status == "back") {
+                    history.push("/");
+                }
+            },
+        });
+    };
+
+
+
     const handleSubmit = () => {
         let data = {
             email: email,
@@ -33,11 +54,13 @@ const ResetPassword = () => {
             if (res.data == 1 || res.data) {
                 // history.push("/");
                 console.log(res.data);
+                fireAlert("Sukses!","success","back","Berhasil reset password!")
             } else {
                 console.log(res.data);
             }
         });
     };
+
 
     const onLoad = () => {
         document.getElementById("reset").click();
@@ -50,7 +73,7 @@ const ResetPassword = () => {
             </h3>
             <p className="py-2">
                 <Input
-                    type="text"
+                    type="password"
                     label="Password"
                     className="input input-bordered w-full border-2 border-gray-500 rounded-md placeholder-gray-700"
                     onChange={(e) => setPassword(e.target.value)}
@@ -59,7 +82,7 @@ const ResetPassword = () => {
             </p>
             <p className="py-2">
                 <Input
-                    type="text"
+                    type="password"
                     label="Confirm Password"
                     className="input input-bordered w-full border-2 border-gray-500 rounded-md placeholder-gray-700"
                     onChange={(e) => setConfirm(e.target.value)}
