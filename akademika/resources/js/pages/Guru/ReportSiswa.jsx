@@ -113,6 +113,7 @@ const ReportSiswa = () => {
                 <p>{laporan.pivot.deskripsi}</p>
             </td>
             <td className="whitespace-pre-wrap text-start text-base">
+                {laporan.pivot.status == 2 && "Ditolak"}
                 {laporan.pivot.status == 1 && "Disetujui"}
                 {laporan.pivot.status == 0 && "Diproses"}
             </td>

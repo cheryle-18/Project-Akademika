@@ -51,6 +51,16 @@ const DetailLaporan = () => {
         });
     };
 
+    const tolakLaporan = (siswa_id) => {
+        console.log(siswa_id);
+        http.post("/admin/master/tolakLaporan", {
+            laporan_id: laporan_id
+        }).then((res) => {
+            //refresh
+            fetchDataLaporan();
+        });
+    };
+
     useEffect(() => {
         fetchDataLaporan();
     }, []);
@@ -130,6 +140,13 @@ const DetailLaporan = () => {
                                     <div className="flex justify-start items-center mt-4">
                                         <div className="w-40">Action</div>
                                         <div className="w-full">
+                                            <button
+                                                type="button"
+                                                onClick={() => tolakLaporan(laporan.siswa_id)}
+                                                className="py-2 px-6 bg-red-800 hover:bg-red-500 text-white transition ease-in duration-200 text-center text-base font-normal shadow-md rounded-lg h-10 mr-2"
+                                            >
+                                                Tolak
+                                            </button>
                                             <button
                                                 type="button"
                                                 onClick={() => banSiswa(laporan.siswa_id)}

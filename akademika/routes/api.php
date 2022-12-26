@@ -71,6 +71,7 @@ Route::group(['middleware'=>'api'],function ()
             });
             Route::post('bansiswa',[AdminController::class,'banSiswa']);
             Route::post('bansiswaLaporan',[AdminController::class,'banSiswaLaporan']);
+            Route::post('tolakLaporan',[AdminController::class,'tolakLaporan']);
 
             Route::prefix('guru')->group(function () {
                 Route::post('/',[AdminController::class,'getGuru']);
