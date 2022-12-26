@@ -90,6 +90,8 @@ Route::group(['middleware'=>'api'],function ()
                 Route::post('getKuis',[AdminController::class,'getKuis']);
             });
 
+            Route::post('/pendaftaran',[AdminController::class,'getPendaftaran']);
+
             Route::prefix('laporan')->group(function() {
                 Route::post('chart', [AdminController::class, 'getLaporanChart']);
                 Route::post('data', [AdminController::class, 'getLaporanData']);
