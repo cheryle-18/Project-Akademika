@@ -90,6 +90,8 @@ Route::group(['middleware'=>'api'],function ()
                 Route::post('getKuis',[AdminController::class,'getKuis']);
             });
 
+            Route::post('/pendaftaran',[AdminController::class,'getPendaftaran']);
+
             Route::prefix('laporan')->group(function() {
                 Route::post('chart', [AdminController::class, 'getLaporanChart']);
                 Route::post('data', [AdminController::class, 'getLaporanData']);
@@ -171,6 +173,7 @@ Route::group(['middleware'=>'api'],function ()
             Route::prefix('kuis')->group(function ()
             {
                 Route::get('get/{subbab_id}',[SiswaKursusController::class,'getKuis']);
+                Route::post('getSiswaKuis',[SiswaKursusController::class,'getSiswaKuis']);
                 Route::post('submit',[SiswaKursusController::class,'submitKuis']);
                 Route::get('getResult/{subbab_id}/{siswa_id}',[SiswaKursusController::class,'getResultKuis']);
             });

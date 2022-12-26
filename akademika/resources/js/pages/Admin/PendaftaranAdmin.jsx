@@ -7,11 +7,14 @@ import Sidebar from "./Sidebar";
 import AuthUser from "../../components/AuthUser";
 import { Link } from "react-router-dom";
 import { useHistory } from "react-router-dom";
+import { toRupiah } from "../../components/CurrencyUtils";
 
 const PendaftaranAdmin = () => {
     const { http, token, user } = AuthUser();
     const history = useHistory();
     const [isLoading, setIsLoading] = useState(true);
+    const [pendaftaran, setPendaftaran] = useState([]);
+    const classBorder = "text-center border border-b-gray-600 border-x-0";
 
     setTimeout(() => {
         if (token == null) {
@@ -28,47 +31,31 @@ const PendaftaranAdmin = () => {
         }
     }, 1000);
 
-    const fetchDataSiswa = () => {
-        http.post("/admin/master/siswa").then((res) => {
-            setSiswa(res.data.siswa);
+    const fetchDataPendaftaran = () => {
+        http.post("/admin/master/pendaftaran").then((res) => {
+            setPendaftaran(res.data.pendaftaran);
             setIsLoading(false);
-            // console.log(res);
         });
     };
 
     useEffect(() => {
-        fetchDataSiswa();
+        fetchDataPendaftaran();
     }, []);
 
-    const [siswa, setSiswa] = useState([]);
 
-    const classBorder = "text-center border border-b-gray-600 border-x-0";
 
-    const cetakSiswa = siswa.map((siswa, index) => (
+    const cetakPendaftaran = pendaftaran.map((p, index) => (
         <tr className={classBorder}>
             <td className="whitespace-pre-wrap text-base">{index + 1}</td>
-            <td className="whitespace-pre-wrap text-base">{siswa.siswa_id}</td>
-            <td className="whitespace-pre-wrap text-base">{siswa.nama}</td>
-            <td className="whitespace-pre-wrap text-base">{siswa.email}</td>
-            <td>
-                <button
-                    type="button"
-                    onClick={() => banSiswa(siswa.siswa_id)}
-                    className="px-6 py-2 bg-blue-600 hover:bg-blue-600 text-white transition ease-in duration-200 text-center text-base font-normal shadow-md rounded-lg h-10"
-                >
-                    {siswa.status == 1 ? "Aktif" : "Banned"}
-                </button>
-            </td>
-            <td>
-                <Link to={`/admin/master/siswa/detail/${siswa.siswa_id}`}>
-                    <button
-                        type="button"
-                        className="py-2 px-6 bg-custom-blue hover:bg-blue-900 text-white transition ease-in duration-200 text-center text-base font-normal shadow-md rounded-lg h-10"
-                    >
-                        Detail
-                    </button>
-                </Link>
-            </td>
+            <td className="whitespace-pre-wrap text-base">{p.kursus}</td>
+            <td className="whitespace-pre-wrap text-base">{p.siswa}</td>
+            <td className="whitespace-pre-wrap text-base">Rp {toRupiah(p.total)}</td>
+            <td className="whitespace-pre-wrap text-base">{p.tanggal}</td>
+            {
+                p.statusInt==1 ?
+                <td className="whitespace-pre-wrap text-base text-green-700">{p.status}</td> :
+                <td className="whitespace-pre-wrap text-base text-red-700">{p.status}</td>
+            }
         </tr>
     ));
 
@@ -101,10 +88,13 @@ const PendaftaranAdmin = () => {
                                             <th className="bg-white text-center text-base">
                                                 TANGGAL
                                             </th>
+                                            <th className="bg-white text-center text-base">
+                                                STATUS
+                                            </th>
                                         </tr>
                                     </thead>
                                     <tbody>
-
+                                        {cetakPendaftaran}
                                     </tbody>
                                 </table>
                             </div>

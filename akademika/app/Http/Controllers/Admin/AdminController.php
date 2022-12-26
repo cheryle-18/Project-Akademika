@@ -299,6 +299,34 @@ class AdminController extends Controller
         ]);
     }
 
+    function getPendaftaran(){
+        $data = Pendaftaran::groupBy('kursus_id')->get();
+        $pendaftaran = [];
+
+        foreach($data as $d){
+            $status = "Pending";
+            if($d->status==1){
+                $status = "Berhasil";
+            }
+            else if($d->status==2){
+                $status = "Ditolak";
+            }
+
+            $pendaftaran[] = [
+                "kursus" => $d->kursus->nama,
+                "siswa" => $d->siswa->nama,
+                "total" => $d->grand_total,
+                "status" => $status,
+                "tanggal" => date_format(date_create($d->tanggal), "d M Y"),
+                "statusInt" => $d->status
+            ];
+        }
+
+        return response()->json([
+            "pendaftaran" => $pendaftaran
+        ]);
+    }
+
     function getLaporanChart(Request $req){
         $type = $req->type;
         $filter = $req->filter;

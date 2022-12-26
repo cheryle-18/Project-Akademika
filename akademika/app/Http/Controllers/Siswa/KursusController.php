@@ -137,6 +137,23 @@ class KursusController extends Controller
         ]);
     }
 
+    function getSiswaKuis(Request $req){
+        $subbabId = $req->subbabId;
+        $siswaId = $req->siswaId;
+
+        $kuis = Kuis::where('subbab_id', $subbabId)->first();
+        $siswaKuis = SiswaKuis::where('kuis_id', $kuis->kuis_id)->where('siswa_id', $siswaId)->first();
+
+        $ada = false;
+        if($siswaKuis){
+            $ada = true;
+        }
+
+        return response()->json([
+            "siswaKuis" => $ada
+        ]);
+    }
+
     function submitKuis(Request $req){
         $subbabId = $req->subbabId;
         $siswaId = $req->siswaId;

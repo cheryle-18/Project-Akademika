@@ -7,8 +7,8 @@ import AuthUser from "../../components/AuthUser";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import * as faIcon from "@fortawesome/free-solid-svg-icons";
 import { Alert, Input, Radio } from "@material-tailwind/react";
-import Swal from 'sweetalert2'
-import withReactContent from 'sweetalert2-react-content'
+import Swal from "sweetalert2";
+import withReactContent from "sweetalert2-react-content";
 
 import {
     Accordion,
@@ -222,7 +222,12 @@ const Silabus = (props) => {
             fetchRegisterData();
             fetchDataChat(true);
             setIsLoading(false);
-            fireAlert("Sukses!","success","tambahKursus","Berhasil tambah kursus baru!")
+            fireAlert(
+                "Sukses!",
+                "success",
+                "tambahKursus",
+                "Berhasil tambah kursus baru!"
+            );
             console.log(res.data);
         });
     };
@@ -338,18 +343,20 @@ const Silabus = (props) => {
         </div>
     );
 
-    const sweetAlert = withReactContent(Swal)
+    const sweetAlert = withReactContent(Swal);
 
-    const fireAlert = (title,icon,status,text) => {
-        sweetAlert.fire({
-            title: <strong>{title}</strong>,
-            text:text,
-            icon: icon,
-            confirmButtonColor:"#0D47A1",
-        }).then((result) => {
-            history.push(`/siswa/kursus/${kursus_id}/detail`);
-        });
-    }
+    const fireAlert = (title, icon, status, text) => {
+        sweetAlert
+            .fire({
+                title: <strong>{title}</strong>,
+                text: text,
+                icon: icon,
+                confirmButtonColor: "#0D47A1",
+            })
+            .then((result) => {
+                history.push(`/siswa/kursus/${kursus_id}/detail`);
+            });
+    };
 
     const cetakSilabus = listSubbab.map((subbab, index) => (
         <Accordion
@@ -404,12 +411,14 @@ const Silabus = (props) => {
                                 </div>
                             );
                         } else {
-                            <div className="w-full bg-white flex mb-1">
-                                <span>Kuis</span>
-                                <span className="ml-auto">
-                                    {kuis.jumlah_soal} soal
-                                </span>
-                            </div>;
+                            return (
+                                <div className="w-full bg-white flex mb-1">
+                                    <span>Kuis</span>
+                                    <span className="ml-auto">
+                                        {kuis.jumlah_soal} soal
+                                    </span>
+                                </div>
+                            );
                         }
                     })}
                 </div>

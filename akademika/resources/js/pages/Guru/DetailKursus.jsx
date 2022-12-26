@@ -74,6 +74,7 @@ const DetailKursus = () => {
             guru_id: user.guru_id,
             kursus_id: kursus_id,
         }).then((res) => {
+            console.log(res.data.kursus)
             setCourse(res.data.kursus);
             setSelectedKategori(res.data.kursus.kategori);
             setEdtNama(res.data.kursus.nama);
@@ -318,9 +319,12 @@ const DetailKursus = () => {
                             </span>
                             <div className="clear-both"></div>
                         </div>
-                        <div className="my-2 text-lg font-semibold text-red-800">
-                            Alasan Ditolak: {deskripsiTolak}
-                        </div>
+                        {
+                            deskripsiTolak && deskripsiTolak!="" &&
+                            <div className="my-2 text-lg font-semibold text-red-800">
+                                Alasan Ditolak: {deskripsiTolak}
+                            </div>
+                        }
                         <div className="content my-6 content flex flex-col mt-6">
                             <div className="subtitle text-xl font-semibold mb-3">
                                 Detail Kursus

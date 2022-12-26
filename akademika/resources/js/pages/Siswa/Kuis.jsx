@@ -15,6 +15,7 @@ const Kuis = () => {
     const [listSoal, setListSoal] = useState([]);
     const [listJawaban, setListJawaban] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
+    const [siswaKuis, setSiswaKuis] = useState(false);
     const history = useHistory()
 
     setTimeout(() => {
@@ -76,8 +77,16 @@ const Kuis = () => {
         });
     };
 
+    const fetchSiswaKuis = () => {
+        http.post("/siswa/kursus/kuis/getSiswaKuis", {
+            subbab_id: subbab_id,
+            siswa_id: user.siswa_id
+        }).then((res) => {
+            setSiswaKuis(res.data.siswaKuis);
+        });
+    };
+
     const cetakKuis = listSoal.map((soal, index) => (
-        // <KuisCard kuis={soal} idx={index+1} key={soal.kuis_soal_id}></KuisCard>
         <div className="relative p-4 mt-6 pr-0" key={soal.kuis_soal_id}>
             <div className="bg-white px-14 py-10 static rounded-xl min-h-100px">
                 <div className="num bg-blue-900 text-white text-xl font-bold rounded-full absolute w-14 h-14 flex justify-center items-center -ml-20 -mt-2">
@@ -109,7 +118,15 @@ const Kuis = () => {
 
     useEffect(() => {
         fetchSubbab()
+        fetchSiswaKuis()
     }, [])
+
+    useEffect(() => {
+        if(siswaKuis==true){
+            let url = `/siswa/kursus/${kursus_id}/subbab/${subbab_id}/kuis/nilai`
+            history.push(url)
+        }
+    }, [siswaKuis])
 
     useEffect(() => {
         fetchDataKuis()

@@ -45,7 +45,7 @@ class Kursus extends Model
     }
     function pendaftaran()
     {
-        return $this->belongsToMany(Siswa::class,'pendaftaran','kursus_id','siswa_id')->withPivot("pendaftaran_id","total","diskon","grand_total","cara_bayar","status");
+        return $this->belongsToMany(Siswa::class,'pendaftaran','kursus_id','siswa_id')->withPivot("pendaftaran_id","total","diskon","grand_total","status");
     }
     function pengambil()
     {
