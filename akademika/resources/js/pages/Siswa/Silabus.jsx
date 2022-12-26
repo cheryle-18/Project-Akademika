@@ -360,12 +360,14 @@ const Silabus = (props) => {
                             )
                         }
                         else{
-                            <div className="w-full bg-white flex mb-1">
-                                <span>Kuis</span>
-                                <span className="ml-auto">
-                                    {kuis.jumlah_soal} soal
-                                </span>
-                            </div>
+                            return(
+                                <div className="w-full bg-white flex mb-1">
+                                    <span>Kuis</span>
+                                    <span className="ml-auto">
+                                        {kuis.jumlah_soal} soal
+                                    </span>
+                                </div>
+                            )
                         }
 
                     })}
