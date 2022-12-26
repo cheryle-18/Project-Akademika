@@ -16,6 +16,7 @@ use App\Models\Siswa;
 use App\Models\Subbab;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
 
@@ -153,13 +154,14 @@ class AdminController extends Controller
         // dd($request);
         Guru::where('username','=', $request->username)->update(
             [
-                "username" => $request->username,
+                // "username" => $request->username,
                 "nama" => $request->nama,
-                "password" => $request->password,
+                "password" => Hash::make($request->password),
                 "telp" => $request->telp,
                 "total_wallet" => $request->total_wallet,
                 "status" => $request->status
             ]);
+
         // $kursus->status = 0;
         return "success";
     }
@@ -172,7 +174,7 @@ class AdminController extends Controller
             [
                 "username" => $request->username,
                 "nama" => $request->nama,
-                "password" => $request->password,
+                "password" => Hash::make($request->password),
                 "telp" => $request->telp,
                 "poin" => $request->poin,
                 "status" => $request->status
