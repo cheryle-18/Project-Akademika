@@ -8,6 +8,8 @@ import Navbar from "./Navbar";
 import AuthUser from "../../components/AuthUser";
 import { toRupiah } from "../../components/CurrencyUtils";
 import { Alert, Input, Radio } from "@material-tailwind/react";
+import Swal from "sweetalert2";
+import withReactContent from "sweetalert2-react-content";
 
 const ProfileSiswa = () => {
     let history = useHistory();
@@ -18,7 +20,7 @@ const ProfileSiswa = () => {
     const [username, setUsername] = useState();
     const [telp, setTelp] = useState();
     const [email, setEmail] = useState();
-    const [password, setPassword] = useState();
+    const [password, setPassword] = useState("");
     const [totalPoin, setTotalPoin] = useState(0);
     const [status, setStatus] = useState();
     const [isAktif, setAktif] = useState(true);
@@ -42,7 +44,7 @@ const ProfileSiswa = () => {
             setUsername(res.data.siswa.username);
             setTelp(res.data.siswa.telp);
             setEmail(res.data.siswa.email);
-            setPassword(res.data.siswa.password);
+            // setPassword(res.data.siswa.password);
             setTotalPoin(res.data.siswa.poin);
             setStatus(res.data.siswa.status);
             setIsLoading(false);
@@ -51,6 +53,18 @@ const ProfileSiswa = () => {
     useEffect(() => {
         fetchDataSiswa();
     }, []);
+
+    const sweetAlert = withReactContent(Swal);
+
+    const fireAlert = (title, icon, status, text) => {
+        sweetAlert.fire({
+            title: <strong>{title}</strong>,
+            text: text,
+            icon: icon,
+            confirmButtonColor: "#0D47A1",
+        });
+    };
+
 
     const submitUpdateForm = () => {
         //api call
@@ -65,6 +79,7 @@ const ProfileSiswa = () => {
             let data = res.data;
             console.log(data);
             setUpdateFailed("success");
+            fireAlert("Sukses!","success","successUpdate","Berhasil update profile!");
         });
     };
 
@@ -114,7 +129,7 @@ const ProfileSiswa = () => {
                                         <div className="mb-2">Password</div>
                                         <div className="bg-white rounded-md shadow-md">
                                             <Input
-                                                type="text"
+                                                type="password"
                                                 label="Password"
                                                 value={password}
                                                 onChange={(e) =>

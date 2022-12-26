@@ -66,6 +66,8 @@ class KursusController extends Controller
 
     function doDeleteSubbab(Request $request)
     {
+        $mySubbab = Subbab::find($request->subbab_id);
+        Kursus::find($mySubbab->kursus_id)->decrement('durasi',$mySubbab->durasi);
         Subbab::find($request->subbab_id)->delete();
         return 'success delete subbab';
     }
@@ -102,12 +104,35 @@ class KursusController extends Controller
         ]);
     }
 
+    public function validateDataTambahPengumuman($data){
+        //Cek semua data
+        $validate = [];
+        $validate["deskripsi"] = 'required|string';
+
+        $validator = Validator::make($data,$validate,[
+            'deskripsi.required'=> "Deskripsi harus diisi",
+        ]);
+        return response()->json([
+            'success' => !$validator->fails(),
+            'messages'=>$validator->errors(),
+        ]);
+    }
+
     function tambahPengumuman(Request $request)
     {
-        $newPengumuman = $request->all();
-        $newPengumuman['tanggal'] = Carbon::now('Asia/Jakarta');
-        Pengumuman::create($newPengumuman);
-        return 'sukses tambah pengumuman';
+        $validate = json_decode($this->validateDataTambahPengumuman($request->all())->content(),false);
+        if($validate->success){
+            $newPengumuman = $request->all();
+            $newPengumuman['tanggal'] = Carbon::now('Asia/Jakarta');
+            Pengumuman::create($newPengumuman);
+            return 1;
+        }
+        else{
+            $messages = get_object_vars($validate->messages);
+            $message = array_values($messages)[0][0];
+            return $message;
+        }
+
     }
 
     function getPengumuman(Request $request)
@@ -161,7 +186,7 @@ class KursusController extends Controller
         $validate["durasi"] = 'required';
 
         $validator = Validator::make($data,$validate,[
-            'judul.required'=> "Nama harus diisi",
+            'judul.required'=> "Judul harus diisi",
             'deskripsi.required'=> "Deskripsi harus diisi",
             'durasi.required'=> "Durasi harus diisi",
         ]);
@@ -296,9 +321,11 @@ class KursusController extends Controller
     {
         $validate = json_decode($this->validateDataTambahSubbab($request->all())->content(),false);
         if($validate->success){
-            //add a new course
-            Subbab::create($request->all());
-            return 'Berhasil tambah subbab baru';
+            //add a new subbab
+            $newSubbab = Subbab::create($request->all());
+            //add time to kursus
+            Kursus::find($newSubbab->kursus_id)->increment('durasi',$newSubbab->durasi);
+            return 1;
         }
         else{
             $messages = get_object_vars($validate->messages);

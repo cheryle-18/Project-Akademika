@@ -58,7 +58,12 @@ const TambahSubbab = () => {
             let data = res.data;
             console.log(data);
             setResponse(data)
-            fireAlert("Sukses!","success","tambahSubbab","Berhasil tambah subbab!")
+            if(data == 1){
+                fireAlert("Sukses!","success","tambahSubbab","Berhasil tambah subbab!")
+            }
+            else{
+                fireAlert("Error!","error","tambahSubbab",res.data+"!")
+            }
         });
     };
 

@@ -134,6 +134,7 @@ const DetailKursus = () => {
             subbab_id: subbab_id,
         }).then((res) => {
             console.log(res.data);
+            fireAlert("Sukses", "success", "deleteSubbab", "Berhasil delete subbab!");
             fetchSubbab();
         });
     };
