@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Siswa;
 
 use App\Http\Controllers\Controller;
+use App\Models\Guru;
 use App\Models\Kuis;
 use App\Models\KuisPilihanJawaban;
 use App\Models\KuisSoal;
@@ -306,10 +307,11 @@ class KursusController extends Controller
         $siswa = Siswa::find($request->siswa_id);
         $kursus = Kursus::find($request->kursus_id);
         $pendaftaran = Pendaftaran::find($request->kursus_id);
+        $guru = Guru::find($kursus->guru_id);
 
         $kursus->pengambil()->attach($siswa, [
-            "nilai_akhir" => 0,
-            "grade" => "E",
+            // "nilai_akhir" => 0,
+            // "grade" => "E",
             "status" => 1,
         ]);
 
@@ -320,6 +322,10 @@ class KursusController extends Controller
                 // "cara_bayar" => 1,
                 "status" => 1,
         ]);
+
+        $guru->total_wallet += $kursus->harga;
+        $guru->save();
+
 
         return "success";
     }
