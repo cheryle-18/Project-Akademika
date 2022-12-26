@@ -10,7 +10,7 @@ const Nav = (props) => {
     const [isLoginFailed, setLoginFailed] = useState(false);
     const [message, setMessage] = useState("Gagal Masuk!");
     const [registerFailed, setRegisterFailed] = useState("awal");
-    const [openNow, setOpenNow] = useState("masuk");
+    const [openNow, setOpenNow] = useState("daftar");
     //login attribs
     const { http, setToken} = AuthUser();
     const [loginEmail, setLoginEmail] = useState();
@@ -62,7 +62,7 @@ const Nav = (props) => {
 
     const changeScroll = () => {
         document.body.style.overflow = "auto";
-        setOpenNow("masuk");
+        setOpenNow("daftar");
     };
     const submitLoginForm = () => {
         //api call

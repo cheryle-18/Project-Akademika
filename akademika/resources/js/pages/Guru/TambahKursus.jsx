@@ -4,12 +4,13 @@ import GuruNav from "./Navbar";
 import Tabs from "./Tabs";
 import AuthUser from "../../components/AuthUser";
 import { useHistory } from "react-router-dom";
-import Swal from 'sweetalert2'
-import withReactContent from 'sweetalert2-react-content'
+import Swal from "sweetalert2";
+import withReactContent from "sweetalert2-react-content";
 
 const TambahKursus = () => {
     //tabs
     const [title, setTitle] = useState("new");
+    const [sudut, setSudut] = useState();
     const [nama, setNama] = useState();
     const [kategori, setKategori] = useState("Teknologi Informasi");
     const [harga, setHarga] = useState();
@@ -28,20 +29,23 @@ const TambahKursus = () => {
         }
     }, 1000);
 
+    setSudut(0);
 
-    const sweetAlert = withReactContent(Swal)
+    setInterval(() => {
+        setSudut(sudut+10);
+        alert(sudut);
+    }, 1000);
 
-    const fireAlert = (title,icon,status,text) => {
+    const sweetAlert = withReactContent(Swal);
+
+    const fireAlert = (title, icon, status, text) => {
         sweetAlert.fire({
             title: <strong>{title}</strong>,
-            text:text,
+            text: text,
             icon: icon,
-            confirmButtonColor:"#0D47A1",
-
-        })
-
-    }
-
+            confirmButtonColor: "#0D47A1",
+        });
+    };
 
     const submitForm = () => {
         http.post("/guru/kursus/tambah", {
@@ -54,13 +58,16 @@ const TambahKursus = () => {
         }).then((res) => {
             let data = res.data;
             console.log(data);
-            if(res.data==1){
-                fireAlert("Sukses!","success","tambahKursus","Berhasil tambah kursus baru!")
+            if (res.data == 1) {
+                fireAlert(
+                    "Sukses!",
+                    "success",
+                    "tambahKursus",
+                    "Berhasil tambah kursus baru!"
+                );
+            } else {
+                fireAlert("Error!", "error", "tambahKursus", res.data + "!");
             }
-            else{
-                fireAlert("Error!","error","tambahKursus",res.data+"!")
-            }
-
         });
     };
 
@@ -174,6 +181,16 @@ const TambahKursus = () => {
                                 Simpan
                             </button>
                         </div>
+                    </div>
+                    <div className="fixed h-screen w-screen flex justify-center items-center">
+                        {
+                            <img
+                                src="/loading_upload.png"
+                                style={{ transform: `rotate(${sudut}deg)` }}
+                                className="w-400px"
+                                alt=""
+                            />
+                        }
                     </div>
                 </div>
             )}
