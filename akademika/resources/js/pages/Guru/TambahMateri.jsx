@@ -63,13 +63,13 @@ const TambahMateri = () => {
         setIsLoadingUpload(true);
         http.post("/guru/kursus/materi/tambah", formData).then((res) => {
             let data = res.data;
-            setIsLoadingUpload(false);
             fireAlert(
                 "Sukses!",
                 "success",
                 "tambahMateri",
                 "Berhasil tambah materi!"
             );
+            setIsLoadingUpload(false);
         });
     };
 
