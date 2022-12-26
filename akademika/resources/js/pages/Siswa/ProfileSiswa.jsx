@@ -121,7 +121,7 @@ const ProfileSiswa = () => {
                                                 onChange={(e) =>
                                                     setUsername(e.target.value)
                                                 }
-                                                required
+                                                disabled
                                             />
                                         </div>
                                     </div>
@@ -163,7 +163,7 @@ const ProfileSiswa = () => {
                                                 onChange={(e) =>
                                                     setEmail(e.target.value)
                                                 }
-                                                required
+                                                disabled
                                             />
                                         </div>
                                     </div>

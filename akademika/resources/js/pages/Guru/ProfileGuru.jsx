@@ -130,12 +130,11 @@ const ProfileGuru = () => {
                                             <Input
                                                 type="text"
                                                 label="Username"
-                                                className="input w-full border-none placeholder-gray-700"
                                                 value={username}
                                                 onChange={(e) =>
                                                     setUsername(e.target.value)
                                                 }
-                                                required
+                                                disabled
                                             />
                                         </div>
                                     </div>
@@ -145,7 +144,6 @@ const ProfileGuru = () => {
                                             <Input
                                                 type="password"
                                                 label="Password"
-                                                className="input w-full border-none placeholder-gray-700"
                                                 value={password}
                                                 onChange={(e) =>
                                                     setPassword(e.target.value)
@@ -160,7 +158,6 @@ const ProfileGuru = () => {
                                             <Input
                                                 type="text"
                                                 label="Nama"
-                                                className="input w-full border-none placeholder-gray-700"
                                                 value={nama}
                                                 onChange={(e) =>
                                                     setNama(e.target.value)
@@ -175,12 +172,11 @@ const ProfileGuru = () => {
                                             <Input
                                                 type="text"
                                                 label="Email"
-                                                className="input w-full border-none placeholder-gray-700"
                                                 value={email}
                                                 onChange={(e) =>
                                                     setEmail(e.target.value)
                                                 }
-                                                required
+                                                disabled
                                             />
                                         </div>
                                     </div>
@@ -190,7 +186,6 @@ const ProfileGuru = () => {
                                             <Input
                                                 type="text"
                                                 label="Telp"
-                                                className="input w-full border-none placeholder-gray-700"
                                                 value={telp}
                                                 onChange={(e) =>
                                                     setTelp(e.target.value)
