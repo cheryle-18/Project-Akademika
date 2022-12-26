@@ -83,7 +83,7 @@ class Siswa extends Authenticatable implements JWTSubject,MustVerifyEmail
 
     function pendaftaran()
     {
-        return $this->belongsToMany(Kursus::class,"pendaftaran","siswa_id","kursus_id")->withPivot("pendaftaran_id","total","diskon","grand_total","cara_bayar","status");
+        return $this->belongsToMany(Kursus::class,"pendaftaran","siswa_id","kursus_id")->withPivot("pendaftaran_id","total","diskon","grand_total","status");
     }
 
     function kursus()

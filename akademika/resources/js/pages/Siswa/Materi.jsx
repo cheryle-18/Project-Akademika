@@ -13,6 +13,7 @@ import AuthUser from "../../components/AuthUser";
 
 const Materi = () => {
     const [src, setSrc] = useState("");
+    const [linkVideo,setLinkVideo] = useState("");
     const { id, kursus_id, subbab_id } = useParams();
     const { http, user, token } = AuthUser();
     const [bacaan, setBacaan] = useState("");
@@ -40,6 +41,7 @@ const Materi = () => {
                     res.data.materi.link_video +
                     "/preview"
             );
+            setLinkVideo(res.data.materi.link_video)
             setBacaan(res.data.materi.penjelasan);
             setMateri(res.data.materi);
         });
@@ -53,6 +55,30 @@ const Materi = () => {
             setIsLoading(false);
         });
     };
+    const submitDownload = () => {
+        http.post("/siswa/kursus/download", {
+            materi_id: id,
+        }).then((res) => {
+            //Create download link
+            // const blobURL = URL.createObjectURL(new Blob(res.data));
+            // const link = document.createElement('a');
+            // link.href = blobURL;
+            // link.download = `${UUID}.mp4`;
+            // link.click();
+        });
+    }
+
+    function download() {
+        //https://drive.google.com/uc?export=download&id=12LL_K_AifGQ3tcQooXIWV753IoFs7Ut-
+
+        let url = "https://drive.google.com/uc?export=download&id="+linkVideo;
+        const a = document.createElement('a')
+        a.href = url
+        a.download = url.split('/').pop()
+        document.body.appendChild(a)
+        a.click()
+        document.body.removeChild(a)
+      }
 
     useEffect(() => {
         //fetch materi based on id
@@ -87,6 +113,7 @@ const Materi = () => {
                             </div>
                             <div className="w-full h-70vh bg-gray-500 rounded-xl mt-4">
                                 <iframe
+                                    id="myiframe"
                                     src={src}
                                     width="100%"
                                     height="100%"
@@ -95,10 +122,11 @@ const Materi = () => {
                             </div>
                             <div>
                                 <div className="float-right">
-                                <Link to={`/siswa/kursus/download`}>
+                                {/* <Link to={`/siswa/kursus/download`}> */}
                                     <button
                                         className="btn w-full mt-3 text-base capitalize bg-custom-blue text-white hover:bg-blue-700 font-normal rounded-md py-2"
                                         name=""
+                                        onClick={download}
                                     >
                                         <FontAwesomeIcon
                                             icon={faCloudArrowDown}
@@ -107,7 +135,7 @@ const Materi = () => {
 
                                         Unduh
                                     </button>
-                                </Link>
+                                {/* </Link> */}
                                 </div>
                                 <div className="clear-both"></div>
                             </div>

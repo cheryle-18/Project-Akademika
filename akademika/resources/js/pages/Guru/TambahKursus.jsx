@@ -11,7 +11,7 @@ const TambahKursus = () => {
     //tabs
     const [title, setTitle] = useState("new");
     const [nama, setNama] = useState();
-    const [kategori, setKategori] = useState("Teknologi informasi");
+    const [kategori, setKategori] = useState("Teknologi Informasi");
     const [harga, setHarga] = useState();
     const [deskripsi, setDeskripsi] = useState();
     const { http, user, token } = AuthUser();
