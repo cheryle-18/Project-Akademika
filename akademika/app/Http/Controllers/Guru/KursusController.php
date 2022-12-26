@@ -104,12 +104,35 @@ class KursusController extends Controller
         ]);
     }
 
+    public function validateDataTambahPengumuman($data){
+        //Cek semua data
+        $validate = [];
+        $validate["deskripsi"] = 'required|string';
+
+        $validator = Validator::make($data,$validate,[
+            'deskripsi.required'=> "Deskripsi harus diisi",
+        ]);
+        return response()->json([
+            'success' => !$validator->fails(),
+            'messages'=>$validator->errors(),
+        ]);
+    }
+
     function tambahPengumuman(Request $request)
     {
-        $newPengumuman = $request->all();
-        $newPengumuman['tanggal'] = Carbon::now('Asia/Jakarta');
-        Pengumuman::create($newPengumuman);
-        return 'sukses tambah pengumuman';
+        $validate = json_decode($this->validateDataTambahPengumuman($request->all())->content(),false);
+        if($validate->success){
+            $newPengumuman = $request->all();
+            $newPengumuman['tanggal'] = Carbon::now('Asia/Jakarta');
+            Pengumuman::create($newPengumuman);
+            return 1;
+        }
+        else{
+            $messages = get_object_vars($validate->messages);
+            $message = array_values($messages)[0][0];
+            return $message;
+        }
+
     }
 
     function getPengumuman(Request $request)

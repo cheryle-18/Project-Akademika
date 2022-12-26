@@ -108,6 +108,9 @@ const DetailSiswa = () => {
                                 </Link>
                             </div>
                             <div className="bg-white overflow-y-auto h-auto p-10 mb-6 rounded-md drop-shadow-lg overflow-x-auto text-black">
+                                <div className="text-2xl text-blue-900 font-semibold mb-6">
+                                    Detail Siswa
+                                </div>
                                 <div className="flex justify-start items-center mt-4">
                                     <div className="w-40">Username</div>
                                     <div className="w-full">

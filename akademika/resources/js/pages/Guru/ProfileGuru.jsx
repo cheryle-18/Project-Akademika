@@ -9,15 +9,18 @@ import AuthUser from "../../components/AuthUser";
 import { toRupiah } from "../../components/CurrencyUtils";
 import { Alert, Input, Radio } from "@material-tailwind/react";
 
+import Swal from "sweetalert2";
+import withReactContent from "sweetalert2-react-content";
+
 const ProfileGuru = () => {
     const { user, http, token } = AuthUser();
     const [guru, setGuru] = useState([]);
     const [updateFailed, setUpdateFailed] = useState("awal");
     const [nama, setNama] = useState();
-    const [username, setUsername] = useState();
-    const [telp, setTelp] = useState();
-    const [email, setEmail] = useState();
-    const [password, setPassword] = useState();
+    const [username, setUsername] = useState("");
+    const [telp, setTelp] = useState("");
+    const [email, setEmail] = useState("");
+    const [password, setPassword] = useState("");
     const [totalWallet, setTotalWallet] = useState(0);
     const [status, setStatus] = useState();
     const [isAktif, setAktif] = useState(true);
@@ -43,7 +46,7 @@ const ProfileGuru = () => {
             setUsername(res.data.guru.username);
             setTelp(res.data.guru.telp);
             setEmail(res.data.guru.email);
-            setPassword(res.data.guru.password);
+            // setPassword(res.data.guru.password);
             setTotalWallet(res.data.guru.total_wallet);
             setStatus(res.data.guru.status);
             setIsLoading(false);
@@ -53,6 +56,18 @@ const ProfileGuru = () => {
         fetchDataGuru();
     }, []);
 
+
+    const sweetAlert = withReactContent(Swal);
+
+    const fireAlert = (title, icon, status, text) => {
+        sweetAlert.fire({
+            title: <strong>{title}</strong>,
+            text: text,
+            icon: icon,
+            confirmButtonColor: "#0D47A1",
+        });
+    };
+
     const submitUpdateForm = () => {
         //api call
         http.post("/admin/master/guru/update", {
@@ -61,11 +76,12 @@ const ProfileGuru = () => {
             password: password,
             telp: telp,
             total_wallet: totalWallet,
-            status: status,
+            status: 1,
         }).then((res) => {
             let data = res.data;
             console.log(data);
             setUpdateFailed("success");
+            fireAlert('Sukses!','success','successUpdate','Berhasil update profile!');
         });
     };
 
@@ -76,6 +92,7 @@ const ProfileGuru = () => {
             let data = res.data;
             console.log("sukses");
             fetchDataGuru();
+            fireAlert('Sukses','success','successTarik','Berhasil tarik penghasilan!');
         });
     };
 
@@ -126,7 +143,7 @@ const ProfileGuru = () => {
                                         <div className="mb-2">Password</div>
                                         <div className="bg-white rounded-md shadow-md">
                                             <Input
-                                                type="text"
+                                                type="password"
                                                 label="Password"
                                                 className="input w-full border-none placeholder-gray-700"
                                                 value={password}
