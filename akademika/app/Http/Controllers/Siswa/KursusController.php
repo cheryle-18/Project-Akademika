@@ -256,6 +256,10 @@ class KursusController extends Controller
         // $email = $siswa->email;
         // $telp = $siswa->telp;
 
+        if($harga == 0){
+            return "gagal";
+        }
+
         $params = array(
             'transaction_details' => array(
                 'order_id' => rand(),
