@@ -1,0 +1,12 @@
+#loading_upload {
+    animation: mymove 1s infinite;
+}
+
+@keyframes mymove {
+    from {
+        transform: rotate(0deg);
+    }
+    to {
+        transform: rotate(359deg);
+    }
+}

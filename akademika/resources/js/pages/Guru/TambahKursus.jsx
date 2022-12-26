@@ -10,7 +10,6 @@ import withReactContent from "sweetalert2-react-content";
 const TambahKursus = () => {
     //tabs
     const [title, setTitle] = useState("new");
-    const [sudut, setSudut] = useState();
     const [nama, setNama] = useState();
     const [kategori, setKategori] = useState("Teknologi Informasi");
     const [harga, setHarga] = useState();
@@ -27,13 +26,6 @@ const TambahKursus = () => {
         } else if (user.role_text == "siswa") {
             return history.push("/siswa/kursus");
         }
-    }, 1000);
-
-    setSudut(0);
-
-    setInterval(() => {
-        setSudut(sudut+10);
-        alert(sudut);
     }, 1000);
 
     const sweetAlert = withReactContent(Swal);
@@ -181,16 +173,6 @@ const TambahKursus = () => {
                                 Simpan
                             </button>
                         </div>
-                    </div>
-                    <div className="fixed h-screen w-screen flex justify-center items-center">
-                        {
-                            <img
-                                src="/loading_upload.png"
-                                style={{ transform: `rotate(${sudut}deg)` }}
-                                className="w-400px"
-                                alt=""
-                            />
-                        }
                     </div>
                 </div>
             )}

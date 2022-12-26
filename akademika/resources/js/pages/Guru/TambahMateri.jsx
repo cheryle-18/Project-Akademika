@@ -12,11 +12,13 @@ import {
     faCloudUploadAlt,
 } from "@fortawesome/free-solid-svg-icons";
 import { useHistory } from "react-router-dom";
-import Swal from 'sweetalert2'
-import withReactContent from 'sweetalert2-react-content'
+import Swal from "sweetalert2";
+import withReactContent from "sweetalert2-react-content";
+import "./style.css";
 
 const TambahMateri = () => {
     const [title, setTitle] = useState("proses");
+    const [sudut, setSudut] = useState(0);
     const [course, setCourse] = useState(
         "Pengembangan Website Front-End Dasar"
     );
@@ -26,6 +28,7 @@ const TambahMateri = () => {
     const { kursus_id, subbab_id } = useParams();
     const history = useHistory();
     const [isLoading, setIsLoading] = useState(false);
+    const [isLoadingUpload, setIsLoadingUpload] = useState(false);
 
     setTimeout(() => {
         if (user == "admin") {
@@ -37,18 +40,16 @@ const TambahMateri = () => {
         }
     }, 1000);
 
-    const sweetAlert = withReactContent(Swal)
+    const sweetAlert = withReactContent(Swal);
 
-    const fireAlert = (title,icon,status,text) => {
+    const fireAlert = (title, icon, status, text) => {
         sweetAlert.fire({
             title: <strong>{title}</strong>,
-            text:text,
+            text: text,
             icon: icon,
-            confirmButtonColor:"#0D47A1",
-        })
-
-    }
-
+            confirmButtonColor: "#0D47A1",
+        });
+    };
 
     const onChangeVideoHandler = (e) => {
         setVideo(e.target.files[0]);
@@ -59,12 +60,25 @@ const TambahMateri = () => {
         formData.append("video", video);
         formData.append("subbab_id", subbab_id);
         formData.append("penjelasan", penjelasan);
-
+        setIsLoadingUpload(true);
         http.post("/guru/kursus/materi/tambah", formData).then((res) => {
             let data = res.data;
-            fireAlert("Sukses!","success","tambahMateri","Berhasil tambah materi!")
+            setIsLoadingUpload(false);
+            fireAlert(
+                "Sukses!",
+                "success",
+                "tambahMateri",
+                "Berhasil tambah materi!"
+            );
         });
     };
+
+    setInterval(() => {
+        // alert(document.getElementById("loading_upload").style.width);
+        setSudut(sudut + 1);
+        // document.getElementById("loading_upload").style.transform = `rotate(${sudut++}deg)`;
+        // alert("123");
+    }, 100);
 
     return (
         <div>
@@ -157,6 +171,18 @@ const TambahMateri = () => {
                             </button>
                         </div>
                     </div>
+
+                    {isLoadingUpload && (
+                        <div className="fixed h-screen w-screen flex justify-center items-center">
+                            <img
+                                src="/loading_upload.png"
+                                className="w-200px"
+                                alt=""
+                                id="loading_upload"
+                            />
+                            ;
+                        </div>
+                    )}
                 </div>
             )}
         </div>
