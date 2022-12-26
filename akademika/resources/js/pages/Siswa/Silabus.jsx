@@ -7,6 +7,8 @@ import AuthUser from "../../components/AuthUser";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import * as faIcon from "@fortawesome/free-solid-svg-icons";
 import { Alert, Input, Radio } from "@material-tailwind/react";
+import Swal from 'sweetalert2'
+import withReactContent from 'sweetalert2-react-content'
 
 import {
     Accordion,
@@ -15,7 +17,6 @@ import {
 } from "@material-tailwind/react";
 import { ceil, floor, keyBy } from "lodash";
 import { countBy } from "lodash";
-import Success from "./Success";
 
 function Icon({ id, open }) {
     return (
@@ -39,9 +40,8 @@ function Icon({ id, open }) {
 }
 
 const Silabus = (props) => {
-    var payButton = "";
     const { http, user, token } = AuthUser();
-    const { kursus_id } = useParams();
+    const { kursus_id, transaction_id } = useParams();
     const [course, setCourse] = useState([]);
 
     const [poin, setPoin] = useState(0);
@@ -212,6 +212,21 @@ const Silabus = (props) => {
         });
     };
 
+    const berhasilDaftarKursus = () => {
+        http.post("/siswa/kursus/berhasil", {
+            siswa_id: user.siswa_id,
+            kursus_id: kursus_id,
+        }).then((res) => {
+            fetchKursus();
+            fetchSubbab();
+            fetchRegisterData();
+            fetchDataChat(true);
+            setIsLoading(false);
+            fireAlert("Sukses!","success","tambahKursus","Berhasil tambah kursus baru!")
+            console.log(res.data);
+        });
+    };
+
     useEffect(() => {
         fetchDataChat(true);
         getSnapToken();
@@ -219,6 +234,17 @@ const Silabus = (props) => {
         //     fetchDataChat(false);
         // }, 2000);
     }, []);
+
+    useEffect(() => {
+        if (transaction_id != null) {
+            if (localStorage.getItem(transaction_id) != null) {
+                // alert(localStorage.getItem(transaction_id));
+                berhasilDaftarKursus();
+                localStorage.removeItem(transaction_id);
+                setIsLoading(true);
+            }
+        }
+    }, [transaction_id]);
 
     useEffect(() => {
         const snapSrcUrl = "https://app.sandbox.midtrans.com/snap/snap.js";
@@ -260,12 +286,18 @@ const Silabus = (props) => {
                     course.harga.toLocaleString(["ban", "id"])}
             </div>
 
-            <input type="text" className="hidden" id="snapToken" value={snapToken} />
-            <input type="text" className="hidden" id="result"/>
-
-            <button className="hidden" onClick={() => {
-                return (<Success props></Success>)
-            }}></button>
+            <input
+                type="text"
+                className="hidden"
+                id="snapToken"
+                value={snapToken}
+            />
+            <input
+                type="text"
+                className="hidden"
+                id="kursus_id"
+                value={kursus_id}
+            />
 
             {!isRegistered && isFetched && (
                 <button
@@ -306,6 +338,19 @@ const Silabus = (props) => {
         </div>
     );
 
+    const sweetAlert = withReactContent(Swal)
+
+    const fireAlert = (title,icon,status,text) => {
+        sweetAlert.fire({
+            title: <strong>{title}</strong>,
+            text:text,
+            icon: icon,
+            confirmButtonColor:"#0D47A1",
+        }).then((result) => {
+            history.push(`/siswa/kursus/${kursus_id}/detail`);
+        });
+    }
+
     const cetakSilabus = listSubbab.map((subbab, index) => (
         <Accordion
             open={open === index + 1}
@@ -345,8 +390,8 @@ const Silabus = (props) => {
                         }
                     })}
                     {subbab.kuis.map((kuis, indexKuis) => {
-                        if(isRegistered){
-                            return(
+                        if (isRegistered) {
+                            return (
                                 <div className="w-full bg-white flex mb-1">
                                     <Link
                                         to={`/siswa/kursus/${kursus_id}/subbab/${subbab.subbab_id}/kuis`}
@@ -357,17 +402,15 @@ const Silabus = (props) => {
                                         {kuis.jumlah_soal} soal
                                     </span>
                                 </div>
-                            )
-                        }
-                        else{
+                            );
+                        } else {
                             <div className="w-full bg-white flex mb-1">
                                 <span>Kuis</span>
                                 <span className="ml-auto">
                                     {kuis.jumlah_soal} soal
                                 </span>
-                            </div>
+                            </div>;
                         }
-
                     })}
                 </div>
             </AccordionBody>
@@ -376,7 +419,7 @@ const Silabus = (props) => {
 
     return (
         <div>
-            {snapToken=="" ||
+            {snapToken == "" ||
             isLoading ||
             token == null ||
             user == "admin" ||
