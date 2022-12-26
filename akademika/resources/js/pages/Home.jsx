@@ -419,6 +419,7 @@ const Home = () => {
                         <button
                             type="button"
                             className="mt-6 py-3 px-6 bg-custom-blue hover:bg-custom-light-blue hover:text-custom-blue text-white transition ease-in duration-200 text-center text-base font-normal shadow-md rounded-lg"
+                            htmlFor="masukDaftar"
                         >
                             Daftar Sekarang
                         </button>
