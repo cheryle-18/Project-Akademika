@@ -22,6 +22,7 @@ class ForgotPasswordController extends Controller
         ]);
 
         $user = Guru::where('email',$request->email)->first();
+
         if($user==null){
             $user = Siswa::where('email',$request->email)->first();
         }
@@ -35,11 +36,11 @@ class ForgotPasswordController extends Controller
             ]);
 
             $tokenData = DB::table('password_resets')
-            ->where('email', $request->email)
+            ->where('email',$request->email)
             ->orderByDesc("created_at")
             ->first();
 
-            if ($this->sendResetEmail($request->email, $request->role, $tokenData->token)) {
+            if ($this->sendResetEmail($tokenData->email,$tokenData->role,$tokenData->token)) {
                 return 'A reset link has been send to your email';
             } else {
                 return 'gabisa';
@@ -48,16 +49,17 @@ class ForgotPasswordController extends Controller
         else {
             return 'not registered';
         }
+
     }
 
     private function sendResetEmail($email, $role, $token)
     {
         $user = null;
         if($role == "guru"){
-            $user = Guru::where('email',$email)->select('email')->first();
+            $user = Guru::where("email",$email)->first();
         }
         else{
-            $user = Siswa::where('email',$email)->select('email')->first();
+            $user = Siswa::where("email",$email)->first();
         }
         //Generate, the password reset link. The token generated is embedded in the link
         $url = env('APP_URL') . '/reset-password/' . $token . '?email=' . urlencode($user->email);
@@ -67,5 +69,6 @@ class ForgotPasswordController extends Controller
         } catch (\Exception $e) {
             return false;
         }
+
     }
 }

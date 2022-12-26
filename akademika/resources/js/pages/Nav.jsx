@@ -5,6 +5,8 @@ import { faCoffee } from "@fortawesome/free-solid-svg-icons";
 import { Link } from "react-router-dom";
 import AuthUser from "../components/AuthUser";
 import { Alert, Input, Radio } from "@material-tailwind/react";
+import Swal from "sweetalert2";
+import withReactContent from "sweetalert2-react-content";
 
 const Nav = (props) => {
     const [isLoginFailed, setLoginFailed] = useState(false);
@@ -31,11 +33,31 @@ const Nav = (props) => {
     const [forgotEmail, setForgotEmail] = useState("");
 
 
+    const sweetAlert = withReactContent(Swal);
+
+    const fireAlert = (title, icon, status, text) => {
+        sweetAlert.fire({
+            title: <strong>{title}</strong>,
+            text: text,
+            icon: icon,
+            confirmButtonColor: "#0D47A1",
+            didClose: () => {
+                // `MySwal` is a subclass of `Swal` with all the same instance & static methods
+                if (status == "ajukan") {
+                    window.location.reload();
+                } else if (status == "delete") {
+                    history.push("/guru/kursus/diterbitkan");
+                }
+            },
+        });
+    };
+
     function onForgotPassword(e) {
         setClicked(true);
-        http.post("forgot-password", { email: forgotEmail }).then((res) => {
+        http.post("forgot-password", {email:forgotEmail }).then((res) => {
             //pass forgot password request to laravel api
-            console.log(res);
+            fireAlert("Sukses!","success","forgotPass","Kami telah mengirimkan link forgot password ke email kamu!")
+          
         });
     }
 
