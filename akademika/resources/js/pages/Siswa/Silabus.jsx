@@ -9,13 +9,14 @@ import * as faIcon from "@fortawesome/free-solid-svg-icons";
 import { Alert, Input, Radio } from "@material-tailwind/react";
 import Swal from "sweetalert2";
 import withReactContent from "sweetalert2-react-content";
+import { toRupiah } from "../../components/CurrencyUtils";
 
 import {
     Accordion,
     AccordionHeader,
     AccordionBody,
 } from "@material-tailwind/react";
-import { ceil, floor, keyBy } from "lodash";
+import { ceil, floor, keyBy, round } from "lodash";
 import { countBy } from "lodash";
 
 function Icon({ id, open }) {
@@ -76,7 +77,10 @@ const Silabus = (props) => {
         }).then((res) => {
             if (res.data.found == true) {
                 setIsRegistered(true);
+                setSnapToken("sudah ada");
                 setRegisData(res.data.data);
+            } else {
+                getSnapToken();
             }
             setIsFetched(true);
         });
@@ -234,7 +238,6 @@ const Silabus = (props) => {
 
     useEffect(() => {
         fetchDataChat(true);
-        getSnapToken();
         // setInterval(() => {
         //     fetchDataChat(false);
         // }, 2000);
@@ -286,9 +289,7 @@ const Silabus = (props) => {
                 {course.nama}
             </h3>
             <div className="text-xl pt-4">
-                Biaya: IDR{" "}
-                {course.harga != null &&
-                    course.harga.toLocaleString(["ban", "id"])}
+                Biaya: IDR {course.harga != null && toRupiah(course.harga)}
             </div>
 
             <input
@@ -526,14 +527,22 @@ const Silabus = (props) => {
                                     alt=""
                                 />
 
-                                {!isRegistered && (
-                                    <label
-                                        className="btn w-48 mx-auto rounded bg-white text-blue-900 border-0 hover:bg-gray-100 capitalize font-medium text-base"
-                                        htmlFor="daftarSekarang"
-                                    >
-                                        Daftar Sekarang
-                                    </label>
-                                )}
+                                {!isRegistered &&
+                                    (course.harga > 0 ? (
+                                        <label
+                                            className="btn w-48 mx-auto rounded bg-white text-blue-900 border-0 hover:bg-gray-100 capitalize font-medium text-base"
+                                            htmlFor="daftarSekarang"
+                                        >
+                                            Daftar Sekarang
+                                        </label>
+                                    ) : (
+                                        <button
+                                            className="btn w-48 mx-auto rounded bg-white text-blue-900 border-0 hover:bg-gray-100 capitalize font-medium text-base"
+                                            onClick={berhasilDaftarKursus}
+                                        >
+                                            Daftar Sekarang
+                                        </button>
+                                    ))}
                             </div>
                             <div className="w-3/4 flex flex-col text-white">
                                 <div className="font-bold text-4xl mb-3">
@@ -558,7 +567,7 @@ const Silabus = (props) => {
                                             icon={faClock}
                                             className="text-white mr-2"
                                         />
-                                        {ceil(course.durasi / 3600)} jam
+                                        {round(course.durasi / 60)} jam
                                     </span>
                                 </div>
                             </div>
