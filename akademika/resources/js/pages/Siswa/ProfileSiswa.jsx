@@ -102,7 +102,6 @@ const ProfileSiswa = () => {
                                             <Input
                                                 type="text"
                                                 label="Username"
-                                                className="input w-full border-none placeholder-gray-700"
                                                 value={username}
                                                 onChange={(e) =>
                                                     setUsername(e.target.value)
@@ -117,7 +116,6 @@ const ProfileSiswa = () => {
                                             <Input
                                                 type="text"
                                                 label="Password"
-                                                className="input w-full border-none placeholder-gray-700"
                                                 value={password}
                                                 onChange={(e) =>
                                                     setPassword(e.target.value)
@@ -132,7 +130,6 @@ const ProfileSiswa = () => {
                                             <Input
                                                 type="text"
                                                 label="Nama"
-                                                className="input w-full border-none placeholder-gray-700"
                                                 value={nama}
                                                 onChange={(e) =>
                                                     setNama(e.target.value)
@@ -147,7 +144,6 @@ const ProfileSiswa = () => {
                                             <Input
                                                 type="text"
                                                 label="Email"
-                                                className="input w-full border-none placeholder-gray-700"
                                                 value={email}
                                                 onChange={(e) =>
                                                     setEmail(e.target.value)
@@ -162,7 +158,6 @@ const ProfileSiswa = () => {
                                             <Input
                                                 type="text"
                                                 label="Telp"
-                                                className="input w-full border-none placeholder-gray-700"
                                                 value={telp}
                                                 onChange={(e) =>
                                                     setTelp(e.target.value)
@@ -184,7 +179,7 @@ const ProfileSiswa = () => {
                                 <div className="clear-both"></div>
                             </div>
 
-                            <div className="text-3xl mt-6 md:mb-6 text-white font-semibold">
+                            {/* <div className="text-3xl mt-6 md:mb-6 text-white font-semibold">
                                 Informasi Poin
                             </div>
                             <div className="p-10 mt-4 rounded-lg shadow-lg bg-gray-50">
@@ -200,7 +195,7 @@ const ProfileSiswa = () => {
                                 </div>
 
                                 <div className="clear-both"></div>
-                            </div>
+                            </div> */}
                         </div>
                     </div>
                 </div>
