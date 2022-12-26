@@ -105,7 +105,7 @@ const NilaiKuis = () => {
                             })}
                             <div className="mt-10">
                                 <div className="">
-                                    <Link to="/siswa/kursus/materi">
+                                    <Link to={`/siswa/kursus/${kursus_id}/detail`}>
                                         <button
                                             className="btn mt-3 text-base capitalize bg-custom-blue text-white hover:bg-blue-700 font-normal rounded-md py-2"
                                             name=""

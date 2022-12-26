@@ -15,7 +15,6 @@ const Kuis = () => {
     const [listSoal, setListSoal] = useState([]);
     const [listJawaban, setListJawaban] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
-    const [siswaKuis, setSiswaKuis] = useState(false);
     const history = useHistory()
 
     setTimeout(() => {
@@ -82,7 +81,10 @@ const Kuis = () => {
             subbab_id: subbab_id,
             siswa_id: user.siswa_id
         }).then((res) => {
-            setSiswaKuis(res.data.siswaKuis);
+            if(res.data.siswaKuis==true){
+                let url = `/siswa/kursus/${kursus_id}/subbab/${subbab_id}/kuis/nilai`
+                history.push(url)
+            }
         });
     };
 
@@ -120,13 +122,6 @@ const Kuis = () => {
         fetchSubbab()
         fetchSiswaKuis()
     }, [])
-
-    useEffect(() => {
-        if(siswaKuis==true){
-            let url = `/siswa/kursus/${kursus_id}/subbab/${subbab_id}/kuis/nilai`
-            history.push(url)
-        }
-    }, [siswaKuis])
 
     useEffect(() => {
         fetchDataKuis()
