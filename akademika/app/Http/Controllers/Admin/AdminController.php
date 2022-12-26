@@ -78,8 +78,11 @@ class AdminController extends Controller
         $ret = [];
         foreach($laporan as $l){
             $status = "Pending";
-            if($l->status=="1"){
-                $status = "Selesai";
+            if($l->status==1){
+                $status = "Disetujui";
+            }
+            else if($l->status==2){
+                $status = "Ditolak";
             }
 
             $temp = [
@@ -104,9 +107,12 @@ class AdminController extends Controller
         $laporan = SiswaLaporan::find($laporanId);
 
         $status = "Pending";
-            if($laporan->status=="1"){
-                $status = "Selesai";
-            }
+        if($laporan->status==1){
+            $status = "Disetujui";
+        }
+        else if($laporan->status==2){
+            $status = "Ditolak";
+        }
 
         $laporanSiswa = [
             "id" => $laporan->siswa_laporan_id,
@@ -135,6 +141,14 @@ class AdminController extends Controller
 
         $laporan = SiswaLaporan::find($request->laporan_id);
         $laporan->status = 1;
+        $laporan->save();
+
+        return "sukses";
+    }
+
+    function tolakLaporan(Request $req){
+        $laporan = SiswaLaporan::find($req->laporan_id);
+        $laporan->status = 2;
         $laporan->save();
 
         return "sukses";
