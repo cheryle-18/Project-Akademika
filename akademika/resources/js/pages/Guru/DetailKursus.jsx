@@ -74,6 +74,7 @@ const DetailKursus = () => {
             guru_id: user.guru_id,
             kursus_id: kursus_id,
         }).then((res) => {
+            console.log(res.data.kursus)
             setCourse(res.data.kursus);
             setSelectedKategori(res.data.kursus.kategori);
             setEdtNama(res.data.kursus.nama);
