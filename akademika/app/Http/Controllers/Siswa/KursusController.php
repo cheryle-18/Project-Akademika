@@ -273,4 +273,9 @@ class KursusController extends Controller
 
 
     }
+
+    public function berhasilDaftarKursus(Request $request)
+    {
+
+    }
 }
