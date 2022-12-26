@@ -263,15 +263,19 @@ class KursusController extends Controller
 
     public function downloadVideo(Request $request)
     {
-    $url = $request->src ?? '';
-    $filename = $request->filename ?? 'download.mp4';
-    $filetype = $request->filetype ?? 'video/mp4';
+        // $url = $request->src ?? '';
+        // $filename = $request->filename ?? 'download.mp4';
+        // $filetype = $request->filetype ?? 'video/mp4';
 
-    $file = $url;
-    $headers = array('Content-Type: '.$filetype);
-    return Response::download($file, $filename, $headers);
+        // $file = $url;
+        // $headers = array('Content-Type: '.$filetype);
+        // return Response::download($file, $filename, $headers);
 
+        $fileName = Materi::find($request->materi_id)->video_name.'.mp4';
+        $response = Storage::disk('google')->download($fileName);
+        $file = $response->send();
 
+        return $file;
     }
 
     public function berhasilDaftarKursus(Request $request)
