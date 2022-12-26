@@ -24,7 +24,7 @@ return new class extends Migration
             $table->integer('total');
             $table->integer('diskon')->nullable();
             $table->integer('grand_total');
-            $table->tinyInteger('cara_bayar');
+            // $table->tinyInteger('cara_bayar');
             $table->tinyInteger('status');
             $table->dateTime('tanggal');
             $table->timestamps();

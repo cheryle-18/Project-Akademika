@@ -19,8 +19,8 @@ const Home = () => {
 
     const fetchKursusPopuler = () => {
         http.get("get/kursusPopuler").then((res) => {
-            // console.log(res.data.kursus)
-            // setKursusPopuler(res.data.kursus)
+            console.log(res.data.kursus)
+            setKursusPopuler(res.data.kursus)
         });
     };
 
@@ -196,6 +196,7 @@ const Home = () => {
                             <button
                                 type="button"
                                 className="my-10 lg:my-0 py-3 px-6  bg-white hover:bg-blue-900 hover:text-white text-custom-blue transition ease-in duration-200 text-center text-base font-normal shadow-md rounded-lg w-full sm:w-96 lg:w-52"
+                                
                             >
                                 Daftar Sekarang
                             </button>
